@@ -154,6 +154,378 @@ MathJax = {
 <p><strong>『準確率 95%』是句空話，除非你先問清楚——這 5% 的錯，是冤枉好人（FP）還是放過壞人（FN），而我的場景賠得起哪一種？</strong></p>
 </blockquote>
 <hr />
+<p><div class="widget" id="cm-sim">
+<style>
+#cm-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+          background: #fbfbfc; margin: 1.6rem 0; }
+#cm-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#cm-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#cm-sim .panel { border-top: 1px solid #ececec; padding-top: 1rem; margin-top: 1.2rem; }
+#cm-sim .panel:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+#cm-sim button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                 border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                 border-radius: 999px; cursor: pointer; }
+#cm-sim button:hover { background: #eef4fd; }
+#cm-sim button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#cm-sim .row { display: flex; align-items: center; gap: .6rem; margin: .4rem 0; }
+#cm-sim .row label { width: 7.6rem; font-size: .84rem; color: #444; flex: none; }
+#cm-sim input[type=range] { flex: 1; }
+#cm-sim .pct { width: 5.4rem; text-align: right; font-size: .82rem; color: #555;
+               font-variant-numeric: tabular-nums; flex: none; }
+#cm-sim .scen { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                padding: .7rem .9rem; font-size: .87rem; line-height: 1.7; margin: .7rem 0; }
+#cm-sim .scen b { color: #17395e; }
+#cm-sim table.mx { border-collapse: collapse; width: 100%; max-width: 32rem; margin: .8rem 0 .4rem; }
+#cm-sim table.mx th, #cm-sim table.mx td { border: 1px solid #e0e0e0; padding: .5rem .6rem;
+                                           text-align: center; font-size: .86rem; }
+#cm-sim table.mx th { background: #f4f6f9; color: #444; font-weight: 600; font-size: .8rem; }
+#cm-sim table.mx td.cell { font-variant-numeric: tabular-nums; }
+#cm-sim td.tp { background: #e8f2e6; } #cm-sim td.tn { background: #eef3f8; }
+#cm-sim td.fp { background: #fdeee2; } #cm-sim td.fn { background: #fbe3e3; }
+#cm-sim table.mx .num { font-size: 1.25rem; font-weight: 700; color: #1d3557; display: block; }
+#cm-sim table.mx .lbl { font-size: .72rem; color: #777; }
+#cm-sim .metrics { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0; }
+#cm-sim .metric { flex: 1 1 7rem; border: 1px solid #e4e4e4; border-radius: 8px; background: #fff;
+                  padding: .5rem .6rem; }
+#cm-sim .metric .k { font-size: .74rem; color: #888; display: block; }
+#cm-sim .metric .v { font-size: 1.15rem; font-weight: 700; color: #17395e;
+                     font-variant-numeric: tabular-nums; }
+#cm-sim .metric.warn { border-color: #e6c964; background: #fffaf0; }
+#cm-sim .cost { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                padding: .7rem .9rem; font-size: .88rem; line-height: 1.8; margin-top: .6rem; }
+#cm-sim .cost .big { font-size: 1.4rem; font-weight: 700; color: #17395e;
+                     font-variant-numeric: tabular-nums; }
+#cm-sim .chart svg { width: 100%; max-width: 32rem; height: auto; display: block; margin: .4rem 0; }
+#cm-sim .ax { stroke: #c9c9c9; } #cm-sim .grid { stroke: #f0f0f0; }
+#cm-sim .cneg { fill: rgba(74,127,208,.22); stroke: #4a7fd0; stroke-width: 1.5; }
+#cm-sim .cpos { fill: rgba(214,109,60,.22); stroke: #d66d3c; stroke-width: 1.5; }
+#cm-sim .thr { stroke: #17395e; stroke-width: 2; }
+#cm-sim .tick { font-size: 9px; fill: #999; }
+#cm-sim .qbox { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                padding: .8rem 1rem; margin: .6rem 0; font-size: .89rem; line-height: 1.8; }
+#cm-sim .qbox b { color: #17395e; }
+#cm-sim ol.q { margin: .3rem 0 .3rem; padding-left: 1.3rem; }
+#cm-sim ol.q li { margin: .45rem 0; }
+#cm-sim .hint { display: none; border-left: 3px solid #c9d4e4; background: #f7f9fc;
+                padding: .6rem .9rem; margin-top: .7rem; font-size: .86rem; line-height: 1.8;
+                color: #445; }
+#cm-sim .hint.show { display: block; }
+</style>
+
+<h5>🎛 互動：換情境、拉門檻，看四格數字一起動</h5>
+<p class="lede">同一個模型、同一組資料，只要把判定門檻往左往右移，TP／FP／FN／TN 四格就會互相消長，precision 與 recall 一定往相反方向跑。先選一個情境，再拉拉看。</p>
+
+<div class="panel">
+  <div id="cm-scen-btns"></div>
+  <div class="scen" id="cm-scen"></div>
+
+  <div class="row">
+    <label>判定門檻</label>
+    <input type="range" id="cm-thr" min="0" max="100" value="50">
+    <span class="pct" id="cm-thrv">50</span>
+  </div>
+  <div class="row">
+    <label>模型鑑別力</label>
+    <input type="range" id="cm-d" min="20" max="320" value="180">
+    <span class="pct" id="cm-dv">1.80</span>
+  </div>
+  <div class="row">
+    <label>母體件數</label>
+    <input type="range" id="cm-n" min="200" max="100000" step="200" value="10000">
+    <span class="pct" id="cm-nv">10,000</span>
+  </div>
+  <div class="row">
+    <label>真陽性比率</label>
+    <input type="range" id="cm-prev" min="1" max="500" value="50">
+    <span class="pct" id="cm-prevv">5.0%</span>
+  </div>
+
+  <div class="chart"><svg id="cm-svg" viewBox="0 0 340 150" preserveAspectRatio="xMidYMid meet"></svg></div>
+
+  <table class="mx">
+    <thead>
+      <tr><th></th><th id="cm-h1">模型說「是」</th><th id="cm-h2">模型說「不是」</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th id="cm-r1">實際是</th>
+        <td class="cell tp"><span class="num" id="cm-tp">0</span><span class="lbl">TP 抓對</span></td>
+        <td class="cell fn"><span class="num" id="cm-fn">0</span><span class="lbl" id="cm-fnl">FN 漏掉</span></td>
+      </tr>
+      <tr>
+        <th id="cm-r2">實際不是</th>
+        <td class="cell fp"><span class="num" id="cm-fp">0</span><span class="lbl" id="cm-fpl">FP 誤抓</span></td>
+        <td class="cell tn"><span class="num" id="cm-tn">0</span><span class="lbl">TN 正確放行</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="metrics">
+    <div class="metric"><span class="k">Recall 抓到幾成</span><span class="v" id="cm-rec">—</span></div>
+    <div class="metric"><span class="k">Precision 抓的對幾成</span><span class="v" id="cm-pre">—</span></div>
+    <div class="metric"><span class="k">F1</span><span class="v" id="cm-f1">—</span></div>
+    <div class="metric" id="cm-accbox"><span class="k">Accuracy 準確率</span><span class="v" id="cm-acc">—</span></div>
+  </div>
+
+  <div class="cost">
+    以本情境的代價權重計算：漏掉一件 <b id="cm-cfn">—</b> ／ 誤抓一件 <b id="cm-cfp">—</b><br>
+    總代價 <span class="big" id="cm-total">—</span>
+    <span id="cm-domi" style="color:#666;"></span><br>
+    <button id="cm-opt">幫我找總代價最低的門檻</button>
+    <button id="cm-maxrec">recall 拉到最高</button>
+    <button id="cm-maxpre">precision 拉到最高</button>
+  </div>
+  <p class="lede" id="cm-verdict" style="margin-top:.7rem;"></p>
+</div>
+
+<div class="panel">
+  <strong>💬 兩人一組：先各自拉，再說服對方</strong>
+  <p class="lede">每題都先各自把門檻拉到你認為對的位置、記下四格數字，再互相說明理由。重點不是誰對，是<strong>你用什麼理由決定「寧可錯抓還是寧可放過」</strong>。</p>
+  <div class="qbox">
+    <ol class="q">
+      <li><b>哪些情境你會把 recall 拉到最高？</b>拉到最高之後看 precision 掉到多少、FP 變成幾件——你的團隊吃得下這些誤抓的後續處理嗎？</li>
+      <li><b>哪些情境 precision 必須最高？</b>把門檻拉到 precision 最高的位置，看 FN 變幾件。那些被放過的，後果由誰承擔？</li>
+      <li><b>「準確率 95%」在哪個情境下最會騙人？</b>把真陽性比率拉到 1%，門檻拉到最右（幾乎什麼都不抓），看 accuracy 剩多少、recall 剩多少。</li>
+      <li><b>換一個角色再答一次</b>：同一個假訊息偵測，你是總編輯 vs 你是平台法遵主管 vs 你是被誤刪的記者——三個位置會把門檻拉到同一格嗎？</li>
+      <li><b>模型變好，兩難就消失嗎？</b>把「模型鑑別力」從 0.5 拉到 3.0，precision 與 recall 是不是能同時變好？那為什麼還是得選門檻？</li>
+    </ol>
+    <button id="cm-toggle">看判準（不是標準答案）</button>
+    <div class="hint" id="cm-hint">
+      <b>可用的判準，不是答案：</b><br>
+      ① <b>哪一種錯不可逆</b>——漏掉一個早期癌症、放過一則選前假訊息，事後補不回來；誤抓通常可以申訴、可以復原。不可逆的那一邊，就是要壓低的那一邊。<br>
+      ② <b>誰承擔後果</b>——FP 的代價常落在被誤判的個人（記者被下架、店家被封），FN 的代價落在整個公眾。落點不同，不能用同一個總分衡量。<br>
+      ③ <b>後面有沒有人接</b>——若有人工複核當第二關，可以把 recall 拉高、讓機器多抓一點；沒有人力複核就把門檻拉高，否則等於用 FP 淹死自己的團隊。<br>
+      ④ <b>量級</b>——真陽性比率越低，同樣的 FPR 會製造越多 FP。1% 盛行率下，看起來很小的誤判率會讓 precision 崩掉。<br>
+      ⑤ <b>模型變好也不會取消選擇</b>——鑑別力提高會讓整條取捨曲線往外移，兩個指標可以同時變好，但只要兩個分布還有重疊，你就還是得決定門檻站哪裡。這是價值判斷，不是技術問題。
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("cm-sim");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var SCEN = [
+    { key: "fake", name: "假訊息偵測",
+      pos: "假訊息", act: "下架送審",
+      n: 10000, prev: 50, d: 180, thr: 50,
+      cfn: 40, cfp: 12,
+      fnl: "FN 假訊息流出去", fpl: "FP 誤下架真報導",
+      desc: "平台每天有一萬則貼文，其中約 5% 是查證後認定的假訊息。模型判「是」就先下架送人工審。<b>漏掉</b>＝假訊息繼續擴散；<b>誤抓</b>＝真報導被下架，記者與讀者都會反彈。" },
+    { key: "hate", name: "留言仇恨言論過濾",
+      pos: "違規留言", act: "自動隱藏",
+      n: 50000, prev: 20, d: 150, thr: 55,
+      cfn: 15, cfp: 10,
+      fnl: "FN 仇恨留言留在版上", fpl: "FP 誤刪正常留言",
+      desc: "新聞網站留言區每天五萬則，約 2% 違規。模型判「是」就自動隱藏。<b>漏掉</b>＝受害者持續被攻擊、社群品質崩壞；<b>誤抓</b>＝一般讀者被消音，投訴信會進來。" },
+    { key: "scam", name: "詐騙廣告審查",
+      pos: "詐騙廣告", act: "退件不刊登",
+      n: 5000, prev: 80, d: 200, thr: 45,
+      cfn: 120, cfp: 8,
+      fnl: "FN 詐騙廣告上線", fpl: "FP 誤退正常廣告",
+      desc: "每天五千件廣告送審，約 8% 是詐騙。<b>漏掉</b>＝讀者被騙、媒體要負連帶責任、可能挨罰；<b>誤抓</b>＝正常客戶被退件，業務要去道歉、可能掉單。" },
+    { key: "screen", name: "疾病篩檢（初篩）",
+      pos: "患者", act: "轉做進一步檢查",
+      n: 20000, prev: 10, d: 170, thr: 40,
+      cfn: 300, cfp: 5,
+      fnl: "FN 漏掉真的患者", fpl: "FP 健康的人被叫回複檢",
+      desc: "兩萬人初篩，盛行率 1%。<b>漏掉</b>＝患者錯過治療時機，不可逆；<b>誤抓</b>＝健康的人多做一次檢查，花錢、焦慮，但可以修正。這是典型「recall 優先」的場景。" },
+    { key: "tip", name: "爆料線索過濾",
+      pos: "值得查的線索", act: "派記者去查",
+      n: 800, prev: 120, d: 130, thr: 60,
+      cfn: 10, cfp: 25,
+      fnl: "FN 錯過一則好題", fpl: "FP 記者白跑一趟",
+      desc: "八百則讀者爆料，約 12% 真的值得查。人力有限，模型判「是」就派記者。<b>漏掉</b>＝錯過一則獨家；<b>誤抓</b>＝寶貴的採訪人力被浪費在假線索上。資源有限時，precision 的權重會變高。" }
+  ];
+
+  /* --- 常態分布工具 --- */
+  function erf(x) {
+    var s = x < 0 ? -1 : 1; x = Math.abs(x);
+    var a1 = .254829592, a2 = -.284496736, a3 = 1.421413741,
+        a4 = -1.453152027, a5 = 1.061405429, p = .3275911;
+    var t = 1 / (1 + p * x);
+    var y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+    return s * y;
+  }
+  function sf(z) { return 0.5 * (1 - erf(z / Math.SQRT2)); }   // P(Z > z)
+  function pdf(z) { return Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI); }
+
+  var cur = SCEN[0];
+  var els = {};
+  ["thr", "d", "n", "prev"].forEach(function (k) { els[k] = document.getElementById("cm-" + k); });
+
+  /* 情境按鈕 */
+  var btns = document.getElementById("cm-scen-btns");
+  SCEN.forEach(function (s) {
+    var b = document.createElement("button");
+    b.textContent = s.name;
+    b.dataset.key = s.key;
+    b.addEventListener("click", function () { setScen(s); });
+    btns.appendChild(b);
+  });
+
+  function setScen(s) {
+    cur = s;
+    btns.querySelectorAll("button").forEach(function (b) {
+      b.className = b.dataset.key === s.key ? "on" : "";
+    });
+    els.thr.value = s.thr; els.d.value = s.d;
+    els.n.value = s.n; els.prev.value = s.prev;
+    document.getElementById("cm-scen").innerHTML =
+      "<b>" + s.name + "</b>：" + s.desc;
+    document.getElementById("cm-h1").textContent = "模型判為「" + s.pos + "」（" + s.act + "）";
+    document.getElementById("cm-h2").textContent = "模型判為「不是」";
+    document.getElementById("cm-r1").textContent = "實際是" + s.pos;
+    document.getElementById("cm-r2").textContent = "實際不是";
+    document.getElementById("cm-fnl").textContent = s.fnl;
+    document.getElementById("cm-fpl").textContent = s.fpl;
+    draw();
+  }
+
+  /* --- 模型：陰性 ~ N(0,1)，陽性 ~ N(d,1)，門檻 t 落在 -1..d+2 --- */
+  function params() {
+    var d = +els.d.value / 100;
+    var t = -1 + (+els.thr.value / 100) * (d + 3);
+    return { d: d, t: t, n: +els.n.value, prev: +els.prev.value / 1000 };
+  }
+  function counts(p) {
+    var pos = Math.round(p.n * p.prev), neg = p.n - pos;
+    var tpr = sf(p.t - p.d), fpr = sf(p.t);
+    var tp = Math.round(pos * tpr), fn = pos - tp;
+    var fp = Math.round(neg * fpr), tn = neg - fp;
+    return { tp: tp, fn: fn, fp: fp, tn: tn, pos: pos, neg: neg };
+  }
+  function fmt(x) { return x.toLocaleString("en-US"); }
+
+  /* --- 分布圖 --- */
+  var svg = document.getElementById("cm-svg");
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function mk(tag, a) {
+    var n = document.createElementNS(SVGNS, tag);
+    Object.keys(a).forEach(function (k) { n.setAttribute(k, a[k]); });
+    return n;
+  }
+  var XL = 30, XR = 330, YB = 118, YT = 14, XMIN = -4, XMAX = 7;
+  var px = function (x) { return XL + (x - XMIN) / (XMAX - XMIN) * (XR - XL); };
+  var py = function (y) { return YB - y / 0.42 * (YB - YT); };
+  var negPath = mk("path", { class: "cneg", d: "" });
+  var posPath = mk("path", { class: "cpos", d: "" });
+  var thrLine = mk("line", { class: "thr", x1: 0, y1: YT - 4, x2: 0, y2: YB });
+  svg.appendChild(mk("line", { class: "ax", x1: XL, y1: YB, x2: XR, y2: YB }));
+  svg.appendChild(negPath); svg.appendChild(posPath); svg.appendChild(thrLine);
+  var lblNeg = mk("text", { class: "tick", x: 0, y: YT + 2, "text-anchor": "middle" });
+  var lblPos = mk("text", { class: "tick", x: 0, y: YT + 2, "text-anchor": "middle" });
+  var lblThr = mk("text", { class: "tick", x: 0, y: YB + 13, "text-anchor": "middle" });
+  svg.appendChild(lblNeg); svg.appendChild(lblPos); svg.appendChild(lblThr);
+  lblThr.textContent = "門檻";
+
+  function curve(mu) {
+    var pts = ["M " + px(XMIN) + " " + py(0)];
+    for (var x = XMIN; x <= XMAX; x += 0.1) pts.push("L " + px(x) + " " + py(pdf(x - mu)));
+    pts.push("L " + px(XMAX) + " " + py(0) + " Z");
+    return pts.join(" ");
+  }
+
+  function draw() {
+    var p = params(), c = counts(p);
+    document.getElementById("cm-thrv").textContent = els.thr.value;
+    document.getElementById("cm-dv").textContent = p.d.toFixed(2);
+    document.getElementById("cm-nv").textContent = fmt(p.n);
+    document.getElementById("cm-prevv").textContent = (p.prev * 100).toFixed(1) + "%";
+
+    negPath.setAttribute("d", curve(0));
+    posPath.setAttribute("d", curve(p.d));
+    thrLine.setAttribute("x1", px(p.t)); thrLine.setAttribute("x2", px(p.t));
+    lblNeg.setAttribute("x", px(0)); lblNeg.textContent = "實際不是";
+    lblPos.setAttribute("x", px(p.d)); lblPos.textContent = "實際是" + cur.pos;
+    lblThr.setAttribute("x", px(p.t));
+
+    document.getElementById("cm-tp").textContent = fmt(c.tp);
+    document.getElementById("cm-fn").textContent = fmt(c.fn);
+    document.getElementById("cm-fp").textContent = fmt(c.fp);
+    document.getElementById("cm-tn").textContent = fmt(c.tn);
+
+    var rec = c.pos ? c.tp / c.pos : 0;
+    var pre = (c.tp + c.fp) ? c.tp / (c.tp + c.fp) : 0;
+    var f1 = (rec + pre) ? 2 * rec * pre / (rec + pre) : 0;
+    var acc = (c.tp + c.tn) / p.n;
+    document.getElementById("cm-rec").textContent = (rec * 100).toFixed(1) + "%";
+    document.getElementById("cm-pre").textContent = (pre * 100).toFixed(1) + "%";
+    document.getElementById("cm-f1").textContent = f1.toFixed(3);
+    document.getElementById("cm-acc").textContent = (acc * 100).toFixed(1) + "%";
+    document.getElementById("cm-accbox").className =
+      (acc > 0.9 && rec < 0.6) ? "metric warn" : "metric";
+
+    var costFN = c.fn * cur.cfn, costFP = c.fp * cur.cfp, total = costFN + costFP;
+    document.getElementById("cm-cfn").textContent = cur.cfn + " 分";
+    document.getElementById("cm-cfp").textContent = cur.cfp + " 分";
+    document.getElementById("cm-total").textContent = fmt(Math.round(total));
+    document.getElementById("cm-domi").textContent =
+      total === 0 ? "" :
+      "（漏掉造成 " + Math.round(costFN / total * 100) + "%、誤抓造成 "
+      + Math.round(costFP / total * 100) + "%）";
+
+    var v;
+    if (acc > 0.9 && rec < 0.5) {
+      v = "⚠️ 準確率看起來很漂亮，但 recall 只有 " + (rec * 100).toFixed(0)
+        + "%——它靠「幾乎什麼都判不是」把分數拿滿。這就是「準確率 95%」最會騙人的地方。";
+    } else if (rec > 0.9 && pre < 0.35) {
+      v = "幾乎全抓到了（recall " + (rec * 100).toFixed(0) + "%），代價是模型每抓 "
+        + Math.round(1 / Math.max(pre, 0.001)) + " 件才有 1 件是真的——"
+        + fmt(c.fp) + " 件誤抓要有人去處理。你有那個人力嗎？";
+    } else if (pre > 0.85 && rec < 0.5) {
+      v = "抓的幾乎都對（precision " + (pre * 100).toFixed(0) + "%），但放過了 "
+        + fmt(c.fn) + " 件。這些被放過的，後果由誰承擔？";
+    } else {
+      v = "現在的位置：抓到 " + (rec * 100).toFixed(0) + "%，抓的裡面 "
+        + (pre * 100).toFixed(0) + "% 是真的。把門檻往左移會多抓也多錯抓，往右移會更準但漏更多。";
+    }
+    document.getElementById("cm-verdict").textContent = v;
+  }
+
+  ["thr", "d", "n", "prev"].forEach(function (k) {
+    els[k].addEventListener("input", draw);
+  });
+
+  function scan(score) {
+    var best = null, bestV = Infinity, old = els.thr.value;
+    for (var i = 0; i <= 100; i++) {
+      els.thr.value = i;
+      var c = counts(params());
+      var v = score(c);
+      if (v < bestV) { bestV = v; best = i; }
+    }
+    els.thr.value = best === null ? old : best;
+    draw();
+  }
+  document.getElementById("cm-opt").addEventListener("click", function () {
+    scan(function (c) { return c.fn * cur.cfn + c.fp * cur.cfp; });
+  });
+  document.getElementById("cm-maxrec").addEventListener("click", function () {
+    scan(function (c) { return c.fn; });          // 漏最少
+  });
+  document.getElementById("cm-maxpre").addEventListener("click", function () {
+    scan(function (c) {                            // 抓的最準（至少要抓到東西）
+      var pre = (c.tp + c.fp) ? c.tp / (c.tp + c.fp) : 0;
+      return c.tp === 0 ? 9e9 : 1 - pre;
+    });
+  });
+
+  var tg = document.getElementById("cm-toggle");
+  tg.addEventListener("click", function () {
+    var h = document.getElementById("cm-hint");
+    var open = h.classList.toggle("show");
+    tg.textContent = open ? "收起判準" : "看判準（不是標準答案）";
+    tg.className = open ? "on" : "";
+  });
+
+  setScen(SCEN[0]);
+})();
+</script>
+</div>
+</p>
 <h3>主管視角：該問工程師什麼、門檻調哪邊</h3>
 <h4>precision / recall 的拉鋸：門檻（threshold）</h4>
 <p>模型其實不是直接吐「假／真」，而是吐一個<strong>分數</strong>（例如「這則是假訊息的機率 0.73」）。是你（或工程師）設一條<strong>門檻</strong>，超過就判「假」、攔下來。<strong>這條門檻往哪邊移，就決定了你要哪一種錯。</strong></p>
@@ -229,7 +601,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：選一個媒體場景，畫 confusion matrix 與誤判代價，標出你會把門檻往哪邊調、為什麼。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:25</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:30</p>
 </div>
 </body>
 </html>
