@@ -7,58 +7,8 @@
 <link rel="stylesheet" href="../../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../../s/WebAnalytics/2026/index.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><strong>本學期</strong>　<a href="2026_Web_Analytics_Syllabus.html">課程簡介</a><a href="schedule.html">每週進度</a><a href="../index.html">課程首頁</a><a href="../../index.html">課程總覽</a><a href="../../../../index.html">回首頁</a></nav><div class="hero"><h1>網路數據分析 Web Analytics（2026）　2026</h1><p class="sub">政治大學傳播學院</p></div><div class="doors"><a class="door" href="2026_Web_Analytics_Syllabus.html"><h2>課程簡介</h2><p>課程簡介、課程目標與學習成效、評量工具與策略與評分標準。</p><span class="tag">2026 Web Analytics Syllabus</span></a><a class="door" href="schedule.html"><h2>每週進度</h2><p>每週上課主題、當週單元連結與作業。</p><span class="tag">共 15 週</span></a><a class="door" href="../../../../module/s/index.html"><h2>教學模組庫</h2><p>所有單元的課程內容，一個單元一頁，跨課程共用。</p><span class="tag">不綁課程</span></a></div><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "d3bTqEE5XH88V42Z3/rh0A==", IV = "t441isyleM2jVI+n", CT = "4Oqc0p4xlamN1nxG8BB475VYf46dqgLaUmclVkWhhoEpjQmMyi6868ePyQ3K1hX7DZ5SfCvJGPGkUTNI22QkyjY1oPi587fUZn+anKsS+FsAaWcEub1SPqBZNXnyEZgOJZRHLw28lSron6Pkb07X43zk1xxftf/yFplZ9I9H8OL50zJo6O9T+YI6v+DNYcLcIjGiryhLyIl2ywsPSvS5voUxKISMsmH5Es3PUucVCjgOIi4SzSLibLlBxiKq+CD4IYnsQRg4RZphS4lqQmbK7yIojZDzYPOlxxubZ4axBQD6J4aR15oNRXelYzAsISryoS3JwtpAtJ1fU13zavG/ETlWOL6fJnZgQ0LPPLuPd2lw2QpxyT2mgG24uy9/lFrk5Gwjrns0P2D1jhMZarl4Xlh86bpp4XipiLo028EaqqoZrmUqjAQSH9DJJI9sshZvcydYwX97twE+SiM/TR+/wno9SyZpmtsf4nzjcw52vMsZdkY190LO8D9eAJJAnPe4JP0jk34AHFB8mximnbBkedc2JmUQ+EOaVgDXp/bitNgUCBWQFpPALLAIh+xn/JUYRMl/QRlee+6eSD2PzJewSTgGcRgcKCONyS4n9mDeqcJ6gqL5JI7WsRuekTSitlZTBMZlTtjVndevpoqsL/Dz4h5JZfzVvvg5dsQk7U6AMBb1CoLUh3FRTppiUQploBrnsjDhUFBjzm9k7qsgPmG57lWsa2yvC8Tb3NpWeJiRdPn7Tb5WGQNS/Y713xIwiw73NS9URahSyJls9JXjR09iUxT7D5zx9N8AMSLMjA5vK4Y2lgqmgmTkItTeN9CaaYpMsjgvQWXeqrVspt1Ko/SPearhrUm/D5SuSruhrVEgwg6o98MzxZgA4NR1X3BpZF4soGcvYbGz/isoCgaXrT5uojqNUWwS9vMujJw/KJUb9kycmLOYpuv0t7/KbbpOb/CENq+h0JTTmtKXwGjbSS5zMaVy/alDdtN+rqlkzGZW2TY90rVwalNotkMYOWNaSo8c1+gR739MwKQ+qMukHb2MC81wlb1vygTXiWUq9CkWWi9eRdW8YOw8uUEyF6zMQiSm8DEYm7LY3Gc/AAvrLAxcfvFw/CII64Ka7e3CK7bYNREPHh/HnZTAxGiJwbX/47BkL9nDQwUqzxy8iBtM7a5UysI65XCgFOwwxBtswgYiPmTUjqf+11BFGfukwxU0FxbBLwRTZ6LpS4bCGfra+KqFKHt+K2GFBWtT0qH2h+RuDjV+Ec9NG7/VxjQDkn5+DxO5fcmk6Yav5THGeX09IgofhMXKe9nPo6CMxmwIy3r88l/vICq2Yi83d7q2O5UeX3m0t9vcqwKWocCOdB+GjpEs1gyokLA4juMHuqQXSkQgJ40U26gcRyYH8Kpmwj43+6JorJ3Hjq7wRfIMjUCBSW01sNIzKPhWWSyknGj28FazSLTQN3YBMtqdnXXozPqanmcrv1A5a8YnYLE2", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

@@ -7,58 +7,8 @@
 <link rel="stylesheet" href="../../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../../s/GCIT/2026-fall/schedule.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><a href="index.html">本學期</a><a href="2026_GCIT_Syllabus.html">課程簡介</a><strong>每週進度</strong>　<a href="../index.html">課程首頁</a><a href="../../index.html">課程總覽</a><a href="../../../../index.html">回首頁</a></nav><div class="hero"><h1>每週進度</h1><p class="sub">2026 GCIT — AI 創意與深度使用方法論　2026-fall</p></div><div class="weekblock"><h3>W1　9/14　Using AI Deeply</h3><ul><li><strong>M1</strong> Mindsets for Deep AI Use (AI as a thinking partner; prompting &amp; dialogue design; reading AI output critically)</li><li><strong>M2</strong> Learning <em>with</em> AI (intro to 11 Learn-with-AI methods: Feynman, Socratic, active recall, protégé effect…)</li><li><strong>M3</strong> Method Try-out &amp; Feedback (each student runs different learning methods on a topic, peer feedback)</li><li>📝 Run one Learn-with-AI method on a topic of your choice; submit a short reflection on which methods you tried and which you'll keep</li></ul></div><div class="weekblock"><h3>W2　9/21　Image Creativity</h3><ul><li><strong>M1</strong> Boden's Three Types × AI Image (combinational / explorative / transformational on one theme)</li><li><strong>M2</strong> Systematic Exploration of Concept Space (explorative; map the conceptual space)</li><li><strong>M3</strong> Prompting Methodology &amp; Reverse-Inferring Assumptions (the thinking behind prompts; read a generated image to surface its hidden assumptions)</li><li>📝 Submit three-type image comparison + three hidden assumptions reverse-inferred from one AI image</li></ul></div><div class="weekblock"><h3>W3　10/5　Methodology: Reframing</h3><ul><li><strong>M1</strong> Using AI to List &amp; Challenge Assumptions (AI lists assumptions; you judge which to break)</li><li><strong>M2</strong> Problem-finding &amp; Jobs-to-be-Done (problem-finding is harder than problem-solving)</li><li><strong>M3</strong> Seeing Your Own Hidden Assumptions (full Harrison reframing on your own familiar domain)</li><li>📝 Produce a one-page "Problem Redefinition Brief"</li></ul></div><div class="weekblock"><h3>W4　10/12　Solving Social Problems & Ethics</h3><ul><li><strong>M1</strong> Systems Thinking for Social Problems (wicked problems; intervention levels &amp; leverage points)</li><li><strong>M2</strong> Building a Causal Feedback Loop with AI (map a Taiwan social issue + 3 intervention points)</li><li><strong>M3</strong> Ethics &amp; Boundaries of Creativity (AI copyright, style mimicry, training-data politics; draw your line)</li><li>📝 A causal-loop diagram + 3 intervention points for a Taiwan social problem, plus one sentence on your AI-creativity ethical boundary</li></ul></div><div class="weekblock"><h3>W5　10/19　Midterm Presentation</h3><ul><li><strong>M1</strong> Proposal Design Workshop (pick one track: expression / business / social)</li><li><strong>M2</strong> Peer Review &amp; Feedback (rubric-based)</li><li><strong>M3</strong> Method Statement &amp; Reflection — present  + method statement  + Q&amp;A</li><li>📝 <strong>Final work</strong>: artifact/proposal + method statement ("which hidden assumption did you break, and what role did AI play?")</li></ul></div><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "QU/PfCxuTLmGK2EK8PopVA==", IV = "Ypo9gXvF/n3jHIw2", CT = "SzcTw6UFDDt1GnQI5W6WLVDyVXaYCPgWDb+hwoqDypq3QUAU0Yl17dwpiCAX3LtDpsu9sSUTacvtwGtso+r+HGonQpHdX7oSjxzZTwcJsnMQH//CW7C+HylypXNO9DbOG0FiuwBzvenpb6U9uaQkUDfOkXmeCHgujvCIavBcwEKCTZJy4X42SFabNfzD0ktwTH7ln0F7E7gW2cXqUnuiNaO5bNaSlE1Y+Y1qDHBnC3X1/jDpRJ8s1f04D2fCurbqMoGHE2x7yx10TXpxVt/10M4OfEh7eWpBIMhN/CID/AlJj4Z40kjDozp9uUOxyCGB8V2COmfSTQ1ouk9/upw9+Gyk89KyOE5zfe2v39WrPulmrzWHV/k+G5yToV4EibZ5aeH40z5l5ql0jEczIxaTy+cjfLKv0roQyG7nM1OGPKBQSj1KB3FHtltkkrc0/2LqWm8ungD0IEZ2ajUrT+1R4xlSFycWvJgqWs6gyUKM/cAmj6JGiKhoYDrMxwkTlNmvrPjcSxm5mD9Ye075Kwllfp1p6fGMy6QDuSmbhGfN5KcSSe4eDtvO2GK5Mv6FRjieQgR+lL1tD9Z3MrCWqsoUVO6OY73Kpqz8d12yoxWv1hDGRORmD1vjWRom2lBWKZvcAt9++d49cCq+xltlUKTpp6/uemWFG7nVagJzRiJkGnzSTaGcqUjX0UNfvGNyVjMHZZQdUTf9r2SYSKcbk92slqNJaUb6woy6Ur+gciyxwgFC0ieH2BGzbNggAERT6fP49LR+RlyJyRsm+MJi+sL2VPWy3wmCKCl7mWgfbbioTyUWP2yBeHweslfGzxFkqwkxnnN7nbN8Nzf/P+5Dq5cIFQgtKoB6OVD/UDveJ5kpD4ZCYgV9KqfaAizJzSscwF0m9Vv4etcgxa1vlt3mMyVy4xcNmi7PR6JmFP0qicNniqcEqXSxFxEEOkjPDt5ZnpnhHr30UwXqTibMeVijlWo12Y3FHk2yE8p2OFib2vU57LVYLRrVowuANI1F0U4Wk5+u9VRQyTJK+S5XaPg38lVUzOC28CBOYRcYwqpXeEuLvnpdUx4teUVQheL1eSBu4Mo+/xYwwfm9cm8VbFpSP37mMiTJUB9c3ThMo71N+3sUidky0OpkOM/ELTC6vBs6XbASHAqlmevO1myFRwc7lrr38OvMKWsfuwbo/dZTmLlk7Xq17upwJiqanULp+xezXbVeAcZ/n0gT4Iy/uSAXsGydB1Kq5M5k4Ky5V/V3E5tnpVguHh61DAqmK8dKCgHYTx3WPW0nPZi7EJw5857VR7G1VKM8xJngdu9CiAfBuVMLehzrg1L4smFFSydh269/szT7MY0U3gDSY5qYHeYxchX4rz8kAh6pAvg3t1FqTbKKqp0B5YfGYxgsNkEj9krtjWHi/Yb9dfkIUvhlfwNScbwYbwbG4yJMs5o9D8qQKAbEfiP58bsF0Fd/nzXxqepAQ7uxzIDHbJSTR4aWEGzjGsJ3riYH8Z56ob9NNxfdlPIC3jiXHsR3fWBHysMuBZwD+PZv1Jko4LKWyF5mTOpkXivjLC4pT+knlKj7YrZUAfHDEr7Vy6ncDmN9gZKnJNzo7u1vqdyfsZk1D73f+KRvHPbSNEJvMCHSH85RjnorD+fuJY+223R9wnLRS5MHge3RVPvx83J34K1B5Zsyd3qqHUsE9JKHfmhA9MK2mkquRdTRxb35wd6Y1ggi2pZf3KtI/e2XmCiK8VQOkwcN9qYuJ+62h0Rkghe5GYjNkg+uEG7eVRizH2vjwy+Iksxk1V5GxWUOXrTN8/nYZb2H3cqQcZmw7xFvM0Z0i/SnH8UnbEeHwXZ2mFJiSXiOpuFkwacJsRP0BOvaa99laMr/qJfARmh1JH3HoEaQ2nyU7gNgsyc02prVeTKoIDwcE8pkJL1gOR2AzR9pop+p6jwP6Ia7bhL4njXSPKZG1aO0ViE6y3VuyiwaNm3AsokQEKP010NAyHXqljo21Vj34bZu4wPH1yUuzongTuVQ6jXYWxLlNlPxv0zdR4whY5blEktreLZRq6byZro9yW/Mj1A4B1idVGaTGH6wRhnzEz4bCX34CEsblIzFtEfOYK06bCs8m9JaTEbO+lElumN8mLgmcomY98JSPN2NhPxWIJNBbd5LvbZoyQDqvX0TJIwaYb3QU1x5TOVF5Ag+SvUVpKVekA8/p1qz/7wYyrHiSx3qORrKk/J9E1OrFn4AaL18RzvFFGJ5KwZsPhIcAAnsN3W+Jtr8iJRv7ULI0VBQMiNPzBW7ZVnRX37U4qdRC+hk8lCGFOQvzkkjAMKYe4TxCvfviVoHl/1GEwoj2j3pv1qQzG+IdWQ0GvQqY/LgvHB6HgJNCWV8BIieRueaDAMb7GhBBwEnVzEe+WeMrciMFe44dXk5DyVDO7UJ37tv9hMi583TlD4HO4cDzTUToKFNJXZg65jHnLwc2hsMByOY9W9yoSec2Ll1xvUvp0vGPjwKCOwOFIiSeQDAVzerGdlpY4aXsozqrv+2fVqZg0Eo+QSgImjA6llsIMhXDJxiJJGyLL6O7LKYtAKlcMjOs5Df01HGRfTYuiMJkJa2URcNHi3/UASpm8qKwY7a1jCMc5o/2DAi8OIMiWuPkPrlgdjVVT4VIrUQRpV7pXTWLgjT6dsVNwx4aQUToHtePIw9IqB93swJq4oZ/XibMH0xtADHh3lHt8CO8X4gvFE73Ro/7WPn5GWeCCZZ5P69BDpooFR37JojZoVBqnu/QsPoIZ86B5ZquyguHhwu+BDgCT12pCfNdBrLjE5wzfHeVvv401bTT5r2LeeVAfuSkBvO0AyFP3vzycwJGpd2Mo7cF5xkW/zOrvoLUGS76BFzbclb6Ca+PFhhqY75WWJtGjsjWVITZURpEk3EkwJtbI6bWiTFr4coyQRCeG1TgnkyYw2TPhe+WuFabKptgkrLLuWJWVi57idXGb3Tx5+M5rI1+CAp1H2GAMh+g4D+kFdiyrktBdMKe7gHlOgOCpvV9ZQ2gffCb3y1KFexGTWfbFQc+tQ3+P9F8qksZGtpA0FoNGS1/pazj3Ovd3wJZvB/KGFNQ5zXzL8olQIpJLEz9bz+X6jhyUlYYPBjYgwKDlqApu5B0prm1wU7UHFOugDrkp9AczNIV/FmNl9tFfduYYk548ESHpPJOUaUlC3sFKn3eacfPAeZcZGPYPdxgLrsd1krr0dYloFDYRm4+eeWPTPZP7un+d3FCt2Pode1Abd2lxt6yT7zDv10YZNCV64QV11g9EyZWeQrGGLsHBxXLub8GGr60aq3wZ0mxqJrIpglHKBswYNeWWmavCJ9QWDudtQF5ecebmOOsaRB/VClUcbuht0Ua+zR1ozdLtgjIYdG5HZcGJDwI3V7FbpfbHZdbGySinDaDFDD3m2yXMpTLBfugefnIjXPolWP6f03aYLmIG+69hoGx9WYWjecll9P2sm+ExLG3AQc1qSGL9skB9Fwz9aXq+zSK0iXS9m9oaYl/6vwL8VVhroEzUo2F/1MBhNrQlIkHwztk8bHhTLnWNWsfKmMiOdhT7LY44EkSlYQM9em+wQHUxLHF/aD2FZZc+uBYMWN4l2vGwWlclbGOCrwZ3+LAM5I/xnJHVBagu2gMHsfO7pkqbuqWZNAN6AI3BmG6cEXhGP/QZKtvjAeVpvPL1M50yYJaVN7DBUw/EvAwZGAT1fRlcH2MKOcO+nGkpw6JfLtbZcucU8BD6VKpWBX4K4+3gtY0wN62xVZg0qMHscc56QsuenkbdLnLlxGG8GfFDxYMDgKx4iWaTr2C2f9rOyT1pUmkBj7UunGOH0YHB9S4k6TYkkN/ai/eoTG68tXjOGE2utaGD7XxMdVhwD65Du0UOVe+yDtIvhK4oUdErbRrFOGAXZzgasgF3J1tUxHU1q1u1P+63HFHE8bvVIWk6ZRnSWfEYwRL+BlhA/Va+/GHAOgHTsRPKvNK21vbtAmTcKIudSi6XgiHaf5SOTaJjoyhdZOxf8GnyoG1LixVDQrWjhT5G1ZDSAfaEoj4WTN7hwRfkBedSVfJGOd48BcXxWFvdXqG+c2RrQE40NGV6U4mKEVapSbvAn8WsHZmkV/92054hrx54pFh8c3Ow52C1+oWuvec46dI9gToZykgiLHS+iVGryxA/tAk/l0Y4yIV7wN2+ZTywtth7pAVUBRL1P+uJnwGzImanuqSODh3r/KnqrRWAiFvEaey9JHFtqD7UfHObmDBY/x9AAFAidcTT9EU/9ClYElmfyt5kJt8HpJk972dwj35AcN9FosVvwPktdMI6mWT1ljRsJwbcfndwNX8+stR8zywnYcdYx8bmExKkVkrCuqRNb8bSjiJRc1SorjMylf8djeV2YSkjoG5F3ePewnSn2zi8t905MPiu4COx7lxMF9hJWvSaQPClozbac1hZIxWC+1hLrJisoDu2REHAj0+nAGoM9W/NYZmg==", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

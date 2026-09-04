@@ -7,58 +7,69 @@
 <link rel="stylesheet" href="../../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../../s/EMA/2026-fall/2026_EMA_AI_Syllabus.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><a href="index.html">本學期</a><strong>課程簡介</strong>　<a href="schedule.html">每週進度</a><a href="../index.html">課程首頁</a><a href="../../index.html">課程總覽</a><a href="../../../../index.html">回首頁</a></nav><div class="hero"><h1>課程簡介</h1><p class="sub">2026 EMA — AI 與媒體　2026-fall</p></div><h3>一、課程簡介</h3>
+<p>本課程為傳播學院在職專班（EMA）開設，對象為<strong>有實務經驗的媒體機構主管</strong>（總編、製作人、部門主管、公關／行銷主管），並協助學生銜接碩士論文寫作。</p>
+<p>面對 2026 年的技術標準——生成式與 <strong>agentic AI（會自己呼叫工具的 AI，如 Claude Code）</strong>、深度研究、生成影音已成為日常生產工具——本課程不把學員當「要學寫程式的工程師」，而是回應媒體主管的兩個真實問題：<strong>(1) 自己會用</strong>——親手把 AI 用進決策、管理與產製工作；<strong>(2) 導入機構</strong>——把 AI 導入整個編輯室／部門，包含採購或自建、流程改造、資料治理、ROI 與風險、變革管理，以及對董事會與團隊的溝通。</p>
+<p>課程保留必要的 AI 基礎技術概念（資訊理論、混淆矩陣、監督式學習等），但<strong>定位為「與工程師溝通」與「用好 agent」的工具</strong>：懂這些概念，主管才聽得懂技術團隊、問得出對的問題、判斷可行性與風險，也才用得好 AI、寫得出有理論張力的碩論。由於學員碩論多與 <strong>AI 倫理、AI 取代工作</strong>相關，課程納入學術論文閱讀與報告，將這兩個熱區做成正式報告以支撐論文。</p>
+<hr />
+<h3>二、課程目標與學習成效</h3>
+<p>修畢本課程，學生應能：</p>
+<ol>
+<li><strong>建立夠用且正確的 AI 心智模型，並能與工程師對話</strong> — 運用資訊理論、混淆矩陣、監督式學習等概念，聽懂技術團隊的說法、問對問題、判斷可行性與風險，不被話術或恐慌帶走。</li>
+<li><strong>主管自己會用 agentic AI</strong> — 親手以 Claude Code 設計、串接、批判 skills／hooks／MCP，把採訪→查證→產製→分發其中一段自動化，並評估哪些值得擴大導入。</li>
+<li><strong>做出可用的新聞／管理小產品</strong> — 以 vibe coding 做出互動報導頁、資料視覺化或查詢小工具，不必先具備程式能力。</li>
+<li><strong>規劃 AI 導入媒體機構</strong> — 能做採購 vs 自建決策、設計流程改造、訂定資料治理與使用規範、估算 ROI 與風險、撰寫導入提案並管理變革。</li>
+<li><strong>帶領團隊面對 AI 倫理與工作重組</strong> — 能訂規範、設揭露機制、處理工會與職場談判，並守住人類判斷的界線（查證、倫理、消息來源保護、署名責任）。</li>
+<li><strong>讀懂並評析 AI 學術論文</strong> — 能拆解一篇 AI 倫理／AI 取代工作論文的理論、方法與限制，並連回自己的碩論問題。</li>
+</ol>
+<hr />
+<h3>四、評量工具與策略、評分標準成效</h3>
+<h4>評量配比</h4>
+<table>
+<thead>
+<tr>
+<th>評量工具</th>
+<th>比重</th>
+<th>對應學習成效</th>
+<th>繳交時間</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每週小作業</td>
+<td>35%</td>
+<td>成效 2、3、4</td>
+<td>每週（除停課週外，第 1–15 週）</td>
+</tr>
+<tr>
+<td>論文報告 ×2</td>
+<td>20%</td>
+<td>成效 5、6</td>
+<td>第 9 週（11/7，兩篇同週繳交）</td>
+</tr>
+<tr>
+<td>期末導入提案</td>
+<td>30%</td>
+<td>成效 1–5 整合</td>
+<td>第 16 週（12/26）</td>
+</tr>
+<tr>
+<td>課堂參與（出席、討論、工具箱分享、同儕互評）</td>
+<td>15%</td>
+<td>成效 1、5</td>
+<td>全學期</td>
+</tr>
+</tbody>
+</table>
+<h4>評分標準（成效檢核）</h4>
+<p>各項作業以下列規準評為四級——4 優異／3 熟練／2 發展中／1 待加強：</p>
+<ul>
+<li><strong>每週小作業</strong>：是否真正改善一段真實工作？是否說明 AI 在何處會出錯、何處須由人把關？</li>
+<li><strong>論文報告</strong>：來源是否忠實呈現？理論／方法／限制是否拆解清楚？是否扣回自己的碩論問題？</li>
+<li><strong>期末導入提案</strong>：採購／自建決策、流程改造、治理與揭露、ROI 與風險、變革計畫是否完整且站得住？是否守住人類判斷界線？</li>
+<li><strong>總原則</strong>：❌ 不以「工具多炫、產出多漂亮」為評分依據；✅ 以「是否真能用進主管工作、是否具備機構導入的可行性與治理意識」為核心。</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "miByiS+GmaMrZUfbHrlwag==", IV = "og9KsuAada51+yKG", CT = "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", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

@@ -7,58 +7,8 @@
 <link rel="stylesheet" href="../../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../../s/AICreativity/2026/index.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><strong>本學期</strong>　<a href="人工智慧生成圖像與創造力_2026_課綱.html">課程簡介</a><a href="schedule.html">每週進度</a><a href="../index.html">課程首頁</a><a href="../../index.html">課程總覽</a><a href="../../../../index.html">回首頁</a></nav><div class="hero"><h1>人工智慧生成圖像與創造力（2026）　2026</h1><p class="sub">政治大學傳播學院｜3 學分</p></div><div class="doors"><a class="door" href="%E4%BA%BA%E5%B7%A5%E6%99%BA%E6%85%A7%E7%94%9F%E6%88%90%E5%9C%96%E5%83%8F%E8%88%87%E5%89%B5%E9%80%A0%E5%8A%9B_2026_%E8%AA%B2%E7%B6%B1.html"><h2>課程簡介</h2><p>課程簡介、課程目標與學習成效、評量工具與策略與評分標準。</p><span class="tag">人工智慧生成圖像與創造力 2026 課綱</span></a><a class="door" href="schedule.html"><h2>每週進度</h2><p>每週上課主題、當週單元連結與作業。</p><span class="tag">共 15 週</span></a><a class="door" href="../../../../module/s/index.html"><h2>教學模組庫</h2><p>所有單元的課程內容，一個單元一頁，跨課程共用。</p><span class="tag">不綁課程</span></a></div><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "De9Mil9tfX9+ekb08pvUMA==", IV = "rkA++p7uilYSzCJI", CT = "uJ12svhWmtwOp6hLBrA/TF4Kcm6PFMpktsc11mr3B0LqOt0/bsGLRKJdLttuEIc2Jc2d2ingt96BFQoT2gMdLDE645Lvn6MHM0Us1v+cKAXbXJ0dpWeQNz2RzwZnidedLyhNJfmjUsk8416RHSkNOosyevEhNTew4MaYWk4KhqqAbowJk3DsUbXMIeU6NuSMlaJ8qFo9RlcLJgCQQjHWvHOPcdlDSTtQtOA+FZ/x9sZqhkVmJCRV4D3uyS3TkuHjVZDZDB0kczzPP6Dn+pOTPLQIgWyt2q22zFsgjBAYN/bJ9Iu1S9Ptodg2JM8zduIbWmPWG6jhUsZEmJCv7Wy6tDUQmyth2/9FuGpdcvUzMrZVdW0U9Ah8eE7j14tDjr7K6rLaaW+dR/WsAlrwuME18CUdB6Sg+z4w1tg3AYP2G46/ti0I82x2fs/CJY2bFBFrpaCTQ9uJXBxVKZuexI38BmHvzYmRbbtelN1J7ejC6d7ZFumltByT5kw2aT9QefRQEYnoFd2W4dOc5rslOpF6ybLETYZPXWOA5FkPoCZthpnV1BRLQpQeHJHJJ2YXCVdmot0hITS0Kt/nJZiX6Yzj1tAB4ggOlL8eV+HTnwvU9xPHgPXb4K4iM6HRRnZmu71MLaLv3qUxRYgAYnQiR8goHNjUmFHJvL/nXbeEV9JnLYY9a8FLd24/lZo1fFLKl7rYse5pTv5D6HWRCMLbuzCnfJTAM/mvgjx4DwOi5i/tcgCUGxaMXAmBQ1iNSH1Y+PSNOgbrOQ4u4viNa6nsUn3hBZBl+bf4FYME/HWtYvt/f55OS+cCkubHzZZOKh3up+ttFgQ7GQD8eEiHn6xTqfpJMxLUHKkVRxJ/JVw501hMRpSkUzsvz6I1BenceCExQM+d/L6d3geFgi1vpIG0YHrgVMTwBYr1VKg+5LUlTXigPE2kxzPR6PiN+YgBJ3IHn9gbFqndW0cEgq/YVixCxvFiLZR+Y55eT4VcQ5NwTYRHx5uWJhZ4VmhtsB7nDqdkCAj74OsspK+PgfHNdEQ8HyHndYEJR8DAXN86s010eIsSi4+OU5NoH3rTYlUD9vuOWbHjrmHnbbx2+mTmr+c9crzu+vRRbzWg45OGDJzaxMKjk/UjFkuW77wv+QxVf6HzDQ8vJV6TWX7qautAuQ37F9ncT4JukWs7KFYOhB0XP36Fk8W7Nnr9XDchAup6so/tHoWajpN9ghbEwyUitjckaLBZLmE7c26iuC+I0LtsX9Oq8/3W2yPPHmSR6MUJO2jFI6DzmXEf9myu4ewQ4UHq8MHGvzM79P8jrZTGqV+zE4RFowTJuk6EWxSdfq102WOVLl9CYMJMXUwqu7nwjdyCaWikA5NwPFedkQ1486WySMlFc8tTBOuc3usEDLAMx8NM3NLKkmUAsQeIR5Vzz4zPRyvKYqHlPzoNn4m+IEtkvJ6pzuI7gPvnaQNl3jSs8l1vmhOG7TE26msP71Bak/pt6tm7MEDZW/qMcq8qwcqba9SPYVZbFslie0TMmVPf2zVGTqCjjaMiN6bkgSayJWqdwhlJ3wk8/u5g6vwqH6/FMaBhUkaniVXOq99ifDvWC5qpWUWaN89HlmkuhwKGOlHPoXnN3WG4JMiRVxCq+xW7U26gIQhheJs/h6xwDkPAYETcoLo5uW1rt/UDE02Jv+EoYwgzWxxQLKeeOT9CMnqq", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

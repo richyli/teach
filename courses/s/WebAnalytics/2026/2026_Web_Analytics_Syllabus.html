@@ -7,58 +7,73 @@
 <link rel="stylesheet" href="../../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../../s/WebAnalytics/2026/2026_Web_Analytics_Syllabus.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><a href="index.html">本學期</a><strong>課程簡介</strong>　<a href="schedule.html">每週進度</a><a href="../index.html">課程首頁</a><a href="../../index.html">課程總覽</a><a href="../../../../index.html">回首頁</a></nav><div class="hero"><h1>課程簡介</h1><p class="sub">網路數據分析 Web Analytics（2026）　2026</p></div><h3>一、課程簡介</h3>
+<p>本課程培養網路數據分析與影響力分析的基本概念，適合完全沒有經驗的同學選修，採半翻轉形式。2026 版在原有 Google Analytics、網路廣告、SEO、社群、電商等數據判讀之上，<strong>加入一條 AI 輔助分析的軸線</strong>：學生學會用一般 AI 聊天機器人（ChatGPT / Claude / Gemini）把貼上的數據報表轉成洞察、生成分析敘述、解讀指標異常、產製分析報告草稿，並建立「AI 給的數字何時可信、何時要自己複核」的判斷力。全程不需寫程式，重點是<strong>用對 prompt、問對問題、看懂 AI 哪裡可能錯</strong>。</p>
+<h3>二、課程目標與學習成效</h3>
+<p>學生將習得（1–5 為原課程目標，6–8 為 2026 新增 AI 能力）：</p>
+<ol>
+<li>了解網路數據的組成因素。</li>
+<li>判讀網路行銷成果與內容成效。</li>
+<li>創造內容流量。</li>
+<li>進行網路行銷研究。</li>
+<li>評估並創造影響力。</li>
+<li><strong>AI 輔助數據判讀</strong>：把數據報表貼給一般 chatbot，用結構化 prompt 取得正確的解讀與分析敘述。</li>
+<li><strong>AI 輔助分析產製</strong>：用 AI 生成圖表建議、KPI/OKR 草案、競品比較、報告草稿，並自行查核修正。</li>
+<li><strong>校準對 AI 的信任</strong>：辨識 AI 在數據分析上的幻覺、編造數字、抽樣偏誤與誤判代價，知道何時必須人工複核。</li>
+</ol>
+<h3>四、評量工具與策略、評分標準成效</h3>
+<table>
+<thead>
+<tr>
+<th>評量項目</th>
+<th>比重</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作業與小考</td>
+<td>35%</td>
+<td>每週數據作業，部分須附 AI 分析過程與自我查核</td>
+</tr>
+<tr>
+<td>證照加分</td>
+<td>20%</td>
+<td>GA、Facebook Blueprint</td>
+</tr>
+<tr>
+<td>期中 GA 證照考</td>
+<td>15%</td>
+<td>W9</td>
+</tr>
+<tr>
+<td>AI 分析報告</td>
+<td>10%</td>
+<td>個人，用一般 chatbot 完成一份數據分析報告並標註查核</td>
+</tr>
+<tr>
+<td>期末考</td>
+<td>20%</td>
+<td>W15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>授課方式比例</strong>：講述 50%／數位學習 30%／討論 10%／小組活動 10%。</p>
+<p><strong>評量策略</strong>：以證照與考試確保數據判讀基本功，以每週作業累積實作，並以「AI 分析報告」訓練學生<strong>用 AI 加速分析、但對數字負責</strong>。評分時特別看：是否能指出 AI 哪裡算錯或編造、是否做了人工查核——而非單純貼上 AI 輸出。</p>
+<hr />
+<h3>教科書與參考書</h3>
+<ol>
+<li>小川卓等，《最親切的 Google Analytics 入門教室》，碁峰，2020</li>
+<li>Todd Kelsey, <em>Introduction to Google Analytics</em>, Apress, 2017</li>
+<li>Todd Kelsey, <em>Introduction to Search Engine Optimization</em>, Apress, 2017</li>
+<li>中澤良直，《如何在 FB、YouTube、IG 做出爆紅影片》，財經傳訊，2020</li>
+<li>Brian Clifton，《完全透視流量的祕密：Google Analytics 徹底解讀》，巨思文化，2013</li>
+<li>David Sumpter，《演算法的一百道陰影》，城邦，2020</li>
+<li>Brian Clifton，《透視數據下的商機》，天下雜誌，2016</li>
+<li>Kevin Allocca，《打造爆紅影音》，遠見天下文化，2019</li>
+<li>Michael Fertik &amp; David C. Thompson，《數位口碑經濟時代》，三采文化，2015</li>
+</ol><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "2LhC3gQCf13cFIErVjey+g==", IV = "VjPNiHpvrG2N7+yP", CT = "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", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

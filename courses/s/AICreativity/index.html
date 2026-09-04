@@ -7,58 +7,8 @@
 <link rel="stylesheet" href="../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../s/AICreativity/index.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><strong>課程首頁</strong>　<a href="../index.html">課程總覽</a><a href="../../../index.html">回首頁</a></nav><div class="hero"><h1>人工智慧生成圖像與創造力（2026）</h1><p class="sub">政治大學傳播學院｜3 學分</p></div><h2>學期</h2><div class="doors"><a class="door" href="2026/index.html"><h2>2026</h2><p>本學期的課程簡介、每週進度與作業。</p><span class="tag">當期</span></a></div><p class="sitefoot">過去學期的頁面保留在各自的資料夾，網址不會被覆蓋。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "+0KWXtpROxAuhjTJ+F3MHA==", IV = "GmFVvXuUIOA7R8kW", CT = "pamsd5DknV8/pvHW3oD112xB4qXm9+4HIg7wxDET64xGllVr3LfAejGhYxwYh1nI4nCrQtJVT+m98yigD+2xZ/ZF/zC1Xjfe5CnSF6aPjtzMTzkgZOYfi38qHc8h3rXbUwdYFupK4GfH0iNNgzlxYQcqo8fawxdwxe5RD8IPhYz4xiLi0f87tgOyWZJbpFGXTfzk5+PJciJZT7ux3kI1EeBdcft2e7bAhcdC8kvODeUD8vK5FeE4d6P0bPQPBpt2WpEK7s96z1j2HdLtRtD0v8pCRhfNG0YCUcKwzPZdNs62qFnJSeRczA8TRj4cIokEH4ahTCrVZyDTgAvjv/slkDFbf+DT4XeWSPPs/0P/zpd1ukWdpReGBQ6qkva4H2LUwTCKyoyQOM8Ix/xsEPriprkSXJqmTvAi577BsU3fbEBo0av94/AfZAr76BdgpwamhcnmbuPAekc7zLMkqNUb/TsLtCvrH48kepaEsMt/hVjCwASPjvdoU/5VbQGHXBrlsUFVvlqvPrYuKIJse4qG/O6KS9UpDhRQZBVJtKVVZjR5y3gGQxzMga16QPkAJA6N6dbzZgmP12INDpBRNfABLYIHGNMEl+SP68Y6O5s7uCjj4z8nXjHbpu4RCel8Y3dGq/AjhsCGIxiewO3MdQQu5nAnGZKJePfKxHvgSjIfCfMjDRiFSLL5JTgXU/zlfQEbKYUipKFMTuO8GFVi3yjfgLLAC8uhiUDorD+zQ5FJWwbQYRq39OPC1fOp6Ky2pOr7L9Qa284ftvVK6EtvqfAMUtyi3n5q2l38FDUD6Fouky8FTS1ggRxqnLOHYHoaRj7+l/MHK0A3UQYLWv6MON7T8c/MjWFH6AqLhNdcwWUAaQAw8DmxBhgy", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>

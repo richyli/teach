@@ -7,58 +7,8 @@
 <link rel="stylesheet" href="../../../style.css">
 </head>
 <body>
-<div id="gate">
-  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
-  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
-  <button id="go">進入</button>
-  <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
-  找課程內容請走 <a href="../../s/GCIT/index.html">學生版</a>。</p>
+<div class="container">
+<nav class="topnav"><strong>課程首頁</strong>　<a href="../index.html">課程總覽</a><a href="../../../index.html">回首頁</a></nav><div class="hero"><h1>2026 GCIT — AI 創意與深度使用方法論</h1><p class="sub">台灣聯合大學系統｜1 學分，AI Creativity 濃縮版</p></div><h2>學期</h2><div class="doors"><a class="door" href="2026-fall/index.html"><h2>2026-fall</h2><p>本學期的課程簡介、每週進度與作業。</p><span class="tag">當期</span></a></div><p class="sitefoot">過去學期的頁面保留在各自的資料夾，網址不會被覆蓋。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:10</p>
 </div>
-<div id="content" class="container" hidden></div>
-<script>
-(function () {
-  var SALT = "/iw/URGEuBnD4Rsn+wu7kg==", IV = "t4eUFyEA3DsodG66", CT = "WahTTjoAyWTRoz0OHXT38ejzyY1bZHRgQgFVqseYtnM4gt6he2OrpCb2hGL5Smo37m6j84k6TrrsNqikEsU65vHQTLlN7Sr97+5sMbR69gReCOfteQO0vQhVQosArQfEPgEoom5ap6LEeAmkTb0DcGNYCzOuy55HaqLc7sApVVVRxLjHxEx1cFhiZBloiJlhLIYPVZlJiRTiSib0Kna8dKsgxqs72rjrhOWUSZRvKUfEW9iHcqoUf3zbm3NxSkXPo2jy6r/rKcs3KEXqlMqM2mOh44G8zwdJcZPqRaVZCPHqDUi0GwIQqGc1nj5gYnbBwTa1HY8TfmtxXwN8R0i+x4eUcr7KdMqv94l01sqOcjueBXAxmo8vWos4fvcBsEse1D1BoEBxHQxhmfvwdJOFcgAft8+OMHM52hAgEf0LK243HlEVZRKsPjsoip0GGh6AqcytxBd4lCF5smsC5p4oOJCNEt0bd0KjhIVMm7r7jN2qWzNOMnzTlqjnxfElc9lIRB0fODHq0Hz9UV/3ZtfTshGWQ1Vd35ier4gZzqgW+V1GstZilpNU7rBGerUKKs1KY1li+uaouXhzR8wErg6IdRyOiCNjakgWzIRW/FV5Hk1EN0D6+MlQ6esPCwWS9u/1No/ik61LOLsfPEJsuHFfTKMB18GG/MPzxHsyIOtdB0pFSwesGC+3hrR9K09KejAhmY+m/7XOA3xIkYWeynaXXS5oi4jOeB0u2Bzc5XoRVf8BvgeWTRGSIMSAJmv9X4JPbVOz3BZOebs0p2FZXinTzOnx7v7gpETkf3xwFeY+4Wqmyo9aZqCtNKmdKERF79oJONOuN5OP6w9IdSJf2uJoXBOjNE8tnVxCreuddh+UQzau3PPvTeqDQ7iNakLigOqFcL6VzXhCwzlVMPzfWPNZkXHMurTIbOGNkjRc0Q==", ITER = 250000, KEY = "teach_site_pw";
-  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
-    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
-  async function unlock(pw, quiet) {
-    try {
-      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
-        "PBKDF2", false, ["deriveKey"]);
-      var key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
-        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-      var el = document.getElementById("content");
-      el.innerHTML = new TextDecoder().decode(buf);
-      el.hidden = false;
-      el.querySelectorAll("script").forEach(function (old) {
-        var s = document.createElement("script");
-        for (var i = 0; i < old.attributes.length; i++)
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
-      document.getElementById("gate").style.display = "none";
-      sessionStorage.setItem(KEY, pw);
-    } catch (e) {
-      sessionStorage.removeItem(KEY);
-      if (!quiet) {
-        document.getElementById("err").textContent = "密碼不對";
-        document.getElementById("pw").value = "";
-        document.getElementById("pw").focus();
-      }
-    }
-  }
-  document.getElementById("go").addEventListener("click", function () {
-    unlock(document.getElementById("pw").value, false);
-  });
-  document.getElementById("pw").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") unlock(this.value, false);
-  });
-  var saved = sessionStorage.getItem(KEY);
-  if (saved) unlock(saved, true);
-})();
-</script>
 </body>
 </html>
