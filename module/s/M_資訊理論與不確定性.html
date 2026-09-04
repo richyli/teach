@@ -115,6 +115,215 @@ MathJax = {
 </tbody>
 </table>
 <p><strong>自己想一下</strong>：丟一枚公正硬幣，結果幾 bit？（答：1 bit，$\log_2 2 = 1$。最公平＝最不可預測＝資訊量最大。）</p>
+<p><div class="widget" id="ent-sim">
+<style>
+#ent-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+           background: #fbfbfc; margin: 1.6rem 0; }
+#ent-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#ent-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#ent-sim .panel { border-top: 1px solid #ececec; padding-top: 1rem; margin-top: 1.2rem; }
+#ent-sim .panel:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+#ent-sim .row { display: flex; align-items: center; gap: .6rem; margin: .35rem 0; }
+#ent-sim .row label { width: 5.2rem; font-size: .86rem; color: #444; flex: none; }
+#ent-sim input[type=range] { flex: 1; }
+#ent-sim .pct { width: 3.4rem; text-align: right; font-variant-numeric: tabular-nums;
+                font-size: .84rem; color: #555; flex: none; }
+#ent-sim .bars { margin: .8rem 0 .4rem; }
+#ent-sim .bar { height: 1.35rem; margin: .22rem 0; display: flex; align-items: center; gap: .5rem; }
+#ent-sim .bar .name { width: 5.2rem; font-size: .82rem; color: #444; flex: none; }
+#ent-sim .bar .fill { height: .8rem; border-radius: 3px; background: #4a7fd0; min-width: 2px;
+                      transition: width .18s ease; }
+#ent-sim .bar .val { font-size: .78rem; color: #888; font-variant-numeric: tabular-nums; }
+#ent-sim .readout { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                    padding: .7rem .9rem; margin-top: .8rem; font-size: .9rem; line-height: 1.7; }
+#ent-sim .big { font-size: 1.5rem; font-weight: 700; color: #17395e;
+                font-variant-numeric: tabular-nums; }
+#ent-sim .verdict { color: #555; }
+#ent-sim button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                  border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                  border-radius: 999px; cursor: pointer; }
+#ent-sim button:hover { background: #eef4fd; }
+#ent-sim button.primary { background: #24528f; color: #fff; border-color: #24528f; }
+#ent-sim button.primary:hover { background: #1b3f70; }
+#ent-sim button:disabled { opacity: .4; cursor: default; }
+#ent-sim .meterwrap { background: #ececec; border-radius: 999px; height: .55rem; margin: .5rem 0; }
+#ent-sim .meter { background: #4a7fd0; height: .55rem; border-radius: 999px; transition: width .25s; }
+#ent-sim .log { font-size: .84rem; color: #555; margin: .5rem 0 0; padding-left: 1.1rem; }
+#ent-sim .log li { margin: .18rem 0; }
+#ent-sim .cands { display: flex; flex-wrap: wrap; gap: .25rem; margin: .6rem 0; }
+#ent-sim .cand { font-size: .76rem; padding: .12rem .45rem; border-radius: 4px;
+                 background: #e8eefb; color: #2b4f83; }
+#ent-sim .cand.out { background: #f1f1f1; color: #bbb; text-decoration: line-through; }
+</style>
+
+<h5>🎛 互動：把 entropy 調給自己看</h5>
+<p class="lede">下面兩個小工具都在回答同一件事——<strong>不確定性有多大，就是還要幾個是非題才問得出答案</strong>。動手拉一拉，比看公式快。</p>
+
+<div class="panel">
+  <strong>一、分布越平，entropy 越高</strong>
+  <p class="lede">拉四種天氣的機率，看 entropy 怎麼動。（會自動歸一化成 100%）</p>
+  <div id="es-sliders"></div>
+  <div>
+    <button data-preset="uniform">四種都一樣</button>
+    <button data-preset="sunny">明天 100% 出太陽</button>
+    <button data-preset="half">50% 降雨</button>
+    <button data-preset="skew">幾乎一定晴天</button>
+  </div>
+  <div class="bars" id="es-bars"></div>
+  <div class="readout">
+    entropy <span class="big" id="es-h">—</span> bit
+    <span style="color:#999;font-size:.82rem;">（最大 2.00 bit）</span><br>
+    <span class="verdict" id="es-verdict"></span>
+  </div>
+</div>
+
+<div class="panel">
+  <strong>二、猜詞遊戲：好問題砍一半，爛問題砍一個</strong>
+  <p class="lede">16 種職業等可能，一開始的 entropy 是 log₂16 = 4 bit。每問一題看它掉多少。</p>
+  <div class="cands" id="es-cands"></div>
+  <div class="meterwrap"><div class="meter" id="es-meter" style="width:100%"></div></div>
+  <div>
+    <button class="primary" id="es-good">問一個砍一半的問題</button>
+    <button id="es-bad">問一個只排除一種的問題</button>
+    <button id="es-reset">重來</button>
+  </div>
+  <div class="readout">
+    還沒消除的不確定性 <span class="big" id="es-rem">4.00</span> bit
+    ｜剩 <span id="es-n">16</span> 種可能｜已拿到 <span id="es-got">0.00</span> bit<br>
+    <span class="verdict" id="es-note">問了幾句話不重要，重要的是每一句砍掉多少猜測空間。</span>
+  </div>
+  <ul class="log" id="es-log"></ul>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("ent-sim");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  function H(ps) {
+    var h = 0;
+    ps.forEach(function (p) { if (p > 0) h -= p * Math.log2(p); });
+    return h;
+  }
+
+  /* ---- panel 1 ---- */
+  var names = ["晴", "陰", "雨", "雷雨"];
+  var w = [25, 25, 25, 25];
+  var box = document.getElementById("es-sliders");
+  names.forEach(function (n, i) {
+    var row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = '<label>' + n + '</label>' +
+      '<input type="range" min="0" max="100" value="25" data-i="' + i + '">' +
+      '<span class="pct" data-p="' + i + '">25%</span>';
+    box.appendChild(row);
+  });
+  var bars = document.getElementById("es-bars");
+  names.forEach(function (n) {
+    var b = document.createElement("div");
+    b.className = "bar";
+    b.innerHTML = '<span class="name">' + n + '</span>' +
+      '<span class="fill" style="width:0"></span><span class="val"></span>';
+    bars.appendChild(b);
+  });
+
+  function draw1() {
+    var sum = w.reduce(function (a, b) { return a + b; }, 0);
+    if (sum === 0) { w = [1, 1, 1, 1]; sum = 4; }
+    var ps = w.map(function (x) { return x / sum; });
+    ps.forEach(function (p, i) {
+      box.querySelector('[data-p="' + i + '"]').textContent = Math.round(p * 100) + "%";
+      var bar = bars.children[i];
+      bar.querySelector(".fill").style.width = (p * 100 * 0.72) + "%";
+      bar.querySelector(".val").textContent = (p * 100).toFixed(0) + "%";
+    });
+    var h = H(ps);
+    document.getElementById("es-h").textContent = h.toFixed(2);
+    var v;
+    if (h < 0.15) v = "分布塌成一個尖峰——幾乎沒有猜測空間了，可以直接行動。";
+    else if (h < 1.0) v = "偏斜得夠明顯，看一眼就知道該賭哪邊。";
+    else if (h < 1.85) v = "還有真正的不確定性，得再問一兩個是非題才敢決定。";
+    else v = "最平的分布＝最不可預測＝資訊量最大。這時任何一則消息都很值錢。";
+    document.getElementById("es-verdict").textContent =
+      v + "　相當於還要問 " + h.toFixed(2) + " 個是非題。";
+  }
+  box.addEventListener("input", function (e) {
+    if (e.target.type !== "range") return;
+    w[+e.target.dataset.i] = +e.target.value;
+    draw1();
+  });
+  root.querySelectorAll("[data-preset]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var p = btn.dataset.preset;
+      if (p === "uniform") w = [25, 25, 25, 25];
+      if (p === "sunny") w = [100, 0, 0, 0];
+      if (p === "half") w = [25, 25, 50, 0];
+      if (p === "skew") w = [92, 5, 2, 1];
+      box.querySelectorAll("input").forEach(function (s, i) { s.value = w[i]; });
+      draw1();
+    });
+  });
+  draw1();
+
+  /* ---- panel 2 ---- */
+  var jobs = ["醫師", "護理師", "記者", "工程師", "會計師", "廚師", "司機", "教師",
+              "農夫", "警察", "設計師", "業務", "木工", "藥師", "導遊", "編劇"];
+  var alive, got;
+  var cands = document.getElementById("es-cands");
+  jobs.forEach(function (j) {
+    var s = document.createElement("span");
+    s.className = "cand";
+    s.textContent = j;
+    cands.appendChild(s);
+  });
+
+  function draw2() {
+    var n = alive.filter(Boolean).length;
+    var rem = Math.log2(n);
+    alive.forEach(function (ok, i) {
+      cands.children[i].className = ok ? "cand" : "cand out";
+    });
+    document.getElementById("es-rem").textContent = rem.toFixed(2);
+    document.getElementById("es-n").textContent = n;
+    document.getElementById("es-got").textContent = got.toFixed(2);
+    document.getElementById("es-meter").style.width = (rem / 4 * 100) + "%";
+    document.getElementById("es-good").disabled = n <= 1;
+    document.getElementById("es-bad").disabled = n <= 1;
+    var note = document.getElementById("es-note");
+    if (n === 1) note.textContent = "收斂了。看看你用了幾個好問題、幾個爛問題——同樣是「問一句話」，值差了十幾倍。";
+    else note.textContent = "問了幾句話不重要，重要的是每一句砍掉多少猜測空間。";
+  }
+  function ask(half) {
+    var idx = [];
+    alive.forEach(function (ok, i) { if (ok) idx.push(i); });
+    if (idx.length <= 1) return;
+    var before = Math.log2(idx.length);
+    var kill = half ? Math.floor(idx.length / 2) : 1;
+    for (var k = 0; k < kill; k++) alive[idx[idx.length - 1 - k]] = false;
+    var after = Math.log2(idx.length - kill);
+    var gain = before - after;
+    got += gain;
+    var li = document.createElement("li");
+    li.textContent = (half ? "「是室內工作嗎？」砍掉一半 → 拿到 " : "「是醫師嗎？」只排除一種 → 拿到 ")
+      + gain.toFixed(2) + " bit";
+    document.getElementById("es-log").appendChild(li);
+    draw2();
+  }
+  function reset() {
+    alive = jobs.map(function () { return true; });
+    got = 0;
+    document.getElementById("es-log").innerHTML = "";
+    draw2();
+  }
+  document.getElementById("es-good").addEventListener("click", function () { ask(true); });
+  document.getElementById("es-bad").addEventListener("click", function () { ask(false); });
+  document.getElementById("es-reset").addEventListener("click", reset);
+  reset();
+})();
+</script>
+</div>
+</p>
 <h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
@@ -180,6 +389,135 @@ MathJax = {
 <blockquote>
 <p>補充視角：模型「最常見的答案」從哪來、為什麼會系統性偏向某些答案，屬於訓練分布偏斜的問題，見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>；而把真訊息從一堆雜訊裡認出來，見 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>。</p>
 </blockquote>
+<p><div class="widget" id="ent-ctx">
+<style>
+#ent-ctx { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+           background: #fbfbfc; margin: 1.6rem 0; }
+#ent-ctx h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#ent-ctx .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#ent-ctx .bar { height: 1.35rem; margin: .22rem 0; display: flex; align-items: center; gap: .5rem; }
+#ent-ctx .bar .name { width: 8.5rem; font-size: .82rem; color: #444; flex: none;
+                      text-align: right; }
+#ent-ctx .bar .fill { height: .8rem; border-radius: 3px; background: #9db8dd; min-width: 2px;
+                      transition: width .3s ease, background .3s ease; }
+#ent-ctx .bar.top .fill { background: #24528f; }
+#ent-ctx .bar .val { font-size: .78rem; color: #888; font-variant-numeric: tabular-nums; }
+#ent-ctx .ctxbox { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                   padding: .6rem .9rem; font-size: .87rem; color: #444; line-height: 1.7;
+                   margin: .8rem 0; min-height: 3.2rem; }
+#ent-ctx .ctxbox .none { color: #aaa; }
+#ent-ctx button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                  border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                  border-radius: 999px; cursor: pointer; }
+#ent-ctx button:hover { background: #eef4fd; }
+#ent-ctx button:disabled { opacity: .35; cursor: default; }
+#ent-ctx .readout { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                    padding: .7rem .9rem; margin-top: .8rem; font-size: .9rem; line-height: 1.7; }
+#ent-ctx .big { font-size: 1.5rem; font-weight: 700; color: #17395e;
+                font-variant-numeric: tabular-nums; }
+#ent-ctx .say { font-weight: 600; color: #17395e; }
+#ent-ctx .verdict { color: #555; }
+</style>
+
+<h5>🎛 互動：餵 context，看它的猜測空間塌下去</h5>
+<p class="lede">同一個問題「這位受訪者最可能的職業是什麼？」。你每補一塊 context，它下一步的候選分布就被壓尖一點，entropy 就掉一截——<strong>幻覺不是它笨，是你讓它在高 entropy 下被迫生成</strong>。</p>
+
+<div id="ec-bars"></div>
+
+<div class="ctxbox" id="ec-ctx"><span class="none">目前給它的 context：（空白）</span></div>
+<div id="ec-btns"></div>
+<button id="ec-reset">全部清掉重來</button>
+
+<div class="readout">
+  它面對的 entropy <span class="big" id="ec-h">—</span> bit<br>
+  它會答：<span class="say" id="ec-say">—</span><br>
+  <span class="verdict" id="ec-verdict"></span>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("ent-ctx");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var LABELS = ["記者", "編輯", "公關", "工程師", "教師", "業務", "設計師", "行政"];
+  var BASE = [1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+  var CLUES = [
+    { text: "他在新聞機構上班", w: [3.0, 2.6, 1.6, 1.0, 0.5, 0.6, 0.8, 0.9] },
+    { text: "他每天要跑現場、找消息來源", w: [6.0, 1.2, 1.1, 0.4, 0.3, 0.4, 0.4, 0.4] },
+    { text: "他的名字會出現在報導最上面", w: [9.0, 0.9, 0.5, 0.2, 0.2, 0.2, 0.2, 0.2] }
+  ];
+  var on = [false, false, false];
+
+  var barsBox = document.getElementById("ec-bars");
+  LABELS.forEach(function (n) {
+    var b = document.createElement("div");
+    b.className = "bar";
+    b.innerHTML = '<span class="name">' + n + '</span>' +
+      '<span class="fill" style="width:0"></span><span class="val"></span>';
+    barsBox.appendChild(b);
+  });
+
+  var btnBox = document.getElementById("ec-btns");
+  CLUES.forEach(function (c, i) {
+    var b = document.createElement("button");
+    b.textContent = "＋ " + c.text;
+    b.addEventListener("click", function () {
+      on[i] = true;
+      b.disabled = true;
+      draw();
+    });
+    btnBox.appendChild(b);
+  });
+
+  function draw() {
+    var w = BASE.slice();
+    on.forEach(function (isOn, i) {
+      if (!isOn) return;
+      w = w.map(function (x, k) { return x * CLUES[i].w[k]; });
+    });
+    var sum = w.reduce(function (a, b) { return a + b; }, 0);
+    var ps = w.map(function (x) { return x / sum; });
+    var h = 0, top = 0;
+    ps.forEach(function (p, i) {
+      if (p > 0) h -= p * Math.log2(p);
+      if (p > ps[top]) top = i;
+    });
+    ps.forEach(function (p, i) {
+      var bar = barsBox.children[i];
+      bar.className = "bar" + (i === top ? " top" : "");
+      bar.querySelector(".fill").style.width = (p * 100 * 0.62) + "%";
+      bar.querySelector(".val").textContent = (p * 100).toFixed(1) + "%";
+    });
+    document.getElementById("ec-h").textContent = h.toFixed(2);
+    document.getElementById("ec-say").textContent =
+      LABELS[top] + "（信心 " + (ps[top] * 100).toFixed(0) + "%）";
+
+    var given = CLUES.filter(function (c, i) { return on[i]; })
+                     .map(function (c) { return "「" + c.text + "」"; });
+    document.getElementById("ec-ctx").innerHTML = given.length
+      ? "目前給它的 context：" + given.join("、")
+      : '<span class="none">目前給它的 context：（空白）</span>';
+
+    var v;
+    if (h > 2.8) v = "八個候選幾乎一樣高——它手上沒有能砍不確定性的資訊，這時逼它回答，它只能挑最常見的那個硬補。這就是幻覺的來源。";
+    else if (h > 1.8) v = "分布開始傾斜，但前兩名還咬得很近。它答得出來，但你不該相信它的信心。";
+    else if (h > 0.9) v = "已經收斂到一個明顯的答案，剩下的不確定性大多是可接受的雜訊。";
+    else v = "分布塌成尖峰，entropy 接近 0。它現在不是在猜，是在讀你給它的資訊。";
+    document.getElementById("ec-verdict").textContent =
+      v + "　最大可能的 entropy 是 3.00 bit（八個候選完全均勻）。";
+  }
+
+  document.getElementById("ec-reset").addEventListener("click", function () {
+    on = [false, false, false];
+    btnBox.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+    draw();
+  });
+  draw();
+})();
+</script>
+</div>
+</p>
 <h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
@@ -236,7 +574,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:33</p>
 </div>
 </body>
 </html>

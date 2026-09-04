@@ -18,7 +18,7 @@
 <div id="content" class="container" hidden></div>
 <script>
 (function () {
-  var SALT = "K3nUueDDNLtyBMPrw47BfA==", IV = "4WlDBH19X+bv04nA", CT = "F4izpEmDx9jspyeHByAw4J5KxlrADWCvrUIO5n/R9yD2jw77U3MfO7sLIbdrX+liQe7wwOIhNbkXq6NpmoiHdjwElLjsaTBWvaR0b9O3DEh0Hg5It5Wo7SHOWR7u2UM0Nm0Dggv5nT33YgdvD+ID2hMwJmLDcnBZX3eJXJiQVOxxuLjCWpXUuEjh/QC6QheeRJqKsd+2cIhaUtzGBmt20qYWXR3jtt3ugUCxm/IAsc3jWHQhKBlmp2E8kgBZDDEjWq4/Mxpa1V7tgUVI4HwZWJaVpoMlf4PxVX0y2ulKGwYq3Hbm3pTdDWun31Ymcy6sRK/5YrG4cbIsWL6k/uSDPgi5FmUT5pKElPNYjuWO0tIKskLoBRz3FqqNAqQLV1qd2JcHKxsPkKT4ZISg5ogsgdn729BXn8A9y/q4CmFD4H36eR+04P6XqqnLR2vlMH4Ws0fkMQ9ZVxs/nOUiIJZUmfLE7FB8l7aayFm27jCDeyZEB5NKsiBT+yUywyGo31eL6tK5xUI9R5sSTj/b3xuFKrfYaIy6GH16yFQ8AIYR6l4Zp8j+Q7SJRqjUzwOAX0H1otWEii6XNCSIFBZCI8TY/S9IZTdVObIqfegYc0gPLVkcY8bJDCZctkqiW6TnH+n3CoRPzI5tDdzJZ84MuWJWGNy7pPkx9oRMQchzLQbmPCHxksUitVaYLSNY6xww23787tHuvUZ81sYiJ+KejzyUvYOJjlwNt1IfRp0+Z7gofL7UPRkgrnJ5CTOQG13fyiedijDIN+JI5b48A9CCXkN0DdSNYi/k69uKtylJEScIBRsSXpZm1LEoEvtPqyc/oyeZax7L6DvH1CzILQ78efo+RHVln6Pq2X5U", ITER = 250000, KEY = "teach_site_pw";
+  var SALT = "K01Gc5rHOaA3/DyS5pzo/w==", IV = "nzGeRurTK8TfuSB0", CT = "tqR+3k62p23NBfHLo6UA/9sxOtG2pDKLItWLtctfAnCzVK/QtHpKo/044ESdnbLKHDjApBtz/TITy/tse4L3UG/hQQ2xSwhjzqD3oZqCxzD2pMsc7IW3iCeMSJ+9bsEWmVzyNTUQ9Lxf4L5/7s06j4oUNpio5RCS+w/snxySYCtRsX4YX3VfqpQersCleFdQAspdDJw3rt7BKMiWKPDIlLH5l3KNTTLDXolWVargMXiCEQIFXdFi9COwSbQzG39OT0u2I/5pR+MxgbbcapNsPHUd0BkbD8zr/uSZ7gDKV04es1mVqIcVwIiWuW4Cqt9zRlhjdGGDHyHGIf9wjTLuH6DsuAdeeVw531OEt2m7s2x6Ae5mGw3lGX9ITaXnyHA7mw5UsKC5gtCvbJR95oiyO28CrwbqPiCNdX1kB7/vEYwTDeGGPGmvdavIFNynl6TZ4nBLeAe2aSpmp5Sc/dZyhc+OF8oINuBLPbC6Kt9ZooIcSpa5BIPD1S9iJo9BnyBwB+6krEtbzPWYLXnIWm3PUnXoxiLrM7SIgxJ5y4va2khaktPVHDAxKqQIO4FlaD/uoGuB9A2wQbSexIIQ/UCAzctLtDtaOGl38Rdf2WBi6AkDE8ftplE+ruqCY8jzxBf1gdP1xp82cZcdL8PcWxTtSeLOXhVqOCLxj82bXhLk8T24moLnmAnsolVoIj/9FcNXDfBXMT8XNYzJMPE8+PkQX4u+oS42kSvI9t8FiAj9/7m5V15YtCPPDBFqFcoQRkd6xSpWHXFMVFQSc5Ow66L2wlV1Fm3JzCPuskk1sSSibz2VIxWw2ggDmJYIF4xgPsB4YlptwDKDklIinr7Q1m58H79jRl99y4A5", ITER = 250000, KEY = "teach_site_pw";
   function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
     for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
   async function unlock(pw, quiet) {
@@ -32,6 +32,13 @@
       var el = document.getElementById("content");
       el.innerHTML = new TextDecoder().decode(buf);
       el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
       document.getElementById("gate").style.display = "none";
       sessionStorage.setItem(KEY, pw);
     } catch (e) {

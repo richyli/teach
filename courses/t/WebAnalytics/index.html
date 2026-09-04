@@ -18,7 +18,7 @@
 <div id="content" class="container" hidden></div>
 <script>
 (function () {
-  var SALT = "uAmyWEbhRP7fhePObTi3cg==", IV = "W4cP/qWo4EbNnHDS", CT = "M5htn6+eJjEhG82tyGh7F3PI0FAuNe3oJtieIr6QL16PUfgfNEVOgrhTH9AQoRuaPm7i4stOBrBDzXWyFJ2HG/LNZF33V17/sgJuvHo+UL8v53G/qFCCCrLYu/7WxYoS0ol14TYhautxcM/CrW1Wvq8RAbanePPP+YH5FkomFdhaWPlqgjcSTGJlRrenEXSTxistDVhCSi5MUFz6fTfOcLHxdP6toqgWyZNWVXkr8gIChNrnipaMbSl2CBwbYO1ibBhqOOaf3D6QuHAop3GptsGwmbHJMVUQmjK0pxOyMwc1cYrRoZ4HQYL/Y6LDBDFGyn2Lw/CRz44xyimXpU7tiO4Ox2N/p1aEbsVCd0P+vp3blVwR3Km/N+BmfhMFWTDwj004+O0H2E91JzCZPjtwPWlvvMGXSBnJN7teMJhNRgMJypt0RFYEK+Q0Ufl7YZjTePSu35Md/HHsVoKhFTLXDmJKvJ2MrDa6DS7Hi7yzCallSieLFuirF5DQpWYKX90fLZr+hB9sjcZsgMpuLYdnMKoROJVPEBJIYkkHXAH7haZ7pM5P1U4lTHeQoYb/DUacIjBSqF98IdisLgZH5oAEXJu9wVZValnLuhOVV7pxA6qTNqcspq1TK9iyQoqB0IJYbpWiCqsCPO3TNPEEMYVlzAD04F764WKp4wQvPsuI3Q9e6TrXbfLIGie+3yjtM/SEOuaDdcAjklOLKhnJOgWpEB1Ab3+o8bGNP486gG0DNe44A00+DgZLBZHPL16Q1z6fMULfrnRqu5zVrIzZhIzDQ9jWRalPkmxeDW27Ar3vg3uXI2KQdJtXpAI6I469XavRikY+tdll7w7m0iLyqqFmF88AD5wm3yGg2Q4Q7VwwS6Eqiz0v03C8wkDd9Cw0", ITER = 250000, KEY = "teach_site_pw";
+  var SALT = "qdYVVxsjBrCrlL2cd3qBbw==", IV = "fTwwfpymHy+rjxi/", CT = "2Zul4JwfrzD4NU9Xn4kkxNHIMwXH+K7FZgoEx7v2dNIGlyjq96n+wZRYF8oNLjGklSA3BSieBOuiYAPxVQsatOWQJkPTCfaUqooqZz7O/At/IBUtWmoWRlyE+P/cUpNDjDiRddadOAGgoQPXuMwkB3sxB9Z0YY01dEnfxuqMQvAZoBurfNzpOuMEyTrtRBiqOpktmU0Hi3yB++FydvPEpxFQtmHhYa0nQ6QJrYk51UN3V/RZe5ODrMiE+kmJ785EV1ZTDXcxAE2seJ2uIrmdTKg14pF88cc7mFBvM6y+67umU2/b6zMp+GFRdc5GB22SmWU/A3+sIM4VyDW6xBHhO9+LJ4YkWqQ9FBLDfngrBBock2+4ClUOE55BdqVu2VXXDN3BOcu6jHBIPKxLIZaS/rP9tNEvhVGikDfiO3YLKVTyuNPRYu7jj4WGmiSFXuBzTRZPhBhkQJuzxereflWs1wtewDvSzgqa+zw5HTTSPlsRSXLTlF1brwuYazqu/xguYXYAK18aLK3zUZpE0yB/eEKEjj2LyxBs3vDQZAjDWApt2HeT+PDFbhm1o8sw66q1732842JaYs9CSVE3dxG6Ml8hKnfdGxJiTTU5ndwwQoO2LkIWdGECyBHIQe5mT4DTyK9BEyBPJX8EozuGRjG3+CP60xmIM+JskWogfgibPF02kP2jtCaBz1VI9r27L1gczDqngRAsw/sKjliMsMZgsXXWWo+MoWDKosAtf3aeDP3d072qvWQiAQ4ZJxGcZEEIictwDnac+cDfQ2xGVDLgM2JKZqY0T+oTSxxxNfg966GHU5yqbh+sA34ooCAV1QEe5KTlXTjGIJaaY9J9B2YQyFTq/nFV/iIVEMaV/+Mx6fqHbq7+PMY/lis6OVKM", ITER = 250000, KEY = "teach_site_pw";
   function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
     for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
   async function unlock(pw, quiet) {
@@ -32,6 +32,13 @@
       var el = document.getElementById("content");
       el.innerHTML = new TextDecoder().decode(buf);
       el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
       document.getElementById("gate").style.display = "none";
       sessionStorage.setItem(KEY, pw);
     } catch (e) {
