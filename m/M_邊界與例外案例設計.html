@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 邊界與例外案例設計</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>M 邊界與例外案例設計</h1></div><ul>
+<li><strong>為何 vibe coding 時代反而更該學</strong>：AI 的第一版幾乎一定只顧「正常輸入、順順走完」。<strong>產品出包的地方，九成在邊界與例外</strong>——空白、超長、0、負數、特殊符號、同時操作、斷線。會系統性地「想出哪裡會壞」，是你補上 AI 盲區、把 demo 變產品的關鍵技能。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>為什麼專盯邊界</strong>：bug 像躲在「正常範圍的交界處」。中間值幾乎都對，<strong>錯都錯在邊緣</strong>。所以測試資源該往邊界集中。</p>
+<p><strong>邊界值分析（Boundary Value Analysis）</strong>：對任何有範圍的輸入，測它的<strong>邊緣</strong>而非中間。
+- 規則「年齡 18–65」→ 測 17、18、65、66（界線兩側），不是測 40。
+- 數量、長度、日期、金額——凡有上下限，都測界線。</p>
+<p><strong>等價分割（Equivalence Partitioning）</strong>：把無限多的輸入分成「會被一樣對待」的幾類，每類測一個代表就好——省力又不漏。</p>
+<p><strong>例外與邊界的常見清單（給非工程師的檢查表）</strong>：
+- <strong>空的</strong>：空字串、空清單、沒選任何項
+- <strong>極端</strong>：超長文字、超大數字、0、負數、未來/過去的日期
+- <strong>格式怪</strong>：特殊符號、emoji、不同語言、貼上一坨 HTML
+- <strong>時序怪</strong>：重複送出、同時兩人改同一筆、按到一半關掉
+- <strong>環境怪</strong>：斷網、逾時、第三方服務掛掉
+- <strong>權限怪</strong>：沒登入、權限不足、別人的資料</p>
+<blockquote>
+<p><strong>vibe coding 接法</strong>：AI 給你第一版後，<strong>拿這張清單逐項問「這個情況它處理了嗎」</strong>，沒處理的就是下一輪指令，也是測試案例（連回 <a href="M_%E9%A9%97%E6%94%B6%E6%B8%AC%E8%A9%A6%E8%88%87_TDD-BDD.html">M 驗收測試與 TDD-BDD</a>）。<strong>你不必會寫程式，但你要會當「最會找碴的使用者」</strong>——這正是 AI 最缺的視角。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>配對</strong>：各拿一個 AI 剛做好的小功能（如「輸入金額轉帳」），互相用清單轟炸出 5 個它八成沒處理的邊界/例外（0 元？負數？小數點很多位？餘額不足？）</li>
+<li>
+<p><strong>反思</strong>：「我驗 AI 做的東西，是不是只輸入了『乖乖的正常值』？真正的使用者可不會這麼乖。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：替你產品的一個輸入功能，列出至少 8 個邊界/例外案例，逐一測 AI 的版本，記錄它漏接幾個。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>

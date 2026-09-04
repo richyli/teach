@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 科技採用：TAM-UTAUT 與經濟模型的交互</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>M 科技採用：TAM-UTAUT 與經濟模型的交互</h1></div><ul>
+<li><strong>核心關鍵句</strong>：TAM/UTAUT 和經濟模型<strong>不是競爭關係，而是不同層次</strong>。前者解釋「個人腦中怎麼形成採用意願」，後者解釋「這些意願在市場上加總後會怎麼演化」。</li>
+<li><strong>先修</strong>：知道 TAM 是 $\text{BI}=f(\text{PU},\text{PEOU})$、UTAUT 多了社會影響等構念即可；建議先上 <a href="M_%E7%A7%91%E6%8A%80%E6%8E%A1%E7%94%A8%E7%9A%84%E7%B6%93%E6%BF%9F%E5%AD%B8%E6%A8%A1%E5%9E%8B.html">M 科技採用的經濟學模型</a>。</li>
+</ul>
+<blockquote>
+<p><strong>三層交互一句話</strong>：<strong>TAM/UTAUT 告訴你「為什麼一個人想用」，經濟模型告訴你「這些想法在市場裡會長成什麼形狀」。</strong> 一個是因，一個是果的演化。</p>
+</blockquote>
+<hr />
+<h3>微觀層：經濟模型是 TAM 的「上位翻譯」</h3>
+<p>TAM 的核心是 $\text{BI} = f(\text{PU}, \text{PEOU})$——行為意圖由知覺有用性、易用性決定。但 <strong>TAM 從沒說「意圖怎麼變成實際選擇」</strong>。</p>
+<h4>McFadden 隨機效用正好接在 TAM 下游</h4>
+<p>把 PU、PEOU 當成效用函數的解釋變數：</p>
+<p>$$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsilon_{ij}$$</p>
+<p>於是 TAM 的潛在構念變成 logit 模型裡<strong>可估計的係數</strong>，採用機率有了明確的機率形式 $P_{ij}=e^{V_{ij}}/\sum_k e^{V_{ik}}$。</p>
+<blockquote>
+<p><strong>教學張力</strong>：TAM 是心理測量（量表 → SEM），McFadden 是選擇行為（選項 → logit）。兩者可以是<strong>同一個效用函數的兩種觀測方式</strong>。conjoint 研究就站在這個接縫上——用選擇資料反推 TAM 式的構念權重。</p>
+</blockquote>
+<h4>Prospect Theory 修正 TAM 的隱含假設</h4>
+<p>TAM 假設使用者線性、理性評估有用性。換成<strong>價值函數 + 損失趨避</strong>後，能解釋 TAM 解釋不了的「現狀偏誤」——為何高 PU 的科技仍被舊系統的沉沒成本綁住。UTAUT 的「使用條件（Facilitating Conditions）」其實是這塊的粗糙代理。</p>
+<p><strong>自我消化</strong>：用一句話說，McFadden 補了 TAM 的哪個缺口？（答：把「意圖」這個態度變數，變成「選擇機率」這個可估、可加總的行為輸出。）</p>
+<hr />
+<h3>中觀層：經濟模型補上 UTAUT 缺的「他人」</h3>
+<p>UTAUT 比 TAM 多了 <strong>Social Influence（社會影響）</strong>，但它只是一個橫斷面的態度變數——「我覺得重要的人認為我該用」。它<strong>沒有動態、沒有人數</strong>。這正是擴散與網路模型切入的地方。</p>
+<table>
+<thead>
+<tr>
+<th>UTAUT 構念</th>
+<th>對應的經濟模型</th>
+<th>補了什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Social Influence</td>
+<td>Bass / 門檻擴散</td>
+<td>把「社會影響」變成<strong>隨採用人數演化的時間函數</strong></td>
+</tr>
+<tr>
+<td>Social Influence</td>
+<td>Network externalities</td>
+<td>把它<strong>微觀基礎化</strong>：效用真的隨 $n$ 上升，$U=v+\theta\,n(p)$</td>
+</tr>
+<tr>
+<td>Facilitating Conditions</td>
+<td>Real Options / Lock-in</td>
+<td>解釋為何條件具備也選擇「等待」或被既有科技鎖定</td>
+</tr>
+<tr>
+<td>（UTAUT 沒有的）</td>
+<td>Information cascade</td>
+<td>個體理性放棄私有訊號跟隨他人——比「社會影響」更精確的機制</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>關鍵理解</strong>：UTAUT 把「別人」塞進<strong>一個靜態係數</strong>裡；network externalities / cascade 告訴你那個係數<strong>內部長什麼樣、隨時間怎麼動</strong>。</p>
+</blockquote>
+<p><strong>自我消化</strong>：UTAUT 說「社會影響 → 採用意圖」。Bass 模型把同一件事改寫成什麼？（答：採用速度正比於已採用人數，社會影響不再是常數而是會隨時間放大的力量。）</p>
+<hr />
+<h3>宏觀層：把個人意圖加總成市場軌跡</h3>
+<p>TAM/UTAUT 預測<strong>一個人</strong>的採用機率；Bass、Romer、GPT 預測<strong>一個市場</strong>的採用曲線。兩者用「加總（aggregation）」連起來：</p>
+<p>個體 logit 機率 $P_i(t)$ → 對人群積分 → 總採用 $N(t)$ → 這就是 Bass 的 S 曲線。<strong>有微觀基礎（micro-foundation）的擴散模型，本質就是「把一堆 TAM 決策加起來」。</strong></p>
+<p>再往上，<strong>GPT 理論</strong>解釋為何 AI 這種通用技術即使個人 PU 很高，總體生產力仍延遲顯現（Solow 悖論）——因為要等互補投資、組織重構到位。這是 TAM 完全觸及不到的時間尺度。</p>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對演練</strong>：挑一個科技（如 ChatGPT、行動支付），請你分別用「TAM 層（個人為何想用）」「network 層（為何臨界後爆發）」「GPT 層（為何生產力沒馬上跟上）」各講一句，體會三層接力。</li>
+<li><strong>一起想一題</strong>：UTAUT 的「社會影響」是個常數係數。若要讓它「會隨時間長大」，你會接上哪個經濟模型？為什麼？</li>
+<li>
+<p><strong>反思</strong>：「我以前以為 TAM 和擴散模型是兩套互斥的理論；現在我會說——它們是<strong>同一條因果鏈的不同段落</strong>，差別只在觀測的層次。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：找一份用 TAM/UTAUT 的論文，指出它「停在哪一層」（多半停在個人意圖），並寫下若要延伸到市場演化，你會接上本模組哪一個經濟模型、補什麼假設。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>

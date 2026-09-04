@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>_modules index</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>_modules index</h1></div><h2>教學模組庫 Teaching Module Library</h2>
+<blockquote>
+<p>跨課共用的教學積木。各課課綱（NCCU Course Index）以 <code>模組名</code> 引用，改一處全課同步。</p>
+</blockquote>
+<h3>共用此模組池的課程（正規代號）</h3>
+<blockquote>
+<p>模組檔 YAML 的 <code>courses:</code> 一律用下列代號，方便 dataview 查詢「哪些模組可用於某課」。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>代號</th>
+<th>課程</th>
+<th>資料夾</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WebAnalytics</code></td>
+<td>網路數據分析 Web Analytics（政大傳院二，15 週，加 AI 分析）</td>
+<td><code>Web Analytics/</code></td>
+</tr>
+<tr>
+<td><code>AICreativity</code></td>
+<td>AI Creativity（政大，3 學分／15 週）</td>
+<td><code>AI Creativity/</code></td>
+</tr>
+<tr>
+<td><code>GCIT</code></td>
+<td>GCIT（台聯大，1 學分，AI Creativity 濃縮版；前身 AIGA）</td>
+<td><code>GCIT/</code></td>
+</tr>
+<tr>
+<td><code>EMA</code></td>
+<td>EMA AI（在職專班，媒體主管）</td>
+<td><code>EMA/</code></td>
+</tr>
+<tr>
+<td><code>Product</code></td>
+<td>Content Product Planning（政大國傳，英文，16 週）</td>
+<td><code>Product/</code></td>
+</tr>
+<tr>
+<td><code>NewsIntro</code></td>
+<td>新聞學導論 News Intro</td>
+<td><code>News Intro/</code></td>
+</tr>
+<tr>
+<td><code>NewsFeature</code></td>
+<td>新聞特寫／深度報導 News Feature</td>
+<td><code>News Feature/</code></td>
+</tr>
+<tr>
+<td><code>InfoViz</code></td>
+<td>資訊視覺化</td>
+<td><code>InfoViz/</code></td>
+</tr>
+</tbody>
+</table>
+<h3>模組規格</h3>
+<ul>
+<li><strong>最小模組 = 15 分鐘</strong>；<strong>完整模組 = 45 分鐘</strong>。</li>
+<li>一個 45 分鐘 slot 可以是「1 個完整模組」或「2–3 個 15 分鐘小模組」組成。</li>
+<li><strong>一次上課 = 3 個 45 分鐘 slot = 135 分鐘</strong>。一門 15 次的課 = 45 個 slot。</li>
+<li>
+<p>模組可跨課共用；每個模組檔的 YAML <code>courses:</code> 標出適用哪些課。</p>
+</li>
+<li>
+<p><strong>內建 AI 互動探索（每個模組都要有）</strong>：每個模組都要思考並寫進「哪些方向可以鼓勵學生<strong>先與 AI 互動、深入了解</strong>」——在模組開始前或早期，給 2–4 個<strong>具體可貼進 chatbot 的 prompt／任務</strong>（舉例／打比方／當對手挑戰／生成情境／追問為什麼／給反例），扣住該模組核心概念，讓學生帶著自己問出來的疑問與 AI 產出進課堂當活動素材。可對應學習法 skill（feynman／socratic／elaborate／analogy／protege）。這是規範固定一環，不是選配。</p>
+</li>
+</ul>
+<h3>模組類型</h3>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lecture</code></td>
+<td>知識講授</td>
+</tr>
+<tr>
+<td><code>practice</code></td>
+<td>動手實作 / 工作坊</td>
+</tr>
+<tr>
+<td><code>discussion</code></td>
+<td>全班或分組討論</td>
+</tr>
+<tr>
+<td><code>sharing</code></td>
+<td>學生分享（工具、經驗、小產出）</td>
+</tr>
+<tr>
+<td><code>report</code></td>
+<td>學生正式報告（含論文報告）</td>
+</tr>
+</tbody>
+</table>
+<h3>模組檔 YAML 範本</h3>
+<pre><code class="language-yaml">---
+tags: [teaching, module]
+module_type: lecture        # lecture / practice / discussion / sharing / report
+duration_min: 45            # 15 / 30 / 45
+courses: [EMA, AICreativity]   # 適用課程，用上表正規代號
+shared: true                # 是否跨課共用
+---
+</code></pre>
+<h3>AI 基礎理論模組群（早期奠基概念，撐起 looping／context／harness engineering）</h3>
+<blockquote>
+<p>設計用途：學生先學這些<strong>核心、基礎、早期</strong>的理論與概念，後續的 AI 應用（looping / context / harness engineering）才接得住。多數為 15′ 小模組，可彈性插進任何一課。以 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a> 為共同地基。</p>
+</blockquote>
+<h4>0. 資訊理論地基（entropy 為共同語言）</h4>
+<ul>
+<li><a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>（lecture 45′，<strong>所有下列模組的先修地基</strong>）</li>
+<li><a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>（lecture 15′，與 entropy 互補，context engineering 紀律）</li>
+</ul>
+<h4>1. 生成機制群（LLM 怎麼吐字 → context／looping 地基）</h4>
+<ul>
+<li><a href="M_Token_%E8%88%87%E5%88%86%E8%A9%9E.html">M Token 與分詞</a>（lecture 15′，context 預算／成本／截斷的單位）</li>
+<li><a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a>（lecture 15′，逐 token 生成＋temperature，looping 累積誤差根源）</li>
+<li><a href="M_Latent_Space_%E6%BD%9B%E5%9C%A8%E7%A9%BA%E9%96%93.html">M Latent Space 潛在空間</a>（lecture 15′，AI 的意義地圖）</li>
+<li><a href="M_Embedding_%E8%88%87%E5%90%91%E9%87%8F%E7%9B%B8%E4%BC%BC%E5%BA%A6.html">M Embedding 與向量相似度</a>（lecture 15′，latent space 可操作版，RAG 引擎）</li>
+</ul>
+<h4>2. 機率推理群（下一步該怎樣 → agent 多步推理地基）</h4>
+<ul>
+<li><a href="M_%E6%A2%9D%E4%BB%B6%E6%A9%9F%E7%8E%87%E8%88%87%E8%B2%9D%E6%B0%8F%E6%9B%B4%E6%96%B0.html">M 條件機率與貝氏更新</a>（lecture 15′，「給定 context 下一步」的數學）</li>
+<li><a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a>（lecture 15′，loop 每步該記多少／記憶放哪）</li>
+</ul>
+<h4>3. 訓練／學習群（模型怎麼學的 → 為何有偏見／盲區）</h4>
+<ul>
+<li><a href="M_Maximum_Likelihood_%E6%9C%80%E5%A4%A7%E6%A6%82%E4%BC%BC.html">M Maximum Likelihood 最大概似</a>（lecture 15′，模型在找最能解釋資料的參數）</li>
+<li><a href="M_%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8%E8%88%87%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">M 損失函數與梯度下降</a>（lecture 15′，「怎麼學」的最小直覺）</li>
+<li><a href="M_%E6%B3%9B%E5%8C%96%E8%88%87%E9%81%8E%E6%93%AC%E5%90%88.html">M 泛化與過擬合</a>（lecture 15′，few-shot／prompt 也會過擬合）</li>
+<li><a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">M Sampling Theory 抽樣理論</a>（lecture 15′，代表性 &gt; 數量）</li>
+<li><a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>（lecture 15′，bias in, bias amplified out）</li>
+</ul>
+<h4>4. 系統／控制群（loop 會收斂還是發散 → looping engineering 地基）</h4>
+<ul>
+<li><a href="M_%E5%9B%9E%E9%A5%8B%E8%BF%B4%E8%B7%AF%E8%88%87%E6%94%B6%E6%96%82%E7%99%BC%E6%95%A3.html">M 回饋迴路與收斂發散</a>（lecture 15′，正回饋發散 vs 負回饋收斂）</li>
+<li><a href="M_%E6%B9%A7%E7%8F%BE%E8%88%87%E8%A6%8F%E6%A8%A1%E6%B3%95%E5%89%87.html">M 湧現與規模法則</a>（lecture 15′，主管期望校準）</li>
+</ul>
+<h4>應用層（用上述基礎解釋的 entropy 模組）</h4>
+<ul>
+<li><a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>（lecture 45′，agent harness = 不確定性工程）</li>
+<li><a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>（lecture 45′，偏見 = 該寬的分布被壓成低 entropy 尖峰）</li>
+<li><a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>（lecture 45′，entropy 應用到 LLM context／主管視角）</li>
+<li><a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>（lecture 45′，神經網路與偏見來源）</li>
+</ul>
+<h4>偏誤實測群（practice，上述 lecture 的動手對應物）</h4>
+<blockquote>
+<p>上面三個 lecture 講「為什麼會偏」，下面兩個 practice 教「你怎麼自己抓出來」。兩者分屬不同家族、不重複：<strong>創作生成型</strong>測 AI 填空的預設值，<strong>判斷分配型</strong>測 AI 給的分數與排序。</p>
+</blockquote>
+<ul>
+<li><a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a>（practice 45′，創作生成型；六維度探針＋兩類偏誤的證據要求；配套 <a href="../_exercises/E%20AI%20偏誤探針題庫.md">E AI 偏誤探針題庫</a>）</li>
+<li><a href="M_AI_%E5%88%A4%E6%96%B7%E5%9E%8B%E5%81%8F%E8%AA%A4%E8%88%87%E5%88%86%E9%85%8D%E6%AD%A3%E7%BE%A9.html">M AI 判斷型偏誤與分配正義</a>（practice 45′，判斷分配型；配對審計＋synthetic persona＋消融測試；配套 <a href="../_exercises/E%20AI%20判斷型偏誤探針.md">E AI 判斷型偏誤探針</a>）</li>
+</ul>
+<h4>基礎 → 下游 engineering 對照（教學排序參考）</h4>
+<table>
+<thead>
+<tr>
+<th>下游應用</th>
+<th>最該先教的基礎模組</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Context engineering</strong></td>
+<td><a href="M_Token_%E8%88%87%E5%88%86%E8%A9%9E.html">M Token 與分詞</a>、<a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>、<a href="M_Embedding_%E8%88%87%E5%90%91%E9%87%8F%E7%9B%B8%E4%BC%BC%E5%BA%A6.html">M Embedding 與向量相似度</a>、<a href="M_%E6%B3%9B%E5%8C%96%E8%88%87%E9%81%8E%E6%93%AC%E5%90%88.html">M 泛化與過擬合</a>、<a href="M_%E6%A2%9D%E4%BB%B6%E6%A9%9F%E7%8E%87%E8%88%87%E8%B2%9D%E6%B0%8F%E6%9B%B4%E6%96%B0.html">M 條件機率與貝氏更新</a></td>
+</tr>
+<tr>
+<td><strong>Looping engineering</strong></td>
+<td><a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a>、<a href="M_%E5%9B%9E%E9%A5%8B%E8%BF%B4%E8%B7%AF%E8%88%87%E6%94%B6%E6%96%82%E7%99%BC%E6%95%A3.html">M 回饋迴路與收斂發散</a>、<a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a></td>
+</tr>
+<tr>
+<td><strong>Harness engineering</strong></td>
+<td><a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>、<a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a>、<a href="M_Embedding_%E8%88%87%E5%90%91%E9%87%8F%E7%9B%B8%E4%BC%BC%E5%BA%A6.html">M Embedding 與向量相似度</a>、<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a></td>
+</tr>
+<tr>
+<td><strong>偏見／倫理判讀</strong></td>
+<td><a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>、<a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">M Sampling Theory 抽樣理論</a>、<a href="M_%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8%E8%88%87%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">M 損失函數與梯度下降</a>、<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a></td>
+</tr>
+<tr>
+<td><strong>偏誤實測（動手抓）</strong></td>
+<td><a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a>（創作生成型）、<a href="M_AI_%E5%88%A4%E6%96%B7%E5%9E%8B%E5%81%8F%E8%AA%A4%E8%88%87%E5%88%86%E9%85%8D%E6%AD%A3%E7%BE%A9.html">M AI 判斷型偏誤與分配正義</a>（判斷分配型）；先修 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a></td>
+</tr>
+<tr>
+<td><strong>主管決策校準</strong></td>
+<td><a href="M_%E6%B9%A7%E7%8F%BE%E8%88%87%E8%A6%8F%E6%A8%A1%E6%B3%95%E5%89%87.html">M 湧現與規模法則</a>、<a href="M_Maximum_Likelihood_%E6%9C%80%E5%A4%A7%E6%A6%82%E4%BC%BC.html">M Maximum Likelihood 最大概似</a>、<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a></td>
+</tr>
+</tbody>
+</table>
+<h3>EMA 2026 用到的模組</h3>
+<ul>
+<li><a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>（lecture, 與工程師溝通 + 用 agent；先修 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>）</li>
+<li><a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>（lecture）</li>
+<li><a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>（lecture）</li>
+<li><a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>（lecture）</li>
+<li><a href="M_Claude_Code_%E4%B8%8A%E6%89%8B.html">M Claude Code 上手</a>（practice，可共用至多門課）</li>
+<li><a href="M_Claude_Code_%E4%B8%B2%E5%B7%A5%E4%BD%9C%E6%B5%81.html">M Claude Code 串工作流</a>（practice）</li>
+<li><a href="M_Vibe_Coding_%E5%81%9A%E5%B0%8F%E5%B7%A5%E5%85%B7.html">M Vibe Coding 做小工具</a>（practice）</li>
+<li><a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">M 採購 vs 自建決策</a>（lecture/discussion）</li>
+<li><a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>（lecture/practice）</li>
+<li><a href="M_%E8%AE%8A%E9%9D%A9%E7%AE%A1%E7%90%86%E8%88%87%E5%B0%8E%E5%85%A5.html">M 變革管理與導入</a>（lecture/discussion）</li>
+<li><a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 取代工作論文報告</a>（report）</li>
+<li><a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>（report）</li>
+<li><a href="M_AI_%E5%95%86%E6%A5%AD%E6%A8%A1%E5%BC%8F%E8%A1%9D%E6%93%8A.html">M AI 商業模式衝擊</a>（lecture/discussion）</li>
+<li><a href="M_%E5%B7%A5%E5%85%B7%E7%AE%B1%E5%88%86%E4%BA%AB.html">M 工具箱分享</a>（sharing，每週輪替）</li>
+<li><a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">M AI 界線討論</a>（discussion）</li>
+</ul>
+<h3>GCIT / AI Creativity 2026 模組（多與 AICreativity 共用）</h3>
+<blockquote>
+<p>詳見 2026 GCIT Syllabus。重方法論、用一般 chatbot（不需 Claude Code）。</p>
+</blockquote>
+<ul>
+<li><a href="M_%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8_AI_%E7%9A%84%E5%BF%83%E6%B3%95.html">M 深度使用 AI 的心法</a>（lecture，後設使用 AI）</li>
+<li><a href="M_%E7%94%A8_AI_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92.html">M 用 AI 深度學習</a>（lecture，Learn with AI 導論）</li>
+<li><a href="M_%E5%AD%B8%E7%BF%92%E6%B3%95%E8%A9%A6%E8%B7%91%E8%88%87%E5%9B%9E%E9%A5%8B.html">M 學習法試跑與回饋</a>（practice）</li>
+<li><a href="M_Boden_%E4%B8%89%E5%9E%8B_AI_%E5%9C%96%E5%83%8F.html">M Boden 三型 AI 圖像</a>（practice）</li>
+<li><a href="M_%E7%B3%BB%E7%B5%B1%E6%80%A7%E6%8E%A2%E7%B4%A2%E6%A6%82%E5%BF%B5%E7%A9%BA%E9%96%93.html">M 系統性探索概念空間</a>（practice）</li>
+<li><a href="M_%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AB%96%E8%88%87%E5%8F%8D%E6%8E%A8%E5%81%87%E8%A8%AD.html">M 提示工程方法論與反推假設</a>（lecture）</li>
+<li><a href="M_%E7%94%A8_AI_%E5%88%97%E8%88%89%E8%88%87%E6%8C%91%E6%88%B0%E5%81%87%E8%A8%AD.html">M 用 AI 列舉與挑戰假設</a>（practice）</li>
+<li><a href="M_Problem-finding_%E8%88%87_JTBD.html">M Problem-finding 與 JTBD</a>（lecture）</li>
+<li><a href="M_%E7%9C%8B%E8%A6%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9A%B1%E5%BD%A2%E5%81%87%E8%A8%AD.html">M 看見自己的隱形假設</a>（practice，Harrison 演練）</li>
+<li><a href="M_%E7%A4%BE%E6%9C%83%E5%95%8F%E9%A1%8C%E7%9A%84%E7%B3%BB%E7%B5%B1%E6%80%9D%E8%80%83.html">M 社會問題的系統思考</a>（lecture/discussion）</li>
+<li><a href="M_%E7%94%A8_AI_%E5%BB%BA%E5%9B%A0%E6%9E%9C%E5%9B%9E%E9%A5%8B%E5%9C%96.html">M 用 AI 建因果回饋圖</a>（practice）</li>
+<li><a href="M_%E5%89%B5%E6%84%8F%E7%9A%84%E5%80%AB%E7%90%86%E8%88%87%E7%95%8C%E7%B7%9A.html">M 創意的倫理與界線</a>（discussion）</li>
+<li><a href="M_%E6%9C%9F%E6%9C%AB%E6%8F%90%E6%A1%88%E8%A8%AD%E8%A8%88%E5%B7%A5%E4%BD%9C%E5%9D%8A.html">M 期末提案設計工作坊</a>（practice）</li>
+<li><a href="M_%E5%90%8C%E5%84%95%E4%BA%92%E8%A9%95%E8%88%87%E7%B5%A6%E5%9B%9E%E9%A5%8B.html">M 同儕互評與給回饋</a>（discussion）</li>
+<li><a href="M_%E6%96%B9%E6%B3%95%E8%87%AA%E8%BF%B0%E8%88%87%E5%8F%8D%E6%80%9D.html">M 方法自述與反思</a>（report）</li>
+</ul>
+<h4>AI Creativity 2026 新增（45-slot 編排，見 模組編排 45 slot）</h4>
+<ul>
+<li><a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">M 創意理論導論</a>（lecture，Boden×Csikszentmihalyi×Wallas×Amabile，W1）</li>
+<li><a href="M_%E7%B3%BB%E7%B5%B1%E6%80%A7%E5%89%B5%E6%84%8F%E6%96%B9%E6%B3%95.html">M 系統性創意方法</a>（lecture，TRIZ/SCAMPER/第一原理，W4）</li>
+<li><a href="M_%E8%A8%88%E7%AE%97%E5%89%B5%E6%84%8F%E8%88%87%E7%94%9F%E6%88%90%E8%97%9D%E8%A1%93%E5%8F%B2.html">M 計算創意與生成藝術史</a>（lecture，AARON/p5.js，W5）</li>
+<li><a href="M_%E9%9B%86%E9%AB%94%E5%89%B5%E6%84%8F%E8%88%87_Remix_%E9%99%B7%E9%98%B1.html">M 集體創意與 Remix 陷阱</a>（lecture/discussion，W6）</li>
+<li><a href="M_Combinational_%E5%89%B5%E6%84%8F%E8%88%87%E6%A6%82%E5%BF%B5%E8%9E%8D%E5%90%88.html">M Combinational 創意與概念融合</a>（practice，W7）</li>
+<li><a href="M_%E5%95%86%E6%A5%AD%E6%A8%A1%E5%BC%8F_Reframing_%E8%88%87%E8%97%8D%E6%B5%B7%E7%AD%96%E7%95%A5.html">M 商業模式 Reframing 與藍海策略</a>（practice，W11）</li>
+<li><a href="M_AI_%E5%89%B5%E6%84%8F%E7%9A%84%E6%9C%AA%E4%BE%86%EF%BC%9A%E6%B0%91%E4%B8%BB%E5%8C%96%E8%88%87%E5%90%8C%E8%B3%AA%E5%8C%96.html">M AI 創意的未來：民主化與同質化</a>（discussion，W14）</li>
+<li><a href="M_%E6%AF%8F%E9%80%B1_Reframing_%E6%A1%88%E4%BE%8B.html">M 每週 Reframing 案例</a>（lecture 15′，每週開場通用）</li>
+<li><a href="M_%E5%AD%B8%E7%94%9F%E6%AD%B7%E5%8F%B2%E5%89%B5%E6%84%8F%E6%A1%88%E4%BE%8B%E5%A0%B1%E5%91%8A.html">M 學生歷史創意案例報告</a>（report 30′，W3–W14 通用）</li>
+<li><a href="M_%E5%89%B5%E6%84%8F%E9%80%B1%E8%A8%98%E8%88%87%E8%A9%95%E9%87%8F%E5%B0%8E%E5%BC%95.html">M 創意週記與評量導引</a>（practice 15′，每週收尾通用）</li>
+</ul>
+<h3>科技採用理論模組群（經濟學／模型導向，補 TAM-UTAUT 的上下游）</h3>
+<blockquote>
+<p>設計用途：把心理量表式的科技接受模型（TAM/UTAUT）往「經濟學、模型導向」延伸。除 Solow、Bass 外，補上 McFadden 隨機效用、門檻/Rank-Stock-Order 擴散、network externalities/lock-in、real options、information cascade、Spence signaling、Romer 內生成長、GPT 通用技術等。串成「個體選擇 → 擴散 → 鎖定 → 總體成長」一條主線。最貼近 conjoint（McFadden）與信號理論（Spence）研究線。</p>
+</blockquote>
+<ul>
+<li><a href="M_%E7%A7%91%E6%8A%80%E6%8E%A1%E7%94%A8%E7%9A%84%E7%B6%93%E6%BF%9F%E5%AD%B8%E6%A8%A1%E5%9E%8B.html">M 科技採用的經濟學模型</a>（lecture 45′，有哪些模型 + 一條主線串起來）</li>
+<li><a href="M_%E7%A7%91%E6%8A%80%E6%8E%A1%E7%94%A8%EF%BC%9ATAM-UTAUT_%E8%88%87%E7%B6%93%E6%BF%9F%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A4%E4%BA%92.html">M 科技採用：TAM-UTAUT 與經濟模型的交互</a>（lecture 45′，微觀翻譯／中觀補社會影響／宏觀加總成擴散三層橋接）</li>
+</ul>
+<h3>產品開發與規格技術模組群（vibe coding 時代「反而更該學」的傳統技術）</h3>
+<blockquote>
+<p>設計用途：vibe coding 把「寫程式」變便宜，卻把「想清楚要什麼、講清楚給 AI、驗收對不對」變更貴。下列是傳統產品開發/規格技術裡反而更該學的部分，皆為 15′ 小模組，可插進 Product 或任何 vibe coding 單元。與既有 <a href="M_PRD_%E6%92%B0%E5%AF%AB%E8%88%87%E5%A3%93%E5%8A%9B%E6%B8%AC%E8%A9%A6.html">M PRD 撰寫與壓力測試</a>、<a href="M_Wireframe_%E8%88%87%E4%BF%9D%E7%9C%9F%E5%BA%A6%E9%9A%8E%E6%A2%AF.html">M Wireframe 與保真度階梯</a>、<a href="M_%E7%AF%84%E7%96%87%E7%AE%A1%E7%90%86%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">M 範疇管理與優先級</a>、<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">M 利害關係人與行動者網絡</a>、<a href="M_%E9%A2%A8%E9%9A%AA%E7%AE%A1%E7%90%86%E8%88%87_Pre-mortem.html">M 風險管理與 Pre-mortem</a> 互補。</p>
+</blockquote>
+<h4>1. 需求規格群（把「要什麼」講到 AI 能照做、能驗收）</h4>
+<ul>
+<li><a href="M_User_Story_%E8%88%87%E9%A9%97%E6%94%B6%E6%A2%9D%E4%BB%B6.html">M User Story 與驗收條件</a>（lecture 15′，誰/要什麼/為什麼 + 怎樣算對）</li>
+<li><a href="M_Use_Case_%E8%88%87%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83.html">M Use Case 與使用情境</a>（lecture 15′，完整流程含例外岔路）</li>
+<li><a href="M_%E8%A6%8F%E6%A0%BC%E6%9B%B8%E8%88%87_Gherkin_%E8%A1%8C%E7%82%BA%E8%A6%8F%E6%A0%BC.html">M 規格書與 Gherkin 行為規格</a>（lecture 15′，Given-When-Then 無歧義規格）</li>
+</ul>
+<h4>2. 建模／圖解群（用圖把結構講清楚再讓 AI 寫）</h4>
+<ul>
+<li><a href="M_UML_%E8%88%87%E7%B3%BB%E7%B5%B1%E5%BB%BA%E6%A8%A1.html">M UML 與系統建模</a>（lecture 15′，類別/循序/狀態圖）</li>
+<li><a href="M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">M ERD 資料模型</a>（lecture 15′，資料結構是真骨架）</li>
+<li><a href="M_%E6%B5%81%E7%A8%8B%E5%9C%96%E8%88%87_BPMN.html">M 流程圖與 BPMN</a>（lecture 15′，business logic 與分支）</li>
+</ul>
+<h4>3. 流程／方法群（把開發節奏與優先級組織起來）</h4>
+<ul>
+<li><a href="M_Agile_%E8%88%87_Scrum-Kanban.html">M Agile 與 Scrum-Kanban</a>（lecture 15′，小步快跑 + WIP limit）</li>
+<li><a href="M_MoSCoW_%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">M MoSCoW 與優先級</a>（lecture 15′，刻意決定不做什麼 + MVP）</li>
+<li><a href="M_DoR_%E8%88%87_DoD_%E5%AE%8C%E6%88%90%E5%AE%9A%E7%BE%A9.html">M DoR 與 DoD 完成定義</a>（lecture 15′，「開始」與「完成」的客觀閘）</li>
+<li><a href="M_%E6%B1%BA%E7%AD%96%E6%AC%8A%E8%88%87%E6%AC%8A%E8%B2%AC%E5%88%86%E9%85%8D%E6%A1%86%E6%9E%B6.html">M 決策權與權責分配框架</a>（practice 45′，RACI/RAPID/DACI/DRI + 導入決策演練，可共用 EMA）</li>
+<li><a href="M_%E6%AC%8A%E8%B2%AC%E8%A7%92%E8%89%B2%E8%BE%A8%E8%AD%98%E8%88%87%E8%81%B7%E6%AC%8A%E7%B3%BE%E9%8C%AF%E6%BC%94%E7%B7%B4.html">M 權責角色辨識與職權糾錯演練</a>（practice 45′，兩關卡：角色現形＋故障表糾錯，附教師解答，先修上一模組，可共用 EMA）</li>
+<li><a href="M_%E5%B0%88%E6%A1%88%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F%E6%AC%8A%E8%B2%AC%E6%A8%A1%E6%93%AC%EF%BC%88%E9%80%B2%E9%9A%8E%EF%BC%89.html">M 專案生命週期權責模擬（進階）</a>（practice 90′／2 slot，跨生命週期動態模擬＋角色卡＋GM 注入卡，capstone，先修前兩模組，可共用 EMA）</li>
+</ul>
+<h4>4. 驗證／品質群（怎麼確認 AI 寫的對）</h4>
+<ul>
+<li><a href="M_%E9%A9%97%E6%94%B6%E6%B8%AC%E8%A9%A6%E8%88%87_TDD-BDD.html">M 驗收測試與 TDD-BDD</a>（lecture 15′，看不懂 code 也能把關）</li>
+<li><a href="M_%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82.html">M 非功能需求</a>（lecture 15′，效能/安全/可用性等 demo→產品分水嶺）</li>
+<li><a href="M_%E9%82%8A%E7%95%8C%E8%88%87%E4%BE%8B%E5%A4%96%E6%A1%88%E4%BE%8B%E8%A8%AD%E8%A8%88.html">M 邊界與例外案例設計</a>（lecture 15′，當最會找碴的使用者）</li>
+</ul>
+<h4>5. 工程實作與維運紀律群（讓專案能持續長大而非中途崩盤）</h4>
+<ul>
+<li><a href="M_API_%E8%A8%AD%E8%A8%88%E8%88%87%E5%A5%91%E7%B4%84.html">M API 設計與契約</a>（lecture 15′，串服務/前後端先講好契約）</li>
+<li><a href="M_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E8%88%87_Git_%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B.html">M 版本控制與 Git 心智模型</a>（lecture 15′，vibe coding 的安全網）</li>
+<li><a href="M_%E6%8A%80%E8%A1%93%E5%82%B5%E8%88%87%E9%87%8D%E6%A7%8B.html">M 技術債與重構</a>（lecture 15′，會動 ≠ 養得起）</li>
+<li><a href="M_%E8%B3%87%E5%AE%89%E5%A8%81%E8%84%85%E5%BB%BA%E6%A8%A1.html">M 資安威脅建模</a>（lecture 15′，STRIDE/OWASP，AI 最大盲區）</li>
+<li><a href="M_%E8%A8%AD%E8%A8%88%E7%B3%BB%E7%B5%B1%E8%88%87%E5%85%83%E4%BB%B6%E5%8C%96.html">M 設計系統與元件化</a>（lecture 15′，一致性是規定出來的）</li>
+</ul>
+<h4>vibe coding 工作流對照（建議教學/實作順序）</h4>
+<table>
+<thead>
+<tr>
+<th>階段</th>
+<th>該用的模組</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 想清楚要什麼</strong></td>
+<td><a href="M_User_Story_%E8%88%87%E9%A9%97%E6%94%B6%E6%A2%9D%E4%BB%B6.html">M User Story 與驗收條件</a>、<a href="M_Use_Case_%E8%88%87%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83.html">M Use Case 與使用情境</a>、<a href="M_MoSCoW_%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">M MoSCoW 與優先級</a></td>
+</tr>
+<tr>
+<td><strong>② 講清楚結構</strong></td>
+<td><a href="M_UML_%E8%88%87%E7%B3%BB%E7%B5%B1%E5%BB%BA%E6%A8%A1.html">M UML 與系統建模</a>、<a href="M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">M ERD 資料模型</a>、<a href="M_%E6%B5%81%E7%A8%8B%E5%9C%96%E8%88%87_BPMN.html">M 流程圖與 BPMN</a>、<a href="M_API_%E8%A8%AD%E8%A8%88%E8%88%87%E5%A5%91%E7%B4%84.html">M API 設計與契約</a></td>
+</tr>
+<tr>
+<td><strong>③ 寫成規格餵 AI</strong></td>
+<td><a href="M_%E8%A6%8F%E6%A0%BC%E6%9B%B8%E8%88%87_Gherkin_%E8%A1%8C%E7%82%BA%E8%A6%8F%E6%A0%BC.html">M 規格書與 Gherkin 行為規格</a>、<a href="M_%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82.html">M 非功能需求</a>、<a href="M_%E8%B3%87%E5%AE%89%E5%A8%81%E8%84%85%E5%BB%BA%E6%A8%A1.html">M 資安威脅建模</a></td>
+</tr>
+<tr>
+<td><strong>④ 組織開發節奏</strong></td>
+<td><a href="M_Agile_%E8%88%87_Scrum-Kanban.html">M Agile 與 Scrum-Kanban</a>、<a href="M_DoR_%E8%88%87_DoD_%E5%AE%8C%E6%88%90%E5%AE%9A%E7%BE%A9.html">M DoR 與 DoD 完成定義</a>、<a href="M_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E8%88%87_Git_%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B.html">M 版本控制與 Git 心智模型</a></td>
+</tr>
+<tr>
+<td><strong>⑤ 驗收 AI 產出</strong></td>
+<td><a href="M_%E9%A9%97%E6%94%B6%E6%B8%AC%E8%A9%A6%E8%88%87_TDD-BDD.html">M 驗收測試與 TDD-BDD</a>、<a href="M_%E9%82%8A%E7%95%8C%E8%88%87%E4%BE%8B%E5%A4%96%E6%A1%88%E4%BE%8B%E8%A8%AD%E8%A8%88.html">M 邊界與例外案例設計</a>、<a href="M_DoR_%E8%88%87_DoD_%E5%AE%8C%E6%88%90%E5%AE%9A%E7%BE%A9.html">M DoR 與 DoD 完成定義</a></td>
+</tr>
+<tr>
+<td><strong>⑥ 持續維護長大</strong></td>
+<td><a href="M_%E6%8A%80%E8%A1%93%E5%82%B5%E8%88%87%E9%87%8D%E6%A7%8B.html">M 技術債與重構</a>、<a href="M_%E8%A8%AD%E8%A8%88%E7%B3%BB%E7%B5%B1%E8%88%87%E5%85%83%E4%BB%B6%E5%8C%96.html">M 設計系統與元件化</a>、<a href="M_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E8%88%87_Git_%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B.html">M 版本控制與 Git 心智模型</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Content Product Planning 2026 新增（16 週編排，見 模組編排 16 週）</h3>
+<blockquote>
+<p>重用 <a href="M_Claude_Code_%E4%B8%8A%E6%89%8B.html">M Claude Code 上手</a>（W2）、<a href="M_Vibe_Coding_%E5%81%9A%E5%B0%8F%E5%B7%A5%E5%85%B7.html">M Vibe Coding 做小工具</a>（W10）、<a href="M_%E5%B7%A5%E5%85%B7%E7%AE%B1%E5%88%86%E4%BA%AB.html">M 工具箱分享</a>（AI Skill Sharing 穿插）。</p>
+</blockquote>
+<ul>
+<li><a href="M_PM_%E8%A7%92%E8%89%B2%E8%88%87%E7%94%A2%E5%93%81%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F.html">M PM 角色與產品生命週期</a>（lecture，W1）</li>
+<li><a href="M_%E5%85%A7%E5%AE%B9%E7%94%A2%E5%93%81%E8%88%87_Affordance_%E6%8B%86%E8%A7%A3.html">M 內容產品與 Affordance 拆解</a>（lecture，W3）</li>
+<li><a href="M_Affordance_%E4%B8%89%E6%96%B9%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94.html">M Affordance 三方角色扮演</a>（practice/role play，W3 Slot 3）</li>
+<li><a href="M_%E5%B8%82%E5%A0%B4%E7%A0%94%E7%A9%B6%E8%88%87_AI_Desk_Research.html">M 市場研究與 AI Desk Research</a>（lecture，W4）</li>
+<li><a href="M_%E7%AB%B6%E5%93%81%E5%88%86%E6%9E%90%E8%88%87%E5%AE%9A%E4%BD%8D.html">M 競品分析與定位</a>（lecture/role play，W5）</li>
+<li><a href="M_%E5%8F%97%E7%9C%BE%E7%90%86%E8%A7%A3%E8%88%87_Mom_Test.html">M 受眾理解與 Mom Test</a>（practice，W6）</li>
+<li><a href="M_%E4%BD%BF%E7%94%A8%E8%80%85%E7%A0%94%E7%A9%B6%E8%88%87_MRD_%E7%B5%84%E8%A3%9D.html">M 使用者研究與 MRD 組裝</a>（lecture，W7）</li>
+<li><a href="M_Wireframe_%E8%88%87%E4%BF%9D%E7%9C%9F%E5%BA%A6%E9%9A%8E%E6%A2%AF.html">M Wireframe 與保真度階梯</a>（practice，W9）</li>
+<li><a href="M_PRD_%E6%92%B0%E5%AF%AB%E8%88%87%E5%A3%93%E5%8A%9B%E6%B8%AC%E8%A9%A6.html">M PRD 撰寫與壓力測試</a>（practice，W11）</li>
+<li><a href="M_%E7%AF%84%E7%96%87%E7%AE%A1%E7%90%86%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">M 範疇管理與優先級</a>（practice/role play，W12）</li>
+<li><a href="M_%E5%90%88%E6%88%90%E8%B3%87%E6%96%99%E8%88%87_AI_Persona.html">M 合成資料與 AI Persona</a>（practice，W13）</li>
+<li><a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">M 利害關係人與行動者網絡</a>（practice，W14，可共用 EMA）</li>
+<li><a href="M_%E9%A2%A8%E9%9A%AA%E7%AE%A1%E7%90%86%E8%88%87_Pre-mortem.html">M 風險管理與 Pre-mortem</a>（practice，W15，可共用 EMA）</li>
+<li><a href="M_Pitch_%E8%88%87_Judge_Skill_%E8%A8%AD%E8%A8%88.html">M Pitch 與 Judge Skill 設計</a>（report/assessment，W8/W16）</li>
+<li><a href="M_%E7%90%86%E8%AB%96%E5%A0%B1%E5%91%8A%E4%BA%92%E5%8B%95%E6%B4%BB%E5%8B%95.html">M 理論報告互動活動</a>（report 30′，W3–W15 開場通用）</li>
+</ul>
+<h3>Web Analytics 2026 新增（15 週編排，見 模組編排 15 週）</h3>
+<blockquote>
+<p>一般 chatbot 路線（不用 Claude Code）。重用 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>（W10）、<a href="M_%E5%B7%A5%E5%85%B7%E7%AE%B1%E5%88%86%E4%BA%AB.html">M 工具箱分享</a>（穿插）。</p>
+</blockquote>
+<ul>
+<li><a href="M_AI_%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E4%B8%8A%E6%89%8B.html">M AI 數據分析上手</a>（practice，W2）</li>
+<li><a href="M_GA4_%E8%88%87_AI_%E5%95%8F%E7%AD%94%E5%88%86%E6%9E%90.html">M GA4 與 AI 問答分析</a>（practice，W3）</li>
+<li><a href="M_%E5%BB%A3%E5%91%8A%E6%95%B8%E6%93%9A%E8%88%87%E6%88%90%E6%95%88%E5%88%86%E6%9E%90.html">M 廣告數據與成效分析</a>（practice，W4）</li>
+<li><a href="M_%E8%A1%8C%E9%8A%B7%E6%95%B8%E6%93%9A%E8%88%87_AI_%E9%80%B1%E5%A0%B1.html">M 行銷數據與 AI 週報</a>（practice，W5）</li>
+<li><a href="M_%E5%BD%B1%E9%9F%B3%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90.html">M 影音數據分析</a>（practice，W6）</li>
+<li><a href="M_SEO_%E8%88%87_AI_%E9%97%9C%E9%8D%B5%E5%AD%97%E5%88%86%E6%9E%90.html">M SEO 與 AI 關鍵字分析</a>（practice，W7）</li>
+<li><a href="M_%E9%9B%BB%E5%95%86%E8%88%87_AARRR_%E6%BC%8F%E6%96%97.html">M 電商與 AARRR 漏斗</a>（practice，W8）</li>
+<li><a href="M_%E8%81%B2%E9%87%8F%E5%88%86%E6%9E%90%E8%88%87%E7%AB%B6%E5%93%81%E7%9B%A3%E6%B8%AC.html">M 聲量分析與競品監測</a>（practice，W11）</li>
+<li><a href="M_A-B_%E6%B8%AC%E8%A9%A6%E8%88%87%E6%88%90%E9%95%B7%E5%88%86%E6%9E%90.html">M A-B 測試與成長分析</a>（practice，W12）</li>
+<li><a href="M_%E6%95%B8%E6%93%9A%E9%A9%85%E5%8B%95%E5%85%A7%E5%AE%B9%E7%AD%96%E7%95%A5.html">M 數據驅動內容策略</a>（practice，W13，可共用 Product）</li>
+<li><a href="M_%E5%BD%B1%E9%9F%BF%E5%8A%9B%E9%87%8F%E6%B8%AC%E8%88%87_OKR.html">M 影響力量測與 OKR</a>（practice，W14，可共用 EMA）</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>

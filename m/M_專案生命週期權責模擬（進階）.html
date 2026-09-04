@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 專案生命週期權責模擬（進階）</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>M 專案生命週期權責模擬（進階）</h1></div><p><strong>90 分鐘進階模擬</strong>（practice，佔 2 個 45′ slot，可拆兩週）。跨課共用（Product / EMA）。<strong>先修</strong>：<a href="M_%E6%B1%BA%E7%AD%96%E6%AC%8A%E8%88%87%E6%AC%8A%E8%B2%AC%E5%88%86%E9%85%8D%E6%A1%86%E6%9E%B6.html">M 決策權與權責分配框架</a>、<a href="M_%E6%AC%8A%E8%B2%AC%E8%A7%92%E8%89%B2%E8%BE%A8%E8%AD%98%E8%88%87%E8%81%B7%E6%AC%8A%E7%B3%BE%E9%8C%AF%E6%BC%94%E7%B7%B4.html">M 權責角色辨識與職權糾錯演練</a>。概念依據：<a href="../../../wiki/權責框架的情境適配.md">權責框架的情境適配</a>、<a href="../../../wiki/分工與權責框架全景.md">分工與權責框架全景</a>。</p>
+<h3>為什麼要學（動機）</h3>
+<p>前兩個演練都在<strong>靜態</strong>的一張表上練功。但真實專案會<strong>長大、轉型、出事、換人</strong>——上週剛好的分工，下週就崩了。這場模擬把<strong>同一個專案</strong>推過完整生命週期（探索 → 專案 → 跨組織營運 → 危機），每一關的<strong>類型、規模、時長都不同</strong>，逼你<strong>一再重排權責</strong>、整合全部框架，並在最後看清一件事：<strong>最貴的錯不是排錯，是該重排時沒重排。</strong></p>
+<h3>學習目標（能力 → 能解釋的真實問題）</h3>
+<ul>
+<li><strong>應用×分析</strong>：能依專案的<strong>類型／規模／時長</strong>選出並組裝合適的框架組合包 → 能回答「這個階段到底該用輕 DRI 還是全套 RACI＋三道防線」。</li>
+<li><strong>評鑑</strong>：能判斷「隨專案演進，哪個角色的職權<strong>該變而沒變</strong>」的隱形風險 → 能回答「為什麼上線後那個一直沒改的分工把我們害慘了」。</li>
+<li><strong>創造</strong>：能設計一條<strong>跨階段的角色演變路徑</strong>與交接／升級機制 → 能回答「當專案從三人變三十人、從試做變常態，我的權責結構怎麼跟著長」。</li>
+</ul>
+<hr />
+<h3>課前／起手式：與 AI 對話（先探索動態感再進課堂）</h3>
+<p>上課前跑任一方向，帶著產出與疑問進來：</p>
+<ul>
+<li><strong>規模三連跳</strong>：「請描述同一個新創產品在 3 人／30 人／300 人三種規模下，權責分工該怎麼不同。」你來判斷它有沒有守住「框架重量與規模相稱」。</li>
+<li><strong>快轉未來</strong>：把你的期末專案給 AI，請它模擬「三個月後專案爆紅／出事」的情境，你來想那時<strong>哪個角色該重排、哪個該變卻可能沒變</strong>。</li>
+<li><strong>跟難搞的人談判</strong>：請 AI 扮一個「想掛名共同發布、卻不想扛錯的當責」的利害關係人跟你談，你練習怎麼把<strong>當責釘回去</strong>。</li>
+</ul>
+<hr />
+<h3>模擬設定</h3>
+<p><strong>專案</strong>（預設；亦可換各組期末專案）：一家區域新聞媒體要推出「<strong>AI 輔助的地方選舉即時查核平台</strong>」——週末原型 → 正式產品 → 與外部事實查核聯盟跨組織合作 → 選舉日常態營運與危機。</p>
+<p><strong>分組</strong>：5–6 人一組。每人抽一張<strong>角色卡（含私下目標）</strong>，全程扮同一角色；私下目標會自然製造職權衝突，正是觀察重點。</p>
+<p>教師是「遊戲主持人（GM）」，每回合開場宣讀情境、中途丟一張 curveball 注入卡（inject），回合末各組交產出。四回合 + 復盤。</p>
+<hr />
+<h3>回合流程（4 回合）</h3>
+<h4>回合一　探索：週末原型（類型=探索／規模=2–3 人／時長=週末）~15′</h4>
+<ul>
+<li><strong>任務</strong>：用<strong>最輕</strong>的分工把原型做出來，決策要快、可逆（Type 2）。</li>
+<li><strong>注入（中途）</strong>：原型意外爆紅、被同業報導 → 「要不要正式立項？」</li>
+<li><strong>產出</strong>：指定一個 DRI；說明「立項與否」用什麼<strong>最小</strong>決策機制（advice process／consent）。</li>
+<li><strong>診斷重點</strong>：有沒有人<strong>過度</strong>套上完整 RACI？探索期套重框架＝自綁手腳。</li>
+</ul>
+<h4>回合二　立項：正式跨部門專案（類型=專案／規模=跨團隊／時長=一季）~20′</h4>
+<ul>
+<li><strong>任務</strong>：立項後跨部門（工程／編輯／法務／資訊）。畫<strong>分階段 RACI</strong>＋用 RAPID decision framework／DACI decision framework 處理「上線範圍」這個重大決策；把法務正式納入 <strong>Agree</strong>、指定唯一 <strong>Approver／Decide</strong>。</li>
+<li><strong>注入</strong>：選舉委員會來函關切 → 這個決策從 Type 2 變 <strong>Type 1（不可逆、高敏感）</strong>。</li>
+<li><strong>產出</strong>：跨部門 RACI＋一張 RAPID 決策表＋一句話說明「<strong>為何要升級 ceremony</strong>」。</li>
+<li><strong>診斷重點</strong>：決策<strong>類型改變</strong>時，框架重量有沒有跟著升？還是沿用原型期的隨便決？</li>
+</ul>
+<h4>回合三　規模化：跨組織營運（類型=平台／規模=跨公司／時長=選前常態）~20′</h4>
+<ul>
+<li><strong>任務</strong>：與<strong>外部</strong>事實查核聯盟、社群平台合作。決策權跨組織 → 需<strong>合約化的 Agree</strong>、聯合治理；「發布查核結果」流程加 職務分離／maker-checker（避免單一人誤標）；角色改<strong>綁職位不綁人</strong>。</li>
+<li><strong>注入</strong>：核心<strong>工程主管離職</strong> → 當責如何<strong>交接</strong>？「角色綁人」的風險現形。</li>
+<li><strong>產出</strong>：跨組織決策治理草圖＋一個職務分離控制點＋一份當責交接方案。</li>
+<li><strong>診斷重點</strong>：規模跳到跨組織後，還想用小團隊的「一人 DRI 到底」嗎？有沒有把當責綁在會離職的「人」身上？</li>
+</ul>
+<h4>回合四　危機：選舉日事件（類型=危機／時長=數小時）~15′</h4>
+<ul>
+<li><strong>注入（開場即爆）</strong>：選舉日，平台<strong>把一則真消息誤標為假</strong>、瘋傳，各方究責湧入。</li>
+<li><strong>任務</strong>：切換到<strong>危機模式</strong>——ICS 式<strong>單一 Incident Commander</strong>、集權快決（Type 1 speed，Vroom AI／AII）、明訂<strong>誰對外交代</strong>、其餘人 disagree-and-commit。事後標出<strong>誰當責</strong>。</li>
+<li><strong>產出</strong>：危機角色配置（Commander／對外發言／技術止血／法務）＋一句「平時分權 ≠ 危機分權」的具體對照。</li>
+<li><strong>診斷重點</strong>：平時的分散授權，在危機中有沒有及時<strong>收斂成單一指揮</strong>？還是繼續開會共識決、貽誤止血？</li>
+</ul>
+<hr />
+<h3>收尾　跨回合復盤（~15′，全模擬的靈魂）</h3>
+<ol>
+<li><strong>畫角色演變圖</strong>：每組挑 <strong>2 個角色</strong>（建議法務、工程主管），畫出它在四回合的職權如何變化。例如<strong>法務</strong>：R1 缺席 → R2 Agree（會簽）→ R3 跨組織合約否決 → R4 危機顧問。</li>
+<li><strong>一起收斂一題</strong>：把各組的演變圖攤開，回答核心問題——<strong>「哪一個角色的職權『該變卻沒變』，最可能把專案害慘？」</strong>（對照 <a href="../../../wiki/權責框架的情境適配.md">權責框架的情境適配</a> 的動態原則）。</li>
+<li><strong>個人反思</strong>：「我的期末專案現在在哪個階段？下一個階段一到，我<strong>第一個要重排</strong>的角色是＿＿＿，因為＿＿＿。」</li>
+</ol>
+<h3>小作業</h3>
+<p>為你的期末專案畫一張<strong>「權責演變路線圖」</strong>：至少切 3 個階段（如試做／上線／營運），每階段標明框架組合（用哪些）、唯一當責者、以及<strong>跨階段的交接或升級觸發條件</strong>（什麼事件一發生就該重排）。評分看：三軸判斷是否合理、動態重排是否到位、每階段是否都有唯一當責。</p>
+<hr />
+<h3>【教師指南　GM Facilitation Kit】</h3>
+<h4>角色卡與私下目標（製造衝突的引擎）</h4>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>公開目標</th>
+<th>私下目標（會誘發的職權錯誤）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>總編輯／發行人</td>
+<td>平台成為招牌、衝影響力</td>
+<td>想搶選舉檔期快上線，<strong>傾向壓過法務</strong>（誘發：越級決策、忽略 Agree）</td>
+</tr>
+<tr>
+<td>工程主管</td>
+<td>準時交付、技術 KPI</td>
+<td>想被<strong>全權授權</strong>、討厭被 review 拖慢（誘發：R 自行拍板；R3 離職伏筆）</td>
+</tr>
+<tr>
+<td>法務／法遵</td>
+<td>零選舉法／版權風險</td>
+<td>傾向對<strong>所有事</strong>行使否決（誘發：<strong>否決權越權</strong>）</td>
+</tr>
+<tr>
+<td>外部事實查核夥伴</td>
+<td>聯盟能見度</td>
+<td>想<strong>掛名共同發布</strong>但不想扛錯標的責任（誘發：<strong>當責真空</strong>）</td>
+</tr>
+<tr>
+<td>資訊部／資安</td>
+<td>系統穩、資安過關</td>
+<td>「沒過我這關不能上內網」但常被略過（誘發：<strong>隱形否決權</strong>）</td>
+</tr>
+<tr>
+<td>贊助方／廣告主</td>
+<td>品牌能見度、ROI</td>
+<td>想介入決策但不想負責（誘發：<strong>有權無責</strong>）</td>
+</tr>
+</tbody>
+</table>
+<h4>注入卡時間軸（GM 中途丟出）</h4>
+<ul>
+<li>R1：原型爆紅 → 立項壓力（測「探索期會不會過度上框架」）</li>
+<li>R2：選委會來函 → 決策升 Type 1（測「類型變、ceremony 跟不跟」）</li>
+<li>R3：工程主管離職 → 當責交接（測「角色綁人 vs 綁職位」）</li>
+<li>R4：誤標真消息瘋傳 → 危機（測「平時分權能否收斂成單一指揮」）</li>
+</ul>
+<h4>復盤解答重點（各回合「應然」框架組合）</h4>
+<ul>
+<li>R1 → DRI＋advice/consent；<strong>忌</strong>完整 RACI。</li>
+<li>R2 → 分階段 RACI＋RAPID／DACI；法務入 Agree、唯一 Approver；Type 1 升級 ceremony。</li>
+<li>R3 → 合約化 Agree＋聯合治理＋職務分離（maker-checker）＋角色綁職位＋交接方案。</li>
+<li>R4 → ICS 單一 Incident Commander＋集權快決＋明訂對外當責＋disagree-and-commit。</li>
+<li>共通致命傷：<strong>該重排卻沿用上一階段的分工</strong>（把小框架硬套到大規模、平時分權硬撐到危機）。</li>
+</ul>
+<h3>延伸概念卡（wiki）</h3>
+<ul>
+<li><a href="../../../wiki/權責框架的情境適配.md">權責框架的情境適配</a>（類型×規模×時長三軸＋動態原則）</li>
+<li><a href="../../../wiki/分工與權責框架全景.md">分工與權責框架全景</a>、<a href="../../../wiki/當責與負責.md">當責與負責</a>、<a href="../../../wiki/職務分離.md">職務分離</a>、<a href="../../../wiki/三道防線.md">三道防線</a>、<a href="../../../wiki/授權層級.md">授權層級</a>、<a href="../../../wiki/Vroom-Yetton%20決策參與模型.md">Vroom-Yetton 決策參與模型</a>、<a href="../../../wiki/同意決與共識決.md">同意決與共識決</a></li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>

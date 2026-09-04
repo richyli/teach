@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M PRD 撰寫與壓力測試</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>M PRD 撰寫與壓力測試</h1></div><ul>
+<li><strong>理論</strong>：Boundary Object Theory（主）——PRD 把跨活動系統的共同規則編碼、凍結一次 sensemaking 結果；輔以 Activity Theory（rules）、Sensemaking。與 W7 的 MRD 構成同學期兩個對照邊界物件。</li>
+<li><strong>Flip Exercise｜PRD Stress Test</strong>：A 組寫 PRD → B 組把它丟給 AI agent、直接出貨 agent 產出的東西 → C 組審查產出、揪出每個規格漏洞與默會假設。</li>
+<li><strong>小作業</strong>：繳交修補後 PRD + 漏洞清單。</li>
+</ul>
+<h4>真實 PRD 範本：Tekton / Yingzao（Build Day 冠軍）</h4>
+<blockquote>
+<p>全文教材：Tekton PRD (Build Day 冠軍範本)（已下載原檔）。來源 Case - Claude Build Day Hackathon。一份 ~6,500 字、13 章節的真實得獎 PRD，課堂直接拿它當「一份好 PRD 長什麼樣」的範本，比抽象講章節有力。</p>
+</blockquote>
+<ul>
+<li><strong>13 章節結構</strong>：①One-Line Punch ②Product Summary ③Why This Matters ④Founder Story ⑤Subject Buildings ⑥UX（六層，明言 <em>Not a Chatbot</em>）⑦Reconstruction Pipeline（5 個 agent 子節）⑧Build-Day Orchestration（時程/事前 vs 當日分工）⑨Data Sources &amp; Rights ⑩MVP Scope ⑪Tech Stack ⑫Definition of Done（9 項）⑬Submission Checklist。</li>
+<li><strong>三個教學點</strong>：</li>
+<li><strong>One-Line Punch = reframing</strong>：「把『對』做得比『像』便宜」（right cheaper than looks-like）——PRD 第一句就是問題重新定義。</li>
+<li><strong>明確「不做清單」</strong>（§10 禁止聊天框 / 帳戶 / CMS / 超過三棟）——範例級的 anti-scope-creep，接 <a href="M_%E7%AF%84%E7%96%87%E7%AE%A1%E7%90%86%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">M 範疇管理與優先級</a>。</li>
+<li><strong>驗收前置而非當日選擇</strong>：顏色作為 design token 預先凍結、部署為 frozen verified artifacts（無 runtime LLM）——對應 §12 Definition of Done。</li>
+<li><strong>注意</strong>：50 張工單在 Notion 看板（不在 PRD 內），PRD 本身不放個別 ticket——示範「PRD（規格）vs 工單（執行）分屬不同邊界物件」。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對互評</strong>：兩人一組，互換各自寫的 PRD（或剛修補完的版本），扮演「惡意 AI agent」逐條挑刺——找出對方規格裡「字面照做就會出錯」的句子、沒寫的 edge case、藏起來的默會假設。各自至少幫對方標出兩個漏洞。</li>
+<li><strong>一起收斂一題</strong>：老師收集大家挑到的漏洞，丟出一題讓全班表態——「PRD 要寫到多細才夠？當 AI 會用『看似合理但錯誤』的預設填空，把邊界畫在哪裡才划算？」對照 Tekton 範本的「不做清單」與 Definition of Done，看好的 PRD 是靠窮舉細節還是靠凍結驗收標準。</li>
+<li><strong>寫下個人反思</strong>：每人寫一句帶走——「我的 PRD 最容易被 AI 誤讀的一個地方是 <strong><em>，下次我會用 </em></strong>（acceptance criteria／不做清單／預先凍結 token）把它釘死。」</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>

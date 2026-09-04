@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 利害關係人與行動者網絡</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../m/M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "0lOAIOHdKMdclgSpeKxebA==", IV = "ko7c63PxT1yDyy+8", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

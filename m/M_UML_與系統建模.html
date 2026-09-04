@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M UML 與系統建模</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../index.html">回首頁</a></nav><div class="hero"><h1>M UML 與系統建模</h1></div><ul>
+<li><strong>為何 vibe coding 時代反而更該學</strong>：你不必再手畫精美 UML（AI 能從一句話生圖），但<strong>你得看得懂、改得動</strong>——因為一張圖能把「系統有哪些東西、怎麼互動」講清楚，而這正是 AI 寫程式前最需要的結構。<strong>UML 圖 = 高密度、無歧義的規格</strong>，比一大段文字更能讓 AI 抓對結構（連回 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>）。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>UML（統一塑模語言）= 一套畫「軟體長什麼樣、怎麼動」的標準圖</strong>。非工程師最該認得這三種：</p>
+<ol>
+<li><strong>類別圖（Class Diagram）— 系統有哪些「東西」</strong>：畫出主要物件（用戶、訂單、商品）、各自有什麼屬性、彼此什麼關係（一個用戶有多筆訂單）。<strong>這就是你產品的「名詞地圖」</strong>，直接對應資料模型（連回 <a href="M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">M ERD 資料模型</a>）。</li>
+<li><strong>循序圖（Sequence Diagram）— 一件事「怎麼一步步發生」</strong>：誰呼叫誰、訊息按時間順序往返。「按下結帳 → 系統查庫存 → 呼叫金流 → 回傳結果」——把一個流程的互動攤平在時間軸上。</li>
+<li><strong>狀態圖（State Diagram）— 一個東西「會處在哪些狀態、怎麼轉換」</strong>：訂單從「待付款 → 已付款 → 出貨中 → 完成」，以及哪些事件觸發轉換（連回 <a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a>：狀態與轉移）。</li>
+</ol>
+<blockquote>
+<p><strong>vibe coding 接法</strong>：用 AI 或 mermaid 語法幾秒生出這些圖，<strong>先和 AI 對齊「系統結構」再讓它寫程式</strong>——你在圖上抓到的漏掉的物件、漏掉的狀態，比在跑出來的程式裡抓便宜一百倍。圖是「想清楚」的便宜稿紙。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：「請假系統」用類別圖會有哪些物件？用狀態圖的話，一張請假單會經過哪些狀態？（待審/核准/駁回/銷假）</li>
+<li>
+<p><strong>反思</strong>：「我直接叫 AI 寫程式，是不是跳過了『先把結構畫清楚』？難怪改著改著就亂了。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一個你的產品，用 mermaid 請 AI 生一張類別圖＋一張狀態圖，檢查它有沒有漏掉重要物件或狀態。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:00</p>
+</div>
+</body>
+</html>
