@@ -149,15 +149,18 @@ MathJax = {
 #ent-sim .meterwrap { background: #ececec; border-radius: 999px; height: .55rem; margin: .5rem 0; }
 #ent-sim .meter { background: #4a7fd0; height: .55rem; border-radius: 999px; transition: width .25s; }
 #ent-sim .log { font-size: .84rem; color: #555; margin: .5rem 0 0; padding-left: 1.1rem; }
-#ent-sim .log li { margin: .18rem 0; }
+#ent-sim .log li { margin: .2rem 0; }
+#ent-sim .log .gain { color: #24528f; font-weight: 600; font-variant-numeric: tabular-nums; }
+#ent-sim .log .weak { color: #b06a00; font-weight: 600; font-variant-numeric: tabular-nums; }
 #ent-sim .cands { display: flex; flex-wrap: wrap; gap: .25rem; margin: .6rem 0; }
 #ent-sim .cand { font-size: .76rem; padding: .12rem .45rem; border-radius: 4px;
                  background: #e8eefb; color: #2b4f83; }
 #ent-sim .cand.out { background: #f1f1f1; color: #bbb; text-decoration: line-through; }
+#ent-sim .cand.win { background: #24528f; color: #fff; }
 </style>
 
 <h5>🎛 互動：把 entropy 調給自己看</h5>
-<p class="lede">下面兩個小工具都在回答同一件事——<strong>不確定性有多大，就是還要幾個是非題才問得出答案</strong>。動手拉一拉，比看公式快。</p>
+<p class="lede">兩個小工具都在回答同一件事——<strong>不確定性有多大，就是還要幾個是非題才問得出答案</strong>。動手拉一拉，比看公式快。</p>
 
 <div class="panel">
   <strong>一、分布越平，entropy 越高</strong>
@@ -178,14 +181,14 @@ MathJax = {
 </div>
 
 <div class="panel">
-  <strong>二、猜詞遊戲：好問題砍一半，爛問題砍一個</strong>
-  <p class="lede">16 種職業等可能，一開始的 entropy 是 log₂16 = 4 bit。每問一題看它掉多少。</p>
+  <strong>二、猜職業：好問題砍一半，爛問題砍一個</strong>
+  <p class="lede">我心裡先隨機抽一個職業（16 種等可能，entropy = log₂16 = 4 bit）。你出題，我照那個職業誠實回答，被排除的候選會即時劃掉。每題實際拿到幾 bit 也一起算給你看。</p>
   <div class="cands" id="es-cands"></div>
   <div class="meterwrap"><div class="meter" id="es-meter" style="width:100%"></div></div>
   <div>
-    <button class="primary" id="es-good">問一個砍一半的問題</button>
-    <button id="es-bad">問一個只排除一種的問題</button>
-    <button id="es-reset">重來</button>
+    <button class="primary" id="es-good">問一個能砍一半的問題</button>
+    <button id="es-bad">直接猜一個職業</button>
+    <button id="es-reset">重抽一個，重來</button>
   </div>
   <div class="readout">
     還沒消除的不確定性 <span class="big" id="es-rem">4.00</span> bit
@@ -207,7 +210,7 @@ MathJax = {
     return h;
   }
 
-  /* ---- panel 1 ---- */
+  /* ---------- panel 1：分布與 entropy ---------- */
   var names = ["晴", "陰", "雨", "雷雨"];
   var w = [25, 25, 25, 25];
   var box = document.getElementById("es-sliders");
@@ -266,58 +269,144 @@ MathJax = {
   });
   draw1();
 
-  /* ---- panel 2 ---- */
-  var jobs = ["醫師", "護理師", "記者", "工程師", "會計師", "廚師", "司機", "教師",
-              "農夫", "警察", "設計師", "業務", "木工", "藥師", "導遊", "編劇"];
-  var alive, got;
+  /* ---------- panel 2：猜職業 ---------- */
+  var JOBS = ["醫師", "護理師", "藥師", "記者", "編劇", "設計師", "工程師", "會計師",
+              "教師", "業務", "導遊", "廚師", "木工", "農夫", "司機", "警察"];
+  // 每題是一個真實屬性，值＝符合的職業；回答依祕密職業誠實給。
+  var QUESTIONS = [
+    { q: "需要通過國家考試才能執業嗎？",
+      yes: ["醫師", "護理師", "藥師", "會計師", "教師", "導遊", "司機", "警察"] },
+    { q: "主要在室內工作嗎？",
+      yes: ["醫師", "護理師", "藥師", "編劇", "設計師", "工程師", "會計師", "教師", "廚師"] },
+    { q: "每天要直接面對客人或民眾嗎？",
+      yes: ["醫師", "護理師", "藥師", "記者", "教師", "業務", "導遊", "司機", "警察"] },
+    { q: "工作時要親手操作工具或機具嗎？",
+      yes: ["醫師", "護理師", "廚師", "木工", "農夫", "司機", "工程師"] },
+    { q: "需要輪班或不固定上下班時間嗎？",
+      yes: ["醫師", "護理師", "記者", "廚師", "導遊", "司機", "警察"] },
+    { q: "主要的產出是文字或圖像嗎？",
+      yes: ["記者", "編劇", "設計師"] },
+    { q: "在醫療或健康領域工作嗎？",
+      yes: ["醫師", "護理師", "藥師"] },
+    { q: "工作內容跟數字、程式或帳目高度相關嗎？",
+      yes: ["會計師", "工程師"] },
+    { q: "通常需要大學以上學歷嗎？",
+      yes: ["醫師", "護理師", "藥師", "記者", "編劇", "設計師", "工程師", "會計師", "教師"] },
+    { q: "固定隸屬於一家機構，而不是接案或自己做？",
+      yes: ["醫師", "護理師", "藥師", "工程師", "會計師", "教師", "警察", "業務"] },
+    { q: "工作場所大多不在辦公室或店面裡？",
+      yes: ["記者", "農夫", "司機", "警察", "導遊", "業務", "木工"] },
+    { q: "可以自己開業當老闆嗎？",
+      yes: ["醫師", "藥師", "會計師", "設計師", "廚師", "木工", "農夫", "導遊"] },
+    { q: "工作對象是活的生物嗎？",
+      yes: ["醫師", "護理師", "農夫"] },
+    { q: "主要產出是文字嗎？",
+      yes: ["記者", "編劇"] }
+  ];
+
+  var alive, got, secret, asked;
   var cands = document.getElementById("es-cands");
-  jobs.forEach(function (j) {
+  JOBS.forEach(function (j) {
     var s = document.createElement("span");
     s.className = "cand";
     s.textContent = j;
     cands.appendChild(s);
   });
 
+  function aliveJobs() {
+    return JOBS.filter(function (j, i) { return alive[i]; });
+  }
+
   function draw2() {
-    var n = alive.filter(Boolean).length;
-    var rem = Math.log2(n);
-    alive.forEach(function (ok, i) {
-      cands.children[i].className = ok ? "cand" : "cand out";
+    var live = aliveJobs();
+    var rem = Math.log2(live.length);
+    JOBS.forEach(function (j, i) {
+      cands.children[i].className = !alive[i] ? "cand out"
+        : (live.length === 1 ? "cand win" : "cand");
     });
     document.getElementById("es-rem").textContent = rem.toFixed(2);
-    document.getElementById("es-n").textContent = n;
+    document.getElementById("es-n").textContent = live.length;
     document.getElementById("es-got").textContent = got.toFixed(2);
     document.getElementById("es-meter").style.width = (rem / 4 * 100) + "%";
-    document.getElementById("es-good").disabled = n <= 1;
-    document.getElementById("es-bad").disabled = n <= 1;
+    var done = live.length <= 1;
+    document.getElementById("es-good").disabled = done || asked.length === QUESTIONS.length;
+    document.getElementById("es-bad").disabled = done;
     var note = document.getElementById("es-note");
-    if (n === 1) note.textContent = "收斂了。看看你用了幾個好問題、幾個爛問題——同樣是「問一句話」，值差了十幾倍。";
-    else note.textContent = "問了幾句話不重要，重要的是每一句砍掉多少猜測空間。";
+    if (done) {
+      note.textContent = "答案是「" + secret + "」。四個好問題就能從 16 種收斂到 1 種，"
+        + "因為每題砍掉一半；靠直接猜要問到十幾次也未必中。";
+    } else {
+      note.textContent = "問了幾句話不重要，重要的是每一句砍掉多少猜測空間。";
+    }
   }
-  function ask(half) {
-    var idx = [];
-    alive.forEach(function (ok, i) { if (ok) idx.push(i); });
-    if (idx.length <= 1) return;
-    var before = Math.log2(idx.length);
-    var kill = half ? Math.floor(idx.length / 2) : 1;
-    for (var k = 0; k < kill; k++) alive[idx[idx.length - 1 - k]] = false;
-    var after = Math.log2(idx.length - kill);
+
+  function logLine(text, gain, weak) {
+    var li = document.createElement("li");
+    li.innerHTML = text + " → 拿到 <span class="
+      + (weak ? '"weak"' : '"gain"') + ">" + gain.toFixed(2) + " bit</span>";
+    document.getElementById("es-log").appendChild(li);
+  }
+
+  function askGood() {
+    var live = aliveJobs();
+    if (live.length <= 1) return;
+    // 從沒問過的題目裡，挑對「目前還活著的候選」切得最接近一半的那一題
+    var best = null, bestScore = 1e9;
+    QUESTIONS.forEach(function (Q, qi) {
+      if (asked.indexOf(qi) >= 0) return;
+      var hit = live.filter(function (j) { return Q.yes.indexOf(j) >= 0; }).length;
+      if (hit === 0 || hit === live.length) return;   // 問了等於沒問
+      var score = Math.abs(hit - live.length / 2);
+      if (score < bestScore) { bestScore = score; best = qi; }
+    });
+    if (best === null) {
+      document.getElementById("es-good").disabled = true;
+      return;
+    }
+    asked.push(best);
+    var Q = QUESTIONS[best];
+    var answer = Q.yes.indexOf(secret) >= 0;
+    var before = Math.log2(live.length);
+    JOBS.forEach(function (j, i) {
+      if (!alive[i]) return;
+      if ((Q.yes.indexOf(j) >= 0) !== answer) alive[i] = false;
+    });
+    var after = Math.log2(aliveJobs().length);
     var gain = before - after;
     got += gain;
-    var li = document.createElement("li");
-    li.textContent = (half ? "「是室內工作嗎？」砍掉一半 → 拿到 " : "「是醫師嗎？」只排除一種 → 拿到 ")
-      + gain.toFixed(2) + " bit";
-    document.getElementById("es-log").appendChild(li);
+    logLine("「" + Q.q + "」答：<strong>" + (answer ? "是" : "否") + "</strong>", gain, gain < 0.5);
     draw2();
   }
+
+  function askBad() {
+    var live = aliveJobs();
+    if (live.length <= 1) return;
+    var pick = live[Math.floor(Math.random() * live.length)];
+    var before = Math.log2(live.length);
+    var hit = pick === secret;
+    if (hit) {
+      JOBS.forEach(function (j, i) { if (j !== secret) alive[i] = false; });
+    } else {
+      alive[JOBS.indexOf(pick)] = false;
+    }
+    var after = Math.log2(aliveJobs().length);
+    var gain = before - after;
+    got += gain;
+    logLine("「是" + pick + "嗎？」答：<strong>" + (hit ? "是" : "否") + "</strong>"
+            + (hit ? "（運氣好，一次中）" : ""), gain, !hit);
+    draw2();
+  }
+
   function reset() {
-    alive = jobs.map(function () { return true; });
+    alive = JOBS.map(function () { return true; });
     got = 0;
+    asked = [];
+    secret = JOBS[Math.floor(Math.random() * JOBS.length)];
     document.getElementById("es-log").innerHTML = "";
     draw2();
   }
-  document.getElementById("es-good").addEventListener("click", function () { ask(true); });
-  document.getElementById("es-bad").addEventListener("click", function () { ask(false); });
+  document.getElementById("es-good").addEventListener("click", askGood);
+  document.getElementById("es-bad").addEventListener("click", askBad);
   document.getElementById("es-reset").addEventListener("click", reset);
   reset();
 })();
@@ -574,7 +663,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:11</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:15</p>
 </div>
 </body>
 </html>
