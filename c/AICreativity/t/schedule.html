@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每週進度｜人工智慧生成圖像與創造力（2026）</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/schedule.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "/yLm+PdwKH0BLese6HJQ5w==", IV = "OHLiAlAdd+e0MRqO", CT = "LscWvqrL7hWt3zOJcT2nb43aMjzTyYNsJG//Nh8tgN5s1SDWkKwJVZKLwSi1ye/5jtl0lLmFaY1beC0kUO0TJe2i0x+3ramnpLt/wZfJNaszZrVSPc0nmW1/rdfIisZUigtlS+yDmJZEKqQ5fib6NySvRFIsrvGrMxxYBOKJJU12widIXCPbf59ztjj5KpVBxoXaf0WR9GJigCZ7b0oxL9kAfV13m0puhY1Mmifr8k6k+diDJwcwp2lwq7aJq/k9Pz0QXt9YRM8t80S7z+OWXjrVFGmPytfAcOnJmPN4K55ZNF9q4FgxpGc9p6HqFqfBF4fzGpSYaNmNMM2cbxIHauX6oAHPrit7rO8ABjMvS4iJJX1wAnQzTHZH5ncdWo3NlQ8Azcy8yAluSrEIuqT3EtRudlgg0IUE1I1iYIdsxG5fiBJFu5L6NAKk/RYmFlAZHLoIbw/MZBkUTPoyex1F/OZbLMbhDkjyD7Dh1nJHGQGeWWkh/fOJGSoBplQFmNpMNFyDI+YyfrKk8L6J8T9R4G8yTx5h1JkTOp7shjqjTS9jsJ3Bi9kCkJvfmw8Jm2ELHZDHmGn63LyaeF5AxK58uvkE9p/DSYlnIm7ledEkobAtzRpEWfVN+gmCschS2E2PgIYEBxKLgIoIHRjdTRpIHQ==", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

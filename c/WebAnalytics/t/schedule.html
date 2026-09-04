@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每週進度｜網路數據分析 Web Analytics（2026）</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/schedule.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "WbL7Ucd+9LRP/Y+9EoTBcg==", IV = "kEccrweKKe4iBFDE", CT = "xPyJgwhYpmIWw4yLy6niqCZLfSWxz6b0CfBPcUtAwwvd9fes7OI1EPr8I+tfdRJn0sCkn8MFwNwgoMqfu5EsRFB3ixtd2fKZ2v23EOc/H/jVXmQkzuo3r/xkiAUxiK35yCP8da4CfK3/GDagKX/Amta2q9FbfIKahPjkoAwknXhbc2IxDHkBrG7BvaI95OApo4DI95v3ZBl7AxsbjlHVW3ywPq3IYb24GIh35zO5GME97WB2x7sIeork33oGV8tHK0E69Cz5vp2mvZ1AfG31iSnAGdIe8i3iJxY3AFYJmHZk9IHhrgJVQH3duLzl/xHSbeC/Wv11TcUlvQN68UdDS3BYlD4SZSE0USiKo9wW5v9LetEyqHgt7GHOV/IwdV0X9g7yd4xnHUVBHYKMT+G7S5Coaw0zBNzh/G5CgMtyXopIVc7g5Fvyujj0M16tD0Esj/DexdU/wtbnPQhJ1WFqRmQOuLqhDqn7nfXu3VmPahsercrw+XieoQ7+Ts09UAYVSdD023JOHaWr/XMaftLuw2cIzFKsHFjmcIizQCyLSAVIlYH0BuRAjhIU/L+O55bwXlRrM2ftwexy9Z2gw09gtNly634XaGsPHxJTHOwA2W/+JWwvf7zx", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>
