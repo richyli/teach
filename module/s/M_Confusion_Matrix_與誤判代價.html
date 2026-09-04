@@ -279,6 +279,61 @@ MathJax = {
 </div>
 
 <div class="panel">
+  <strong>有成本的情境：報社自動校對系統該做到幾成？</strong>
+  <p class="lede">上面那個模擬器問「門檻放哪裡」，這一個問更難的：<strong>把抓錯字的能力再往上推 1 個百分點，值不值得那筆錢</strong>。四個數字都可以拉，答案會翻面。</p>
+
+  <div class="row">
+    <label>抓到錯字的比率</label>
+    <input type="range" id="pf-rec" min="9000" max="9990" step="10" value="9600">
+    <span class="pct" id="pf-recv">96.0%</span>
+  </div>
+  <div class="row">
+    <label>每提升 1% 花費</label>
+    <input type="range" id="pf-cost" min="5000" max="120000" step="1000" value="35000">
+    <span class="pct" id="pf-costv">35,000</span>
+  </div>
+  <div class="row">
+    <label>每天錯字數</label>
+    <input type="range" id="pf-typo" min="5" max="300" value="50">
+    <span class="pct" id="pf-typov">50</span>
+  </div>
+  <div class="row">
+    <label>一個錯字的品牌損失</label>
+    <input type="range" id="pf-brand" min="10" max="2000" step="10" value="200">
+    <span class="pct" id="pf-brandv">200</span>
+  </div>
+  <div class="row">
+    <label>每天誤報件數</label>
+    <input type="range" id="pf-fp" min="0" max="300" value="30">
+    <span class="pct" id="pf-fpv">30</span>
+  </div>
+  <div class="row">
+    <label>每件誤報複核成本</label>
+    <input type="range" id="pf-fpc" min="0" max="120" value="15">
+    <span class="pct" id="pf-fpcv">15</span>
+  </div>
+  <div>
+    <button id="pf-mode">切換成「越往上越貴」</button>
+    <button id="pf-opt">找總成本最低點</button>
+  </div>
+
+  <div class="chart"><svg id="pf-svg" viewBox="0 0 340 180" preserveAspectRatio="xMidYMid meet"></svg></div>
+
+  <div class="cost">
+    <b>一年下來（以 365 天計）</b><br>
+    漏掉的錯字 <b id="pf-miss">—</b> 個／年　→　品牌損失 <b id="pf-loss">—</b><br>
+    系統投資（從不花錢就有的 90% 往上推）<b id="pf-inv">—</b><br>
+    誤報複核人力 <b id="pf-fpcost">—</b><br>
+    總成本 <span class="big" id="pf-total">—</span>
+  </div>
+  <div class="cost" style="margin-top:.5rem;">
+    再往上 1 個百分點：要花 <b id="pf-mc">—</b>，省下 <b id="pf-mb">—</b>　→　<b id="pf-call">—</b><br>
+    <span style="color:#666;">每 1% 的合理投資上限＝每天錯字數 × 1% × 365 × 單位品牌損失 ＝ <b id="pf-be">—</b></span>
+  </div>
+  <p class="lede" id="pf-verdict" style="margin-top:.7rem;"></p>
+</div>
+
+<div class="panel">
   <strong>💬 兩人一組：先各自拉，再說服對方</strong>
   <p class="lede">每題都先各自把門檻拉到你認為對的位置、記下四格數字，再互相說明理由。重點不是誰對，是<strong>你用什麼理由決定「寧可錯抓還是寧可放過」</strong>。</p>
   <div class="qbox">
@@ -287,6 +342,7 @@ MathJax = {
       <li><b>哪些情境 precision 必須最高？</b>把門檻拉到 precision 最高的位置，看 FN 變幾件。那些被放過的，後果由誰承擔？</li>
       <li><b>「準確率 95%」在哪個情境下最會騙人？</b>把真陽性比率拉到 1%，門檻拉到最右（幾乎什麼都不抓），看 accuracy 剩多少、recall 剩多少。</li>
       <li><b>換一個角色再答一次</b>：同一個假訊息偵測，你是總編輯 vs 你是平台法遵主管 vs 你是被誤刪的記者——三個位置會把門檻拉到同一格嗎？</li>
+      <li><b>校對系統做到幾成才停？</b>用下面那個成本面板：先各自決定「一個錯字被讀者看到，值多少錢」，再看你們算出來的合理投資上限差多少。品牌損失是最難估也最能吵的一個數字——你憑什麼說它是 200 而不是 20？</li>
       <li><b>模型變好，兩難就消失嗎？</b>把「模型鑑別力」從 0.5 拉到 3.0，precision 與 recall 是不是能同時變好？那為什麼還是得選門檻？</li>
     </ol>
     <button id="cm-toggle">看判準（不是標準答案）</button>
@@ -513,6 +569,146 @@ MathJax = {
     });
   });
 
+  /* ---------- 有成本的情境：自動校對 ---------- */
+  var P = {};
+  ["rec", "cost", "typo", "brand", "fp", "fpc"].forEach(function (k) {
+    P[k] = document.getElementById("pf-" + k);
+  });
+  var BASE = 0.90, DAYS = 365, convex = false;
+  function money(x) { return "NT$ " + Math.round(x).toLocaleString("en-US"); }
+
+  // 線性：從 90% 每推 1 個百分點固定花 c
+  // 遞增：花費 ∝ 1/(1-r)，並校準成「在目前這一點，下一個百分點正好等於滑桿的 c」
+  var ANCHOR = 0.96;   // 報價的參考點：滑桿上的「每 1% 花費」指的是在 96% 這個水準的價
+  function invest(r, c) {
+    if (!convex) return (r - BASE) * 100 * c;
+    var k = c / (1 / Math.pow(1 - ANCHOR, 2) * 0.01);
+    return k * (1 / (1 - r) - 1 / (1 - BASE));
+  }
+  function readP() {
+    return { r: +P.rec.value / 10000, c: +P.cost.value, typo: +P.typo.value,
+             brand: +P.brand.value, fp: +P.fp.value, fpc: +P.fpc.value };
+  }
+  function totalAt(r, v) {
+    var miss = v.typo * (1 - r) * DAYS;
+    return { miss: miss, loss: miss * v.brand,
+             inv: invest(r, v.c),
+             fpcost: v.fp * DAYS * v.fpc,
+             get all() { return this.loss + this.inv + this.fpcost; } };
+  }
+
+  var ps = document.getElementById("pf-svg");
+  var PL = 52, PR = 330, PB = 138, PT = 14, RMIN = 0.90, RMAX = 0.999;
+  var ppx = function (r) { return PL + (r - RMIN) / (RMAX - RMIN) * (PR - PL); };
+  var pAxis = [];
+  function pfInit() {
+    ps.innerHTML = "";
+    ps.appendChild(mk("line", { class: "ax", x1: PL, y1: PB, x2: PR, y2: PB }));
+    ps.appendChild(mk("line", { class: "ax", x1: PL, y1: PT, x2: PL, y2: PB }));
+    [0.90, 0.92, 0.94, 0.96, 0.98, 0.999].forEach(function (r) {
+      var tx = mk("text", { class: "tick", x: ppx(r), y: PB + 13, "text-anchor": "middle" });
+      tx.textContent = (r * 100).toFixed(r === 0.999 ? 1 : 0) + "%";
+      ps.appendChild(tx);
+    });
+    var lb = mk("text", { class: "tick", x: (PL + PR) / 2, y: PB + 29, "text-anchor": "middle" });
+    lb.textContent = "抓到錯字的比率";
+    ps.appendChild(lb);
+    pAxis = [];
+    ["投資", "品牌損失", "總成本"].forEach(function (name, i) {
+      var p = mk("polyline", { fill: "none", "stroke-width": i === 2 ? 2.4 : 1.6,
+        stroke: ["#4a7fd0", "#d66d3c", "#17395e"][i],
+        "stroke-dasharray": i === 2 ? "" : "4 3" });
+      ps.appendChild(p); pAxis.push(p);
+      var t = mk("text", { class: "tick", x: PR, y: PT + 4 + i * 11, "text-anchor": "end",
+        fill: ["#4a7fd0", "#d66d3c", "#17395e"][i] });
+      t.textContent = name; ps.appendChild(t);
+    });
+    pAxis.push(ps.appendChild(mk("line", { class: "thr", x1: 0, y1: PT, x2: 0, y2: PB })));
+    pAxis.push(ps.appendChild(mk("circle", { r: 4, fill: "#17395e", cx: 0, cy: 0 })));
+    pAxis.push(ps.appendChild(mk("text", { class: "tick", x: PL - 6, y: PT + 4,
+                                           "text-anchor": "end" })));
+  }
+  pfInit();
+
+  function pfDraw() {
+    var v = readP();
+    document.getElementById("pf-recv").textContent = (v.r * 100).toFixed(1) + "%";
+    document.getElementById("pf-costv").textContent = v.c.toLocaleString("en-US");
+    document.getElementById("pf-typov").textContent = v.typo;
+    document.getElementById("pf-brandv").textContent = v.brand;
+    document.getElementById("pf-fpv").textContent = v.fp;
+    document.getElementById("pf-fpcv").textContent = v.fpc;
+
+    var now = totalAt(v.r, v);
+    document.getElementById("pf-miss").textContent = Math.round(now.miss).toLocaleString("en-US") + " 個";
+    document.getElementById("pf-loss").textContent = money(now.loss);
+    document.getElementById("pf-inv").textContent = money(now.inv);
+    document.getElementById("pf-fpcost").textContent = money(now.fpcost);
+    document.getElementById("pf-total").textContent = money(now.all);
+
+    var step = Math.min(0.01, RMAX - v.r);
+    var mb = v.typo * step * DAYS * v.brand;
+    var mc = step <= 0 ? 0 : invest(v.r + step, v.c) - invest(v.r, v.c);
+    document.getElementById("pf-mc").textContent = money(mc);
+    document.getElementById("pf-mb").textContent = money(mb);
+    document.getElementById("pf-call").textContent =
+      step <= 0 ? "已經到頂了" : (mb > mc ? "划算，該再往上推" : "不划算，這筆錢花在別的地方更值");
+    document.getElementById("pf-be").textContent =
+      money(v.typo * 0.01 * DAYS * v.brand) + " / 每 1%";
+
+    // 曲線
+    var xs = [], ymax = 0, series = [[], [], []];
+    for (var r = RMIN; r <= RMAX + 1e-9; r += (RMAX - RMIN) / 120) {
+      var t = totalAt(r, v);
+      xs.push(r); series[0].push(t.inv); series[1].push(t.loss); series[2].push(t.all);
+      ymax = Math.max(ymax, t.all, t.inv, t.loss);
+    }
+    ymax = ymax || 1;
+    var py2 = function (y) { return PB - y / ymax * (PB - PT); };
+    series.forEach(function (arr, i) {
+      pAxis[i].setAttribute("points", arr.map(function (y, k) {
+        return ppx(xs[k]).toFixed(1) + "," + py2(y).toFixed(1);
+      }).join(" "));
+    });
+    pAxis[3].setAttribute("x1", ppx(v.r)); pAxis[3].setAttribute("x2", ppx(v.r));
+    pAxis[4].setAttribute("cx", ppx(v.r)); pAxis[4].setAttribute("cy", py2(now.all));
+    pAxis[5].textContent = money(ymax).replace("NT$ ", "");
+
+    var best = xs[0], bestV = Infinity;
+    xs.forEach(function (r, k) { if (series[2][k] < bestV) { bestV = series[2][k]; best = r; } });
+    var verdict;
+    if (!convex) {
+      verdict = mb > mc
+        ? "在這組數字下，每買 1 個百分點省下的品牌損失（" + money(mb) + "）大於它的價錢（"
+          + money(mc) + "）——線性模型下答案是角解：能推多高就推多高。把「每提升 1% 花費」往右拉，看它在哪裡翻面。"
+        : "每買 1 個百分點只省下 " + money(mb) + "，卻要花 " + money(mc)
+          + "——現在這個系統做得越好越虧。要嘛壓低單位成本，要嘛承認 96% 已經夠用。";
+    } else {
+      verdict = "越往上越貴的版本：總成本變成 U 形，最低點落在 " + (best * 100).toFixed(1)
+        + "%。這比較貼近現實——把準確度從 90% 拉到 96% 也許便宜，從 99% 拉到 99.9% 常常貴十倍以上。";
+    }
+    document.getElementById("pf-verdict").textContent = verdict;
+  }
+  ["rec", "cost", "typo", "brand", "fp", "fpc"].forEach(function (k) {
+    P[k].addEventListener("input", pfDraw);
+  });
+  document.getElementById("pf-mode").addEventListener("click", function () {
+    convex = !convex;
+    this.textContent = convex ? "切換回「每 1% 固定價」" : "切換成「越往上越貴」";
+    this.className = convex ? "on" : "";
+    pfDraw();
+  });
+  document.getElementById("pf-opt").addEventListener("click", function () {
+    var v = readP(), best = RMIN, bestV = Infinity;
+    for (var r = RMIN; r <= RMAX + 1e-9; r += 0.001) {
+      var t = totalAt(r, v).all;
+      if (t < bestV) { bestV = t; best = r; }
+    }
+    P.rec.value = Math.round(best * 10000);
+    pfDraw();
+  });
+  pfDraw();
+
   var tg = document.getElementById("cm-toggle");
   tg.addEventListener("click", function () {
     var h = document.getElementById("cm-hint");
@@ -601,7 +797,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：選一個媒體場景，畫 confusion matrix 與誤判代價，標出你會把門檻往哪邊調、為什麼。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:30</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:40</p>
 </div>
 </body>
 </html>
