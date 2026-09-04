@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Vibe Coding 做小工具</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M Vibe Coding 做小工具</h1></div><p><strong>橫跨 2 個 45 分鐘 slot</strong>（上＋下，practice）。跨課共用。</p>
+<h4>🎯 學習目標</h4>
+<p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了學會寫程式，是為了讓沒有工程背景的你，真的做出並發布一個別人能用的小工具。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>撰寫</strong>一份三件套規格（一句話規格／不做清單／驗證點），並 vibe coding 出可跑雛形</td>
+<td>為什麼一開頭就叫 AI 寫 code 常常做歪？<strong>規格留白的每一處，AI 都會用『看似合理但其實錯』的預設替你填。</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>判斷</strong> AI 產出的失敗模式（幻覺／預設亂填／改 A 壞 B／邊界爆），並用「開乾淨對話讓 AI 審計」修補</td>
+<td>為什麼在原對話問「這有沒有問題」它都說沒事，換個全新對話一問就抓出一堆？因為模型對自己的作品評分很差。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評斷</strong>一個做好的工具值不值得正式導入團隊</td>
+<td><strong>「做得出來」之後，主管真正難的判斷是什麼？</strong>——用「省下的時間 × 頻率 × 人數 vs 維護成本 × 出錯風險」權衡。AI 不會主動跟你說「這太貴、不該留」，那是人的工作。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>上</strong>：做出雛形。</li>
+<li><strong>下</strong>：做完、發布；主管評估「值不值得正式導入」。</li>
+<li><strong>小作業</strong>：完成並發布工具，寫「AI 幫我做到／我得自己補」反思。</li>
+</ul>
+<h4>與 AI 互動的工法：Tekton / Yingzao（Build Day 冠軍）</h4>
+<blockquote>
+<p>來源 <a href="Case_-_Claude_Build_Day_Hackathon.html">Case - Claude Build Day Hackathon</a>。示範「人怎麼帶 AI」而非「AI 幫你打字」。</p>
+</blockquote>
+<ul>
+<li><strong>先規劃再動工</strong>：冠軍第一條建議 <em>"Map the whole project before you build any of it."</em> 先寫好 PRD（見 <a href="M_PRD_%E6%92%B0%E5%AF%AB%E8%88%87%E5%A3%93%E5%8A%9B%E6%B8%AC%E8%A9%A6.html">M PRD 撰寫與壓力測試</a> 範本）＋ Notion 50 工單，才讓 AI 開始——用規格控制 AI，不是被 AI 牽著走。</li>
+<li><strong>不信任 AI 自評，設外部驗證</strong>：PRD 白紙黑字寫「模型對自己的作品評分很差」，所以<strong>驗證者跑在全新 context window</strong> 獨立評分；自修正迴圈反覆檢查到通過 20 項測試（<code>done.rubric.json</code>），共 339 個增量構建階段。這是與 AI 互動的核心紀律——把把關機制設計進流程，而非事後人工抽查。</li>
+<li><strong>用 AI 選工具、做架構決策</strong>（季軍 Custom Universe）：「Use Claude to choose tools, not just to write code」——把「要不要把 Apple RealityKit 加進 pipeline」這種決策也丟給 AI 一起想。</li>
+<li><strong>互動練習</strong>：學生對自己的小工具，仿照寫一條 one-line 規格 + 一個「不做清單」+ 一個外部驗證檢查點，再開始 vibe coding，比較有無規格控制的產出差異。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>成果快展</strong>：demo 自己發布的工具，講「最意外 AI 幫你做到的一件事」。</li>
+<li><strong>一起想一題</strong>：「這個東西值不值得正式導入團隊？」用一個判準回答——維護成本 vs 省下的時間。</li>
+<li>
+<p><strong>反思</strong>：「沒有工程背景的我，剛剛真的做出能用的東西了嗎？這改變了我對『誰能做產品』的看法嗎？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：完成並發布工具，寫「AI 幫我做到／我得自己補」反思。</p>
+</li>
+</ul>
+<h4>連結 / 關係</h4>
+<ul>
+<li><strong>先修鏈</strong>：<a href="M_Claude_Code_%E4%B8%8A%E6%89%8B.html">M Claude Code 上手</a>（安裝、第一個指令）→ <a href="M_Claude_Code_%E4%B8%B2%E5%B7%A5%E4%BD%9C%E6%B5%81.html">M Claude Code 串工作流</a>（設計 skill、接 MCP）→ 本模組（把規格做成並發布一個能用的小工具）。同一套「描述需求＋驗收＋迭代」心法，逐步放大。</li>
+<li><strong>導入決策的下游</strong>：<a href="M_%E8%AE%8A%E9%9D%A9%E7%AE%A1%E7%90%86%E8%88%87%E5%B0%8E%E5%85%A5.html">M 變革管理與導入</a>——本模組尾段「值不值得導入團隊」的判斷，正是那個模組「個人工具→驗證→產品化→分發」微縮生命週期的起點。</li>
+<li><strong>每週輪替的分享場</strong>：<a href="M_%E5%B7%A5%E5%85%B7%E7%AE%B1%E5%88%86%E4%BA%AB.html">M 工具箱分享</a>——把發布的工具帶去 demo、互評、歸檔。</li>
+<li><strong>背後的不確定性工程</strong>：<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>——「規格留白 AI 就自作主張」用 entropy 講就是「沒砍掉的不確定性它硬補」。</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

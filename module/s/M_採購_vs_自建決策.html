@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 採購 vs 自建決策</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 採購 vs 自建決策</h1></div><h4>🎯 學習目標</h4>
+<p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了會講幾個名詞，是為了在「要不要導入這個 AI」的會議上，做出一個半年後不會被打臉的決策。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>列出</strong> SaaS／API／自建／暫不導入四條路，並說明 TCO 與三大風險（外洩／鎖定／過時）</td>
+<td>為什麼「自建比較省」常常是錯覺？上線價之外的人力、訓練、維運、退場成本最容易被漏算。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>估算</strong>一個 AI 功能的 ROI，並選出四條路裡最合適的一條</td>
+<td>這功能省下的工時 × 時薪，划得過導入成本嗎？<strong>『暫不導入』永遠是合法選項——先問這功能真的非做不可嗎。</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>拆解</strong>一個決策的最弱環節，推論它在哪種未來情境下會崩</td>
+<td><strong>為什麼同一個功能，不同主管會選不同路？</strong>——把成本、風險、退場條款攤開，會看到各人賭的未來不一樣。若供應商半年後漲價或倒閉，我這個決策留了退路嗎？</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<ul>
+<li><strong>成本看全貌</strong>：別只比上線價，要算 TCO（導入、訓練、維運、退場），自建的人力時間成本最常被低估。</li>
+<li><strong>三大風險</strong>：資料外洩（敏感資料丟給第三方）、供應商鎖定（被綁死、漲價也只能吞）、技術過時（自建的模型半年就落後）。</li>
+<li><strong>ROI 怎麼估</strong>：省下多少工時 × 時薪 ÷ 投入成本，再回頭問「這功能真的非導入不可嗎」，「暫不導入」永遠是合法選項。</li>
+<li><strong>供應商評估</strong>：看資安認證、SLA、資料落地、出場條款（能不能把資料帶走）。</li>
+<li><strong>小作業</strong>：針對一個想導入的 AI 功能，做一頁採購 vs 自建決策表。</li>
+</ul>
+<hr />
+<h4>🤖 課前 AI 互動（10–15 分鐘，上課前完成）</h4>
+<p>上課前先讓 AI 扮演你的財務長，替你壓力測試一次。想一個你<strong>真的想導入</strong>的 AI 功能，然後貼這段給 AI（ChatGPT／Claude／Gemini 皆可）：</p>
+<blockquote>
+<p>「我想替公司導入這個 AI 功能：〔填入你的功能〕。請你扮演一位很懂總持有成本（TCO）的財務長，用連環追問逼我把決策想完整：SaaS／API／自建／暫不導入四條路我各漏算了哪些成本？資料外洩、供應商鎖定、技術過時三大風險我怎麼防？半年後供應商漲價一倍，我有沒有退路？不要直接給我答案，一次問一題，等我回答再追問。」</p>
+</blockquote>
+<p>把<strong>被問倒的那一格</strong>記下來帶進課堂——課堂的決策表演練會從大家被問倒的格子開始。</p>
+<h3>四條路：SaaS／API／自建／暫不導入</h3>
+<p>要不要導入一個 AI 功能，攤開來其實只有四條路。多數會議吵不出結果，是因為大家把這四條路混在一起講，又只盯著一個數字（月費或上線價）比。先把四條路各自講清楚。</p>
+<ul>
+<li><strong>SaaS（買現成）</strong>：直接訂閱別人做好的成品（例如某家 AI 字幕／審稿／生圖工具），開帳號就能用。<strong>適合</strong>：需求標準、不想養工程、要快上線。<strong>典型成本</strong>：月費／席次費為主，前期幾乎零，但功能被框死、資料進別人家。</li>
+<li><strong>API（接服務自己包介面）</strong>：底層模型用別人的（OpenAI／Anthropic／Google），但前後端、流程、介面自己接。<strong>適合</strong>：需求略客製、想把 AI 嵌進自家系統、但不想自己訓模型。<strong>典型成本</strong>：用量計費（每百萬 token）＋自家工程把它包成可用功能的人力。</li>
+<li><strong>自建（自己訓／自己部署）</strong>：自己跑開源模型或自己微調，部署在自家或私雲。<strong>適合</strong>：資料極敏感不能外送、量大到 API 帳單失控、或這功能是核心競爭力。<strong>典型成本</strong>：前期工程＋算力很重，且<strong>維運是長期負擔</strong>（人力時間最常被低估）。</li>
+<li><strong>暫不導入（先不做）</strong>：明確決定這一輪不碰，繼續用現行流程或先觀望。<strong>適合</strong>：需求不明、技術還在快速變、或省下的工時根本不值得折騰。<strong>典型成本</strong>：機會成本（可能比同業慢），但前期與維運成本為零、退場零難度。</li>
+</ul>
+<p>四條路用同一把尺對照，才看得出差別：</p>
+<table>
+<thead>
+<tr>
+<th>維度</th>
+<th>SaaS</th>
+<th>API</th>
+<th>自建</th>
+<th>暫不導入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>前期成本</strong></td>
+<td>低（開帳號）</td>
+<td>中（接介面工程）</td>
+<td>高（訓練＋部署）</td>
+<td>零</td>
+</tr>
+<tr>
+<td><strong>維運成本</strong></td>
+<td>低（廠商扛）</td>
+<td>中（你顧介面、廠商顧模型）</td>
+<td>高（模型、算力、人都你扛）</td>
+<td>零</td>
+</tr>
+<tr>
+<td><strong>客製彈性</strong></td>
+<td>低（功能被框死）</td>
+<td>中高（介面隨你）</td>
+<td>最高（連模型都能改）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>鎖定風險</strong></td>
+<td>高（綁廠商生態）</td>
+<td>中（換底層模型相對容易）</td>
+<td>低（東西在自己手上）</td>
+<td>無</td>
+</tr>
+<tr>
+<td><strong>退場難度</strong></td>
+<td>中（資料能不能帶走看條款）</td>
+<td>中（介面留著、換模型即可）</td>
+<td>高（沉沒成本大、難回頭）</td>
+<td>零</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>別問「哪條路最好」，問「這個功能配哪條路」——同一個組織，不同功能本來就該走不同路。</strong></p>
+</blockquote>
+<hr />
+<h3>成本與風險看全貌</h3>
+<p><strong>TCO（總持有成本）才是真價格。</strong> 月費或上線報價只是冰山一角，水面下還有四塊：</p>
+<ol>
+<li><strong>導入成本</strong>：串接、資料搬遷、流程改造、跟舊系統磨合。</li>
+<li><strong>訓練成本</strong>：教會團隊用、寫 SOP、改掉舊習慣的時間。</li>
+<li><strong>維運成本</strong>：每月帳單、故障處理、版本升級、模型重訓——<strong>自建的這塊是無底洞</strong>。</li>
+<li><strong>退場成本</strong>：哪天要換掉它，資料搬出、流程回退、重新招標的代價。</li>
+</ol>
+<p><strong>自建的人力時間最常被低估，給一個 worked 估算例。</strong> 假設一個編輯室想自建一套「自動生標題＋審稿」工具：</p>
+<ul>
+<li>上線價（算力＋部署）：看起來「只要」一台機器，約 NT$30 萬一次性。</li>
+<li>但開發要 2 名工程師 × 3 個月：2 × 3 × NT$15 萬／月 ＝ **NT$90 萬**（這筆最常被漏算）。</li>
+<li>上線後維運：0.5 名工程師長期顧著，每年 ≈ NT$90 萬／年。</li>
+<li>模型半年落後一次，重新微調＋驗證：每次再吃掉約 1 人月 ≈ NT$15 萬。</li>
+</ul>
+<p>→ 第一年真實 TCO 已逼近 <strong>NT$200 萬**，跟「30 萬就搞定」差了一個量級。同樣的功能若走 API，第一年可能 NT$30–50 萬就跑起來。</strong>自建省的是月費，貴的是你看不到的人月。**</p>
+<p>三大風險，每個都配一個媒體業真實情境：</p>
+<table>
+<thead>
+<tr>
+<th>風險</th>
+<th>它長什麼樣</th>
+<th>媒體業情境</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>資料外洩</strong></td>
+<td>敏感資料丟給第三方，落地在境外、被當訓練語料</td>
+<td>把尚未刊登的調查報導原稿貼進外部 AI 潤稿，等於把獨家與消息來源送出門</td>
+</tr>
+<tr>
+<td><strong>供應商鎖定</strong></td>
+<td>流程綁死單一廠商，漲價／改規則只能吞</td>
+<td>整個 CMS 的自動標籤、推薦都接某 SaaS，對方隔年月費漲三倍、又不給匯出，搬不走</td>
+</tr>
+<tr>
+<td><strong>技術過時</strong></td>
+<td>自建或選型押錯，半年就落後業界</td>
+<td>去年花大錢自訓的摘要模型，今年開源新模型免費就贏它，當初的投入瞬間變沉沒成本</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>上線價是冰山一角，自建真正貴的是看不到的人月與退場成本。</strong></p>
+</blockquote>
+<hr />
+<h3>ROI 與決策：主管怎麼拍板</h3>
+<p>把效益量化成一條式子，會議才吵得出結論：</p>
+<p>$$\text{ROI} = \frac{\text{每月省下工時} \times \text{時薪} \times 12 - \text{年維運成本}}{\text{導入投入成本}}$$</p>
+<p>舉例：某功能每月幫團隊省 80 工時、平均時薪 NT$400，一年省 $80 \times 400 \times 12 = $ NT$38.4 萬；若走 SaaS 一年費用 NT$12 萬、導入投入 NT$10 萬，則一年淨省 ≈ NT$26 萬、投入 10 萬，**ROI ≈ 2.6**，划得過。同一功能若自建，分母換成第一年 NT$200 萬，ROI 直接變負——<strong>這就是為什麼同一個功能、不同路會得出完全相反的拍板。</strong></p>
+<p>算完數字，還要逼自己問兩個問題：</p>
+<ul>
+<li><strong>「這功能真的非導入不可嗎？」</strong> 如果省的工時換算下來一年才幾萬塊，折騰導入、訓練、維運的代價遠超過它，那答案就是不做。</li>
+<li><strong>「暫不導入」永遠在桌上。</strong> 不是「先不做就輸了」，而是把資源留給真正非做不可、ROI 漂亮的那一個。</li>
+</ul>
+<blockquote>
+<p><strong>『暫不導入』永遠是合法選項——先問這功能真的非做不可嗎。</strong></p>
+</blockquote>
+<p>要拍板買哪一家，用一張供應商評估 checklist 把對方問到底（特別是 SaaS／API）：</p>
+<ul>
+<li>[ ] <strong>資安認證</strong>：有沒有 ISO 27001／SOC 2 之類的第三方稽核？還是只有一句「我們很安全」？</li>
+<li>[ ] <strong>SLA（服務水準協議）</strong>：保證可用率多少（99.9%？）？掛掉怎麼賠？支援回應多快？</li>
+<li>[ ] <strong>資料落地</strong>：我的資料存在哪個國家的機房？會不會被拿去訓練他們的模型？能不能要求不訓練？</li>
+<li>[ ] <strong>出場條款</strong>：合約終止時，<strong>我能不能把資料完整帶走</strong>（標準格式匯出）？還是被綁死、搬出來等於重做？</li>
+</ul>
+<blockquote>
+<p><strong>簽約前先看出場條款——能把資料帶走，才有第二次選擇的權利。</strong></p>
+</blockquote>
+<hr />
+<h3>迷思攔截</h3>
+<p>在會議上最容易帶歪決策的四個直覺，先攔下來：</p>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼錯</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「自建比較省」</td>
+<td>只看上線價，漏算開發人月、長期維運、模型重訓——真實 TCO 常是報價的數倍</td>
+<td>把人力時間折成錢算進 TCO，再比</td>
+</tr>
+<tr>
+<td>「買 SaaS 最省事、沒風險」</td>
+<td>省了維運，卻換來鎖定風險與資料外洩風險——資料進別人家、被漲價也只能吞</td>
+<td>看出場條款與資料落地，問「搬得走嗎」</td>
+</tr>
+<tr>
+<td>「不導入＝落後」</td>
+<td>把「暫不導入」當失敗，結果硬上一個 ROI 是負的功能，反而拖累團隊</td>
+<td>先算 ROI、問「非做不可嗎」，暫不導入是合法選項</td>
+</tr>
+<tr>
+<td>「簽了約資料就安全」</td>
+<td>合約寫「安全」不等於有第三方認證、不等於資料不被當訓練語料、不等於搬得走</td>
+<td>要 ISO/SOC 認證、要不訓練承諾、要可匯出條款</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>連結 / 關係</h3>
+<p>這個模組是 EMA「主管 AI 決策」系列的<strong>錢與風險那一塊</strong>，和幾個模組互相咬合：</p>
+<ul>
+<li><a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>——上游：先有「該不該碰這個 AI」的全局框架，再進到「碰的話走哪條路」。</li>
+<li><a href="M_%E8%AE%8A%E9%9D%A9%E7%AE%A1%E7%90%86%E8%88%87%E5%B0%8E%E5%85%A5.html">M 變革管理與導入</a>——下游：決定要導入、選好路之後，怎麼讓團隊不抵抗、試點先行、KPI 怎麼設。本模組決定「買不買、怎麼買」，那個模組決定「買了怎麼推得動」。</li>
+<li><a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>——資料外洩與資料落地的風險，最後要落到治理規範與對讀者的揭露上。</li>
+<li><a href="M_AI_%E5%95%86%E6%A5%AD%E6%A8%A1%E5%BC%8F%E8%A1%9D%E6%93%8A.html">M AI 商業模式衝擊</a>——ROI 與「非做不可嗎」放回媒體商業模式變動的大局看，才知道哪些功能是賭未來、哪些只是跟風。</li>
+</ul>
+<hr />
+<h3>進行方式</h3>
+<ul>
+<li><strong>配對互評</strong>：兩人一組互看對方的「採購 vs 自建決策表」，挑對方表上最弱的一格（成本或風險漏估之處）回饋給對方。</li>
+<li><strong>一起收斂一題</strong>：投票「你這個功能最後選哪條路？SaaS／API／自建／暫不導入」，請各陣營各派一人講一句理由，凸顯同一功能不同人會做出不同決策。</li>
+<li><strong>寫下個人反思</strong>：寫一句——「如果半年後供應商漲價或倒閉，我這個決策會怎麼被打臉？我有沒有留退路？」</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

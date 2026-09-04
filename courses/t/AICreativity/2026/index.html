@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人工智慧生成圖像與創造力（2026） 2026</title>
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../../../s/AICreativity/2026/index.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "KsQ+Ibyn11j6fNPZr+xAiA==", IV = "ra6mvAPzNKH6I2q0", CT = "tmf6Txsiws691CxgZMnX8ny1bGbMNnGhzskBNQctfMYwt0nsZcklviS/NDAcslxPqqZTpQp95h5Pkibh27yApR4N2FeNNkRGlBx1o9V3M/KefI4nDknyaBFeGt+AH9V3EpqVBvOliq6VERumbfWA1fCit6EiaGODIh18F8m6mTDWKm8cQk+LdnNtM6b0umskU+O6fOijXSj2d77yWaNDl+kf6ZG6GE4g1sej+MikQ62IOCkOK9MvlL+Uy4IpS0YASHutWkPhIVMckTVQeAccSWvmjDcRHylLvrB4tWoJQ8gimF7EY8Q0F8xNXJu6DO14UC+RpNItgpOshlVW53T//OXmtwu2g6Sw5z8V9Yrl4TMnhium7lpaoyy1RyP7aoFeVTLy36ylyCE940a+TuksnDUdezdXXDIonhr8IfMqiPx4uDhUTw5Y9rajllmlZaAouShR8Q0HfeO9vF+Xqjgazhdz4fq91iNKsEXHLlxHZD7eibUSsMnbKPw7j2LIL5IEt+8gnS2rm+8mEVxbi7uidv6+p+rWJDoxOzOINQ/emyh7fge8F7rVoKjq7Adm6HVZQagjLFhuvfldA41wBib1pOD+WRUFGDmqRsyHwwLOB2wLq2EUzQv1k+6ekADRjajhfx/7gx8HA69qkewM0EuVJC7WZdAQPVCXHurbZe1lTfv+nb9GPF2NJX13H69Sb4z0y+Tt4o9UWvFWmYhDFxmEW//coikXRyuKUuRgLdOCdVxVvtp6WkY0G3PjqMvEpwx48+c1OX+KtT0db70x3c870MtInMuB2/UGYoMXNQVITjb1Kz30xqlh/+IptIPRGVmx1ce33cyH1+n7ec9cR7fNZ/hFZafFnpUwmA671k0NlZf1SuKZRmBa8iWGMS/BAmvps5bTGVvTKS4QDTcIFz0Zmi2rje/gIXNAGD9GdgiQHe8Yu+uM+SZI1UhD51f4TY55LGpnpPFS9lA1mHKJGO//qResopW43XGSqWrA9Lb9uP0Er7U8nnL9aj0B7NKECwqdTwPfW1v/qIHh7noSrrFgGPRBTa5k4fZI9SlweKhUQCqBouc0SZcpoNz+WxvmMz0RJTBadGvWHAZC0eB/LqlpVCiFsOk1TbfrBCvqPvYMQUprYm3WqOJEZ1ypYOONQU78ZJKJmvYkiG3bMSfDgjxZ5OrgLo5J74SgxUYrSu441M/y0QaXTffSiD7yTJ1DcjLqv5sUfQh98qf+tDK5CLAoU5v9pppmqEEOZcnb302Usu1yWM9nyNNvgsOhwRWNV3OnAWfkkII0Sqxw9lYYcRx4uh9owHXmGvVtPlsYOp4/NDTss/pYDxXEJRMQi/eUAnKj5LSKjaYbqbNe1mVzBHBN8VSFk93H8uJkxyjknMzKOtJRPs3EzTxN5MxJy1Kl+PoAW7GYjbGwZH82mOMCsBQSSHWYT04LgR2pdWtVOyQTd0/1HYRkECXb+pbKI6UpJ1czaTrPr4lL9vA3NtPpnmaKTz4+6KP/2fieayeRglpFkPpgNM4N43xtjxyO4/yiSqJpUvCwnUoIe2xIzRQeLqA/aTFjGWnWodAlykDe6O7JE12I0UVhAdmSpMDgnHBn4IroCk/jKFc17219ujGkXA1gOX2IhkzBip9qVW8o7krylw1+dgjM0SYC92p95GVmSmXTU0+m5X0DcjYhbeJ3eKtGu9aIIXYS1Cwsaq+Lwmf1eE5pom2O/sl1zVG8RCD6E30EUpCKoy6sjL/BqWuZWP6Z6NfBQ3Nwe4N5h40WicCGFNVAGq1DhuhvB9ESDw71bJkDNZKRE2wB9Jim//zx7qpqluA/FiVWMFjJ2jXne5c=", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

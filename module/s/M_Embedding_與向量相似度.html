@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Embedding 與向量相似度</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M Embedding 與向量相似度</h1></div><ul>
+<li><strong>一句話</strong>：<strong>Embedding = 把一段文字（或圖、音）變成一串數字（向量），意義相近的東西向量也相近。</strong> 算兩個向量「有多近」就能做語意搜尋、檢索、推薦。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>Embedding（嵌入）</strong>：把「意義」編碼成座標。"狗" 和 "犬" 的向量很近，"狗" 和 "稅務" 很遠——<strong>靠的是意義，不是字面</strong>。這就是 latent space 落地成可計算的形式（連回 <a href="M_Latent_Space_%E6%BD%9B%E5%9C%A8%E7%A9%BA%E9%96%93.html">M Latent Space 潛在空間</a>）。</p>
+<p><strong>向量相似度</strong>：常用 <strong>cosine similarity（餘弦相似度）</strong>——看兩個向量「方向多接近」，1=幾乎同義，0=無關。<strong>「找相似」就是在向量空間找鄰居。</strong></p>
+<p><strong>為什麼這是 context engineering 的引擎</strong>：
+1. <strong>RAG（檢索增強生成）的核心</strong>：你的文件先全部轉成 embedding 存進<strong>向量資料庫</strong>；使用者一問，把問題也 embed，去找<strong>最相似</strong>的幾段文件，塞進 context 餵給模型。<strong>這就是「怎麼自動找到該餵的 context」的標準解</strong>（連回 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>：精準地把高資訊量的 bits 餵進去砍 entropy）。
+2. <strong>AI 長期記憶靠它取回</strong>：agent 的外部記憶（連回 <a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a>）通常以 embedding 存取——「跟現在這步最相關的過往」用相似度撈回來。
+3. <strong>它會繼承偏見</strong>：embedding 學自資料，資料偏 → 語意地圖就歪（"護理師" 偏向某性別向量）。語意搜尋、推薦因此可能系統性偏（連回 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>、<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>）。</p>
+<blockquote>
+<p><strong>一個常見誤解</strong>：語意搜尋找的是「意思像」，不是「字一樣」——所以它能找到沒有共同關鍵字但講同一件事的文件，這正是它比關鍵字搜尋強的地方，也是它偶爾撈回「看似相關其實離題」的原因。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：公司知識庫要做「問答機器人」，為什麼不能只靠關鍵字比對、需要 embedding？舉一個關鍵字會漏掉的真實提問。</li>
+<li>
+<p><strong>反思</strong>：「AI 判斷『相關』，是按它的語意地圖在量距離——這張地圖是用某批資料訓的，它的『相關』未必是我的『相關』。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：想一個你想做的「找相似 / 自動撈資料」應用，描述要 embed 什麼、用相似度撈什麼餵給 AI。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

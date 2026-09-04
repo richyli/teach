@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 學生歷史創意案例報告</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/M_%E5%AD%B8%E7%94%9F%E6%AD%B7%E5%8F%B2%E5%89%B5%E6%84%8F%E6%A1%88%E4%BE%8B%E5%A0%B1%E5%91%8A.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "zl2vNUD4V6+hC+Ih8sd0GA==", IV = "f98ezaUhsGfXw3zp", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

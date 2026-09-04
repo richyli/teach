@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Boden 三型 AI 圖像</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/M_Boden_%E4%B8%89%E5%9E%8B_AI_%E5%9C%96%E5%83%8F.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "Bhu781uzzOSGO1INUWAWZw==", IV = "FZcHtOpltOgv9jw9", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

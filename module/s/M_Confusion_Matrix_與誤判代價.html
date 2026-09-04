@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Confusion Matrix 與誤判代價</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M Confusion Matrix 與誤判代價</h1></div><h4>🎯 學習目標</h4>
+<p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了看懂一張表格，是為了不被「準確率 95%」這種數字騙過去。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>解釋</strong> confusion matrix 四格的意思，以及 false positive 與 false negative 的差別</td>
+<td>為什麼「準確率 95%」可能是個騙局？如果 100 則裡只有 5 則是假新聞，全部判「真」也有 95% 準。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>計算／指出</strong>一個分類場景中哪一種誤判代價更高，該往哪邊調門檻</td>
+<td>留言審查系統要寧可錯刪還是寧可漏放？把真讀者誤封（FP）和放過攻擊言論（FN），哪個你賠得起？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>拆解</strong>一個真實 AI 決策的兩種誤判各害到誰，並權衡門檻</td>
+<td><strong>為什麼自動假訊息偵測一上線就被罵爆？</strong>——把「漏掉假訊息」和「誤刪真報導」的代價攤開，會發現新聞場景的 FP 比 FN 更傷可信度。<strong>選門檻＝替你的場景決定『寧可錯抓還是寧可放過』。</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>誰該聽：要驗收 AI 分類系統、被工程師塞「準確率 95%」這種數字、或要決定「自動處理還是人工複核」的媒體主管。你不用會算，你要會問對問題。</p>
+</blockquote>
+<hr />
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>上課前先讓 AI（ChatGPT／Claude／Gemini 皆可）當你的出題教練。貼這段給它：</p>
+<blockquote>
+<p>「用一個『100 則留言、其中 5 則是惡意攻擊』的例子，教我 confusion matrix 四格的意思。然後出三題情境題考我：留言審查、假訊息偵測、內容推薦——各自 false positive 和 false negative 哪個代價更高、門檻該往哪邊調。一題一題來，等我回答之後再講解。」</p>
+</blockquote>
+<p>把你<strong>答錯（或跟 AI 意見相左）的那一題</strong>帶進課堂。課堂上會用媒體場景重新拆這題，看你和 AI 誰對。</p>
+<h3>Confusion Matrix 的四格</h3>
+<p>任何「把東西分成兩類」的 AI——這則貼文是不是假訊息？這則留言該不該刪？——上線後只會有四種結局。把它畫成一張 2×2 的表，就是 <strong>confusion matrix（混淆矩陣）</strong>。</p>
+<p>拿一個你天天會碰到的場景：一套<strong>假訊息偵測系統</strong>，掃過 100 則貼文，每一則它判「假」或「真」，而每一則實際上也真的是「假」或「真」。把「系統怎麼判」當欄、「實際是什麼」當列，就得到四格：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>實際是假訊息</strong></th>
+<th><strong>實際是真消息</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>系統判「假」（攔下來）</strong></td>
+<td>✅ TP 真陽性：假的，抓對了</td>
+<td>❌ FP 偽陽性：真的，被誤刪／誤標</td>
+</tr>
+<tr>
+<td><strong>系統判「真」（放行）</strong></td>
+<td>❌ FN 偽陰性：假的，漏掉了</td>
+<td>✅ TN 真陰性：真的，正確放行</td>
+</tr>
+</tbody>
+</table>
+<p>逐格用白話講一遍：</p>
+<ul>
+<li><strong>TP（True Positive，真陽性）</strong>：是假訊息，系統也說是假訊息。<strong>抓對了</strong>。</li>
+<li><strong>FP（False Positive，偽陽性）</strong>：其實是正當報導，系統卻把它當假訊息攔下來。<strong>冤枉好人</strong>——真記者的稿被下架、真讀者被禁言。</li>
+<li><strong>FN（False Negative，偽陰性）</strong>：是假訊息，系統卻放它過去。<strong>漏網之魚</strong>——假消息照樣傳播。</li>
+<li><strong>TN（True Negative，真陰性）</strong>：是真消息，系統也放行。<strong>沒事</strong>。</li>
+</ul>
+<p>兩條對角線是兩種人生：<strong>左上＋右下（TP＋TN）是答對</strong>，<strong>右上＋左下（FP＋FN）是兩種不同的錯</strong>。整個模組的重點就是：<strong>這兩種錯不一樣，代價也不一樣。</strong></p>
+<h4>兩個你必須聽得懂的詞：precision 與 recall</h4>
+<p>工程師報告時會丟出兩個指標。你不用會算，但要聽得懂它們各自只看哪一格的失敗：</p>
+<ul>
+<li><strong>精確率 precision（白話：抓出來的，有多少是真的該抓的）</strong>——系統喊「假訊息」的那一堆裡，有多少真的是假訊息？被它「冤枉」越多，precision 越低。</li>
+</ul>
+<p>$$\text{precision}=\frac{TP}{TP+FP}$$</p>
+<ul>
+<li><strong>召回率 recall（白話：該抓的，抓到多少）</strong>——所有真正的假訊息裡，被系統抓到的比例。漏掉越多，recall 越低。</li>
+</ul>
+<p>$$\text{recall}=\frac{TP}{TP+FN}$$</p>
+<p>記法：<strong>precision 在替「被你攔下來的人」喊冤（盯 FP）；recall 在替「被你放過去的禍害」算帳（盯 FN）。</strong> 一個顧誤殺，一個顧漏網。</p>
+<blockquote>
+<p><strong>confusion matrix 不是一個分數，是四種結局——而其中兩種『錯』，從來不等價。</strong></p>
+</blockquote>
+<hr />
+<h3>誤判代價不對稱</h3>
+<h4>先戳破「準確率 95%」的迷思</h4>
+<p>工程師說：「我們這套假訊息偵測，準確率 <strong>95%</strong>。」聽起來很猛。但請先問一句：<strong>這批資料裡，假訊息本來占多少？</strong></p>
+<p>假設 100 則貼文裡，<strong>只有 5 則是假訊息</strong>，95 則是真的。現在我做一個<strong>最廢的「模型」：不管三七二十一，全部判「真」</strong>。</p>
+<ul>
+<li>95 則真消息，全判真 → 全對（95 個 TN）。</li>
+<li>5 則假訊息，全判真 → 全錯（5 個 FN）。</li>
+<li>答對 95 / 100 = <strong>準確率 95%</strong>。</li>
+</ul>
+<p>一個<strong>什麼都沒做、假訊息一則都沒抓到</strong>的廢模型，準確率就有 95%。這叫 <strong>base rate（基準率）陷阱</strong>：當你要抓的東西本來就很稀有，「準確率」這個單一數字幾乎只是在反映「多數類有多大」，跟「有沒有抓到壞東西」幾乎無關。</p>
+<p>這時候真正會說話的是 <strong>recall</strong>：上面那個廢模型 recall = $\frac{0}{0+5} = 0$，一抓就現形。<strong>所以主管聽到「準確率 95%」的正確反應不是點頭，是反問：「那 recall 多少？漏掉的那批呢？」</strong></p>
+<h4>同一個 95%，FP 和 FN 的代價天差地遠</h4>
+<p>兩種錯的代價幾乎從不對稱，而且<strong>害到的是不同的人</strong>。同一套「準確率」，換個場景，你該怕的錯就翻面：</p>
+<table>
+<thead>
+<tr>
+<th>場景</th>
+<th>FP（誤抓／誤判正向）害到誰</th>
+<th>FN（漏抓／漏判）害到誰</th>
+<th>哪種代價更高</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>假訊息偵測</strong></td>
+<td>真記者好稿被下架、真讀者被禁言 → <strong>傷新聞可信度與言論自由</strong></td>
+<td>假消息照傳 → 公共危害、平台被罵</td>
+<td>視角而定，但<strong>新聞品牌</strong>通常更怕 FP（誤殺真報導重傷公信力）</td>
+</tr>
+<tr>
+<td><strong>留言審查</strong></td>
+<td>正常網友被誤封、社群氣氛變寒蟬</td>
+<td>攻擊／仇恨言論漏放 → 受害者受傷、平台失格</td>
+<td><strong>FN 漏放仇恨</strong>對受害者代價極高；但 FP 過嚴會趕走用戶</td>
+</tr>
+<tr>
+<td><strong>內容推薦</strong></td>
+<td>推了用戶其實沒興趣的內容 → 體驗稍差</td>
+<td>該推的好內容沒推到 → 機會成本、流量損失</td>
+<td>兩者代價都相對低、可逆，<strong>容錯空間大</strong></td>
+</tr>
+<tr>
+<td><strong>詐騙偵測</strong></td>
+<td>正常交易被擋、用戶氣到客訴</td>
+<td>詐騙放過 → 真金白銀損失、法遵風險</td>
+<td><strong>FN 漏掉詐騙</strong>通常代價最高（直接賠錢＋監管）</td>
+</tr>
+</tbody>
+</table>
+<p>讀這張表的方式：<strong>先問「在我的場景，FP 和 FN 各害到誰、賠不賠得起、可不可逆」</strong>，再決定要把系統調得「寧可錯殺」還是「寧可錯放」。留言審查漏放一則仇恨言論，傷的是一個具體的受害者，可能不可逆；推薦系統推錯一則，使用者滑掉就沒事。代價結構不同，工程上該追求的指標就不同。</p>
+<blockquote>
+<p><strong>『準確率 95%』是句空話，除非你先問清楚——這 5% 的錯，是冤枉好人（FP）還是放過壞人（FN），而我的場景賠得起哪一種？</strong></p>
+</blockquote>
+<hr />
+<h3>主管視角：該問工程師什麼、門檻調哪邊</h3>
+<h4>precision / recall 的拉鋸：門檻（threshold）</h4>
+<p>模型其實不是直接吐「假／真」，而是吐一個<strong>分數</strong>（例如「這則是假訊息的機率 0.73」）。是你（或工程師）設一條<strong>門檻</strong>，超過就判「假」、攔下來。<strong>這條門檻往哪邊移，就決定了你要哪一種錯。</strong></p>
+<ul>
+<li><strong>門檻調低（風吹草動就攔）</strong>：抓得更兇 → 漏網變少（<strong>recall ↑</strong>），但冤枉的也變多（<strong>precision ↓</strong>）。寧可錯殺。</li>
+<li><strong>門檻調高（很確定才攔）</strong>：出手更謹慎 → 冤枉變少（<strong>precision ↑</strong>），但漏網變多（<strong>recall ↓</strong>）。寧可錯放。</li>
+</ul>
+<p>這是一場<strong>蹺蹺板</strong>：在同一個模型上，precision 和 recall <strong>通常無法同時拉滿</strong>，壓低一種錯就會放大另一種。所以「門檻定在哪」不是技術細節，是<strong>價值判斷</strong>——你在替你的場景決定「寧可錯抓還是寧可放過」。這正是該由懂業務、懂品牌風險的<strong>主管</strong>參與的決定，不該全丟給工程師。</p>
+<h4>該問工程師的三題</h4>
+<p>不用會算，把這三題問出口，你就已經不會被單一數字騙：</p>
+<ol>
+<li><strong>「誤判率多少——precision 和 recall 各是多少？」</strong>（別接受只報一個「準確率」。要拆開看冤枉率和漏網率。）</li>
+<li><strong>「在我們這個場景，哪一種誤判代價高——FP 還是 FN，害到的是誰？」</strong>（逼大家把「冤枉好人」和「放過壞人」攤開比，這是業務判斷不是技術判斷。）</li>
+<li><strong>「門檻怎麼定的、能不能調？如果我們更怕漏掉假訊息，門檻往哪邊移、代價是什麼？」</strong>（確認門檻是可調的旋鈕，而且調整的取捨講得清楚。）</li>
+</ol>
+<h4>設「人複核把關點」：human-in-the-loop</h4>
+<p>既然兩種錯都消不掉、門檻只能在它們之間取捨，成熟的設計不是「讓模型全自動」，而是<strong>把人放在最痛的那種錯的關口上</strong>——這就是 <strong>human-in-the-loop（人機協作把關）</strong>。設計原則：</p>
+<ul>
+<li><strong>不對稱投放人力</strong>：哪種錯代價高、不可逆，就在那條路徑上塞人工複核。例如假訊息偵測<strong>怕誤刪真報導（FP）</strong>，就讓系統只「標記送審」、<strong>下架前一定要編輯人工確認</strong>；詐騙偵測<strong>怕漏掉（FN）</strong>，就把模型門檻調低多攔、再讓人去清冤枉的那批。</li>
+<li><strong>用門檻分流，不是門檻決生死</strong>：高信心的自動處理、模糊地帶（接近門檻）一律送人複核。讓 AI 處理量、讓人處理風險。</li>
+<li><strong>記錄與回饋</strong>：人複核的每一筆都是在告訴模型「這格你判錯了」，回頭可以重新校準門檻與重訓。</li>
+</ul>
+<p>延伸閱讀（這套思路在治理層怎麼落地）：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>。</p>
+<p>真實個案（效率數字如何蓋住誤判代價）：<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a> — DOGE 宣稱 AI 把法規審查「快 90%（36 小時→2.4 小時）」，但把「錯刪一條反歧視住房法規」與「漏刪一條冗規」的極不對稱代價整個藏了起來。是「當有人拿效率數字說服你導入 AI，先問代價換的是什麼」最好的討論素材。</p>
+<blockquote>
+<p><strong>本模組收束成一句話：模型給你分數，門檻替你的場景決定『寧可錯抓還是寧可放過』，而人複核把關點要設在你最賠不起的那種錯上。AI 負責量，人負責風險。</strong></p>
+</blockquote>
+<hr />
+<h3>⚠️ 迷思攔截</h3>
+<p>聽工程師報告時，這三句話只要出現就要警鈴大作：</p>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>怎麼攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「準確率高就是好模型」</td>
+<td>在 base rate 偏斜的場景（假訊息稀有），全判「真」也有 95% 準——準確率只反映多數類大小，沒告訴你抓到壞東西沒</td>
+<td>反問「<strong>recall 多少、漏掉的那批呢</strong>」；要求拆出 precision／recall 而非只看一個總分</td>
+</tr>
+<tr>
+<td>「precision 和 recall 可以同時拉滿」</td>
+<td>同一模型上兩者是蹺蹺板，壓低一種錯就放大另一種；門檻往哪移都得犧牲一邊</td>
+<td>要工程師畫出「不同門檻下 precision／recall 怎麼變」，逼出取捨而非幻想全贏</td>
+</tr>
+<tr>
+<td>「門檻是工程師的事，跟我無關」</td>
+<td>門檻＝「寧可錯抓還是寧可放過」的價值判斷，牽涉品牌風險與對誰負責，是業務決定不是技術細節</td>
+<td>主管必須參與定門檻，並指定「哪種錯我們更賠不起」；把它當經營決策而非調參</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>與其他模組的關係</h3>
+<ul>
+<li><strong>偏見從哪來</strong>：模型為什麼系統性地對某類內容判錯（某一格特別高），常是訓練資料的問題 → <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>。</li>
+<li><strong>怎麼落地成制度</strong>：門檻、人複核把關點、誤判責任歸屬，要寫進編輯室規範與對外揭露 → <a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>。</li>
+<li><strong>放進主管決策框架</strong>：「驗收 AI 別只看一個數字」是主管面對所有 AI 系統的通則 → <a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>。</li>
+</ul>
+<p><strong>連結</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>｜<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></p>
+<hr />
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各舉一個自己領域的分類場景（假訊息/留言審查/推薦/詐騙偵測），互相問「false positive 和 false negative 哪個害人比較深？」</li>
+<li><strong>一起想一題</strong>：當兩種誤判代價不對稱時，該把模型門檻調哪邊？收斂一個原則。</li>
+<li>
+<p><strong>反思</strong>：「我之前看 AI 準確率，是不是只看一個數字？現在我會多問什麼？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：選一個媒體場景，畫 confusion matrix 與誤判代價，標出你會把門檻往哪邊調、為什麼。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Maximum Likelihood 最大概似</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M Maximum Likelihood 最大概似</h1></div><ul>
+<li><strong>一句話</strong>：<strong>Maximum Likelihood Estimation（MLE，最大概似估計）= 在所有可能的設定裡，挑出「最有可能生出我手上這份資料」的那一組。</strong></li>
+</ul>
+<h4>核心</h4>
+<p><strong>用一個情境秒懂</strong>：你撿到一枚硬幣，丟 10 次出現 7 正 3 反。問：它正面機率 $p$ 是多少？</p>
+<ul>
+<li>直覺會說「$p=0.7$」。<strong>為什麼是 0.7？</strong> 因為在所有可能的 $p$ 裡，$p=0.7$ 讓「丟出 7 正 3 反」這件事<strong>發生的機率最大</strong>。</li>
+<li>這就是 MLE：<strong>寫出「資料發生的機率」當成參數的函數（叫 likelihood），然後挑讓它最大的參數。</strong></li>
+</ul>
+<p>$$\hat{\theta}_{MLE} = \arg\max_{\theta} \; P(\text{你的資料} \mid \theta)$$</p>
+<p>讀法：$\theta$ 是模型參數，挑那個讓「資料出現機率」最高的 $\theta$。</p>
+<p><strong>三個要記住的點</strong>：
+1. <strong>「最能解釋資料」不等於「真相」</strong>：資料少、或抽樣偏（<a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">M Sampling Theory 抽樣理論</a>），MLE 就會自信地給你一個偏掉的答案。7 正 3 反就斷定 $p=0.7$，其實很可能只是公正硬幣的隨機波動。
+2. <strong>它是無數 AI 模型的訓練骨架</strong>：邏輯迴歸、神經網路的訓練，本質都是「調參數去最大化資料的 likelihood」——等價於最小化 cross-entropy loss（連回 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>：訓練 = 降低模型對真實答案的不確定性）。
+3. <strong>過度自信是它的天性</strong>：MLE 只看「最能解釋已見資料」，不內建「我見得不夠多」的謙虛——這要靠更多資料或貝氏方法補。</p>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>配對</strong>：丟硬幣 4 次全是正面，MLE 會說 $p=1.0$（永遠正面）。這合理嗎？問題出在哪？（樣本太小）</li>
+<li>
+<p><strong>反思</strong>：「AI 給我一個很篤定的答案時，它是不是只是『最能解釋它看過的資料』，而不是『對』？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：想一個你工作上「用過去推估未來」的判斷，寫下它假設了哪份資料能代表全局、這假設什麼時候會害你。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

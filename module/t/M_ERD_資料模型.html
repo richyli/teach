@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M ERD 資料模型</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "sAdKfcWJdSta71G2wt8fZQ==", IV = "E0LNYn6uZqEi95m6", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

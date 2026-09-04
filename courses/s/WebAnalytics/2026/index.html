@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>網路數據分析 Web Analytics（2026） 2026</title>
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../../../s/WebAnalytics/2026/index.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "MohcMC0wltC31zkrue8yAA==", IV = "QZJfvy7pOjt3xZsC", CT = "sTtVwHtmYxMY65UuSqogtq5VJk4gEDI7ucKe2sfQAN15WpiKzksJkz3TTjC4608OFX57ZhRm3p6EPjf4EF+bnyxI4J5D1mgTH4noXjlXfsUXOZqzpe+7QXfjRBTBmxHjvm4y59NGXYxER7mOOjbbE/yylntKPcKwNNE5P5bKEHn9WF2xYV7NwtetA6hvG/zCOVLJiG6J5fLiNkEyeKagfAF9s9XbKnVwpgrC/Ud598eTqdzXzsmr3eHKJnXQMNLi51apOkLtxnl6GsALlmRVKI+f3FWwkFpIaeg0I5urBeyti+G8AqGazTwwPVEqSu3GHUTZIbeSfzUOYwkIaYAEv4Uu5/vquv+dRQOLhanLe7uyq0/SQbVr3Yi+i72YTiXTTEDJgzCCncfLh+EDgttrdIewr8cL3IhoaIfbyjSN3jduEYMHzptN9BSj+UXxLbbf2ES9Sb2uwnNBZc4QLxBPnnuaxZPmVVT2jYBg+vvvfMBmowBYQIpc4UhqfZREn9ickmT/0vGHv2aIJobBv9tbtQ+ijFX6zE57u2ooqNtSBhEsXH+3dSjpEZohDGUNuUV++6A4Mvn2+XxYPRQbN+JhR9QW57O4FLcKeeTbtl8K4MVjTRTxUwp7Craz156ylnnBaA536APh4fCuaGqTUcFJSSsoQyd001Clv/hA6SD+zxCisormzq+46eHwuM1E6Mv0ftsp+b+S+r89qZSMraWKD4N2JrH8vbW9EXoZ6aux4W14+rZPX8wZ1a2WBHxG5q7tHttphoHjby9uRCzlZMcYsinECWWRErQuxLsMwul4Y9WwrA+JzoVlZN/HWaa3uqtcdJZgGfLvjJ6CQ1fK+oNIj3J9H1D049yNjA5yGBkjkhziv/MBsoKuLjKxWFjxcz1Wvw1X5gQCNqmxMEg96PL0vrmk/IgnE5TPwDJzxBSPm/2ay+SbwJh8A5ncbt6UdIDng3qTc4dOo9PLrZPNO6nkEEbbZ7aD/NAdLUaGsdu2p8CwAYn3AeA/P5zI0oMXggHjzdGZodCSgf5R8bwafEh32XDBZtNA2iSHQMg9602wb1z5bnUyTgCntqX3DcpOZn+OaJWibdMwbx+XRXi9BlwWDCathu1H7ZEg6U4DEgg7eERiRuQhM/OE/eiREWjxMoRBa4Lt0j60tDMsrnEs0Ei3w2CBYeJD55XnPNM1sb1pKUcQy3ujkl2cnGdaG+2LvEWl1QmQcnN1GSavPJiwNbvtO89TtN9KkwgJmk1RCzga7BrSDpCZKIoZRsycixNXxdhxnHt/QMhCt9gex2CpGlmanmw38j1qPYrLfR0WvE0GVd9FScvblKpWMIGwwEIJD4LdykuAUvY8A9iMQJOzwd00bhsKNYGk7p8vSMbBKDlSywlJXnzri5XwHZp4yNv8IKrDoyleolnWGgP1XUgUsD/YAqtoZ5tISN65o7DAOs5S+EOjuF3HnsFSikGJvJRZ949UTg5KThsGfJqU", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

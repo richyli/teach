@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 設計系統與元件化</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 設計系統與元件化</h1></div><ul>
+<li><strong>為何 vibe coding 時代反而更該學</strong>：你一頁一頁叫 AI 生畫面時，<strong>它每次都會「重新發明」按鈕、顏色、間距</strong>——結果十個畫面長得像十個不同產品，按鈕一頁圓一頁方、藍色有五種。設計系統與元件化是「<strong>定義一次、到處重用</strong>」的紀律，讓 AI 生出來的東西一致、專業、好維護。這在「畫面生成超便宜」的時代，反而是品質的分水嶺。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>元件化（componentization）= 把介面拆成可重用的積木</strong>：按鈕、輸入框、卡片、導覽列各做成一個「元件」，<strong>定義一次、到處用</strong>。改一次元件，所有用到的地方一起更新（連回 <a href="M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">M ERD 資料模型</a> 的「同一事實只存一處」——這裡是「同一個按鈕只定義一處」）。</p>
+<p><strong>設計系統（design system）= 一整套「視覺與互動的共同規範」</strong>，通常含：
+- <strong>設計 token</strong>：顏色、字級、間距、圓角的標準值（主色就這一個藍、間距只用 4/8/16…）。<strong>不准每次隨手挑</strong>。
+- <strong>元件庫</strong>：標準化的按鈕、表單、卡片等，附「什麼時候用哪個」。
+- <strong>規範</strong>：什麼情境用什麼樣式、文案語氣、無障礙要求。</p>
+<p><strong>為什麼一致性這麼值錢</strong>：
+1. <strong>專業感</strong>：一致 = 看起來像一個成熟產品；混亂 = 看起來像拼湊的學生作業。
+2. <strong>可維護</strong>：改一處全站更新，不用一頁頁追（連回 <a href="M_%E6%8A%80%E8%A1%93%E5%82%B5%E8%88%87%E9%87%8D%E6%A7%8B.html">M 技術債與重構</a>：不一致就是一種債）。
+3. <strong>更快</strong>：有現成積木，新畫面用組的，不用每次從零。</p>
+<blockquote>
+<p><strong>vibe coding 接法</strong>：<strong>別讓 AI 每頁自由發揮。</strong> 開工前先和 AI 定一份輕量設計系統——主色、字級階、間距尺、幾個核心元件——<strong>然後每生一頁都要求它「沿用既有元件與 token，不要新造樣式」</strong>。或直接讓它套用現成 UI 框架（如某個元件庫），一致性免費拿到。<strong>一致性是規定出來的，不是 AI 自動會的。</strong></p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：你連續叫 AI 生了 8 個畫面，怎麼確保它們看起來像「同一個產品」而不是 8 個產品？（先定 token + 元件，每頁要求沿用）</li>
+<li>
+<p><strong>反思</strong>：「我一頁頁生畫面時，有沒有給 AI 一套共同規範？還是放任它每次重新發明按鈕？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：替你的產品定一份最小設計系統（1 主色 + 3 字級 + 1 套間距 + 3 個核心元件），下次生畫面時要求 AI 全程沿用，比較一致性差多少。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

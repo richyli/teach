@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 科技採用的經濟學模型</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 科技採用的經濟學模型</h1></div><ul>
+<li><strong>先修</strong>：會「機率是 0 到 1」「效用 = 我從一個選項得到的價值」即可。</li>
+</ul>
+<blockquote>
+<p><strong>一條主線串起全部</strong>：個體選擇（McFadden）→ 加異質性變擴散（門檻）→ 加互動變 Bass → 加網路外部性變 lock-in → 拉到總體變 Romer/GPT。<strong>每一步都是「上一個模型多放一個經濟學假設」</strong>，學生看得到模型怎麼長出來。</p>
+</blockquote>
+<hr />
+<h3>個體層：採用是一個「選擇」（效用 / 期望理論）</h3>
+<p>最該補的一塊，因為它正是 conjoint 分析的理論母體。</p>
+<h4>Random Utility / Discrete Choice（McFadden, 諾貝爾經濟獎）</h4>
+<p>採用 = 比較「採用 vs 不採用」的效用，誰高選誰。第 $i$ 人對選項 $j$ 的效用：</p>
+<p>$$U_{ij} = V_{ij} + \varepsilon_{ij}$$</p>
+<p>$V_{ij}$ 是可觀測部分（價格、功能、易用性…），$\varepsilon_{ij}$ 是隨機誤差。選擇機率寫成 logit：</p>
+<p>$$P_{ij} = \frac{e^{V_{ij}}}{\sum_k e^{V_{ik}}}$$</p>
+<blockquote>
+<p><strong>教學張力</strong>：TAM 是心理測量（量表 → SEM），McFadden 是選擇行為（選項 → logit），但兩者可以是<strong>同一個效用函數的兩種觀測方式</strong>。conjoint 研究就站在這個接縫上——用選擇資料反推「有用性」這類構念的權重。</p>
+</blockquote>
+<h4>Subjective Expected Utility / Prospect Theory（Kahneman–Tversky）</h4>
+<p>採用新科技是<strong>風險決策</strong>：期望效用 vs 價值函數 + 損失趨避。它解釋為何「現狀偏誤」讓好科技也擴散得慢——放棄舊系統的「損失」感受，是同等「獲得」的兩倍重。</p>
+<p><strong>自我消化</strong>：為什麼大公司明明知道新工具更好，卻常常拖很久才換？（提示：沉沒成本 + 損失趨避，不是「他們不理性」。）</p>
+<hr />
+<h3>群體層：擴散的經濟學版本（Bass 的近親與上位理論）</h3>
+<p>Bass 給了 S 曲線，但它把擴散當「傳染」。經濟學版本問的是：<strong>到底是什麼力量推著人一個個採用？</strong></p>
+<ul>
+<li><strong>Epidemic / Logistic diffusion</strong>：Bass 的數理骨架，$\dot{N}=\beta N(M-N)$。純模仿、無創新，採用速度正比於「已採用 × 未採用」。</li>
+<li><strong>Probit / Threshold model（David, Davies）</strong>：每個採用者有<strong>異質門檻</strong>（企業規模、成本回收點不同）。科技降價時，門檻由低到高逐一被跨過——比 Bass 更「經濟學」，因為擴散是<strong>價格下降</strong>驅動，不是傳染。</li>
+<li><strong>Rank / Stock / Order effects（Karshenas &amp; Stoneman）</strong>：擴散的總框架，把「為何有人早採用」拆成四種機制——</li>
+<li><strong>Rank（異質報酬）</strong>：不同人從科技得到的好處不同，好處大的先採用。</li>
+<li><strong>Stock（存量外溢）</strong>：採用的人越多，後採用者的好處越低（或成本越高）。</li>
+<li><strong>Order（卡位）</strong>：早採用本身有策略價值（搶先機）。</li>
+<li><strong>Epidemic（資訊擴散）</strong>：要先「知道」才能採用。</li>
+</ul>
+<blockquote>
+<p><strong>一句話對照</strong>：Bass 把所有人當成只會互相傳染的同質個體；門檻/Rank 模型承認<strong>人是不一樣的</strong>，這更貼近企業科技採用的真實。</p>
+</blockquote>
+<p><strong>自我消化</strong>：同一個 AI 工具，為什麼新創公司比傳統大企業早採用？用 Rank（報酬）和 Stock（轉換成本）各講一句。</p>
+<hr />
+<h3>網路、策略與總體（為何鎖定、要不要等、加總到哪）</h3>
+<h4>網路與相容性：為何科技會「鎖定」</h4>
+<ul>
+<li><strong>Network externalities（Katz–Shapiro, Farrell–Saloner）</strong>：效用隨採用人數上升，$U = v + \theta\, n(p)$。解釋臨界質量（critical mass）、tipping point、贏者全拿。</li>
+<li><strong>Path dependence / Lock-in（Arthur, increasing returns）</strong>：QWERTY 鍵盤、VHS 勝 Betamax。報酬遞增 → 多重均衡 → <strong>歷史（而非優劣）決定結果</strong>。對「為何劣勢科技勝出」極有說服力。</li>
+</ul>
+<h4>資訊與策略：要不要「先」採用</h4>
+<ul>
+<li><strong>Real Options（投資不可逆 + 等待價值）</strong>：採用是有 timing 的投資，不確定性高時「等待」本身有價值——解釋過度延遲。</li>
+<li><strong>Information cascades / Herding（Bikhchandani–Hirshleifer–Welch）</strong>：理性個體看別人的決策而<strong>捨棄自己的私有訊號</strong> → 集體採用或集體不採用（可能採用到爛東西）。</li>
+<li><strong>Signaling（Spence）</strong>：採用新科技當成<strong>能力訊號</strong>（「我們很創新」）——這條線直接接信號理論。</li>
+</ul>
+<h4>總體 / 成長（Solow 的延伸）</h4>
+<ul>
+<li><strong>Romer 內生成長</strong>：技術不是天上掉的「剩餘」，而是 R&amp;D 投入的<strong>內生產物</strong>。補上 Solow 把技術當外生的最大缺口。</li>
+<li><strong>GPT（General Purpose Technology, Bresnahan–Trajtenberg）</strong>：通用技術（蒸汽、電、AI）有<strong>延遲的生產力效應</strong>，解釋 <strong>Solow 悖論</strong>——「電腦無所不在，唯獨不在生產力統計裡」，因為要等互補投資、組織重構到位。</li>
+</ul>
+<blockquote>
+<p><strong>本模組收束成一句話</strong>：<strong>TAM/UTAUT 告訴你「為什麼一個人想用」；這些經濟模型告訴你「這些想法在市場裡會長成什麼形狀」——選擇 → 擴散 → 鎖定 → 成長。</strong></p>
+</blockquote>
+<hr />
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對演練</strong>：各選一個你身邊正在擴散（或卡住）的科技（如某 AI 工具、電動車、行動支付），用上面<strong>任兩個模型</strong>各講一句它為何快/慢。鼓勵跨層次配（一個個體層 + 一個網路/總體層）。</li>
+<li><strong>一起想一題</strong>：「劣幣驅逐良幣」的科技版——舉一個你認為「比較差卻贏了」的科技，它靠的是 network externalities、lock-in、還是 cascade？</li>
+<li>
+<p><strong>反思</strong>：「我以前解釋科技採用只會說『好不好用』；現在我會多問——它的擴散是被<strong>價格</strong>、<strong>人數</strong>、<strong>等待價值</strong>、還是<strong>互補投資</strong>卡住？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一個你工作領域正在導入的科技，畫出它在「個體選擇 → 擴散 → 網路鎖定 → 總體影響」這條線上目前卡在哪一段，並指出對應的那個模型。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

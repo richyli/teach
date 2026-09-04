@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 資訊理論與不確定性</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 資訊理論與不確定性</h1></div><h4>🎯 學習目標</h4>
+<p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背公式，是為了能回答你本來就好奇、而且天天踩到的事。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>解釋</strong> entropy 就是「不確定性／還沒被消除的猜測空間」，資訊量＝消除了多少不確定性</td>
+<td>為什麼老闆落落長的信常常沒新資訊，一句「你被資遣了」資訊量卻爆表？資訊量跟字數無關。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>判斷</strong>一段對話裡 AI 手上的 context 夠不夠、不確定性集中在哪</td>
+<td>為什麼同一個問題，我給三句背景它就答得準、我只丟一句它就亂編？<strong>context 不足＝它面對的 entropy 太高，只好用最可能的答案硬補。</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>拆解</strong>一次「AI 幻覺／亂補」是怎麼從不確定性產生的，並推論該補什麼 context</td>
+<td>那次 AI 把我同事的名字張冠李戴、把沒發生的會議講得煞有其事——它不是笨，是我讓它在高不確定性下被迫生成。我當時少給了什麼？</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>不確定性是一種「猜測空間」，資訊量就是把它砍小</h3>
+<blockquote>
+<p>先備概念：entropy 是「平均不確定性」，公式是 $H = -\sum p_i \log_2 p_i$。<strong>本模組不重推公式</strong>，只借它的直覺：分布越均勻、entropy 越高、越不可預測；餵對資訊就把分布壓尖、entropy 砍下來。</p>
+</blockquote>
+<p>這一節的目的不是讓你會算 entropy，而是讓你用 entropy 的眼睛看 AI。讀完之後，看到 AI 亂講話，第一個念頭不會是「這 AI 真笨」，而是「它面對的猜測空間太大，我少餵了哪幾塊資訊？」</p>
+<p><strong>先用一個猜詞遊戲建立直覺</strong>。假設對方心裡想著一個職業，你要用是非題把它猜出來：</p>
+<table>
+<thead>
+<tr>
+<th>你問的問題</th>
+<th>砍掉多少不確定性</th>
+<th>拿到幾 bit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「是醫師嗎？」</td>
+<td>幾乎沒砍（幾千種職業砍掉一種）</td>
+<td>≈ 0 bit，爛問題</td>
+</tr>
+<tr>
+<td>「是室內工作嗎？」</td>
+<td>一刀砍掉約一半</td>
+<td>≈ 1 bit，好問題</td>
+</tr>
+<tr>
+<td>「需要證照嗎？」</td>
+<td>又砍一半</td>
+<td>再 +1 bit</td>
+</tr>
+</tbody>
+</table>
+<p>每問一個「砍一半」的好問題，就拿到 <strong>1 bit</strong>。如果職業有 16 種等可能，理論上 $\log_2 16 = 4$ 個好問題就收斂。<strong>重點不在你問了幾句話，在每一句砍掉多少猜測空間。</strong></p>
+<p><strong>把這個直覺接到「資訊量跟字數無關」</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>訊息</th>
+<th>字數</th>
+<th>消除的不確定性</th>
+<th>資訊量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>老闆落落長的勉勵信</td>
+<td>800 字</td>
+<td>你早就知道的事</td>
+<td>趨近 0</td>
+</tr>
+<tr>
+<td>「你被資遣了」</td>
+<td>5 字</td>
+<td>把你對未來的猜測空間整個翻掉</td>
+<td>爆表</td>
+</tr>
+<tr>
+<td>「明天 50% 降雨」</td>
+<td>6 字</td>
+<td>分布最均勻、最沒幫你決策</td>
+<td>高 entropy，逼你再去查</td>
+</tr>
+<tr>
+<td>「明天 100% 出太陽」</td>
+<td>7 字</td>
+<td>分布塌成一個尖峰</td>
+<td>entropy ≈ 0，可直接行動</td>
+</tr>
+</tbody>
+</table>
+<p><strong>自己想一下</strong>：丟一枚公正硬幣，結果幾 bit？（答：1 bit，$\log_2 2 = 1$。最公平＝最不可預測＝資訊量最大。）</p>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「報告寫越長＝資訊越多」</td>
+<td>長度量的是字數，不是消除的不確定性</td>
+<td>回扣「資遣信 vs 勉勵信」</td>
+</tr>
+<tr>
+<td>「entropy 高是壞事」</td>
+<td>entropy 是<strong>中性量尺</strong>，量的是「還沒被消除的猜測空間」，不是混亂或品質差</td>
+<td>強調單位是 bit，是尺不是評價</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>資訊量不看你說了多少，看你砍掉對方多少猜測空間。AI 面對的猜測空間，就是它的 entropy。</strong></p>
+</blockquote>
+<hr />
+<h3>把這把尺對準 LLM：context 不足＝高 entropy＝它只好硬補</h3>
+<p><strong>LLM 在做的事，一句話</strong>：給定目前的上下文，吐出「下一個 token 的機率分布」，再從分布裡 sample。這個分布有它的 entropy——<strong>分布越平，模型越不知道該說什麼，sample 出來就越像亂編。幻覺不是品德問題，是高 entropy 下被迫生成的數學後果。</strong></p>
+<p><strong>生成式 vs 判別式（一句話分清楚）</strong>：判別式模型是「在你給的選項裡選一個」（分類、是非），猜測空間小、容易驗證；生成式 LLM 是「從近乎無限的句子空間裡生一段」，猜測空間天生巨大，所以<strong>餵 context 砍 entropy 才是它能不能可靠的關鍵</strong>。</p>
+<p><strong>核心對照表：context 不足 → 高 entropy → 幻覺</strong></p>
+<table>
+<thead>
+<tr>
+<th>你給的 context</th>
+<th>模型對「答案」的分布</th>
+<th>entropy</th>
+<th>它的行為</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只丟「我們上週那案子結論是什麼？」</td>
+<td>一堆似是而非的答案機率差不多（均勻）</td>
+<td>高</td>
+<td>從均勻分布 sample → <strong>亂編一個煞有其事的結論</strong></td>
+</tr>
+<tr>
+<td>加三句背景：客戶、爭點、上次決議</td>
+<td>分布開始往某幾個答案集中</td>
+<td>中</td>
+<td>答得有方向，但細節可能還湊</td>
+</tr>
+<tr>
+<td>把那份會議紀錄整份貼進去</td>
+<td>分布塌成一個尖峰</td>
+<td>≈ 0</td>
+<td>它只能照著紀錄講，幾乎不會錯</td>
+</tr>
+</tbody>
+</table>
+<p><strong>為什麼「同一個問題，給三句它就準、丟一句它就亂編」</strong>：你不是在跟一個「有時聰明有時笨」的人講話，你是在調節它面前那個分布的形狀。<strong>你每給一塊對的 context，就是替它砍掉一半猜測空間。</strong> 這正是 RAG／檢索／工具呼叫的本質：不是讓模型變聰明，是幫它把 entropy 壓低（深入工程做法見 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>）。</p>
+<p><strong>那次 AI 把同事名字張冠李戴、把沒發生的會議講得煞有其事</strong>——拆給主管看：模型手上對「這位同事叫什麼、那場會開了沒」的分布是均勻的，它沒有任何 bit 去塌縮這個分布，於是用「訓練資料裡最常見的名字／最像會發生的會議」硬補。它不是說謊，是<strong>在高不確定性下被你逼著生成</strong>。當時你少給的，就是那幾塊能砍掉一半的 context。</p>
+<blockquote>
+<p>補充視角：模型「最常見的答案」從哪來、為什麼會系統性偏向某些答案，屬於訓練分布偏斜的問題，見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>；而把真訊息從一堆雜訊裡認出來，見 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>。</p>
+</blockquote>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 出錯＝它笨／模型不夠強」</td>
+<td>多數錯是 context 不足造成的高 entropy 硬猜，換更強的模型也救不了沒給的資訊</td>
+<td>反問：你給它的 bit 夠它砍到尖峰了嗎？</td>
+</tr>
+<tr>
+<td>「context 塞越多越好」</td>
+<td>無關／矛盾的資料是<strong>加噪</strong>，等於問一堆爛是非題，反而把 entropy 加回去、稀釋邊際資訊量</td>
+<td>準則是「每塊 context 的邊際資訊量」高，不是量大</td>
+</tr>
+<tr>
+<td>「它講得很流暢，應該是對的」</td>
+<td>流暢度由語言機率決定，跟事實無關；<strong>滑順但空泛</strong>常正是高 entropy 硬 sample 的徵兆</td>
+<td>教主管把「流暢」和「有依據」分開看</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>幻覺＝context 不足讓它的 entropy 太高，它只好用最可能的答案硬補。主管的工作不是嫌它笨，是把它面前那個分布餵尖。</strong></p>
+</blockquote>
+<hr />
+<h3>主管視角：跟工程師對話、自己用 agent 的標準動作</h3>
+<p>把 entropy 當成你和工程師之間的<strong>共同語言</strong>。你不必會算，但你要會用它定位問題、問對問題。</p>
+<p><strong>該問工程師的三題（entropy 版）</strong>
+1. 「這個 AI 功能下一步<strong>靠什麼資訊</strong>收斂？它的 context 視窗多大、我們的內部資料餵不餵得進去？」（→ 它有沒有足夠的 bit 去砍 entropy）
+2. 「它<strong>亂答的時候</strong>，通常是哪一類不確定性沒被消掉——缺資料、缺工具、還是指令太鬆？」（→ 把幻覺定位成可修的 entropy 來源，而不是含糊的「AI 就是會錯」）
+3. 「我們怎麼<strong>驗證</strong>它不是在高 entropy 下硬猜？有沒有讓它『不確定就說不知道、或去查』的機制？」（→ 不確定性的安全閥；誤判一旦放行的代價怎麼估，見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>）</p>
+<p><strong>自己用 agent／AI 的三個動作</strong>
+1. <strong>先餵高資訊量的 context</strong>：把最能「砍一半」的關鍵檔案、規格、限制、前情先給足，別丟一堆無關背景稀釋它。問自己：我給的這塊，能塌縮它的分布嗎？
+2. <strong>能查的就讓它查</strong>：給它檢索或工具，等於授權它自己去問是非題、自己砍 entropy，不要逼它用記憶硬掰。
+3. <strong>可疑就追問來源</strong>：輸出很「滑順但空泛」時要它列依據——這是把它從「硬 sample」拉回「有 bit 支撐」。</p>
+<blockquote>
+<p><strong>界線提醒</strong>（呼應本模組討論題、亦見 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>）：「給足 context」和「把商業機密貼給外部 AI」是兩回事。砍 entropy 要用<strong>對的、可外洩的</strong>資訊；機密走內部部署或先去識別化。收斂一個部門原則，而不是因噎廢食地什麼都不餵。</p>
+<p><strong>AI 會不會幫你做對事，多半不取決於模型多強，而取決於你有沒有把它下一步的 entropy 餵到夠低。主管的核心技能，是用 entropy 這把尺，把「它怎麼又亂講」翻譯成「我該補哪一塊 context」。</strong></p>
+</blockquote>
+<hr />
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各舉一次「AI 因 context 不足而亂補」的親身經驗，互相判斷當時補給它什麼就能避免。</li>
+<li><strong>一起想一題</strong>：「給足 context」與「把商業機密貼給 AI」之間，界線在哪？收斂一個原則。</li>
+<li>
+<p><strong>反思</strong>：「我之前以為 AI 出錯是它笨，現在我會先問——是不是我沒給夠資訊？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 資安威脅建模</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 資安威脅建模</h1></div><ul>
+<li><strong>為何 vibe coding 時代反而更該學</strong>：AI 預設只想「讓功能動」，<strong>不會主動幫你防壞人</strong>——它可能把密鑰寫死在前端、不檢查權限、不防注入攻擊。一旦你的小產品上線收了真實用戶資料，<strong>資安不是加分題，是會出大事的必答題</strong>（個資外洩、被盜用、法律責任）。威脅建模是「系統性地想『壞人會怎麼攻擊我』」的技術，補上 AI 最大的盲區。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>威脅建模（threat modeling）= 動工/上線前，有系統地問「這東西會怎麼被攻擊」</strong>。不是等出事才補，是事先想好。</p>
+<p><strong>STRIDE — 六類威脅的記憶法</strong>（逐項問「我這裡會不會」）：
+| 字母 | 威脅 | 白話 |
+| --- | --- | --- |
+| <strong>S</strong>poofing | 假冒身分 | 有人冒充別的使用者登入 |
+| <strong>T</strong>ampering | 竄改資料 | 有人偷改金額、改別人的資料 |
+| <strong>R</strong>epudiation | 抵賴 | 做了壞事卻查不到是誰（沒留紀錄） |
+| <strong>I</strong>nfo disclosure | 資訊外洩 | 個資、密碼、密鑰被看到 |
+| <strong>D</strong>enial of service | 阻斷服務 | 灌爆流量讓服務癱瘓 |
+| <strong>E</strong>levation of privilege | 越權 | 一般用戶拿到管理員權限 |</p>
+<p><strong>OWASP Top 10 — 最常見的網站漏洞清單</strong>（業界公認的「最該先防的十種」）。給非工程師記住最致命的幾個：
+- <strong>注入攻擊（injection）</strong>：在輸入欄塞惡意指令操控資料庫（連回 <a href="M_%E9%82%8A%E7%95%8C%E8%88%87%E4%BE%8B%E5%A4%96%E6%A1%88%E4%BE%8B%E8%A8%AD%E8%A8%88.html">M 邊界與例外案例設計</a>：惡意輸入也是一種邊界）。
+- <strong>權限控制失效</strong>：沒檢查「這個人有沒有資格做這件事」，於是誰都能改誰的資料。
+- <strong>機敏資料外洩</strong>：密碼明文存、密鑰寫在前端、走未加密連線。
+- <strong>設定不當</strong>：用預設密碼、把除錯模式開在正式環境。</p>
+<p><strong>vibe coding 的三條保命底線</strong>（AI 不提你也要主動要求）：
+1. <strong>密鑰/密碼絕不寫死在前端或 commit 進 Git</strong>——用環境變數。
+2. <strong>任何「改/看資料」的動作都要先檢查身分與權限</strong>。
+3. <strong>所有使用者輸入都當成「可能有惡意」來處理</strong>——驗證、過濾、別直接信任。</p>
+<blockquote>
+<p><strong>vibe coding 接法</strong>：上線前拿 STRIDE 逐項問一遍你的產品，把「安全需求」明確寫進給 AI 的規格（連回 <a href="M_%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82.html">M 非功能需求</a>），並<strong>特別要求 AI 檢查 OWASP 常見漏洞</strong>。收真實用戶資料前，這關不能跳。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：一個「線上問卷收集個資」的小工具，用 STRIDE 想，最該擔心哪 3 種威脅？各舉一個防法。</li>
+<li>
+<p><strong>反思</strong>：「我 vibe code 的東西如果上線收了真人資料——AI 有沒有幫我防壞人？還是我從沒問過這件事？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：拿你一個（打算）上線的產品，用 STRIDE 跑一遍列出威脅，對照三條保命底線檢查 AI 的版本有沒有踩雷。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

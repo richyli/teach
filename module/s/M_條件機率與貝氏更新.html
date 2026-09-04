@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 條件機率與貝氏更新</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 條件機率與貝氏更新</h1></div><ul>
+<li><strong>一句話</strong>：<strong>條件機率 $P(A\mid B)$ = 已知 B 發生後，A 的機率。</strong> 貝氏更新 = 拿到新證據後，理性地把信念調一下。LLM 生成、agent 推理、RAG 檢索，骨子裡都是這個。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>條件機率</strong>：$P(\text{下雨}\mid\text{烏雲})$ 讀作「在烏雲的條件下，下雨的機率」。<strong>LLM 在做的事就是 $P(\text{下一個 token}\mid\text{前文})$</strong>——給定你的 prompt 和它寫到一半的內容，下一個 token 最可能是什麼（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a>）。<strong>所以「context 給什麼」直接改寫了這個條件，等於改寫了它的輸出分布。</strong></p>
+<p><strong>貝氏更新</strong>：核心精神一句話——<strong>新證據進來，按它的份量調整信念</strong>。</p>
+<p>$$P(\text{假設}\mid\text{證據}) \propto P(\text{證據}\mid\text{假設}) \times P(\text{假設})$$</p>
+<p>讀法：更新後的信念（後驗）= 證據的吻合度 × 原本的信念（先驗）。</p>
+<ul>
+<li><strong>先驗</strong>：你還沒看證據前的看法。</li>
+<li><strong>證據</strong>：新進來的資料。</li>
+<li><strong>後驗</strong>：更新後的看法，會變成下一輪的先驗。</li>
+</ul>
+<p><strong>為什麼這對 AI 應用是核心</strong>：
+1. <strong>Agent 多步推理 = 貝氏連鎖</strong>：每一步拿到新觀察（工具回傳、檢索結果），就更新「現在最該做什麼」的信念，再行動。Loop 的每一輪都是一次更新（連回 <a href="M_Markov_%E7%8B%80%E6%85%8B%E8%88%87%E8%A8%98%E6%86%B6.html">M Markov 狀態與記憶</a>）。
+2. <strong>Context engineering = 餵對的證據</strong>：你給的每塊 context 都是「證據」，會按貝氏方式重塑模型的後驗。給對證據 → 後驗收斂到正解；給矛盾證據 → 後驗反而散掉。
+3. <strong>基率謬誤是常見錯</strong>：人和 AI 都容易忽略先驗（基率）。例：罕見病的陽性檢驗，因為先驗極低，實際得病機率可能遠比你想的低。<strong>證據要乘上先驗，不能只看證據。</strong></p>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：同一個問題，先給 AI「你是法律顧問」再問，跟直接問，答案會不同——用 $P(\text{答案}\mid\text{角色設定})$ 解釋為什麼。</li>
+<li>
+<p><strong>反思</strong>：「我給 AI 的每句背景，都在改寫它『下一句該說什麼』的機率——所以 context 不是裝飾，是條件。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：想一個你常做的判斷，寫下你的「先驗」是什麼、什麼新證據會讓你願意改變、需要多強才夠。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

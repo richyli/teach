@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人工智慧生成圖像與創造力（2026）</title>
+<link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../../s/AICreativity/index.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "Ugx6Jrne8zCpQWbVksMuSg==", IV = "QBUX9m1SdSZmCEMm", CT = "mRP5d1FtM4iYUFfNrVcxMyHCeZKKEDyHBGdi9PFGWk3grTbiXaNZgXNEs1x6eSyOjAsjzNRgWBS8sag5gc0n2ym9YOoGteVc7muH4W7YLvEl3Lq8ngGWzFvhOwU6fNV2Atej6Med8ufoRYg+JA5WeylXRVJOZxab7MP41fQm7TzHfekP2rXSLkClX3wl77oh6Jqrf+Lf/3Wq5A5gpBiGhJpWTQCaDLDVdbcfhbopok+tegCMLd/pmFmplUqhx3gKNqJYQUXBeeg9Q9EsSDS46G+N3ZAQbELe/u7RautqToqX4mA3uSPyyTw1Uxz4mLoemhDAzhJzRcqIRAAEujxob9YWPyi8H/V+yp9VxU9imgpgOdyTv2z6Ju8/DJ7cmaLq6mxHQm7zcNSoBF01QuwaGNjoGcVqZ2CFJlM2F3a3/m+FewaoAAry/3xnuzQ8l1kOq4uuUGYY7GIGx/T/j1lXkBckyG6ct7w6qFG0WT4o+TSIT4GqA+/IApTo0Fwf7fdHCz2afbDYXHsJ/Vx3BPfhQwzdU0pQeoNbEh0eWeYPXRwxqn2JbIn+YEe16zgRys0llZs5C+daR98Ib3OkwT+bkcm8XJH6zXShvn0v7ciAHxxce7X2iyqtbDtFNSUzX6LY1YLGw6H1vSiwGZfR80Ty4iStpWjyHU5TU8v7sSP9jbnjZl5x8xEbGS3nglxE33rtkQcwrdPR9XqkO1olEDOrwjNNopG+/Yw2NDMUWyyEm7LPY3ooTk73F7mV+bF3qZ6lF3n5qKFdygrwkqQcBiuVFFqZrWqAnDmkdG1fPQhsiLqZbKszHt1nUDVWBNH/XmvX0C5mH/UxktFkakIDFl4X0yS07bA2YqOfljPxwa144wqpO2jb9g9c", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

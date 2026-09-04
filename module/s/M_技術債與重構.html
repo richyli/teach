@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 技術債與重構</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 技術債與重構</h1></div><ul>
+<li><strong>為何 vibe coding 時代反而更該學</strong>：AI 能極快堆出「能動」的程式，但<strong>快速堆疊最容易累積技術債</strong>——一坨會動、但越來越亂、越來越沒人（包括 AI 自己）改得動的程式。很多人 vibe code 到一半「卡死」，不是做不出新功能，是<strong>舊的爛攤子讓任何改動都會弄壞別的地方</strong>。看得懂技術債、知道何時該重構，是讓專案能「持續長大」而非「中途崩盤」的關鍵。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>技術債（technical debt）= 為了快，先用爛做法，欠下「以後要還」的整理成本</strong>。像借錢：短期跑得快，但<strong>利息會滾</strong>——債越多，每加一個新功能就越慢、越容易出包。</p>
+<p><strong>vibe coding 為何特別容易欠債</strong>：
+- AI 為「讓它先動」常產出重複、雜亂、硬寫死的程式。
+- 你看不太懂，於是不敢動、只敢一直疊上去 → 債滾債。
+- 徵兆：改一個小地方就壞三個別的；同樣的邏輯散落好幾處；AI 自己也開始改不對了。</p>
+<p><strong>重構（refactoring）= 不改變外部行為，只把內部整乾淨</strong>。功能一樣，但程式更清楚、更好改。關鍵：<strong>重構不是加功能，是還債</strong>。</p>
+<p><strong>安全重構的兩個前提</strong>（缺一不可）：
+1. <strong>先有測試</strong>：重構前要有測試保證「整理完行為沒變」（連回 <a href="M_%E9%A9%97%E6%94%B6%E6%B8%AC%E8%A9%A6%E8%88%87_TDD-BDD.html">M 驗收測試與 TDD-BDD</a>）。沒測試的重構 = 拆牆不知道哪面是承重牆。
+2. <strong>先 commit</strong>：整理前存安全點，弄壞了退得回（連回 <a href="M_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E8%88%87_Git_%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B.html">M 版本控制與 Git 心智模型</a>）。</p>
+<p><strong>何時該停下來還債（給非工程師的判準）</strong>：
+- 連續好幾次「加小功能卻花超久 / 一直弄壞別處」→ 該重構了。
+- AI 開始反覆改不對同一塊 → 那塊太亂，先請它整理再說。
+- <strong>定期還小債 &gt; 累成大債一次爆</strong>。</p>
+<blockquote>
+<p><strong>vibe coding 接法</strong>：把「請 AI 重構這段、不要改行為、讓它更清楚好改」當成定期動作，<strong>重構前先確認有測試＋已 commit</strong>。別一路狂疊到崩盤——<strong>會動 ≠ 養得起</strong>（連回 <a href="M_%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82.html">M 非功能需求</a> 的可維護性）。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：一個 vibe code 的專案，前兩週超快、第四週幾乎加不動新功能，發生了什麼？該怎麼辦？</li>
+<li>
+<p><strong>反思</strong>：「我是不是只要『能動』就一直往上疊？有沒有定期請 AI 幫我把程式整乾淨？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一個你疊得有點亂的 vibe coding 專案，確認有測試與 commit 後，請 AI 重構一段並驗證行為沒變，記錄改動前後好不好讀。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

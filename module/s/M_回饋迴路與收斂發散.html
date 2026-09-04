@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 回饋迴路與收斂發散</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 回饋迴路與收斂發散</h1></div><ul>
+<li><strong>一句話</strong>：把輸出再餵回輸入，就形成<strong>回饋迴路</strong>。<strong>負回饋會收斂（趨於穩定），正回饋會發散（越滾越極端）。</strong> Looping engineering 就是在設計「讓 loop 收斂到對的地方」。</li>
+</ul>
+<h4>核心</h4>
+<p><strong>回饋迴路</strong>：系統的輸出回頭影響它的輸入。控制論（cybernetics）的兩種基本型：
+- <strong>負回饋（self-correcting）</strong>：偏離目標時把它拉回來 → <strong>收斂、穩定</strong>。像冷氣的溫控：太熱就降、太冷就停。
+- <strong>正回饋（self-reinforcing）</strong>：偏離被放大 → <strong>發散、失控或暴衝</strong>。像麥克風的尖嘯：聲音被自己放大到爆。</p>
+<p><strong>AI loop 就是一個回饋迴路</strong>（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a>：模型把輸出餵回自己）：</p>
+<ol>
+<li><strong>發散的 loop（要避免）</strong>：agent 把上一輪的小錯當前提，下一輪在錯誤上加碼，誤差正回饋滾大 → 越跑越離譜、或鬼打牆重複（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a> 的累積誤差）。<strong>模型自我訓練自己生成的資料會「model collapse」也是這種正回饋。</strong></li>
+<li><strong>收斂的 loop（要設計出來）</strong>：每一輪引入<strong>外部校正訊號</strong>——跑測試、查真實資料、要它對照目標自評——把偏差拉回。這就是把 loop 從正回饋改造成負回饋。</li>
+<li><strong>收斂判據（什麼時候停）</strong>：好的 loop 要有明確的「夠好了就停」條件（達標、連續幾輪沒進步、達上限），否則要嘛無限燒 token、要嘛在原地震盪。</li>
+</ol>
+<blockquote>
+<p><strong>looping engineering 一句話</strong>：<strong>別讓 agent 在自己的輸出裡空轉（正回饋）；每一輪都灌一個來自外界的校正訊號（負回饋），並設好停止條件。</strong> 收斂不是自動的，是設計出來的。</p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：社群演算法「推你愛看的 → 你更常看 → 推更多同類」是哪種回饋？會收斂還是發散？對社會的後果是什麼？（同溫層／極化）</li>
+<li>
+<p><strong>反思</strong>：「我設計 AI 自動迴圈時，要先問——它每一輪有沒有來自外界的校正？還是只是在自己的輸出裡越滾越偏？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一個你想自動化的多輪 AI 流程，標出 (1) 校正訊號從哪來、(2) 什麼條件下該停。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

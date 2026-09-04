@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 湧現與規模法則</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="index.html">模組庫</a><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 湧現與規模法則</h1></div><ul>
+<li><strong>一句話</strong>：<strong>規模法則 = 模型/資料/算力放大，能力會以可預測的方式變好；湧現 = 到了某個規模，會冒出小模型完全沒有、且難以預測的新能力。</strong></li>
+</ul>
+<h4>核心</h4>
+<p><strong>規模法則（scaling laws）</strong>：把「模型大小 × 資料量 × 算力」往上加，loss 會沿著一條相當平滑、可預測的曲線下降。<strong>這就是過去幾年「把模型做更大」如此有效的底層理由</strong>——進步在很大程度上是「規模換來的」，而且可以事先估算投入產出。</p>
+<p><strong>湧現（emergence）</strong>：有些能力<strong>不是平滑長出來的</strong>，而是模型過了某個規模門檻才<strong>突然出現</strong>（多步推理、寫程式、依指令、思維鏈）。小模型完全不會、量變到質變後就會了。</p>
+<p><strong>三個給決策者的要點</strong>：
+1. <strong>「不會」可能只是「還不夠大」</strong>：今天 AI 做不到某件事，未必是路線錯，可能只是規模沒到。但<strong>反過來不保證</strong>——不是每件事加大就會湧現。押注時要分清「規模問題」還是「方法問題」。
+2. <strong>湧現難預測 → 別把產品壓在「它之後一定會」</strong>：湧現何時發生、會冒出什麼，學界都還在吵。<strong>規劃要對「現在做得到的」負責，把「未來可能湧現的」當上檔利多、不當前提。</strong>
+3. <strong>規模法則可能放緩 / 撞牆</strong>：高品質資料會用完、邊際效益會遞減。「無腦變大就會更強」不是永恆定律；近年重心已部分轉向<strong>怎麼用模型</strong>（推理時運算、agent、工具）——這正是 looping / context / harness engineering 的價值所在（連回 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>）。</p>
+<blockquote>
+<p><strong>管理者一句話</strong>：用規模法則校準「值不值得等下一代模型」，用湧現的不可預測性提醒自己「別把商業計畫綁在尚未出現的能力上」。<strong>眼前能靠 harness/context engineering 榨出來的價值，比賭未來湧現更可控。</strong></p>
+</blockquote>
+<h4>💬 互動</h4>
+<ul>
+<li><strong>一起想一題</strong>：你部門有件事現在 AI 做不好。怎麼判斷它是「等更大的模型就會」還是「方法/資料根本不對」？各舉一個判準。</li>
+<li>
+<p><strong>反思</strong>：「我對 AI 的期待，有沒有偷偷押在『它之後一定會變強』上？哪些計畫該只靠現在做得到的能力。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：列出你最想交給 AI 的 3 件事，各標「現在就能做 / 可能靠規模解 / 需要不同方法」，據此排投入順序。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:29</p>
+</div>
+</body>
+</html>

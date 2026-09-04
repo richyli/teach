@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>內容產品企劃與內容策略（2026） 2026</title>
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../../../s/Product/2026/index.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "T5U7jBaiyyjH/mO+cKc+hA==", IV = "j0d2iQZjGt0JGhyZ", CT = "kPnnNw+bhv5Q3BUilirF2WZn4hipipLQ84veuZclwe0K3bqT6O0YMn8R5snl99ROaIO59C7gghbMkwknApEsI58X8H3ATa1Ki9s+KqpaA9H4F0M7sd88pKo5NlFUrMEJDBtgVg7DJ5snuCnW+CYiPgeH9A41xLgK7E0tZny+FOmWSvjxxVOdWww5zWHWtwD/KAGnghd37b01yFophd+WFnSDE/kL8WrU6mwtHipw6OIyUg+7vqvBc4CNtr0tPeGrn+6nK1EPj9EzkpPur6FrsBzYlIPVhK2PDiHhDQExjyisj4pwwTQ+awho4m5mJyKHCIW3mvrbt6mVmWAhANwkPlSKjkLSKugN9Zv4oS37XPNRoGhWqaxHbyugTMGJ+Cerj/EuMESJuMxThVQ1cSbm6bx18lTMi2Nm/b4ktx3IYBPV6/eHo7VdcxiI27W6VB32TWYFyYIlhh6u/7Fb2is2klMc8RQ0DmBhCw4FkVu3+3yIBHVt7nf8O9B3Q8hvcu+3FOzKlOuwO/0GEg4o9g+0scSMidzsEcw2ghxSV7Txl0p4aGG2jkKLf2WJZ1OAOLq05CSqEVPz2thl09lkVZnNf/ThmHCmNtvxz17tY5m9KbRC1uHkBHz/s6vN2sYDc8W0yZ6GkCeuCd7NwDrk7g60sQRmP6o6mX3yH1QlptzBYurLtbNYBIa+SFjnrq9NmgLNzR7B58/E04aVmLDdxmSZKj0rDcmW4qIt1rfy+n4Osj7DdjZufoiXJSlYlAiau8mtpiS/pK6LrTW1SAwPm0+Eu2LpNlgm0X/mL6gl80WLp/s11+RSHuswEJyFMgyAAdWboH097uNbzppMK+hsEY+kGrqFpeGve2WgmWNElAQ+zAtTje3vNC5PaleCyu+4IewUqaSGj9ytFoUGYJS+0nz/o29oioN3x/Si1hEKJfTRKiIOeGJXPx1KE5/ReR3S5gquyF1qq3xEv8fPgWxMjSn+xSLsPUcqNOQKh2Kfz7LA7v2jyjPPYJJz5zhyfaeLNfVzB2bBSGxJlpUCkYaVPeIWgC1SW521VFDukUoC434E4zOMCfzpRB3CerLBmIAaiHR5QEDuxX2K3iI/M4+IpExYAL75QEGyyaDFlY/o1wBLh4uCH8P3Zvyg/kgskesnFKf1l3Mskf8MOXxQA2itFWyXU1aICJZIZo+OGWvUKaKbpKRRpzgig3GP7OKb55n/RrcsTGFkx909fRsl/uf3Al/49pn87BLch7IVN4kYdAsaJcsJtlit/v95fdaWke7STkKedPlh9LbbNpFjpq1w44u/yDktl2vBe3RiBN+H9lK6kepkaONC/X+LQ3stzQ7yKvKwoXPncJg4ERhQ1GMCbsmlxfb4EQbQILweZ2XtGQbkatSeeeOnmQJg7OfidpfAkqRU15ODK4JO06z49ZJkilOduxKMIUXtHx7MoiYTyLFURdqQhsLazG+ePyaX6B9wMTi/IIP6jtSBqwDYeqBuw2HiGnebAQdfRtK4DtCewQ3mMO5PRGxm7iM7l+NKXLM1M/SF9eRTR3RiBgKAxTRNh5AotPnnTQ==", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>課程簡介｜2026 GCIT — AI 創意與深度使用方法論</title>
+<link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../../../s/GCIT/2026-fall/2026_GCIT_Syllabus.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "i1Tft4MZ5XjZ5bsqF5MbHg==", IV = "C24itQAvMkvVxLJH", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>
