@@ -32,7 +32,7 @@
 <tr>
 <td>3</td>
 <td><strong>拆解</strong>一個偏見輸出是怎麼從訓練資料的分布偏斜長出來的</td>
-<td><strong>為什麼 AI 生圖裡護理師幾乎都是女性、CEO 幾乎都是男性？</strong>——訓練資料把職業和性別的關聯餵成近乎必然。<strong>本質金句：偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。</strong></td>
+<td><strong>為什麼 AI 生圖裡護理師幾乎都是女性、CEO 幾乎都是男性？</strong>——訓練資料把職業和性別的關聯餵成近乎必然。<strong>偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。</strong></td>
 </tr>
 </tbody>
 </table>
@@ -80,7 +80,7 @@
 <p>模型是用<strong>某個時間點之前</strong>的資料訓練的，這個時間點叫<strong>訓練截止日（knowledge cutoff）</strong>。截止日之後發生的事——上週的判決、今早的新法規、剛改的公司政策——它<strong>一無所知</strong>，但被問到時往往不會說「我不知道」，而是<strong>用舊資料硬湊一個聽起來合理的答案</strong>。這就是為什麼問它「最新的」任何東西特別危險。</p>
 <p>補救的主流做法叫<strong>檢索增強（RAG，Retrieval-Augmented Generation）</strong>：在它回答前，先即時去「外接資料源」（你的資料庫、最新新聞、內部文件）撈出相關片段，塞進它的輸入裡，讓它<strong>照著新撈到的資料講</strong>，而不是靠記憶硬掰。RAG 的本質不是讓模型變聰明，是<strong>把它本來不確定的東西，先餵成確定的</strong>（這點在 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a> 用 entropy 講得更透）。</p>
 <blockquote>
-<p><strong>本質金句</strong>：<strong>LLM 不是在查答案，是在猜「下一個最像的字」。它流暢，是因為它很會接話；不是因為它查證過。</strong></p>
+<p><strong>LLM 不是在查答案，是在猜「下一個最像的字」。它流暢，是因為它很會接話；不是因為它查證過。</strong></p>
 </blockquote>
 <hr />
 <h3>幻覺與偏見從哪來</h3>
@@ -129,7 +129,7 @@
 <li><strong>少數族群／非主流觀點被低估</strong>：資料裡聲量小的群體，模型對他們的「預設描繪」會被主流敘事蓋過——做專題時若全靠 AI 起稿，等於<strong>讓資料裡的多數偏見替你定調</strong>，這正是媒體最該警覺的編輯責任問題（延伸 <a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>）。</li>
 </ul>
 <blockquote>
-<p><strong>本質金句</strong>：<strong>偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。幻覺也不是它說謊，是它在不確定時，仍被迫吐出一個最像的字。</strong></p>
+<p><strong>偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。幻覺也不是它說謊，是它在不確定時，仍被迫吐出一個最像的字。</strong></p>
 </blockquote>
 <hr />
 <h3>主管視角：該問工程師什麼</h3>
@@ -149,7 +149,7 @@
 <li><strong>同一題問兩三次</strong>：答案飄忽不定，就是它在高 entropy 下亂猜的信號。</li>
 </ul>
 <blockquote>
-<p><strong>本質金句</strong>：<strong>主管的工作不是會用 AI，是會問「它怎麼知道」「它何時不知道」——並要求一個能驗證的答案，而不是一句很流暢的保證。</strong></p>
+<p><strong>主管的工作不是會用 AI，是會問「它怎麼知道」「它何時不知道」——並要求一個能驗證的答案，而不是一句很流暢的保證。</strong></p>
 </blockquote>
 <hr />
 <h4>🧯 迷思攔截</h4>
@@ -210,7 +210,7 @@
 <li>
 <p><strong>小作業</strong>：設計三個「測 LLM 在你領域會不會胡說」的提問，記錄結果並標出哪題它最容易出錯。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:01</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 22:11</p>
 </div>
 </body>
 </html>
