@@ -157,10 +157,20 @@ MathJax = {
                  background: #e8eefb; color: #2b4f83; }
 #ent-sim .cand.out { background: #f1f1f1; color: #bbb; text-decoration: line-through; }
 #ent-sim .cand.win { background: #24528f; color: #fff; }
+#ent-sim .chart { margin: .6rem 0 .2rem; }
+#ent-sim .chart svg { width: 100%; max-width: 30rem; height: auto; display: block; }
+#ent-sim .ax { stroke: #c9c9c9; stroke-width: 1; }
+#ent-sim .grid { stroke: #ececec; stroke-width: 1; }
+#ent-sim .curve { fill: none; stroke: #4a7fd0; stroke-width: 2; }
+#ent-sim .guide { stroke: #b7c8e4; stroke-width: 1; stroke-dasharray: 3 3; }
+#ent-sim .dot { fill: #24528f; }
+#ent-sim .tick { font-size: 9px; fill: #999; }
+#ent-sim .note { font-size: 9.5px; fill: #7a5b00; }
+#ent-sim .mark { fill: #e0a300; }
 </style>
 
 <h5>🎛 互動：把 entropy 調給自己看</h5>
-<p class="lede">兩個小工具都在回答同一件事——<strong>不確定性有多大，就是還要幾個是非題才問得出答案</strong>。動手拉一拉，比看公式快。</p>
+<p class="lede">三個小工具都在回答同一件事——<strong>不確定性有多大，就是還要幾個是非題才問得出答案</strong>。動手拉一拉，比看公式快。</p>
 
 <div class="panel">
   <strong>一、分布越平，entropy 越高</strong>
@@ -181,7 +191,24 @@ MathJax = {
 </div>
 
 <div class="panel">
-  <strong>二、猜職業：好問題砍一半，爛問題砍一個</strong>
+  <strong>二、entropy 曲線：不確定性在哪裡最大</strong>
+  <p class="lede">只有兩種結果時（下雨／不下雨），entropy 隨機率變化的樣子。拉滑桿看點在曲線上跑。</p>
+  <div class="row">
+    <label>下雨機率</label>
+    <input type="range" id="bc-p" min="0" max="100" value="50">
+    <span class="pct" id="bc-pv">50%</span>
+  </div>
+  <div class="chart"><svg id="bc-svg" viewBox="0 0 340 190" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <div class="readout">
+    H(p) = <span class="big" id="bc-hv">1.00</span> bit
+    <span class="verdict" id="bc-cv"></span>
+  </div>
+  <p class="lede" style="margin-top:1rem;">候選越多，最大 entropy 越高，但長得很慢——<strong>候選數要翻倍，才多買到 1 bit</strong>。</p>
+  <div class="chart"><svg id="en-svg" viewBox="0 0 340 170" preserveAspectRatio="xMidYMid meet"></svg></div>
+</div>
+
+<div class="panel">
+  <strong>三、猜職業：好問題砍一半，爛問題砍一個</strong>
   <p class="lede">我心裡先隨機抽一個職業（16 種等可能，entropy = log₂16 = 4 bit）。你出題，我照那個職業誠實回答，被排除的候選會即時劃掉。每題實際拿到幾 bit 也一起算給你看。</p>
   <div class="cands" id="es-cands"></div>
   <div class="meterwrap"><div class="meter" id="es-meter" style="width:100%"></div></div>
@@ -269,7 +296,107 @@ MathJax = {
   });
   draw1();
 
-  /* ---------- panel 2：猜職業 ---------- */
+  /* ---------- panel 2：entropy 曲線 ---------- */
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(SVGNS, tag);
+    Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function Hb(p) {
+    if (p <= 0 || p >= 1) return 0;
+    return -p * Math.log2(p) - (1 - p) * Math.log2(1 - p);
+  }
+
+  /* 2a. 二元 entropy 曲線 H(p) */
+  var cs = document.getElementById("bc-svg");
+  var L = 42, R = 322, T = 18, B = 150;                 // 繪圖區
+  var cx = function (p) { return L + p * (R - L); };
+  var cy = function (h) { return B - h * (B - T); };
+
+  [0, 0.5, 1].forEach(function (h) {
+    cs.appendChild(el("line", { x1: L, y1: cy(h), x2: R, y2: cy(h), class: "grid" }));
+    cs.appendChild(el("text", { x: L - 6, y: cy(h) + 3, class: "tick",
+                                "text-anchor": "end" }, h.toFixed(1)));
+  });
+  cs.appendChild(el("line", { x1: L, y1: T, x2: L, y2: B, class: "ax" }));
+  cs.appendChild(el("line", { x1: L, y1: B, x2: R, y2: B, class: "ax" }));
+  [0, 0.25, 0.5, 0.75, 1].forEach(function (p) {
+    cs.appendChild(el("text", { x: cx(p), y: B + 14, class: "tick",
+                                "text-anchor": "middle" }, (p * 100) + "%"));
+  });
+  cs.appendChild(el("text", { x: (L + R) / 2, y: B + 30, class: "tick",
+                              "text-anchor": "middle" }, "下雨機率 p"));
+  cs.appendChild(el("text", { x: L - 30, y: T + 4, class: "tick" }, "bit"));
+  var pts = [];
+  for (var i = 0; i <= 200; i++) {
+    var p = i / 200;
+    pts.push(cx(p).toFixed(1) + "," + cy(Hb(p)).toFixed(1));
+  }
+  cs.appendChild(el("polyline", { points: pts.join(" "), class: "curve" }));
+  cs.appendChild(el("circle", { cx: cx(0.5), cy: cy(1), r: 2.5, class: "mark" }));
+  cs.appendChild(el("text", { x: cx(0.5), y: cy(1) - 6, class: "note",
+                              "text-anchor": "middle" }, "50/50 最不可預測，1 bit"));
+  cs.appendChild(el("text", { x: cx(0.02), y: cy(0) - 6, class: "note" }, "0 bit"));
+  cs.appendChild(el("text", { x: cx(0.98), y: cy(0) - 6, class: "note",
+                              "text-anchor": "end" }, "0 bit"));
+  var gx = el("line", { x1: cx(0.5), y1: B, x2: cx(0.5), y2: cy(1), class: "guide" });
+  var gy = el("line", { x1: L, y1: cy(1), x2: cx(0.5), y2: cy(1), class: "guide" });
+  var dot = el("circle", { cx: cx(0.5), cy: cy(1), r: 4.5, class: "dot" });
+  cs.appendChild(gx); cs.appendChild(gy); cs.appendChild(dot);
+
+  var pIn = document.getElementById("bc-p");
+  function drawCurve() {
+    var p = +pIn.value / 100, h = Hb(p);
+    document.getElementById("bc-pv").textContent = pIn.value + "%";
+    document.getElementById("bc-hv").textContent = h.toFixed(2);
+    dot.setAttribute("cx", cx(p)); dot.setAttribute("cy", cy(h));
+    gx.setAttribute("x1", cx(p)); gx.setAttribute("x2", cx(p));
+    gx.setAttribute("y2", cy(h));
+    gy.setAttribute("y1", cy(h)); gy.setAttribute("y2", cy(h));
+    gy.setAttribute("x2", cx(p));
+    var v;
+    if (h > 0.97) v = "——最高點。這時預報等於沒說，你非得再去查一次不可。";
+    else if (h > 0.7) v = "——還是很難決定，帶傘不帶傘都可能後悔。";
+    else if (h > 0.3) v = "——已經可以賭一邊了，但還是有意外。";
+    else if (h > 0.02) v = "——幾乎確定，剩下的是可以忽略的風險。";
+    else v = "——完全確定，這則預報的資訊量是 0：你早就知道了。";
+    document.getElementById("bc-cv").textContent = v;
+  }
+  pIn.addEventListener("input", drawCurve);
+  drawCurve();
+
+  /* 2b. 候選數 N 對最大 entropy log2(N) */
+  var ns = document.getElementById("en-svg");
+  var NL = 42, NR = 322, NT = 18, NB = 130, NMAX = 64, HMAX = 6;
+  var nx = function (n) { return NL + (Math.log2(n) / Math.log2(NMAX)) * (NR - NL); };
+  var ny = function (h) { return NB - (h / HMAX) * (NB - NT); };
+  [0, 2, 4, 6].forEach(function (h) {
+    ns.appendChild(el("line", { x1: NL, y1: ny(h), x2: NR, y2: ny(h), class: "grid" }));
+    ns.appendChild(el("text", { x: NL - 6, y: ny(h) + 3, class: "tick",
+                                "text-anchor": "end" }, h));
+  });
+  ns.appendChild(el("line", { x1: NL, y1: NT, x2: NL, y2: NB, class: "ax" }));
+  ns.appendChild(el("line", { x1: NL, y1: NB, x2: NR, y2: NB, class: "ax" }));
+  var npts = [];
+  for (var n = 1; n <= NMAX; n += 0.25) {
+    npts.push(nx(n).toFixed(1) + "," + ny(Math.log2(n)).toFixed(1));
+  }
+  ns.appendChild(el("polyline", { points: npts.join(" "), class: "curve" }));
+  [1, 2, 4, 8, 16, 32, 64].forEach(function (n) {
+    ns.appendChild(el("text", { x: nx(n), y: NB + 14, class: "tick",
+                                "text-anchor": "middle" }, n));
+    ns.appendChild(el("circle", { cx: nx(n), cy: ny(Math.log2(n)), r: 2.5,
+                                  class: n === 16 ? "dot" : "mark" }));
+  });
+  ns.appendChild(el("text", { x: (NL + NR) / 2, y: NB + 30, class: "tick",
+                              "text-anchor": "middle" }, "等可能的候選數 N"));
+  ns.appendChild(el("text", { x: NL - 30, y: NT + 4, class: "tick" }, "bit"));
+  ns.appendChild(el("text", { x: nx(16) + 6, y: ny(4) - 5, class: "note" },
+                   "16 種職業 = 4 bit（下一段用得到）"));
+
+  /* ---------- panel 3：猜職業 ---------- */
   var JOBS = ["醫師", "護理師", "藥師", "記者", "編劇", "設計師", "工程師", "會計師",
               "教師", "業務", "導遊", "廚師", "木工", "農夫", "司機", "警察"];
   // 每題是一個真實屬性，值＝符合的職業；回答依祕密職業誠實給。
@@ -663,7 +790,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:15</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-04 23:22</p>
 </div>
 </body>
 </html>
