@@ -32,6 +32,11 @@ MathJax = {
 <td>為什麼「準確率 95%」可能是個騙局？如果 100 則裡只有 5 則是假新聞，全部判「真」也有 95% 準。</td>
 </tr>
 <tr>
+<td>1b</td>
+<td><strong>說出</strong> accuracy／precision／recall／specificity／F-score 各自的分母是哪一格，以及各自看不到什麼</td>
+<td>工程師報告時丟出五個數字，我要盯哪一個？為什麼兩個完全相反的系統，F-score 可以一模一樣？</td>
+</tr>
+<tr>
 <td>2</td>
 <td><strong>計算／指出</strong>一個分類場景中哪一種誤判代價更高，該往哪邊調門檻</td>
 <td>留言審查系統要寧可錯刪還是寧可漏放？把真讀者誤封（FP）和放過攻擊言論（FN），哪個你賠得起？</td>
@@ -96,6 +101,397 @@ $$\text{precision}=\frac{TP}{TP+FP}$$
 </ul>
 $$\text{recall}=\frac{TP}{TP+FN}$$
 <p>記法：<strong>precision 在替「被你攔下來的人」喊冤（盯 FP）；recall 在替「被你放過去的禍害」算帳（盯 FN）。</strong> 一個顧誤殺，一個顧漏網。</p>
+<h4>兩種錯的正式名字：Type 1 與 Type 2 Error</h4>
+<p>統計課本裡的講法，跟這張表是同一件事，只是換個名字：</p>
+<ul>
+<li><strong>FP＝Type 1 Error（型一錯誤）</strong>：本來沒事，你說有事。<strong>偽陽性、false alarm、冤枉好人。</strong></li>
+<li><strong>FN＝Type 2 Error（型二錯誤）</strong>：本來有事，你說沒事。<strong>偽陰性、漏網之魚。</strong></li>
+</ul>
+<p>聽到工程師或研究者講「型一錯誤」，就把它翻成「誤抓」；「型二錯誤」翻成「漏掉」。</p>
+<h4>五個數字，先把定義弄清楚</h4>
+<p>工程師的報告上通常有五個數字。<strong>每一個的分母不一樣，因此每一個都有它看不見的東西。</strong></p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>公式</th>
+<th>白話</th>
+<th>分母是哪一塊</th>
+<th>它看不見什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Accuracy 準確率</strong></td>
+<td>$\dfrac{TP+TN}{總數}$</td>
+<td>全部判斷裡判對的比例</td>
+<td>全部四格</td>
+<td>看不見兩種錯的差別；當陽性極少時會嚴重高估</td>
+</tr>
+<tr>
+<td><strong>Recall 召回率</strong></td>
+<td>$\dfrac{TP}{TP+FN}$</td>
+<td>該抓的抓到幾成</td>
+<td>「實際為陽性」那一<strong>列</strong></td>
+<td>看不見你誤抓了多少</td>
+</tr>
+<tr>
+<td><strong>Precision 精確率</strong></td>
+<td>$\dfrac{TP}{TP+FP}$</td>
+<td>抓起來的有幾成是對的</td>
+<td>「判為陽性」那一<strong>欄</strong></td>
+<td>看不見你漏掉了多少</td>
+</tr>
+<tr>
+<td><strong>Specificity 特異度</strong></td>
+<td>$\dfrac{TN}{TN+FP}$</td>
+<td>本來沒事的，有幾成被正確放行</td>
+<td>「實際為陰性」那一<strong>列</strong></td>
+<td>看不見陽性那一側的表現</td>
+</tr>
+<tr>
+<td><strong>F-Score（F1）</strong></td>
+<td>$\dfrac{2PR}{P+R}$</td>
+<td>precision 與 recall 的調和平均</td>
+<td>—</td>
+<td>看不見兩者是誰高誰低——<strong>兩個相反的系統可以同分</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>recall 與 specificity 是一對鏡像</strong>：一個顧陽性那一列（有沒有漏），一個顧陰性那一列（有沒有冤枉）。
+在陽性極少的場景（詐騙、疾病、假訊息），<strong>specificity 幾乎永遠很漂亮</strong>，因為分母被大量的 TN 撐著——
+所以看到很高的 specificity 不必太興奮，那多半是題目本身給的。</p>
+<div class="widget" id="mc-calc">
+<style>
+#mc-calc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+           background: #fbfbfc; margin: 1.6rem 0; }
+#mc-calc h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#mc-calc .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#mc-calc button { font: inherit; font-size: .82rem; padding: .28rem .7rem; margin: .18rem .28rem .18rem 0;
+                  border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                  border-radius: 999px; cursor: pointer; }
+#mc-calc button:hover { background: #eef4fd; }
+#mc-calc button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#mc-calc table.grid { border-collapse: collapse; width: 100%; max-width: 34rem; margin: .8rem 0 .3rem; }
+#mc-calc table.grid th, #mc-calc table.grid td { border: 1px solid #ddd; padding: .45rem .5rem;
+                                                 text-align: center; }
+#mc-calc table.grid th { background: #f4f6f9; font-size: .76rem; color: #555; font-weight: 600; }
+#mc-calc table.grid td.tp { background: #e8f2e6; } #mc-calc table.grid td.tn { background: #eef3f8; }
+#mc-calc table.grid td.fp { background: #fdeee2; } #mc-calc table.grid td.fn { background: #fbe3e3; }
+#mc-calc table.grid input { width: 6.2rem; font: inherit; font-size: 1rem; font-weight: 700;
+                            color: #1d3557; text-align: center; border: 1px solid #d5d5d5;
+                            border-radius: 5px; padding: .2rem; background: #fff;
+                            font-variant-numeric: tabular-nums; }
+#mc-calc table.grid .lbl { display: block; font-size: .7rem; color: #777; margin-top: .18rem; }
+#mc-calc .metric { border: 1px solid #e4e4e4; border-radius: 8px; background: #fff;
+                   padding: .6rem .8rem; margin: .5rem 0; }
+#mc-calc .metric .top { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+#mc-calc .metric .nm { font-weight: 700; color: #17395e; font-size: .93rem; }
+#mc-calc .metric .en { font-size: .78rem; color: #999; }
+#mc-calc .metric .v { margin-left: auto; font-size: 1.25rem; font-weight: 700; color: #17395e;
+                      font-variant-numeric: tabular-nums; }
+#mc-calc .metric .fm { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .8rem;
+                       color: #55627a; margin-top: .3rem; }
+#mc-calc .metric .ds { font-size: .82rem; color: #666; margin-top: .28rem; line-height: 1.7; }
+#mc-calc .metric.warn { border-color: #e6c964; background: #fffaf0; }
+#mc-calc .alert { background: #fff6dd; border: 1px solid #e6c964; border-radius: 8px;
+                  padding: .7rem .9rem; font-size: .87rem; line-height: 1.8; color: #6b5200;
+                  margin-top: .6rem; }
+#mc-calc .caseinfo { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                     padding: .65rem .9rem; font-size: .86rem; line-height: 1.75; color: #444;
+                     margin: .6rem 0; }
+#mc-calc .caseinfo b { color: #17395e; }
+</style>
+
+<h5>🎛 互動：四格填進去，五個數字自己算</h5>
+<p class="lede">先把定義弄清楚，再談門檻。下面四格可以直接改數字，
+五個指標會即時重算，<strong>而且會把代入的數字寫給你看</strong>。
+上排的按鈕是課堂上會用到的真實案例。</p>
+
+<div id="mc-presets"></div>
+<div class="caseinfo" id="mc-case"></div>
+
+<table class="grid">
+  <thead>
+    <tr><th></th><th id="mc-h1">模型判為「是」</th><th id="mc-h2">模型判為「不是」</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="mc-r1">實際是</th>
+      <td class="tp"><input type="number" id="mc-tp" min="0" value="3">
+        <span class="lbl">TP 真陽性</span></td>
+      <td class="fn"><input type="number" id="mc-fn" min="0" value="2">
+        <span class="lbl">FN 偽陰性・Type 2 Error</span></td>
+    </tr>
+    <tr>
+      <th id="mc-r2">實際不是</th>
+      <td class="fp"><input type="number" id="mc-fp" min="0" value="4">
+        <span class="lbl">FP 偽陽性・Type 1 Error</span></td>
+      <td class="tn"><input type="number" id="mc-tn" min="0" value="91">
+        <span class="lbl">TN 真陰性</span></td>
+    </tr>
+  </tbody>
+</table>
+<div class="lede" id="mc-tot" style="margin:.2rem 0 1rem;"></div>
+
+<div id="mc-metrics"></div>
+<div class="alert" id="mc-alert" style="display:none;"></div>
+
+<script>
+(function () {
+  var root = document.getElementById("mc-calc");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var CASES = [
+    { k: "court", n: "死刑：基準", tp: 3, fn: 2, fp: 4, tn: 91,
+      h1: "判有罪（處死）", h2: "判無罪（釋放）", r1: "真的有罪", r2: "真的無辜",
+      d: "一百個被告，五個真的有罪。系統判對三個、放掉兩個，另外<b>錯判四個無辜的人</b>。"
+         + "Blackstone：「<b>寧可放過十個有罪的人，也不要讓一個無辜者受害</b>」——"
+         + "這句話講的就是 FP 與 FN 的代價權重。" },
+    { k: "hifp", n: "死刑：高偽陽", tp: 1, fn: 0, fp: 9, tn: 90,
+      h1: "判有罪（處死）", h2: "判無罪（釋放）", r1: "真的有罪", r2: "真的無辜",
+      d: "有罪的一個都沒放過（recall 100%），代價是<b>九個無辜者被處死</b>。"
+         + "這是「寧可錯殺一百」的形態。" },
+    { k: "hifn", n: "死刑：高偽陰", tp: 1, fn: 9, fp: 0, tn: 90,
+      h1: "判有罪（處死）", h2: "判無罪（釋放）", r1: "真的有罪", r2: "真的無辜",
+      d: "沒有冤枉任何人（precision 100%），代價是<b>九個有罪的人被放走</b>。"
+         + "跟上一個案例的 accuracy 一樣是 91%、F-score 也一樣——<b>但這是兩個相反的世界</b>。" },
+    { k: "terror", n: "恐怖份子入境", tp: 5, fn: 5, fp: 0, tn: 9999990,
+      h1: "系統攔下", h2: "系統放行", r1: "真的是恐怖份子", r2: "一般旅客",
+      d: "每年一千萬人入境，其中十名恐怖份子。系統攔下五名、放行五名，一般旅客零人被錯攔。"
+         + "<b>準確率超過 99.9999%，但一半的恐怖份子入境了。</b>" },
+    { k: "google", n: "垃圾信：Google", tp: 990, fn: 10, fp: 20, tn: 980,
+      h1: "判為垃圾信", h2: "判為正常信", r1: "真的是垃圾信", r2: "真的是正常信",
+      d: "兩千封信，一千封垃圾。抓到 990 封垃圾，但<b>誤殺 20 封正常信</b>。" },
+    { k: "yahoo", n: "垃圾信：Yahoo", tp: 950, fn: 50, fp: 1, tn: 999,
+      h1: "判為垃圾信", h2: "判為正常信", r1: "真的是垃圾信", r2: "真的是正常信",
+      d: "同樣兩千封。漏掉 50 封垃圾信，但<b>只誤殺 1 封正常信</b>。"
+         + "accuracy 比 Google 低，你要選哪一個？" },
+    { k: "park", n: "路邊停車偵測", tp: 880, fn: 45, fp: 25, tn: 2050,
+      h1: "判定有停車（開單）", h2: "判定沒停車", r1: "真的有停車", r2: "真的沒停車",
+      d: "偵測系統的錯誤率約 2.33%，聽起來很低。但 <b>25 張是開錯的罰單</b>，"
+         + "每一張都是一通客訴電話。<b>民怨來自 FP，不來自錯誤率。</b>" }
+  ];
+
+  var pbox = document.getElementById("mc-presets");
+  CASES.forEach(function (c) {
+    var b = document.createElement("button");
+    b.textContent = c.n; b.dataset.k = c.k;
+    b.addEventListener("click", function () { load(c); });
+    pbox.appendChild(b);
+  });
+
+  var IN = {};
+  ["tp", "fn", "fp", "tn"].forEach(function (k) {
+    IN[k] = document.getElementById("mc-" + k);
+    IN[k].addEventListener("input", draw);
+  });
+
+  function load(c) {
+    IN.tp.value = c.tp; IN.fn.value = c.fn; IN.fp.value = c.fp; IN.tn.value = c.tn;
+    document.getElementById("mc-h1").textContent = c.h1;
+    document.getElementById("mc-h2").textContent = c.h2;
+    document.getElementById("mc-r1").textContent = c.r1;
+    document.getElementById("mc-r2").textContent = c.r2;
+    document.getElementById("mc-case").innerHTML = "<b>" + c.n + "</b>：" + c.d;
+    pbox.querySelectorAll("button").forEach(function (b) {
+      b.className = b.dataset.k === c.k ? "on" : "";
+    });
+    draw();
+  }
+
+  function fmt(x) { return x.toLocaleString("en-US"); }
+  function pc(x) { return isNaN(x) ? "—" : (x * 100).toFixed(2) + "%"; }
+
+  var DEFS = [
+    { nm: "Accuracy 準確率", en: "(TP+TN) / 全部",
+      calc: function (v) { return (v.tp + v.tn) / v.tot; },
+      sub: function (v) { return "(" + fmt(v.tp) + " + " + fmt(v.tn) + ") / " + fmt(v.tot); },
+      ds: "全部的判斷裡，判對的佔多少。<b>最直覺，也最會騙人</b>——"
+        + "當一種結果佔絕大多數時，什麼都不抓也能拿到很高的準確率。" },
+    { nm: "Recall 召回率", en: "TP / (TP+FN)",
+      calc: function (v) { return v.tp / (v.tp + v.fn); },
+      sub: function (v) { return fmt(v.tp) + " / (" + fmt(v.tp) + " + " + fmt(v.fn) + ")"; },
+      ds: "<b>真的有問題的東西裡，抓到了幾成。</b>漏掉的越少，recall 越高。"
+        + "分母是「實際為陽性」那一整列——它只在乎有沒有漏掉，不管你誤抓多少。" },
+    { nm: "Precision 精確率", en: "TP / (TP+FP)",
+      calc: function (v) { return v.tp / (v.tp + v.fp); },
+      sub: function (v) { return fmt(v.tp) + " / (" + fmt(v.tp) + " + " + fmt(v.fp) + ")"; },
+      ds: "<b>你抓起來的東西裡，真的有問題的佔幾成。</b>誤抓越少，precision 越高。"
+        + "分母是「模型判為陽性」那一整欄——它只在乎抓得準不準，不管你漏掉多少。" },
+    { nm: "Specificity 特異度", en: "TN / (TN+FP)",
+      calc: function (v) { return v.tn / (v.tn + v.fp); },
+      sub: function (v) { return fmt(v.tn) + " / (" + fmt(v.tn) + " + " + fmt(v.fp) + ")"; },
+      ds: "<b>本來沒問題的東西裡，被正確放行的佔幾成。</b>它是 recall 的鏡像——"
+        + "recall 顧的是陽性那一列，specificity 顧的是陰性那一列。"
+        + "當「不要冤枉好人」是重點時，看這個比看 precision 更穩定。" },
+    { nm: "F-Score（F1）", en: "2·P·R / (P+R)",
+      calc: function (v) {
+        var p = v.tp / (v.tp + v.fp), r = v.tp / (v.tp + v.fn);
+        return (p + r) ? 2 * p * r / (p + r) : NaN;
+      },
+      sub: function (v) {
+        var p = v.tp / (v.tp + v.fp), r = v.tp / (v.tp + v.fn);
+        return "2 × " + (isNaN(p) ? "—" : p.toFixed(3)) + " × " + (isNaN(r) ? "—" : r.toFixed(3))
+          + " / (" + (isNaN(p) ? "—" : p.toFixed(3)) + " + " + (isNaN(r) ? "—" : r.toFixed(3)) + ")";
+      },
+      ds: "precision 與 recall 的調和平均，用一個數字概括兩者。"
+        + "<b>但它會把兩個相反的世界壓成同一個分數</b>——切「死刑：高偽陽」與「高偽陰」比較看看。" }
+  ];
+
+  var mbox = document.getElementById("mc-metrics");
+  DEFS.forEach(function (d) {
+    var el = document.createElement("div");
+    el.className = "metric";
+    el.innerHTML = '<div class="top"><span class="nm">' + d.nm + '</span>'
+      + '<span class="en">' + d.en + '</span><span class="v">—</span></div>'
+      + '<div class="fm"></div><div class="ds">' + d.ds + "</div>";
+    mbox.appendChild(el);
+  });
+
+  function draw() {
+    var v = {
+      tp: Math.max(0, +IN.tp.value || 0), fn: Math.max(0, +IN.fn.value || 0),
+      fp: Math.max(0, +IN.fp.value || 0), tn: Math.max(0, +IN.tn.value || 0)
+    };
+    v.tot = v.tp + v.fn + v.fp + v.tn;
+    document.getElementById("mc-tot").textContent =
+      "總數 " + fmt(v.tot) + "　實際為陽性 " + fmt(v.tp + v.fn)
+      + "（佔 " + (v.tot ? ((v.tp + v.fn) / v.tot * 100).toFixed(2) : "0") + "%）"
+      + "　模型判為陽性 " + fmt(v.tp + v.fp);
+
+    var acc = (v.tp + v.tn) / v.tot;
+    var rec = v.tp / (v.tp + v.fn);
+    var pre = v.tp / (v.tp + v.fp);
+
+    DEFS.forEach(function (d, i) {
+      var el = mbox.children[i];
+      var val = d.calc(v);
+      el.querySelector(".v").textContent = pc(val);
+      el.querySelector(".fm").textContent = "= " + d.sub(v)
+        + " = " + (isNaN(val) ? "無法計算（分母為 0）" : val.toFixed(4));
+      el.className = "metric";
+    });
+    if (acc > 0.9 && rec < 0.6) mbox.children[0].className = "metric warn";
+
+    var al = document.getElementById("mc-alert");
+    if (v.tot === 0) {
+      al.style.display = "block";
+      al.innerHTML = "四格全是 0，沒有東西可以算。";
+    } else if (acc > 0.95 && rec < 0.6) {
+      al.style.display = "block";
+      al.innerHTML = "⚠️ <b>準確率 " + pc(acc) + "，但 recall 只有 " + pc(rec)
+        + "。</b> 這就是準確率會騙人的地方：實際為陽性的只佔 "
+        + ((v.tp + v.fn) / v.tot * 100).toFixed(2)
+        + "%，所以只要大量判「不是」就能拿到漂亮的準確率。"
+        + "<b>聽到「準確率 99%」時，先問這一題的陽性佔比是多少。</b>";
+    } else if (rec > 0.95 && pre < 0.4) {
+      al.style.display = "block";
+      al.innerHTML = "⚠️ 幾乎沒漏掉（recall " + pc(rec) + "），"
+        + "但每抓 " + Math.round(1 / Math.max(pre, 0.0001)) + " 件才有 1 件是真的。"
+        + "誤抓的 " + fmt(v.fp) + " 件要有人善後——<b>你有那個人力嗎？</b>";
+    } else if (pre > 0.95 && rec < 0.4) {
+      al.style.display = "block";
+      al.innerHTML = "⚠️ 抓的幾乎都對（precision " + pc(pre) + "），"
+        + "但放過了 " + fmt(v.fn) + " 件。<b>那些被放過的，後果由誰承擔？</b>";
+    } else {
+      al.style.display = "none";
+    }
+  }
+
+  load(CASES[0]);
+})();
+</script>
+</div>
+
+<h4>用一個古典難題算一次：To kill, or not to kill</h4>
+<blockquote>
+<p>「<strong>寧可放過十個有罪的人，也不要讓一個無辜者受害。</strong>」——William Blackstone</p>
+</blockquote>
+<p>一百個被告，其中五個真的有罪。系統判決的結果：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>判有罪（處死）</th>
+<th>判無罪（釋放）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>真的有罪</strong></td>
+<td>TP = 3</td>
+<td>FN = 2</td>
+</tr>
+<tr>
+<td><strong>真的無辜</strong></td>
+<td>FP = 4</td>
+<td>TN = 91</td>
+</tr>
+</tbody>
+</table>
+<p>代進去算：</p>
+<ul>
+<li>Accuracy $=(3+91)/100=\mathbf{94\%}$</li>
+<li>Recall $=3/(3+2)=\mathbf{60\%}$</li>
+<li>Precision $=3/(3+4)=\mathbf{42.9\%}$</li>
+<li>Specificity $=91/(91+4)=\mathbf{95.8\%}$</li>
+<li>F1 $=\mathbf{0.50}$</li>
+</ul>
+<p>準確率 94% 聽起來不錯，但<strong>有四個無辜的人被處死</strong>，而且只抓到六成的真兇。
+Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代價權重應該遠低於 FP。</strong></p>
+<h4>同樣的準確率，兩個相反的世界</h4>
+<p>現在看兩個極端。<strong>兩者的 accuracy 都是 91%，F-score 都是 0.1818</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>高偽陽（寧可錯殺）</th>
+<th>高偽陰（寧可錯放）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP / FN / FP / TN</td>
+<td>1 / 0 / 9 / 90</td>
+<td>1 / 9 / 0 / 90</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td><strong>100%</strong></td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>10%</td>
+<td><strong>100%</strong></td>
+</tr>
+<tr>
+<td>Specificity</td>
+<td>90.9%</td>
+<td><strong>100%</strong></td>
+</tr>
+<tr>
+<td>實際發生了什麼</td>
+<td>一個有罪的都沒放過，<strong>九個無辜者被處死</strong></td>
+<td>沒有冤枉任何人，<strong>九個有罪的被放走</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>這是本模組最重要的一張表。</strong> 同樣的 accuracy、同樣的 F-score，
+一個是獨裁者的世界，一個是 Blackstone 的世界。
+<strong>任何把兩種錯壓成單一分數的指標，都會把這個差別抹掉。</strong></p>
+<h4>極端的準確率：恐怖份子</h4>
+<p>每年一千萬人入境，其中十名恐怖份子。系統攔下五名、放行五名，一般旅客零人被錯攔：</p>
+<ul>
+<li>Accuracy $\approx \mathbf{99.99995\%}$</li>
+<li>Precision $=\mathbf{100\%}$（攔下來的全對）</li>
+<li>Specificity $=\mathbf{100\%}$（沒有冤枉任何旅客）</li>
+<li>Recall $=5/10=\mathbf{50\%}$</li>
+</ul>
+<p><strong>四個數字裡有三個接近完美，但一半的恐怖份子入境了。</strong>
+這是「準確率會騙人」最乾淨的例子——<strong>陽性佔比只有百萬分之一時，準確率這個指標基本上沒有資訊量。</strong></p>
 <blockquote>
 <p><strong>confusion matrix 不是一個分數，是四種結局——而其中兩種『錯』，從來不等價。</strong></p>
 </blockquote>
@@ -111,6 +507,71 @@ $$\text{recall}=\frac{TP}{TP+FN}$$
 想抓得準一點，就得提高標準，於是漏得更多。你只能選一邊，而選哪一邊不是技術問題，
 是「哪一種錯，我們賠得起」的問題。</p></div>
 <h3>誤判代價不對稱</h3>
+<h4>先做一個選擇題：Google 還是 Yahoo？</h4>
+<p>兩家的垃圾信過濾器，各測兩千封信（一千封垃圾、一千封正常）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Google</th>
+<th>Yahoo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP（垃圾信抓到）</td>
+<td>990</td>
+<td>950</td>
+</tr>
+<tr>
+<td>FN（垃圾信漏掉）</td>
+<td>10</td>
+<td>50</td>
+</tr>
+<tr>
+<td>FP（<strong>正常信被誤殺</strong>）</td>
+<td>20</td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td>TN（正常信放行）</td>
+<td>980</td>
+<td>999</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td><strong>98.5%</strong></td>
+<td>97.45%</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td><strong>99.0%</strong></td>
+<td>95.0%</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>98.0%</td>
+<td><strong>99.9%</strong></td>
+</tr>
+<tr>
+<td>Specificity</td>
+<td>98.0%</td>
+<td><strong>99.9%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>哪一個比較強？</strong> Google 的 accuracy 與 recall 都比較高，如果只看那兩個數字，答案很明顯。</p>
+<p>但是把兩種錯換成真實後果：</p>
+<ul>
+<li><strong>FN（漏掉垃圾信）</strong>＝使用者信箱裡多幾封廣告，煩，但按一下就刪掉了。</li>
+<li><strong>FP（正常信被丟進垃圾桶）</strong>＝<strong>使用者錯過一封重要的信</strong>，可能是客戶、面試通知、法院文書。</li>
+</ul>
+<p>Google 誤殺 20 封，Yahoo 誤殺 1 封。<strong>在這個場景，FP 的代價高出 FN 好幾個量級</strong>，
+所以 accuracy 比較低的 Yahoo，很可能才是使用者要的那一個。</p>
+<blockquote>
+<p>這一題要記住的不是誰贏，是<strong>「哪一個模型比較強」這個問題本身沒有答案</strong>——
+沒有先講清楚兩種錯的代價，任何比較都是空的。</p>
+</blockquote>
 <h4>先戳破「準確率 95%」的迷思</h4>
 <p>工程師說：「我們這套假訊息偵測，準確率 <strong>95%</strong>。」聽起來很猛。但請先問一句：<strong>這批資料裡，假訊息本來占多少？</strong></p>
 <p>假設 100 則貼文裡，<strong>只有 5 則是假訊息</strong>，95 則是真的。現在我做一個<strong>最廢的「模型」：不管三七二十一，全部判「真」</strong>。</p>
@@ -774,6 +1235,35 @@ $$\text{recall}=\frac{TP}{TP+FN}$$
 它的準確率是 95%——因為 95% 的貼文本來就不是假訊息。但它一則都沒抓到。</p>
 <p>所以聽到「準確率 95%」時，該問的是：<strong>這 5% 的錯，是冤枉好人還是放過壞人？
 我們的場景賠得起哪一種？</strong> 只看一個總分，等於什麼都沒問。</p></div>
+<h4>把代價換成錢：銀行房貸的成本矩陣</h4>
+<p>指標吵不出結論的時候，把四格換成金額，答案通常就出來了。</p>
+<p>一家銀行的貸款申請：<strong>95% 的人會準時還款，每人帶來 1,000 元利潤；5% 會違約，每件損失 50,000 元。</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>核貸</th>
+<th>婉拒</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>會準時還（95%）</strong></td>
+<td>TP：<strong>+1,000</strong></td>
+<td>FN：0（少賺 1,000 的機會成本）</td>
+</tr>
+<tr>
+<td><strong>會違約（5%）</strong></td>
+<td>FP：<strong>−50,000</strong></td>
+<td>TN：0（避開損失）</td>
+</tr>
+</tbody>
+</table>
+<p>一筆違約的損失，等於五十筆正常放款的利潤。所以即使違約者只佔 5%，
+<strong>寧可錯拒五十個好客戶，也不要放行一個違約戶</strong>——門檻自然應該往嚴的那邊調。</p>
+<p>換成媒體場景是同一個算法：一則誤刪的報導要花多少人力善後、賠掉多少記者信任？
+一則漏掉的假訊息會造成多少公信力損失？<strong>兩個數字算出來，門檻就不必用感覺決定。</strong></p>
+<p>（下一個工具就是在做這件事——它把兩種錯的代價權重放進去，直接幫你找總代價最低的門檻。）</p>
 <h3>主管視角：該問工程師什麼、門檻調哪邊</h3>
 <h4>precision / recall 的拉鋸：門檻（threshold）</h4>
 <p>模型其實不是直接吐「假／真」，而是吐一個<strong>分數</strong>（例如「這則是假訊息的機率 0.73」）。是你（或工程師）設一條<strong>門檻</strong>，超過就判「假」、攔下來。<strong>這條門檻往哪邊移，就決定了你要哪一種錯。</strong></p>
@@ -782,6 +1272,40 @@ $$\text{recall}=\frac{TP}{TP+FN}$$
 <li><strong>門檻調高（很確定才攔）</strong>：出手更謹慎 → 冤枉變少（<strong>precision ↑</strong>），但漏網變多（<strong>recall ↓</strong>）。寧可錯放。</li>
 </ul>
 <p>這是一場<strong>蹺蹺板</strong>：在同一個模型上，precision 和 recall <strong>通常無法同時拉滿</strong>，壓低一種錯就會放大另一種。所以「門檻定在哪」不是技術細節，是<strong>價值判斷</strong>——你在替你的場景決定「寧可錯抓還是寧可放過」。這正是該由懂業務、懂品牌風險的<strong>主管</strong>參與的決定，不該全丟給工程師。</p>
+<h4>評估一個模型，不是只有準確度</h4>
+<p>工程師報告時容易只談指標。<strong>主管要記得問的還有五件事</strong>，它們不在 confusion matrix 上：</p>
+<table>
+<thead>
+<tr>
+<th>面向</th>
+<th>該問的問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>速度 Speed</strong></td>
+<td>一則要判多久？尖峰時段跟得上嗎？</td>
+</tr>
+<tr>
+<td><strong>穩健 Robustness</strong></td>
+<td>換一種寫法、換一個議題，它還準嗎？</td>
+</tr>
+<tr>
+<td><strong>可擴充 Scalability</strong></td>
+<td>量翻十倍時成本怎麼變？</td>
+</tr>
+<tr>
+<td><strong>可解釋 Explainable</strong></td>
+<td>它為什麼判這一則？申訴的人問起來，我們答得出來嗎？</td>
+</tr>
+<tr>
+<td><strong>維運</strong></td>
+<td>誰每週看它有沒有漂掉？壞掉怎麼知道？</td>
+</tr>
+</tbody>
+</table>
+<p><strong>可解釋那一項對媒體特別致命</strong>：被誤刪的記者一定會問「為什麼」，
+「模型說的」不是一個可以拿出去的答案。</p>
 <h4>該問工程師的三題</h4>
 <p>不用會算，把這三題問出口，你就已經不會被單一數字騙：</p>
 <ol>
@@ -841,6 +1365,9 @@ $$\text{recall}=\frac{TP}{TP+FN}$$
 <hr />
 <h4>💬 討論／分享／反思</h4>
 <ul>
+<li><strong>一起想一題</strong>：路邊停車自動偵測開單，整體錯誤率只有 2.33%，聽起來很好。
+  但民怨從哪裡來？（提示：把 2.33% 拆成 FP 與 FN，看哪一種會讓人打電話來罵。
+  切到計算機的「路邊停車偵測」按鈕看實際數字。）<strong>要減少民怨，該調哪一邊？代價是什麼？</strong></li>
 <li><strong>配對分享</strong>：各舉一個自己領域的分類場景（假訊息/留言審查/推薦/詐騙偵測），互相問「false positive 和 false negative 哪個害人比較深？」</li>
 <li><strong>一起想一題</strong>：當兩種誤判代價不對稱時，該把模型門檻調哪邊？收斂一個原則。</li>
 <li>
@@ -849,7 +1376,7 @@ $$\text{recall}=\frac{TP}{TP+FN}$$
 <li>
 <p><strong>小作業</strong>：選一個媒體場景，畫 confusion matrix 與誤判代價，標出你會把門檻往哪邊調、為什麼。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:11</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:20</p>
 </div>
 </body>
 </html>
