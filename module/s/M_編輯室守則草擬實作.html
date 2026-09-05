@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 編輯室守則草擬實作</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 編輯室守則草擬實作</h1></div><h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>寫出</strong>一份含禁用清單、揭露語、負責人的守則草案</td>
+<td>為什麼別家的準則抄過來沒有用？因為它沒有寫誰負責。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>檢驗</strong>每一條規則是否可執行（有沒有人、有沒有時間、違反了會怎樣）</td>
+<td>我們寫了一堆「應注意」，結果沒有人真的改變行為，問題出在哪？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>哪些條文該現在定死、哪些該留彈性並設定複查時間</td>
+<td>技術半年就變一次，規則要怎麼寫才不會三個月就過期？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>貼這段：</p>
+<blockquote>
+<p>請找出三家國際新聞機構公開的 AI 使用準則的共同結構（例如禁用範圍、揭露方式、責任歸屬）。然後幫我列出一份適用於台灣中型媒體的守則大綱，每一條標示：這是原則宣示，還是可以直接執行的規則。</p>
+</blockquote>
+<p><strong>注意</strong>：它可能會編造不存在的準則內容或誤植機構。把它列的「三家」記下來，上課時我們只用<strong>結構</strong>，不引用它給的具體條文——這一題本身就是 AI 幻覺的實例。</p>
+<hr />
+<h3>進行方式</h3>
+<h4>一、草擬 v0.1（20′，個人或兩人一組）</h4>
+<p>依這五段寫，<strong>每段都要寫到具體到可以照做</strong>：</p>
+<p><strong>① 禁用清單（不准做的）</strong>
+不是原則，是清單。範例格式：</p>
+<ul>
+<li>不得用 AI 生成事實、引述、消息來源或人名</li>
+<li>不得將未公開的消息來源資訊、個資、未發布稿件輸入外部 AI 服務</li>
+<li>不得用 AI 生成寫實風格的新聞影像，或修改具新聞性的照片內容</li>
+<li>不得將 AI 輸出直接發布而未經人工查證</li>
+</ul>
+<p><strong>② 允許並鼓勵的（做這些不用問）</strong>
+沒有這一段的守則會被讀成禁令，然後大家轉入地下使用。範例：整理逐字稿、翻譯、改寫成多平台版本、找背景資料、資料分群、初步校對。</p>
+<p><strong>③ 揭露語（給讀者看的）</strong>
+寫出<strong>確切的字句</strong>，不是「應適當揭露」。範例：</p>
+<blockquote>
+<p>本文使用 AI 工具協助整理訪談逐字稿，內容經記者查證並負全責。</p>
+</blockquote>
+<p>三種情境各寫一句：AI 輔助整理、AI 生成圖像示意、AI 協助資料分析。</p>
+<p><strong>④ 負責人（每一條後面掛名字或職稱）</strong>
+誰核准新工具、誰處理違規、誰每季複查。<strong>沒有掛人的條文不算數。</strong></p>
+<p><strong>⑤ 例外程序</strong>
+遇到守則沒寫到的狀況，誰有權決定、要不要留紀錄。</p>
+<h4>二、可執行性檢驗</h4>
+<p>跟旁邊的人交換草案，逐條填：</p>
+<table>
+<thead>
+<tr>
+<th>條文</th>
+<th>誰執行</th>
+<th>執行要花多少時間</th>
+<th>違反了會怎樣</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>三欄有任何一欄填不出來的條文，當場劃掉或改寫。</strong> 這一步通常會砍掉一半的條文，剩下的才是真的守則。</p>
+<p>參考 <a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a>：那個案子的「人在迴圈」在紙上是存在的，實際上審查者沒有時間也沒有推翻的權力。<strong>你的守則正在犯同一個錯嗎？</strong></p>
+<h4>三、定死 vs 留彈性</h4>
+<p>把條文分成兩堆：</p>
+<ul>
+<li><strong>現在定死</strong>：涉及事實、消息來源保護、對外揭露、個資的——這些不隨技術改變</li>
+<li><strong>留彈性 + 設複查日</strong>：涉及特定工具、特定功能、特定門檻的——寫上「20XX 年 X 月複查」</li>
+</ul>
+<p>沒有複查日期的彈性條文，半年後就變成沒人遵守的空文。</p>
+<h4>四、分享</h4>
+<p>兩到三份念出<strong>禁用清單第一條</strong>與<strong>揭露語</strong>。互相挑毛病：這條真的做得到嗎？這句話讀者看得懂嗎？</p>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「先抄一份國外準則」</td>
+<td>別人的準則反映他們的組織與法域；抄來的條文沒有負責人，等於沒有</td>
+<td>只借結構，條文自己寫，每條掛人</td>
+</tr>
+<tr>
+<td>「規則越嚴越安全」</td>
+<td>過嚴會讓大家轉入地下使用，你反而失去可見度；看不見的使用才危險</td>
+<td>強制寫「允許並鼓勵」那一段</td>
+</tr>
+<tr>
+<td>「揭露就是在告訴讀者我們偷懶」</td>
+<td>揭露建立的是可預期性；讀者反感的是被發現後才承認</td>
+<td>讓學員念自己寫的揭露語，聽聽像不像人話</td>
+</tr>
+<tr>
+<td>「等技術穩定再訂」</td>
+<td>沒有規則的期間，實際使用已經在發生，而且沒有紀錄</td>
+<td>強調這是 v0.1 加複查日，不是永久版</td>
+</tr>
+</tbody>
+</table>
+<h3>與其他模組的關係</h3>
+<ul>
+<li><strong>原則在前</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<strong>界線討論</strong>：<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">M AI 界線討論</a></li>
+<li><strong>責任歸屬</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%88%87%E6%A9%9F%E6%A7%8B%E5%80%AB%E7%90%86%E8%B2%AC%E4%BB%BB.html">M AI 取代工作與機構倫理責任</a>｜<strong>個案</strong>：<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a></li>
+<li><strong>產製面的落實</strong>：<a href="M_AI_%E7%94%A8%E9%80%B2%E7%B7%A8%E8%BC%AF%E8%88%87%E7%94%A2%E8%A3%BD%E6%B1%BA%E7%AD%96.html">M AI 用進編輯與產製決策</a>｜<strong>法規框架</strong>：<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></li>
+</ul>
+<p><strong>連結</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">M AI 界線討論</a>｜<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%88%87%E6%A9%9F%E6%A7%8B%E5%80%AB%E7%90%86%E8%B2%AC%E4%BB%BB.html">M AI 取代工作與機構倫理責任</a>｜<a href="M_AI_%E7%94%A8%E9%80%B2%E7%B7%A8%E8%BC%AF%E8%88%87%E7%94%A2%E8%A3%BD%E6%B1%BA%E7%AD%96.html">M AI 用進編輯與產製決策</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></p>
+<h4>💬 討論／分享／反思（內建於進行方式）</h4>
+<ul>
+<li><strong>一起想一題</strong>：你的守則裡有沒有一條，是你自己上個月剛違反過的？那條要改，還是你要改？</li>
+<li>
+<p><strong>反思</strong>：「檢驗過可執行性之後，我砍掉了＿＿＿條，因為＿＿＿。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：完成自家編輯室「AI 使用與揭露守則 v0.1」，含禁用清單、鼓勵清單、三句揭露語、每條的負責人、以及複查日期。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 10:31</p>
+</div>
+</body>
+</html>

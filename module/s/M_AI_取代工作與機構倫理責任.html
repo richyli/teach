@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M AI 取代工作與機構倫理責任</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M AI 取代工作與機構倫理責任</h1></div><h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>用 automation／augmentation 四象限</strong>描述一個職務被 AI 影響的方式，而不是只說「會不會被取代」</td>
+<td>為什麼「記者會不會被取代」是個爛問題？該問的是記者的哪幾項任務會被拆走。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>拆解</strong>一個 AI 系統的偏誤是從資料、目標函數、還是使用流程來的</td>
+<td>我們的推薦系統讓某類新聞越來越少人看，這是讀者的選擇還是系統造成的？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一項倫理責任該落在工程師、供應商、主管還是制度上，並說出理由</td>
+<td>出事的時候「是 AI 判斷的」能不能當理由？如果不能，那誰要簽名？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>貼這段給任何一個 AI：</p>
+<blockquote>
+<p>請把「新聞記者」這個職業拆成 10 到 15 項具體任務。針對每一項，判斷它比較可能被 AI「取代」還是「增強」，並說明理由。最後請你指出：這份拆解裡，哪幾項你其實不確定，因為它高度取決於這家媒體的組織方式。</p>
+</blockquote>
+<p>帶著它的拆解來。上課時把它換成<strong>你自己部門真正的職務</strong>，你會發現它拆的任務跟實際工作內容差距很大——<strong>那個差距就是「取代論」最常出錯的地方</strong>。</p>
+<hr />
+<h3>別問「會不會被取代」，問「哪幾項任務被拆走」</h3>
+<p>「AI 會不會取代記者」這種問法沒有辦法回答，因為職業不是一個單元，是一束任務。把它拆開，每一項任務放進四象限：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>AI 做得比人好</strong></th>
+<th><strong>AI 做不好</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>這項任務可以獨立切出來</strong></td>
+<td>① 自動化：整段交出去（轉逐字稿、翻譯、產生多平台版本、資料整理）</td>
+<td>② 保留：仍然由人做（判斷可信度、談消息來源、決定發不發）</td>
+</tr>
+<tr>
+<td><strong>這項任務跟其他任務綁在一起</strong></td>
+<td>③ 增強：人做，但速度與廣度被放大（找背景資料、比對前例、初步分群）</td>
+<td>④ 重組：任務本身會被重新設計（採訪流程、值班編制、稽核關卡）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>真正會出事的是第 ④ 格。</strong>①②③ 都是可以一項一項討論的；④ 是整個工作方式被改寫，通常沒有人負責宣布它發生了，它就這樣悄悄發生了。</p>
+<p><strong>主管的具體工作</strong>：把自己團隊的職務攤成十幾項任務，逐項放格子。放完之後你會看到——被拆走的多半是<strong>新人用來練功的那幾項</strong>（整理逐字稿、做背景資料、跑例行稿）。這帶出一個沒有人準備好回答的問題：<strong>新人以後在哪裡練基本功？</strong></p>
+<blockquote>
+<p>「取代」很少是整個職位消失，比較常見的是<strong>入門階梯被抽掉</strong>：資深的人更值錢，新人沒有位置。這件事在人力預算表上看不出來，要三年後才會顯形。</p>
+</blockquote>
+<hr />
+<h3>偏誤從哪裡來：資料、目標、流程</h3>
+<p>「AI 有偏見」講一百次也沒用，因為它不指向任何可以修的東西。拆成三個來源，每一個對應不同的修法：</p>
+<p><strong>① 資料</strong>：訓練資料本身就偏斜。台灣的護理人員約九成是女性，模型說「護理師是女性」是忠實反映——但它把統計上的多數，輸出成看起來像必然的敘述（詳見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>、<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>）。<strong>修法</strong>：換資料、補樣本、標註。</p>
+<p><strong>② 目標函數</strong>：系統被要求最佳化的東西，跟你真正想要的東西不一樣。推薦系統被要求最大化停留時間，於是它學會推煽動性內容——它沒有壞掉，它把你交代的事做得很好。<strong>修法</strong>：改指標，而且要改的是被獎勵的那個指標，不是牆上貼的那個。</p>
+<p><strong>③ 使用流程</strong>：模型輸出被放在什麼位置。同一個信心分數，放在「給編輯參考」跟「自動下架」是完全不同的東西（回想 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a> 的門檻）。<strong>修法</strong>：改流程，不用改模型。</p>
+<blockquote>
+<p>這三個裡面，主管能直接動的是②和③。多數機構卻把力氣全花在要求供應商改①——那是最慢、最貴、也最不受你控制的一個。</p>
+</blockquote>
+<p><strong>監控資本主義那一支的提醒</strong>：當商業模式建立在「盡可能取得使用者行為資料並用來預測與引導行為」之上，偏誤就不是 bug 而是產品的一部分。這一支的批評對媒體特別刺——因為媒體既是被平台監控的一方，自己也在對讀者做同樣的事。</p>
+<p><strong>「AI 中立」是迷思</strong>：任何系統都要選擇最佳化什麼、以誰的資料為準、把誰的判斷寫進規則。宣稱中立通常只是把這些選擇藏起來。<strong>主管要問的不是「這個系統中不中立」，而是「它的選擇是誰做的、寫在哪裡、我能不能改」。</strong></p>
+<hr />
+<h3>主管視角：責任落在誰身上</h3>
+<p>出事的時候，「是 AI 判斷的」不能當理由。理由是這樣的：<strong>AI 系統沒有法律人格，也不會出席道歉記者會。</strong> 責任會沿著決策鏈往上找，找到最後一個有權力改變它、卻沒有改變的人。</p>
+<p>責任盤點的四層：</p>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>誰</th>
+<th>該負什麼責任</th>
+<th>你能怎麼要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供應商</td>
+<td>賣你模型或 SaaS 的人</td>
+<td>揭露訓練資料範圍、已知失效情況、錯誤率</td>
+<td>寫進合約與 SLA；問不出來就是一個風險訊號</td>
+</tr>
+<tr>
+<td>工程／資料團隊</td>
+<td>建置與串接的人</td>
+<td>說明門檻怎麼定、監看誰做、壞掉怎麼知道</td>
+<td>要求可追溯的紀錄，不是口頭保證</td>
+</tr>
+<tr>
+<td>主管</td>
+<td>你</td>
+<td>決定用在哪一段、驗收點在哪、誰簽名</td>
+<td>這一層不能外包，也沒有人能代替你決定</td>
+</tr>
+<tr>
+<td>制度</td>
+<td>法規與行業準則</td>
+<td>揭露義務、申訴管道、可否據以處分</td>
+<td>台灣《人工智慧基本法》2026/1/14 施行，屬指導性框架、無罰則；EU AI Act 課的是義務。內容可能被歐盟讀者看到，較嚴的那套就是你的下限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>個案</strong>：<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a> —— 把公共決策交給 AI、預設值設成「刪除」、事後拒絕揭露怎麼用。這個案子把三件事一次演完：責任不可外包、人在迴圈可以徒具形式、拒絕揭露本身就是答案。</p>
+<p><strong>帶團隊的三件事</strong>：</p>
+<ol>
+<li><strong>先講清楚哪些任務不會被拿走</strong>，再談哪些會。沒有這一句，任何導入都會被讀成裁員的前奏。</li>
+<li><strong>入門階梯要重建</strong>。如果新人的練功任務被自動化了，就要設計新的練功方式，否則三年後你沒有中生代。</li>
+<li><strong>簽名制</strong>。每個 AI 輔助的對外產出，內部要看得出來是誰放行的。這不是為了究責，是為了讓「有人在看」這件事成立。</li>
+</ol>
+<blockquote>
+<p>主管在這一題上的位置很簡單：<strong>你可以把工作交給 AI，不能把責任交給它。</strong> 能被外包的是任務，不能被外包的是簽名。</p>
+</blockquote>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 只是工具，看人怎麼用」</td>
+<td>這句話把系統設計者的選擇（資料、目標函數、預設值）洗掉了，也讓責任無處可放</td>
+<td>追問：預設值是誰設的？改得動嗎？</td>
+</tr>
+<tr>
+<td>「等法規明確再說」</td>
+<td>台灣的基本法是指導性框架、沒有罰則，等它明確等不到；而且民事責任與公信力損失不等法規</td>
+<td>用四層責任表指出：制度層之外還有三層是你現在就能動的</td>
+</tr>
+<tr>
+<td>「我們有人在迴圈，所以沒問題」</td>
+<td>人在迴圈如果沒有時間、沒有資訊、沒有推翻的權力，就只是橡皮圖章</td>
+<td>問：那個人一天要看幾件？他推翻過幾次？</td>
+</tr>
+<tr>
+<td>「取代的是低階工作，資深的不受影響」</td>
+<td>被拆走的常是新人的練功任務，資深的短期受惠、長期斷層</td>
+<td>要求盤點「新人現在靠哪幾項任務學會判斷」</td>
+</tr>
+</tbody>
+</table>
+<h3>與其他模組的關係</h3>
+<ul>
+<li><strong>偏誤的技術來源</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>｜<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a></li>
+<li><strong>門檻與誤判代價</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<strong>法規框架</strong>：<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></li>
+<li><strong>寫成規範</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<strong>同週論文報告</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 取代工作論文報告</a>、<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a></li>
+</ul>
+<p><strong>連結</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 取代工作論文報告</a>｜<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>｜<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">M AI 界線討論</a></p>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各自把自己部門一個職務拆成十項任務，互相指出哪幾項落在第 ④ 格（會被重組但沒人宣布）。</li>
+<li><strong>一起想一題</strong>：如果新人的練功任務被自動化了，你要用什麼取代它？回答不准是「就讓他們做更高階的事」。</li>
+<li>
+<p><strong>反思</strong>：「我原本以為 AI 倫理是要不要用的問題，現在我會先問——出事的時候，誰的名字在上面？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：把自己部門一個職務攤成任務清單並填四象限；針對第 ④ 格的任務，各寫一句「這件事被重組之後，誰的位置變了」。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 10:31</p>
+</div>
+</body>
+</html>
