@@ -141,6 +141,13 @@ MathJax = {
 <p><strong>資訊量不看你說了多少，看你砍掉對方多少猜測空間。AI 面對的猜測空間，就是它的 entropy。</strong></p>
 </blockquote>
 <hr />
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>上一個模組把 entropy 定成「平均還剩多少不確定性」。這一段只做一件事：<strong>把那把尺拿去量 AI</strong>。</p>
+<p>AI 生成文字的方式，是一步一步猜下一個字。每一步它心裡都有一個「哪些字比較可能」的分布。
+你給的背景資訊越足，那個分布就越尖——它幾乎知道該接什麼；
+你給得越少，分布越平——它面對的 entropy 很高，但它仍然被要求給出答案，
+於是它挑一個「看起來最合理」的答案填上去。</p>
+<p>這就是幻覺的來源。<strong>它不是在說謊，是在高不確定性下被迫生成。</strong>
+所以下次它亂講，第一個該問的不是「這 AI 怎麼這麼笨」，而是「我少餵了哪一塊資訊」。</p></div>
 <h3>把這把尺對準 LLM：context 不足＝高 entropy＝它只好硬補</h3>
 <p><strong>LLM 在做的事，一句話</strong>：給定目前的上下文，吐出「下一個 token 的機率分布」，再從分布裡 sample。這個分布有它的 entropy——<strong>分布越平，模型越不知道該說什麼，sample 出來就越像亂編。幻覺不是品德問題，是高 entropy 下被迫生成的數學後果。</strong></p>
 <p><strong>生成式 vs 判別式（一句話分清楚）</strong>：判別式模型是「在你給的選項裡選一個」（分類、是非），猜測空間小、容易驗證；生成式 LLM 是「從近乎無限的句子空間裡生一段」，猜測空間天生巨大，所以<strong>餵 context 砍 entropy 才是它能不能可靠的關鍵</strong>。</p>
@@ -180,7 +187,7 @@ MathJax = {
 <blockquote>
 <p>補充視角：模型「最常見的答案」從哪來、為什麼會系統性偏向某些答案，屬於訓練分布偏斜的問題，見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>；而把真訊息從一堆雜訊裡認出來，見 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a>。</p>
 </blockquote>
-<p><div class="widget" id="ent-ctx">
+<div class="widget" id="ent-ctx">
 <style>
 #ent-ctx { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
            background: #fbfbfc; margin: 1.6rem 0; }
@@ -308,7 +315,7 @@ MathJax = {
 })();
 </script>
 </div>
-</p>
+
 <h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
@@ -340,6 +347,11 @@ MathJax = {
 <p><strong>幻覺＝context 不足讓它的 entropy 太高，它只好用最可能的答案硬補。主管的工作不是嫌它笨，是把它面前那個分布餵尖。</strong></p>
 </blockquote>
 <hr />
+<div class="callout callout-student"><span class="co-title">學生閱讀｜給足 context 不等於什麼都貼</span><p>「餵資訊」有一條界線：能砍掉不確定性的、而且<strong>可以外流</strong>的資訊才餵。
+未公開的消息來源、個資、還沒發布的稿件，貼進外部 AI 服務就是外流，
+這跟它答得準不準是兩回事。</p>
+<p>實務上先問兩題：這塊資訊真的能幫它收斂嗎？如果它明天出現在別人的螢幕上，我會不會出事？
+兩題都過才貼。</p></div>
 <h3>主管視角：跟工程師對話、自己用 agent 的標準動作</h3>
 <p>把 entropy 當成你和工程師之間的<strong>共同語言</strong>。你不必會算，但你要會用它定位問題、問對問題。</p>
 <p><strong>該問工程師的三題（entropy 版）</strong>
@@ -365,7 +377,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 10:41</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 11:22</p>
 </div>
 </body>
 </html>

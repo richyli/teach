@@ -90,16 +90,26 @@ MathJax = {
 <ul>
 <li><strong>精確率 precision（白話：抓出來的，有多少是真的該抓的）</strong>——系統喊「假訊息」的那一堆裡，有多少真的是假訊息？被它「冤枉」越多，precision 越低。</li>
 </ul>
-<p>$$\text{precision}=\frac{TP}{TP+FP}$$</p>
+$$\text{precision}=\frac{TP}{TP+FP}$$
 <ul>
 <li><strong>召回率 recall（白話：該抓的，抓到多少）</strong>——所有真正的假訊息裡，被系統抓到的比例。漏掉越多，recall 越低。</li>
 </ul>
-<p>$$\text{recall}=\frac{TP}{TP+FN}$$</p>
+$$\text{recall}=\frac{TP}{TP+FN}$$
 <p>記法：<strong>precision 在替「被你攔下來的人」喊冤（盯 FP）；recall 在替「被你放過去的禍害」算帳（盯 FN）。</strong> 一個顧誤殺，一個顧漏網。</p>
 <blockquote>
 <p><strong>confusion matrix 不是一個分數，是四種結局——而其中兩種『錯』，從來不等價。</strong></p>
 </blockquote>
 <hr />
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>一個會做「是／不是」判斷的系統，結果只有四種：抓對、抓錯、漏掉、正確放過。
+把它們排成兩排兩列，就是 confusion matrix。</p>
+<p>從這四格衍生出兩個你一定要聽得懂的詞：</p>
+<ul>
+<li><strong>recall（抓到幾成）</strong>：真的有問題的東西裡，它抓到多少。漏得少，recall 就高。</li>
+<li><strong>precision（抓的對幾成）</strong>：它抓起來的東西裡，真的有問題的佔多少。誤抓得少，precision 就高。</li>
+</ul>
+<p>關鍵在於：<strong>這兩個數字沒辦法同時衝高。</strong> 想少漏一點，就得放寬標準，於是誤抓變多；
+想抓得準一點，就得提高標準，於是漏得更多。你只能選一邊，而選哪一邊不是技術問題，
+是「哪一種錯，我們賠得起」的問題。</p></div>
 <h3>誤判代價不對稱</h3>
 <h4>先戳破「準確率 95%」的迷思</h4>
 <p>工程師說：「我們這套假訊息偵測，準確率 <strong>95%</strong>。」聽起來很猛。但請先問一句：<strong>這批資料裡，假訊息本來占多少？</strong></p>
@@ -154,7 +164,7 @@ MathJax = {
 <p><strong>『準確率 95%』是句空話，除非你先問清楚——這 5% 的錯，是冤枉好人（FP）還是放過壞人（FN），而我的場景賠得起哪一種？</strong></p>
 </blockquote>
 <hr />
-<p><div class="widget" id="cm-sim">
+<div class="widget" id="cm-sim">
 <style>
 #cm-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
           background: #fbfbfc; margin: 1.6rem 0; }
@@ -759,7 +769,11 @@ MathJax = {
 })();
 </script>
 </div>
-</p>
+
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼「準確率 95%」常常是句空話</span><p>假設一萬則貼文裡只有 500 則是假訊息。有一個系統什麼都判「不是」，
+它的準確率是 95%——因為 95% 的貼文本來就不是假訊息。但它一則都沒抓到。</p>
+<p>所以聽到「準確率 95%」時，該問的是：<strong>這 5% 的錯，是冤枉好人還是放過壞人？
+我們的場景賠得起哪一種？</strong> 只看一個總分，等於什麼都沒問。</p></div>
 <h3>主管視角：該問工程師什麼、門檻調哪邊</h3>
 <h4>precision / recall 的拉鋸：門檻（threshold）</h4>
 <p>模型其實不是直接吐「假／真」，而是吐一個<strong>分數</strong>（例如「這則是假訊息的機率 0.73」）。是你（或工程師）設一條<strong>門檻</strong>，超過就判「假」、攔下來。<strong>這條門檻往哪邊移，就決定了你要哪一種錯。</strong></p>
@@ -835,7 +849,7 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：選一個媒體場景，畫 confusion matrix 與誤判代價，標出你會把門檻往哪邊調、為什麼。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 10:40</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 11:22</p>
 </div>
 </body>
 </html>

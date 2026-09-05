@@ -65,9 +65,16 @@ MathJax = {
 </blockquote>
 <p><strong>自我消化</strong>：擲一枚公正硬幣，結果的資訊量是幾 bits？（答：1 bit，因為 $\log_2 2 = 1$）</p>
 <hr />
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>「資訊」在日常語言裡很模糊，Shannon 把它定成一件可以量的事：<strong>資訊就是消除掉的不確定性</strong>。</p>
+<p>想像你要猜一件事，一開始有很多種可能。每得到一則消息，可能性就少一些。
+少得越多，那則消息的資訊量就越大——跟它有幾個字、檔案多大完全無關。
+一句「你被資遣了」只有五個字，卻把你對未來的所有猜測整個翻掉；
+老闆八百字的勉勵信講的全是你早就知道的事，資訊量趨近於零。</p>
+<p>量尺的單位是 <strong>bit</strong>：能把可能性砍成一半的消息，就是 1 bit。
+猜 1 到 100 的數字，每次問一個能砍一半的是非題，大約七題就會收斂。</p></div>
 <h3>Shannon 的 entropy 公式（量化）</h3>
 <p>Shannon（1948）把上面的直覺寫成一條公式。對一個有 $n$ 種可能結果、每種發生機率為 $p_i$ 的隨機事件，它的<strong>熵 entropy</strong>是：</p>
-<p>$$H = -\sum_{i=1}^{n} p_i \log_2 p_i$$</p>
+$$H = -\sum_{i=1}^{n} p_i \log_2 p_i$$
 <p>讀法：把每個結果的「意外程度」$-\log_2 p_i$（機率越小、越意外、值越大），用它自己的機率 $p_i$ 加權平均。<strong>H 就是「平均每次結果帶來的資訊量（bits）」，也就是這個系統的平均不確定性。</strong></p>
 <h4>三個直覺要記住</h4>
 <ol>
@@ -94,7 +101,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <blockquote>
 <p><strong>一張圖記住</strong>：兩種結果時，H 隨機率畫出一條倒 U——兩端（0 或 1）是 0，正中央（0.5）是最高的 1 bit。<strong>最公平 = 最不可預測 = 資訊量最大。</strong></p>
 </blockquote>
-<p><div class="widget" id="ent-sim">
+<div class="widget" id="ent-sim">
 <style>
 #ent-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
            background: #fbfbfc; margin: 1.6rem 0; }
@@ -518,7 +525,17 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 })();
 </script>
 </div>
-</p>
+
+<div class="callout callout-student"><span class="co-title">學生閱讀｜公式在說什麼</span><p>$H = -\sum p_i \log_2 p_i$ 看起來嚇人，意思其實只有一句：
+<strong>把每一種可能結果的「意外程度」，按它發生的機率加權平均起來。</strong></p>
+<ul>
+<li>越不可能發生的事，一旦發生越意外，帶來的資訊越多</li>
+<li>但它很少發生，所以在平均裡佔的權重小</li>
+<li>兩者相乘再加總，就是這個分布的平均不確定性</li>
+</ul>
+<p>結論只要記三句：<strong>分布越平均，entropy 越高；越偏斜，entropy 越低；
+只有一種結果時 entropy 是 0</strong>（沒有不確定性，也就沒有資訊可言）。
+上面那個互動工具就是在讓你把這三句話拉出來看。</p></div>
 <h4>⚠️ 常見迷思</h4>
 <p>學生算完硬幣後最容易卡在這三點，講授時主動點破：</p>
 <table>
@@ -569,7 +586,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <li>
 <p><strong>小作業</strong>：找一個你工作上常做的「判斷／決策」，寫下：(1) 決策前有幾種可能結果、大致機率分布長怎樣；(2) 哪一筆資料最能「砍一半」、最值得先去查。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 10:40</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 11:22</p>
 </div>
 </body>
 </html>
