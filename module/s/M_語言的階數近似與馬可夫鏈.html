@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 語言的階數近似與馬可夫鏈</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 語言的階數近似與馬可夫鏈</h1></div><p>1948 年 Shannon 手工翻書抽字，做出了世界上第一個語言模型。
+這個模組把那個實驗跑一次給你看——<strong>你會看見 GPT 的祖先，而且它長得比你想像的簡單。</strong>
+接在 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a> 之後，接往 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">M 從 Shannon 到 LLM</a>。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說明</strong>「階數」是什麼：模型多看前面幾個字，就多知道多少</td>
+<td>為什麼手機的注音選字有時神準、有時荒謬？它到底看了多少前文？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>推論</strong>為什麼階數越高、熵越低，並連到「語言有冗餘」</td>
+<td>英文冗餘 50% 這個數字是怎麼算出來的？它跟 ZIP 為什麼壓得動文字有什麼關係？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一個生成模型的產出「像人話」到什麼程度，是哪一階的能力</td>
+<td>AI 寫出流暢但空洞的段落，這是它笨，還是它本來就只在做高階的接龍？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>貼這段給任何一個 AI：</p>
+<blockquote>
+<p>請你模擬 Shannon 1948 年的英文近似實驗：分別產生零階、一階、二階、三階的假英文各一行，
+再產生「詞的一階」與「詞的二階」各一行。產生完之後，請說明每一階的熵大概是多少 bit/字母，
+並標示哪些數字是你查到的、哪些是你估的。</p>
+</blockquote>
+<p><strong>它幾乎一定會作弊</strong>——因為它是高階模型，要它假裝成零階很難，它產出的「零階」通常還是有點像英文。
+把它的產出帶來，上課時跟工具現場算出來的比對。<strong>這個作弊本身就是本節的教材。</strong></p>
+<hr />
+<h3>六個階數：模型多看一點，就多像人話一點</h3>
+<p>Shannon 用<strong>馬可夫鏈</strong>建立不同層級的機率模型，來模擬英文的結構。</p>
+<div class="widget" id="ta-sim">
+<style>
+#ta-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+          background: #fbfbfc; margin: 1.6rem 0; }
+#ta-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#ta-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#ta-sim .panel { border-top: 1px solid #ececec; padding-top: 1rem; margin-top: 1.2rem; }
+#ta-sim .panel:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+#ta-sim button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                 border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                 border-radius: 999px; cursor: pointer; }
+#ta-sim button:hover { background: #eef4fd; }
+#ta-sim button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#ta-sim .out { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+               padding: .8rem .95rem; margin: .7rem 0; font-family: ui-monospace, "SF Mono",
+               Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.75;
+               letter-spacing: .04em; word-break: break-word; min-height: 4.6rem; color: #333; }
+#ta-sim .readout { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                   padding: .7rem .9rem; font-size: .89rem; line-height: 1.8; }
+#ta-sim .big { font-size: 1.4rem; font-weight: 700; color: #17395e;
+               font-variant-numeric: tabular-nums; }
+#ta-sim table.hh { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .6rem 0; }
+#ta-sim table.hh th, #ta-sim table.hh td { border-bottom: 1px solid #eee; padding: .35rem .5rem;
+                                           text-align: left; }
+#ta-sim table.hh th { background: #f4f6f9; font-size: .77rem; color: #555; }
+#ta-sim table.hh td.n { font-variant-numeric: tabular-nums; }
+#ta-sim table.hh tr.cur td { background: #eef4fd; font-weight: 600; }
+#ta-sim .hbar { display: inline-block; height: .62rem; background: #4a7fd0; border-radius: 3px;
+                vertical-align: middle; }
+#ta-sim .shan { font-size: .82rem; color: #666; line-height: 1.9; }
+#ta-sim .shan code { background: #f2f2f2; padding: .05rem .3rem; border-radius: 3px;
+                     font-size: .95em; letter-spacing: .03em; }
+</style>
+
+<h5>🎛 互動：Shannon 的英文近似——階數越高，熵越低</h5>
+<p class="lede">1948 年 Shannon 做過一件很有趣的事：他用不同「階數」的機率模型去<strong>生成假英文</strong>，
+看它離真英文有多近。階數越高，文字越像人話，<strong>熵就越低</strong>。
+下面這個工具用一段真的英文當語料，現場算出各階的機率表再生成給你看。</p>
+
+<div class="panel">
+  <strong>一、選一個階數，看它生出什麼</strong>
+  <div>
+    <button data-o="0" class="on">零階：完全隨機</button>
+    <button data-o="1">一階：照字母頻率</button>
+    <button data-o="2">二階：看前一個字母</button>
+    <button data-o="3">三階：看前兩個字母</button>
+    <button data-o="w1">詞的一階</button>
+    <button data-o="w2">詞的二階</button>
+  </div>
+  <div class="out" id="ta-out"></div>
+  <button id="ta-again">再生一次</button>
+  <div class="readout">
+    這一階的熵 <span class="big" id="ta-h">—</span> bit／字母
+    <span style="color:#999;font-size:.82rem;">（零階上限 4.75）</span><br>
+    <span id="ta-note" style="color:#555;"></span>
+  </div>
+</div>
+
+<div class="panel">
+  <strong>二、熵是怎麼一路掉下來的</strong>
+  <table class="hh">
+    <thead><tr><th>階數</th><th>模型知道什麼</th><th>熵（bit／字母）</th><th></th></tr></thead>
+    <tbody id="ta-tab"></tbody>
+  </table>
+  <p class="lede">每上升一階，模型就多知道一點語言的規律，剩下的不確定性就少一點。
+  <strong>Shannon 估計英文的冗餘度約 50%</strong>——也就是說，英文有一半的位元其實是可以省掉的，
+  這正是 ZIP、JPEG 這類壓縮技術的基礎。</p>
+</div>
+
+<div class="panel">
+  <strong>三、Shannon 1948 年論文裡的原始例子</strong>
+  <p class="shan">
+    零階：<code>XFOML RXKHRJFFJUJ ZLPWCFWKCYJ FFJEYVKCQSGHYD</code><br>
+    一階：<code>OCRO HLI RGWR NMIELWIS EU LL NBNESEBYA TH EEI</code><br>
+    二階：<code>ON IE ANTSOUTINYS ARE T INCTORE ST BE S DEAMY</code><br>
+    三階：<code>IN NO IST LAT WHEY CRATICT FROURE BIRS GROCID PONDENOME</code><br>
+    詞一階：<code>REPRESENTING AND SPEEDILY IS AN GOOD APT OR COME CAN DIFFERENT</code><br>
+    詞二階：<code>THE HEAD AND IN FRONTAL ATTACK ON AN ENGLISH WRITER THAT THE CHARACTER OF THIS POINT</code>
+  </p>
+  <p class="lede" style="margin-top:.8rem;">最後那一行是 1948 年的成果。
+  <strong>它跟今天的語言模型是同一條線上的東西</strong>——只是 GPT 看的不是前一個詞，
+  而是前面幾千個詞，而且用的不是查表，是學出來的表示法。
+  Shannon 當年手工翻書抽字，做出來的就是 N-gram 語言模型的雛形。</p>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("ta-sim");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var CORPUS = ("the newsroom is a place where people decide what other people will "
+    + "know about the world today and that decision is never as simple as it looks "
+    + "an editor reads a story and asks whether the facts hold up whether the source "
+    + "can be trusted and whether the public needs this now or next week "
+    + "the reporter who wrote it has spent three days on the phone and still cannot "
+    + "confirm the central claim so the story waits another day "
+    + "readers rarely see this part of the work they see only the finished page "
+    + "and they judge the paper by whether it was right "
+    + "a single error can undo years of careful reporting because trust is built "
+    + "slowly and lost quickly in every market in every language "
+    + "when a machine begins to help with this work the question does not change "
+    + "the machine can gather and sort and translate and summarise but it cannot "
+    + "decide what matters and it cannot carry the blame when the story is wrong "
+    + "the person who signs the page still owns the judgment "
+    + "so the useful question is not whether the tool is clever but which part of "
+    + "the work we are willing to hand over and who is watching when it fails "
+    + "a good editor knows that the hardest calls are made under time pressure "
+    + "with incomplete information and that the record of those calls is what "
+    + "makes a publication worth reading over many years ").toLowerCase();
+
+  var AL = "abcdefghijklmnopqrstuvwxyz ";
+  var text = CORPUS.replace(/[^a-z ]/g, " ").replace(/\s+/g, " ");
+  var words = text.trim().split(" ");
+
+  /* ---- 建表 ---- */
+  function ctxTable(order) {
+    var tb = {};
+    for (var i = order; i < text.length; i++) {
+      var c = text.substr(i - order, order);
+      var ch = text[i];
+      if (!tb[c]) tb[c] = {};
+      tb[c][ch] = (tb[c][ch] || 0) + 1;
+    }
+    return tb;
+  }
+  var T1 = ctxTable(0), T2 = ctxTable(1), T3 = ctxTable(2);
+
+  var WB = {};
+  for (var i = 0; i < words.length - 1; i++) {
+    var a = words[i], b = words[i + 1];
+    if (!WB[a]) WB[a] = {};
+    WB[a][b] = (WB[a][b] || 0) + 1;
+  }
+  var WF = {};
+  words.forEach(function (w) { WF[w] = (WF[w] || 0) + 1; });
+
+  function pick(counts) {
+    if (!counts) return null;
+    var tot = 0, k;
+    for (k in counts) tot += counts[k];
+    var r = Math.random() * tot;
+    for (k in counts) { r -= counts[k]; if (r <= 0) return k; }
+    return k;
+  }
+
+  /* ---- 熵 ---- */
+  function entOf(counts) {
+    var tot = 0, k, h = 0;
+    for (k in counts) tot += counts[k];
+    for (k in counts) { var p = counts[k] / tot; h -= p * Math.log2(p); }
+    return h;
+  }
+  function condEnt(tb) {
+    var grand = 0, ctx;
+    for (ctx in tb) for (var k in tb[ctx]) grand += tb[ctx][k];
+    var h = 0;
+    for (ctx in tb) {
+      var sub = 0;
+      for (var k2 in tb[ctx]) sub += tb[ctx][k2];
+      h += (sub / grand) * entOf(tb[ctx]);
+    }
+    return h;
+  }
+  var AVGLEN = text.length / words.length;   // 平均每詞幾個字元（含空白）
+  var H = {
+    "0": Math.log2(27),
+    "1": entOf(T1[""]),
+    "2": condEnt(T2),
+    "3": condEnt(T3),
+    "w1": entOf(WF) / AVGLEN,
+    "w2": condEnt(WB) / AVGLEN
+  };
+
+  /* ---- 生成 ---- */
+  function gen(order) {
+    var n = 180, s = "";
+    if (order === "0") {
+      for (var i = 0; i < n; i++) s += AL[Math.floor(Math.random() * AL.length)];
+      return s;
+    }
+    if (order === "1") {
+      for (var j = 0; j < n; j++) s += pick(T1[""]);
+      return s;
+    }
+    if (order === "2" || order === "3") {
+      var k = order === "2" ? 1 : 2;
+      var tb = order === "2" ? T2 : T3;
+      s = text.substr(1, k);
+      while (s.length < n) {
+        var c = s.slice(-k);
+        var nx = pick(tb[c]);
+        if (!nx) { s += " "; continue; }
+        s += nx;
+      }
+      return s;
+    }
+    if (order === "w1") {
+      var o = [];
+      for (var m = 0; m < 26; m++) o.push(pick(WF));
+      return o.join(" ");
+    }
+    var w = words[Math.floor(Math.random() * words.length)], o2 = [w];
+    for (var q = 0; q < 25; q++) {
+      var nw = pick(WB[w]);
+      if (!nw) nw = pick(WF);
+      o2.push(nw); w = nw;
+    }
+    return o2.join(" ");
+  }
+
+  var NOTE = {
+    "0": "每個字母機率相同，這是不確定性的上限：log₂27 ≈ 4.75 bit。完全不像英文，因為它什麼規律都不知道。",
+    "1": "現在它知道 e 比 z 常見了。看起來仍然是亂碼，但字母的「比例」對了，熵因此掉了一截。",
+    "2": "它開始知道 q 後面通常接 u、th 很常見。已經出現像英文的片段，但還沒有真正的單字。",
+    "3": "看前兩個字母就足以生出一堆看起來像英文的東西。這一階已經很接近真英文的字母結構了。",
+    "w1": "改用整個單字當單位。單字都是真的，但句子沒有文法——像從字典裡隨機抽字。",
+    "w2": "只多知道「前一個詞是什麼」，句子就開始像人話了。這就是 N-gram 語言模型，也是 LLM 的祖先。"
+  };
+  var ROWS = [
+    ["零階", "什麼都不知道（26 字母＋空格等機率）", "0"],
+    ["一階", "各字母出現的頻率", "1"],
+    ["二階", "前一個字母是什麼", "2"],
+    ["三階", "前兩個字母是什麼", "3"],
+    ["詞一階", "各單字出現的頻率", "w1"],
+    ["詞二階", "前一個單字是什麼", "w2"]
+  ];
+
+  var cur = "0";
+  var tab = document.getElementById("ta-tab");
+  ROWS.forEach(function (r) {
+    var tr = document.createElement("tr");
+    tr.dataset.o = r[2];
+    var h = H[r[2]];
+    tr.innerHTML = "<td>" + r[0] + "</td><td>" + r[1] + "</td>"
+      + '<td class="n">' + h.toFixed(2) + "</td>"
+      + '<td><span class="hbar" style="width:' + (h / 4.75 * 90) + '%"></span></td>';
+    tab.appendChild(tr);
+  });
+
+  function render() {
+    document.getElementById("ta-out").textContent = gen(cur);
+    document.getElementById("ta-h").textContent = H[cur].toFixed(2);
+    document.getElementById("ta-note").textContent = NOTE[cur];
+    tab.querySelectorAll("tr").forEach(function (tr) {
+      tr.className = tr.dataset.o === cur ? "cur" : "";
+    });
+  }
+  root.querySelectorAll("[data-o]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      cur = b.dataset.o;
+      root.querySelectorAll("[data-o]").forEach(function (x) {
+        x.className = x === b ? "on" : "";
+      });
+      render();
+    });
+  });
+  document.getElementById("ta-again").addEventListener("click", render);
+  render();
+})();
+</script>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>階數</th>
+<th>模型知道什麼</th>
+<th>Shannon 1948 年的產出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零階</td>
+<td>什麼都不知道，26 字母＋空格等機率</td>
+<td><code>XFOML RXKHRJFFJUJ ZLPWCFWKCYJ</code></td>
+</tr>
+<tr>
+<td>一階</td>
+<td>各字母的出現頻率（E 比 Z 常見）</td>
+<td><code>OCRO HLI RGWR NMIELWIS EU LL NBNESEBYA</code></td>
+</tr>
+<tr>
+<td>二階</td>
+<td>前一個字母是什麼（digram）</td>
+<td><code>ON IE ANTSOUTINYS ARE T INCTORE ST BE S DEAMY</code></td>
+</tr>
+<tr>
+<td>三階</td>
+<td>前兩個字母是什麼（trigram）</td>
+<td><code>IN NO IST LAT WHEY CRATICT FROURE BIRS</code></td>
+</tr>
+<tr>
+<td>詞的一階</td>
+<td>各單字的頻率</td>
+<td><code>REPRESENTING AND SPEEDILY IS AN GOOD APT OR COME</code></td>
+</tr>
+<tr>
+<td>詞的二階</td>
+<td>前一個單字是什麼</td>
+<td><code>THE HEAD AND IN FRONTAL ATTACK ON AN ENGLISH WRITER</code></td>
+</tr>
+</tbody>
+</table>
+<p>最後那一行，是 1948 年的成果。<strong>它已經接近可讀的英文，但它完全不知道自己在說什麼。</strong></p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>「階數」講的是：<strong>模型往回看幾個字，才決定下一個字。</strong></p>
+<ul>
+<li>零階＝什麼都不看，隨便抽字母</li>
+<li>一階＝知道哪些字母比較常見，但仍然一個一個獨立抽</li>
+<li>二階＝看前一個字母（所以會出現 th、qu 這種常見組合）</li>
+<li>三階＝看前兩個字母（開始跑出看起來像單字的東西）</li>
+<li>詞的二階＝看前一個「詞」（句子開始像人話）</li>
+</ul>
+<p>每多看一個字，模型就多知道一點語言的規律，<strong>它要猜的東西就少一點</strong>。
+這就是為什麼階數越高，熵越低。</p>
+<p>重點在於：<strong>這一整條線上沒有任何一步「理解了意思」。</strong> 它只是在算「接下來哪個字比較可能」。
+今天的 GPT 是這條線的延伸——看得更遠、算得更好，但做的還是同一件事。</p></div>
+<h4>馬可夫鏈：只看前一步的機率</h4>
+<p>上面二階近似的背後就是一個馬可夫鏈。舉個最小的例子，只有三個字母 A、B、C：</p>
+<ul>
+<li>目前是 A → 下一個是 B 的機率 80%、是 C 的機率 20%</li>
+<li>目前是 B → 下一個是 A 的機率 50%、是 B 的機率 50%</li>
+</ul>
+<p>畫成圖：<strong>狀態是節點，轉移機率是箭頭</strong>，而且從任一狀態射出的所有箭頭機率加起來必須是 1。
+「只看前一步」是馬可夫鏈的定義性質，也是它的限制——它記不住更早以前發生過什麼。</p>
+<h4>遍歷（ergodic）：長期來看，統計性質是穩定的</h4>
+<p>Shannon 假設訊息來源是<strong>遍歷的</strong>：觀察夠久，每一種符號組合都會照它的機率出現，
+而且長期的平均行為與機率模型描述的一致。</p>
+<ul>
+<li><strong>遍歷的例子</strong>：公正骰子擲無限次，每個數字大約各佔 1/6。</li>
+<li><strong>不遍歷的例子</strong>：一個來源有兩種模式，模式 A 只產生 A/B/C、模式 B 只產生 X/Y/Z，
+  隨機挑一種之後就固定。你在模式 A 裡永遠看不到 X，<strong>長期平均不能代表全部</strong>。</li>
+</ul>
+<blockquote>
+<p>這件事對媒體有直接含意：<strong>你的讀者資料如果來自一個非遍歷的來源（例如只有臉書來的流量），
+那份資料的統計性質不能推廣到全體讀者。</strong> 這是所有「用自家數據訓練模型」的第一個陷阱。</p>
+</blockquote>
+<hr />
+<h3>熵是怎麼一路掉下來的</h3>
+<table>
+<thead>
+<tr>
+<th>階數</th>
+<th>熵（bit／字母，英文近似值）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零階（27 個符號等機率）</td>
+<td>4.75</td>
+</tr>
+<tr>
+<td>一階（照字母頻率）</td>
+<td>約 4.1</td>
+</tr>
+<tr>
+<td>二階</td>
+<td>約 3.3</td>
+</tr>
+<tr>
+<td>三階</td>
+<td>約 3.1</td>
+</tr>
+<tr>
+<td>真實英文（Shannon 用人做實驗估的）</td>
+<td>約 1.0–1.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>上限 4.75、實際約 1.x，中間那一段就是冗餘。</strong> Shannon 因此估計英文的冗餘度約 50%。</p>
+<p>這個數字有三個直接後果：</p>
+<ol>
+<li><strong>壓縮</strong>：既然有一半是可預測的，就可以用更少的位元表示——ZIP、JPEG 就建在這上面。</li>
+<li><strong>編碼效率</strong>：常出現的東西用短代碼、罕見的用長代碼（Huffman 編碼的核心想法）。
+   <code>E</code> 用短碼、<code>Z</code> 用長碼，整體長度就變短。</li>
+<li><strong>抗雜訊</strong>：那一半冗餘正是 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a> 講的保險——<strong>丟了一點也還原得回來。</strong></li>
+</ol>
+<hr />
+<h3>主管視角：流暢不等於正確</h3>
+<p>這條線一路走到今天，變成了 GPT。中間沒有任何一步引入「理解」。所以：</p>
+<p><strong>AI 寫出流暢的段落，證明的是它高階接龍做得好，不是它知道那件事是真的。</strong></p>
+<p>這句話有三個實務含意：</p>
+<ol>
+<li><strong>越流暢越危險</strong>。低階模型胡言亂語，你一眼就知道要查；高階模型寫得像人話，
+   錯的地方會混在對的裡面。<strong>流暢度與可信度是兩件獨立的事。</strong></li>
+<li><strong>它最擅長的是「補上最可能的下一個字」</strong>，所以它填出來的專有名詞、數字、引述，
+   正是最需要查證的部分——那些是它「猜」得最用力的地方。</li>
+<li><strong>驗收要對著事實，不能對著語感。</strong> 「讀起來很順」是它一定會做到的，不構成任何證據。</li>
+</ol>
+<p><strong>該問工程師的一題</strong>：「這個模型的 context window 多大？」——那就是它的「階數」，
+它往回看得到多遠。看不到的東西，它就會用最可能的內容補上（連回 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>）。</p>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 會寫文章，代表它懂語言」</td>
+<td>從一階到 GPT，這條線上沒有一步引入「理解」；它做的是機率接龍</td>
+<td>現場按二階→三階，讓他們看見「像人話」是怎麼被算出來的</td>
+</tr>
+<tr>
+<td>「馬可夫鏈是老東西，跟 LLM 無關」</td>
+<td>LLM 是同一個問題的高階解法，差別在看得更遠、表示法是學出來的</td>
+<td>對照 1948 年詞二階那一行與 GPT 的輸出</td>
+</tr>
+<tr>
+<td>「冗餘 50% 表示英文有一半是廢話」</td>
+<td>那一半是抗雜訊的保險，不是廢話；刪掉之後就經不起任何干擾</td>
+<td>回扣上一個模組的雜訊工具</td>
+</tr>
+<tr>
+<td>「用我們自家的資料訓練最準」</td>
+<td>若資料來源不遍歷（只有單一渠道），統計性質不能推廣</td>
+<td>用非遍歷那個例子問「你的資料是哪一種？」</td>
+</tr>
+</tbody>
+</table>
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>（熵的定義）、<a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a>（冗餘）</li>
+<li><strong>後續</strong>：<a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">M 從 Shannon 到 LLM</a>——這條線走到 Transformer 之後發生了什麼</li>
+<li><strong>平行相關</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a></li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各舉一次「AI 寫得很順但內容是錯的」的經驗，互相判斷錯的是哪一類
+  （專有名詞／數字／引述／因果關係），並找出共同點。</li>
+<li><strong>一起想一題</strong>：如果流暢度不能當可信度的證據，那你的團隊該用什麼當驗收標準？</li>
+<li>
+<p><strong>反思</strong>：「我原本以為 AI 寫得順代表它懂，現在我知道它其實在做＿＿＿。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：拿一段 AI 產出的文字，標出三處「它猜得最用力」的地方（專有名詞、數字、引述），
+  各查證一次，記錄對錯。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:11</p>
+</div>
+</body>
+</html>

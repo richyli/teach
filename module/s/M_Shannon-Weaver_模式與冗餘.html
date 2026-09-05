@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M Shannon-Weaver 模式與冗餘</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M Shannon-Weaver 模式與冗餘</h1></div><p>傳播學院背得最熟的那張框框圖，其實是電路圖。這個模組把它還原回工程問題，
+再把「冗餘」這個被當成廢話的概念，翻成主管每天在做的取捨：<strong>訊息要寫多短才不會被誤讀。</strong>
+接在 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a> 之後。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>還原</strong>Shannon-Weaver 模式各元件原本的工程意義（來源、編碼、通道、雜訊、解碼）</td>
+<td>為什麼傳播理論課本上那張圖，畫的其實是電話線？把它當成「傳播過程」用會漏掉什麼？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>判斷</strong>一則訊息的冗餘是不足還是過多，並說出代價</td>
+<td>為什麼我寫的公告簡潔精準，同事還是看錯？為什麼公文那麼囉唆卻不容易被誤讀？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>應用</strong>通道容量的概念，說明為什麼「資訊量必須小於接收者的理解容量」</td>
+<td>為什麼把三十頁簡報壓成十分鐘講完，聽眾等於什麼都沒聽到？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>貼這段給任何一個 AI：</p>
+<blockquote>
+<p>請說明 Shannon-Weaver 傳播模式的五個元件，並指出這個模式常見的三項批評。
+接著請你誠實標示：你的說明裡，哪些是 Shannon 1948 年原文就有的，
+哪些是後來傳播學者加上去或改寫的？</p>
+</blockquote>
+<p>它多半會把後人的詮釋講得像原文就有。<strong>把你覺得可疑的那一句圈起來帶來</strong>——
+這一題同時是傳播理論課，也是「AI 在高不確定性下會硬補」的實例。</p>
+<hr />
+<h3>那張圖原本是電路圖</h3>
+<p>Shannon 要解決的問題非常具體：<strong>電話線有雜訊，訊號會失真，一條線最多能可靠傳多少東西？</strong>
+他畫的圖是這樣：</p>
+<table>
+<thead>
+<tr>
+<th>元件</th>
+<th>原本的工程意義</th>
+<th>傳播學院常見的讀法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Information source</td>
+<td>要傳的訊息（電報內容）</td>
+<td>傳播者</td>
+</tr>
+<tr>
+<td>Transmitter／編碼</td>
+<td>把訊息轉成訊號（電流變化）</td>
+<td>訊息製作</td>
+</tr>
+<tr>
+<td>Channel</td>
+<td>實體線路</td>
+<td>媒介</td>
+</tr>
+<tr>
+<td>Noise</td>
+<td>線路上的電流干擾</td>
+<td>各種干擾（實體、心理、語意）</td>
+</tr>
+<tr>
+<td>Receiver／解碼</td>
+<td>把訊號轉回訊息</td>
+<td>接收與詮釋</td>
+</tr>
+<tr>
+<td>Destination</td>
+<td>收訊的機器或人</td>
+<td>閱聽人</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心公式的白話版</strong>：傳輸通道的容量 = 有效資訊 + 雜訊。
+所以工程上的目標是「用最小的失真，換最大的線路容量」。</p>
+<p>Shannon 對「說服」「效果」「意義」完全沒有興趣——<strong>他的模式裡沒有「意義」這個東西</strong>。
+這正是後來傳播學界批評它的地方，也是宣偉伯（Wilbur Schramm）修改它的動機：
+Schramm 加上了「經驗範圍」——<strong>只有在傳播者與接收者的經驗有交集的地方，傳播才真的發生</strong>。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>你在傳播理論課本看到的那張「來源→編碼→通道→解碼→接收者」的框框圖，
+原本不是在講人跟人怎麼溝通，是在講<strong>電話線怎麼傳電流</strong>。</p>
+<p>這件事有兩個含意。第一，這個模式很強，因為它可以計算——它能算出一條線最多能傳多少、
+要加多少保險才不會出錯。第二，它有個大破綻：<strong>它不管意義</strong>。
+訊號完整送到了，不代表對方懂了；對方懂了，也不代表懂成你的意思。</p>
+<p>宣偉伯後來補的那一塊就是這個：兩個人的經驗要有交集，傳播才成立。
+你對工程師講「這功能的 recall 要拉高」，如果他不知道你的場景，字傳到了，意思沒到。</p></div>
+<hr />
+<h3>冗餘不是廢話，是抗雜訊的保險</h3>
+<p>Shannon 發現：真實語言的 entropy 遠低於理論上限，因為語言充滿<strong>可預測的部分</strong>。
+他估計<strong>英文的冗餘度約 50%</strong>——一半的字母其實可以刪掉而不影響理解。</p>
+<p>冗餘的定義很簡單：<strong>最小情報值與實際使用位元數之間的差距。</strong></p>
+<p>一則訊息的兩種寫法：</p>
+<table>
+<thead>
+<tr>
+<th>寫法</th>
+<th>內容</th>
+<th>字數</th>
+<th>性質</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>低冗餘</td>
+<td>政治大學明天起停課兩週</td>
+<td>11</td>
+<td>每個字都在扛資訊，效率最高</td>
+</tr>
+<tr>
+<td>高冗餘</td>
+<td>台北市政治大學決定明天起停課兩週，在這兩週內，政治大學的師生將透過線上教學</td>
+<td>38</td>
+<td>「政治大學」「兩週」各出現兩次</td>
+</tr>
+</tbody>
+</table>
+<p>沒有雜訊的時候，短的那句完勝。<strong>但通道從來不是乾淨的</strong>——
+LINE 訊息被截斷、公告貼在牆上被撕掉一角、口頭傳達傳到第三個人、讀者只看了標題。
+這時候高冗餘的版本仍然還原得回來，低冗餘的版本一破就全毀。</p>
+<div class="widget" id="rd-sim">
+<style>
+#rd-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+          background: #fbfbfc; margin: 1.6rem 0; }
+#rd-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#rd-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#rd-sim .row { display: flex; align-items: center; gap: .6rem; margin: .5rem 0; }
+#rd-sim .row label { width: 6.5rem; font-size: .84rem; color: #444; flex: none; }
+#rd-sim input[type=range] { flex: 1; }
+#rd-sim .pct { width: 3.6rem; text-align: right; font-size: .82rem; color: #555;
+               font-variant-numeric: tabular-nums; flex: none; }
+#rd-sim button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                 border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                 border-radius: 999px; cursor: pointer; }
+#rd-sim button:hover { background: #eef4fd; }
+#rd-sim .msg { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+               padding: .8rem .95rem; margin: .6rem 0; }
+#rd-sim .msg .tag { display: block; font-size: .73rem; letter-spacing: .06em; font-weight: 700;
+                    margin-bottom: .4rem; }
+#rd-sim .msg.lo .tag { color: #b05a2a; }
+#rd-sim .msg.hi .tag { color: #2a7a4a; }
+#rd-sim .txt { font-size: 1.02rem; line-height: 2.1; letter-spacing: .06em; color: #222; }
+#rd-sim .txt .gone { color: #d0d0d0; background: #f2f2f2; border-radius: 2px; }
+#rd-sim .meta { font-size: .8rem; color: #888; margin-top: .5rem; }
+#rd-sim .verdict { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                   padding: .7rem .9rem; font-size: .89rem; line-height: 1.8; color: #444;
+                   margin-top: .6rem; }
+#rd-sim .verdict b { color: #17395e; }
+</style>
+
+<h5>🎛 互動：冗餘——把雜訊打進兩句話</h5>
+<p class="lede">同一件事，用兩種寫法。拉「雜訊」滑桿，把一定比例的字打掉，看哪一句還救得回來。
+<strong>冗餘不是廢話，是你在雜訊裡還聽得懂的原因。</strong></p>
+
+<div class="row">
+  <label>通道雜訊</label>
+  <input type="range" id="rd-p" min="0" max="60" value="25">
+  <span class="pct" id="rd-pv">25%</span>
+</div>
+<button id="rd-roll">重新打一次雜訊</button>
+
+<div class="msg lo">
+  <span class="tag">低冗餘寫法（每個字都在扛資訊）</span>
+  <div class="txt" id="rd-a"></div>
+  <div class="meta" id="rd-am"></div>
+</div>
+
+<div class="msg hi">
+  <span class="tag">高冗餘寫法（同一件事講兩次、補上背景）</span>
+  <div class="txt" id="rd-b"></div>
+  <div class="meta" id="rd-bm"></div>
+</div>
+
+<div class="verdict" id="rd-v"></div>
+
+<script>
+(function () {
+  var root = document.getElementById("rd-sim");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var A = "政治大學明天起停課兩週";
+  var B = "台北市政治大學決定明天起停課兩週，在這兩週內，政治大學的師生將透過線上教學";
+  // 每句話裡「掉了也還原得回來」的關鍵詞（用來估算可還原程度）
+  var KEY = ["政治大學", "停課", "兩週", "明天"];
+
+  // 還原度：關鍵概念在句中出現幾次，被打掉後還剩幾次
+  function recoverable(s, plain, p) {
+    var ok = 0, tot = 0;
+    KEY.forEach(function (k) {
+      var idx = 0;
+      while ((idx = s.indexOf(k, idx)) >= 0) {
+        tot++;
+        var seg = plain.substr(idx, k.length);
+        if (seg.indexOf("■") < 0) ok++;
+        idx += k.length;
+      }
+    });
+    return tot ? ok / tot : 0;
+  }
+
+  function plainDamage(s, p, seedArr, off) {
+    var out = "";
+    for (var i = 0; i < s.length; i++) {
+      out += (seedArr[off + i] < p && s[i] !== "，") ? "■" : s[i];
+    }
+    return out;
+  }
+
+  var seed = [];
+  function reseed() {
+    seed = [];
+    for (var i = 0; i < 200; i++) seed.push(Math.random());
+    draw();
+  }
+
+  function render(s, plain) {
+    var out = "";
+    for (var i = 0; i < s.length; i++) {
+      out += plain[i] === "■" ? '<span class="gone">■</span>' : s[i];
+    }
+    return out;
+  }
+
+  function draw() {
+    var p = +document.getElementById("rd-p").value / 100;
+    document.getElementById("rd-pv").textContent = Math.round(p * 100) + "%";
+
+    var pa = plainDamage(A, p, seed, 0);
+    var pb = plainDamage(B, p, seed, 60);
+    document.getElementById("rd-a").innerHTML = render(A, pa);
+    document.getElementById("rd-b").innerHTML = render(B, pb);
+
+    var ra = recoverable(A, pa, p), rb = recoverable(B, pb, p);
+    var la = (pa.split("■").length - 1), lb = (pb.split("■").length - 1);
+    document.getElementById("rd-am").textContent =
+      A.length + " 字，被打掉 " + la + " 字｜關鍵詞還原度 " + Math.round(ra * 100) + "%";
+    document.getElementById("rd-bm").textContent =
+      B.length + " 字，被打掉 " + lb + " 字｜關鍵詞還原度 " + Math.round(rb * 100) + "%";
+
+    var v;
+    if (p < 0.05) {
+      v = "沒有雜訊時，短的那句<b>效率更高</b>——用 11 個字講完同一件事。"
+        + "在完美通道上，冗餘確實是浪費。";
+    } else if (rb - ra > 0.15) {
+      v = "看差別：長的那句被打掉的字更多，卻<b>還讀得懂</b>，因為「政治大學」「兩週」都出現了兩次，"
+        + "壞掉一次還有另一次。短的那句每個字都在扛資訊，掉一個就補不回來。<br>"
+        + "<b>這就是冗餘的功能：用多餘的位元換取抗雜訊的能力。</b>";
+    } else if (p > 0.45) {
+      v = "雜訊太大時兩句都毀了。冗餘能救的是<b>一定程度</b>的雜訊，不是無限的——"
+        + "Shannon 的通道容量定理講的正是這條上限在哪裡。";
+    } else {
+      v = "再拉高一點雜訊，或按「重新打一次雜訊」多試幾次，看兩句話崩壞的速度差多少。";
+    }
+    document.getElementById("rd-v").innerHTML = v;
+  }
+
+  document.getElementById("rd-p").addEventListener("input", draw);
+  document.getElementById("rd-roll").addEventListener("click", reseed);
+  reseed();
+})();
+</script>
+</div>
+
+<div class="callout callout-student"><span class="co-title">學生閱讀｜冗餘的真正功能</span><p>「冗餘」聽起來像在罵人囉唆，但它在工程上是<strong>保險</strong>。</p>
+<p>你寫一則訊息，等於把它送進一條會出錯的管子。管子越髒（讀者分心、訊息被轉述、
+版面被砍），你就越需要重複與背景，讓對方在資訊殘缺的情況下仍然拼得回來。</p>
+<p>所以「寫得精簡」不是永遠正確的建議。<strong>要問的是：這條通道有多髒？</strong>
+給熟悉業務的同事的內部信可以極短；給不特定讀者的公告就必須囉唆，
+因為你不知道他會從哪一句開始讀、會漏掉哪一段。</p>
+<p>反過來也成立：<strong>冗餘過多會讓真正的資訊被稀釋</strong>，讀者讀了三段還不知道重點在哪。
+拿捏的方法不是憑感覺，是先判斷通道的雜訊有多大。</p></div>
+<h4>bit 越多，丟失的風險越大</h4>
+<ul>
+<li>1 個 bit 表示兩種狀態；$n$ 個 bit 可以表示 $2^n$ 種訊息。</li>
+<li>傳 1 個 bit 時，翻轉一次影響很小；傳 1000 個 bit、每個有 1% 出錯機率，平均會錯 10 個。</li>
+<li><strong>bit 遺失（erasure）</strong>：整段不見，還原不了。</li>
+<li><strong>bit 翻轉（bit flip）</strong>：值錯了，但可以靠錯誤更正碼修回來——<strong>那些更正碼就是冗餘。</strong></li>
+</ul>
+<hr />
+<h3>主管視角：你的團隊的通道容量是多少</h3>
+<p><strong>「資訊量必須小於理解容量」</strong>這句話，是這個模組給主管最實用的一條。</p>
+<ul>
+<li>三十頁簡報壓成十分鐘講完 → 送出的資訊量超過通道容量 → 對方接收到的接近 0</li>
+<li>一次會議交代七件事 → 團隊記得兩件，而且不是你最在意的那兩件</li>
+<li>給工程師的需求寫得極簡 → 他照他的理解補完剩下的（回想 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>：
+  context 不足，他就用最可能的預設值硬補——人和 AI 在這件事上一模一樣）</li>
+</ul>
+<p><strong>該問自己的三題</strong>：</p>
+<ol>
+<li>這則訊息的通道有多髒？（對方會分心嗎？會被轉述嗎？會只看標題嗎？）</li>
+<li>我要對方<strong>做什麼</strong>？那件事有沒有在訊息裡重複至少兩次？</li>
+<li>如果這則訊息只有一半送到，剩下那一半還撐得住嗎？</li>
+</ol>
+<blockquote>
+<p>對外的公告寧可冗餘，對內的指令寧可精確——<strong>但兩者都要先問通道有多髒，而不是先問要寫多長。</strong></p>
+</blockquote>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Shannon-Weaver 是傳播模式」</td>
+<td>它是通訊工程模式，被借用為傳播模式；它裡面沒有「意義」，用它解釋誤解會失焦</td>
+<td>問「這張圖裡，意義在哪一個框？」</td>
+</tr>
+<tr>
+<td>「冗餘＝囉唆＝寫作缺點」</td>
+<td>冗餘是抗雜訊的保險，通道越髒越需要</td>
+<td>用互動工具現場打雜訊給他們看</td>
+</tr>
+<tr>
+<td>「訊息寫得越精簡越專業」</td>
+<td>精簡的前提是通道乾淨、接收者有背景；對不特定讀者精簡等於賭運氣</td>
+<td>拿一則自家公告，問「如果讀者只看到後半段呢？」</td>
+</tr>
+<tr>
+<td>「雜訊是外部的、我控制不了」</td>
+<td>你控制得了編碼方式與冗餘量，那正是你唯一能動的地方</td>
+<td>回到目標 2 的小作業</td>
+</tr>
+</tbody>
+</table>
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>——沒有它，「冗餘＝低於理論上限的那一段」講不通</li>
+<li><strong>後續</strong>：<a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">M 語言的階數近似與馬可夫鏈</a>——英文冗餘 50% 這個數字是怎麼算出來的</li>
+<li><strong>平行相關</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>（人與 AI 都會在 context 不足時硬補）</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各拿一則自己最近發出去的公告或群組訊息，互相判斷它的冗餘是太少還是太多，
+  以及那條通道有多髒。</li>
+<li><strong>一起想一題</strong>：你的團隊一次會議的「通道容量」大概是幾件事？超過會怎樣？</li>
+<li>
+<p><strong>反思</strong>：「我原本以為寫得精簡就是專業，現在我會先問——＿＿＿。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一則自家的對外公告，寫出低冗餘與高冗餘兩個版本，並說明各適合什麼通道。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:11</p>
+</div>
+</body>
+</html>

@@ -52,18 +52,329 @@ MathJax = {
 </tbody>
 </table>
 <hr />
+<div class="callout callout-student"><span class="co-title">學生閱讀｜Shannon 是誰，為什麼傳播學院要上他</span><p><strong>Claude Shannon（1916–2001）不是傳播學者，是數學家兼工程師</strong>，在貝爾實驗室工作。
+他 1948 年那篇〈A Mathematical Theory of Communication〉要解決的是一個很實際的問題：
+<strong>電話線有雜訊，訊號會失真，那到底一條線最多能可靠地傳多少東西？</strong></p>
+<p>他對「傳播效果」「說服」「閱聽人」完全沒有興趣。但他為了回答那個工程問題，
+順手做了一件事——<strong>把「資訊」變成一個可以計算的量</strong>。這件事後來外溢到所有地方：
+網路、壓縮（ZIP、JPEG）、密碼學、基因定序，以及今天的語言模型。</p>
+<p>傳播學院熟悉的「Shannon-Weaver 模式」其實是後人把他的數學圖轉成傳播模式的結果，
+而 Weaver 也是數學家。<strong>你在傳播理論課本看到的那個框框圖，原本是電路圖。</strong></p>
+<p>這件事本身就值得記住：一個為了省電話線成本而發展出來的量尺，
+七十幾年後變成解釋 AI 為什麼會胡說八道的工具。</p></div>
 <h3>資訊就是「消除不確定性」（直覺）</h3>
-<p><strong>一句話定義</strong>：資訊量 = 它幫你消除了多少不確定性。</p>
-<p>從一個遊戲開始：我心裡想一個 1～16 的數字，你用「是非題」來猜。</p>
-<ul>
-<li>問「是 1 嗎？」最爛——大多時候答案是「否」，幾乎沒縮小範圍。</li>
-<li>問「大於 8 嗎？」最好——不論答案，都把可能性砍一半。</li>
-</ul>
-<p>每問一個「砍一半」的問題，就拿到 <strong>1 bit</strong> 的資訊。16 個等可能的數字，需要 $\log_2 16 = 4$ 個問題 → <strong>4 bits</strong>。</p>
+<p><strong>先玩再說</strong>：世界盃足球賽 32 隊，你心裡選一隊當冠軍，我來猜。<strong>只能問是非題，每問一次算你一次代價。</strong></p>
+<div class="widget" id="wc-guess">
+<style>
+#wc-guess { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+            background: #fbfbfc; margin: 1.6rem 0; }
+#wc-guess h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#wc-guess .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#wc-guess .panel { border-top: 1px solid #ececec; padding-top: 1rem; margin-top: 1.2rem; }
+#wc-guess .panel:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+#wc-guess button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                   border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                   border-radius: 999px; cursor: pointer; }
+#wc-guess button:hover { background: #eef4fd; }
+#wc-guess button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#wc-guess button:disabled { opacity: .4; cursor: default; }
+#wc-guess .teams { display: flex; flex-wrap: wrap; gap: .22rem; margin: .7rem 0; }
+#wc-guess .tm { font-size: .75rem; padding: .12rem .42rem; border-radius: 4px;
+                background: #e8eefb; color: #2b4f83; }
+#wc-guess .tm.out { background: #f1f1f1; color: #c2c2c2; text-decoration: line-through; }
+#wc-guess .tm.win { background: #24528f; color: #fff; }
+#wc-guess .readout { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                     padding: .7rem .9rem; margin-top: .7rem; font-size: .9rem; line-height: 1.75; }
+#wc-guess .big { font-size: 1.45rem; font-weight: 700; color: #17395e;
+                 font-variant-numeric: tabular-nums; }
+#wc-guess .log { font-size: .83rem; color: #555; margin: .5rem 0 0; padding-left: 1.1rem; }
+#wc-guess .log li { margin: .18rem 0; }
+#wc-guess .log b { color: #24528f; }
+#wc-guess table.cmp { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .6rem 0; }
+#wc-guess table.cmp th, #wc-guess table.cmp td { border-bottom: 1px solid #eee;
+                                                 padding: .38rem .5rem; text-align: left; }
+#wc-guess table.cmp th { background: #f4f6f9; font-size: .78rem; color: #555; }
+#wc-guess .row { display: flex; align-items: center; gap: .6rem; margin: .4rem 0; }
+#wc-guess .row label { width: 9rem; font-size: .84rem; color: #444; flex: none; }
+#wc-guess input[type=range] { flex: 1; }
+#wc-guess .pct { width: 4.2rem; text-align: right; font-size: .82rem; color: #555;
+                 font-variant-numeric: tabular-nums; flex: none; }
+#wc-guess .bars { margin: .6rem 0; }
+#wc-guess .bar { display: flex; align-items: center; gap: .5rem; height: 1.2rem; margin: .2rem 0; }
+#wc-guess .bar .nm { width: 5rem; font-size: .78rem; color: #444; flex: none; text-align: right; }
+#wc-guess .bar .fl { height: .75rem; background: #4a7fd0; border-radius: 3px; min-width: 2px;
+                     transition: width .2s; }
+#wc-guess .bar .vl { font-size: .75rem; color: #888; font-variant-numeric: tabular-nums; }
+</style>
+
+<h5>🎛 互動：世界盃冠軍是哪一隊？</h5>
+<p class="lede">32 隊，你心裡想一隊，我來猜。<strong>每問一次是非題要付一點代價</strong>——問得笨要問很多次，問得聰明只要五次。這一節要回答的是：為什麼是「五」，以及什麼情況下連五次都不用。</p>
+
+<div class="panel">
+  <strong>一、四種問法，差多少？</strong>
+  <p class="lede">先看四種策略在同一組 32 隊上的表現。</p>
+  <table class="cmp">
+    <thead><tr><th>問法</th><th>平均要問幾次</th><th>最壞情況</th><th>拿到的資訊</th></tr></thead>
+    <tbody>
+      <tr><td>① 從第 1 隊一路問到第 32 隊</td><td>16.5 次</td><td>31 次</td><td>仍然是 5 bit</td></tr>
+      <tr><td>② 每次砍一半（1–16？1–8？…）</td><td><b>5 次</b></td><td>5 次</td><td>5 bit</td></tr>
+      <tr><td>③ 先問洲別，再砍一半</td><td>約 4.6 次</td><td>5 次</td><td>5 bit</td></tr>
+      <tr><td>④ 已知德國奪冠機率 99%，先問「是不是德國」</td><td><b>約 1.1 次</b></td><td>32 次</td><td>只剩 0.10 bit</td></tr>
+    </tbody>
+  </table>
+  <p class="lede">同樣是 32 隊，①和②拿到的資訊<strong>一樣多</strong>（都是 5 bit），差別只在你問得有多笨。
+  但④完全不同——<strong>因為你已經知道一些事，這件事本身就沒那麼不確定了</strong>，所以連 5 bit 都不需要。</p>
+</div>
+
+<div class="panel">
+  <strong>二、自己玩一次</strong>
+  <p class="lede">我心裡已經抽好一隊（32 隊等可能）。選一種問法，看要問幾次。</p>
+  <div>
+    <button data-mode="binary" class="on">每次砍一半</button>
+    <button data-mode="conf">先問洲別</button>
+    <button data-mode="one">一隊一隊問</button>
+    <button id="wc-reset">重抽一隊</button>
+  </div>
+  <div class="teams" id="wc-teams"></div>
+  <div>
+    <button id="wc-ask">問下一題</button>
+    <button id="wc-auto">一路問到底</button>
+  </div>
+  <div class="readout">
+    已問 <span class="big" id="wc-n">0</span> 次
+    ｜剩 <span id="wc-left">32</span> 隊
+    ｜還沒消除的不確定性 <span id="wc-rem">5.00</span> bit
+    ｜已拿到 <span id="wc-got">0.00</span> bit
+    <div id="wc-note" style="color:#666;margin-top:.3rem;">32 隊等可能，一開始的不確定性正好是 log₂32 = 5 bit。</div>
+  </div>
+  <ul class="log" id="wc-log"></ul>
+</div>
+
+<div class="panel">
+  <strong>三、已知的事情越多，需要的資訊越少</strong>
+  <p class="lede">如果德國奪冠的機率不是 1/32，而是你心裡有底的某個數字，整件事的不確定性會掉多少？</p>
+  <div class="row">
+    <label>德國奪冠機率</label>
+    <input type="range" id="wc-p" min="3" max="99" value="99">
+    <span class="pct" id="wc-pv">99%</span>
+  </div>
+  <div class="bars" id="wc-bars"></div>
+  <div class="readout">
+    整場的不確定性 <span class="big" id="wc-h">—</span> bit
+    <span style="color:#999;font-size:.82rem;">（32 隊等可能時是 5.00 bit）</span><br>
+    <span id="wc-hnote" style="color:#555;"></span>
+  </div>
+  <p class="lede" style="margin-top:.7rem;">這就是「<strong>融入更多已知訊息，就減少了訊息的不確定性</strong>」。
+  同一個問題，對懂足球的人來說資訊量很小，對完全不懂的人來說是滿滿 5 bit——<strong>資訊量不是消息本身的性質，是消息與接收者之間的關係</strong>。</p>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("wc-guess");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var CONF = [
+    ["亞洲區", ["澳洲", "伊朗", "日本", "卡達", "沙烏地阿拉伯", "南韓"]],
+    ["非洲區", ["喀麥隆", "迦納", "摩洛哥", "塞內加爾", "突尼西亞"]],
+    ["北美洲", ["加拿大", "哥斯大黎加", "墨西哥", "美國"]],
+    ["南美洲", ["阿根廷", "巴西", "厄瓜多", "烏拉圭"]],
+    ["歐洲區", ["比利時", "克羅埃西亞", "丹麥", "英格蘭", "法國", "德國", "荷蘭",
+                "波蘭", "葡萄牙", "塞爾維亞", "西班牙", "瑞士", "威爾斯"]]
+  ];
+  var TEAMS = [], CONF_OF = {};
+  CONF.forEach(function (c) {
+    c[1].forEach(function (t) { TEAMS.push(t); CONF_OF[t] = c[0]; });
+  });
+
+  var mode = "binary", alive, secret, asked, got;
+  var box = document.getElementById("wc-teams");
+  TEAMS.forEach(function (t) {
+    var s = document.createElement("span");
+    s.className = "tm"; s.textContent = t; box.appendChild(s);
+  });
+
+  function live() { return TEAMS.filter(function (t, i) { return alive[i]; }); }
+
+  function draw() {
+    var L = live(), rem = Math.log2(L.length);
+    TEAMS.forEach(function (t, i) {
+      box.children[i].className = !alive[i] ? "tm out"
+        : (L.length === 1 ? "tm win" : "tm");
+    });
+    document.getElementById("wc-n").textContent = asked;
+    document.getElementById("wc-left").textContent = L.length;
+    document.getElementById("wc-rem").textContent = rem.toFixed(2);
+    document.getElementById("wc-got").textContent = got.toFixed(2);
+    var done = L.length <= 1;
+    document.getElementById("wc-ask").disabled = done;
+    document.getElementById("wc-auto").disabled = done;
+    var note = document.getElementById("wc-note");
+    if (done) {
+      note.innerHTML = "答案是 <b>" + secret + "</b>。你問了 " + asked
+        + " 次，總共拿到 5.00 bit——<b>不管用哪種問法，資訊量都是 5 bit，"
+        + "差別只在你付出幾次提問</b>。";
+    } else {
+      note.textContent = "32 隊等可能，一開始的不確定性正好是 log₂32 = 5 bit。";
+    }
+  }
+
+  function cut(keep, label) {
+    var L = live();
+    var before = Math.log2(L.length);
+    TEAMS.forEach(function (t, i) { if (alive[i] && !keep(t)) alive[i] = false; });
+    var after = Math.log2(live().length);
+    var gain = before - after;
+    got += gain; asked += 1;
+    var li = document.createElement("li");
+    li.innerHTML = label + " → 拿到 <b>" + gain.toFixed(2) + " bit</b>，剩 "
+      + live().length + " 隊";
+    document.getElementById("wc-log").appendChild(li);
+    draw();
+  }
+
+  function ask() {
+    var L = live();
+    if (L.length <= 1) return;
+    if (mode === "one") {
+      var pick = L[0] === secret && L.length > 1 ? L[1] : L[0];
+      var hit = pick === secret;
+      cut(function (t) { return hit ? t === pick : t !== pick; },
+          "「是" + pick + "嗎？」答：<b>" + (hit ? "是" : "否") + "</b>");
+      return;
+    }
+    if (mode === "conf") {
+      var confs = [];
+      L.forEach(function (t) {
+        if (confs.indexOf(CONF_OF[t]) < 0) confs.push(CONF_OF[t]);
+      });
+      if (confs.length > 1) {
+        var half = confs.slice(0, Math.ceil(confs.length / 2));
+        var inHalf = half.indexOf(CONF_OF[secret]) >= 0;
+        cut(function (t) { return (half.indexOf(CONF_OF[t]) >= 0) === inHalf; },
+            "「是不是 " + half.join("／") + "？」答：<b>" + (inHalf ? "是" : "否") + "</b>");
+        return;
+      }
+    }
+    var mid = Math.ceil(L.length / 2);
+    var first = L.slice(0, mid);
+    var inFirst = first.indexOf(secret) >= 0;
+    cut(function (t) { return (first.indexOf(t) >= 0) === inFirst; },
+        "「在前半這 " + mid + " 隊裡嗎？」答：<b>" + (inFirst ? "是" : "否") + "</b>");
+  }
+
+  function reset() {
+    alive = TEAMS.map(function () { return true; });
+    asked = 0; got = 0;
+    secret = TEAMS[Math.floor(Math.random() * TEAMS.length)];
+    document.getElementById("wc-log").innerHTML = "";
+    draw();
+  }
+
+  root.querySelectorAll("[data-mode]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      mode = b.dataset.mode;
+      root.querySelectorAll("[data-mode]").forEach(function (x) {
+        x.className = x === b ? "on" : "";
+      });
+      reset();
+    });
+  });
+  document.getElementById("wc-ask").addEventListener("click", ask);
+  document.getElementById("wc-auto").addEventListener("click", function () {
+    var guard = 0;
+    while (live().length > 1 && guard++ < 40) ask();
+  });
+  document.getElementById("wc-reset").addEventListener("click", reset);
+  reset();
+
+  /* ---- 面板三：已知機率 ---- */
+  var LABELS = ["德國", "巴西", "法國", "阿根廷", "其餘 28 隊（合計）"];
+  var barBox = document.getElementById("wc-bars");
+  LABELS.forEach(function (n) {
+    var d = document.createElement("div");
+    d.className = "bar";
+    d.innerHTML = '<span class="nm">' + n + '</span>'
+      + '<span class="fl" style="width:0"></span><span class="vl"></span>';
+    barBox.appendChild(d);
+  });
+  var pIn = document.getElementById("wc-p");
+
+  function drawP() {
+    var pg = +pIn.value / 100;
+    var rest = 1 - pg;
+    // 其餘 31 隊平分
+    var each = rest / 31;
+    var shown = [pg, each, each, each, each * 28];
+    document.getElementById("wc-pv").textContent = pIn.value + "%";
+    shown.forEach(function (p, i) {
+      var b = barBox.children[i];
+      b.querySelector(".fl").style.width = (p * 100 * 0.62) + "%";
+      b.querySelector(".vl").textContent = (p * 100).toFixed(p < 0.01 ? 2 : 1) + "%";
+    });
+    var h = 0;
+    if (pg > 0 && pg < 1) h -= pg * Math.log2(pg);
+    if (each > 0) h -= 31 * each * Math.log2(each);
+    document.getElementById("wc-h").textContent = h.toFixed(2);
+    var n = "";
+    if (h < 0.3) {
+      n = "幾乎沒有不確定性了。這時候「德國奪冠」這則消息幾乎沒有資訊量——"
+        + "你早就知道了。真正有資訊量的是「德國沒進決賽」這種罕見結果。";
+    } else if (h < 2.5) {
+      n = "不確定性掉了一大半。你只要問一題（是不是德國？）就能解決大部分的疑問。";
+    } else if (h < 4.6) {
+      n = "還有相當的不確定性，但比完全不懂足球的人少。";
+    } else {
+      n = "跟完全不知道差不多——32 隊在你眼中幾乎一樣可能，那就是滿滿的 5 bit。";
+    }
+    document.getElementById("wc-hnote").textContent = n
+      + "　（相當於還要問 " + h.toFixed(2) + " 個好問題）";
+  }
+  pIn.addEventListener("input", drawP);
+  drawP();
+})();
+</script>
+</div>
+
+<p>四種問法，差別很大：</p>
+<table>
+<thead>
+<tr>
+<th>問法</th>
+<th>平均要問幾次</th>
+<th>為什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 從第 1 隊一路問到第 32 隊</td>
+<td>16.5 次</td>
+<td>每次只排除一隊，幾乎沒縮小範圍</td>
+</tr>
+<tr>
+<td>② 每次砍一半（1–16？1–8？1–4？…）</td>
+<td><strong>5 次</strong></td>
+<td>不論答案是「是」或「否」，可能性都少一半</td>
+</tr>
+<tr>
+<td>③ 先問洲別，再砍一半</td>
+<td>約 4.6 次</td>
+<td>洲的大小不一樣，有時一刀砍掉 13 隊</td>
+</tr>
+<tr>
+<td>④ 已知德國有 99% 機率奪冠，先問「是不是德國」</td>
+<td><strong>約 1.1 次</strong></td>
+<td>你已經知道很多了，剩下的不確定性本來就很少</td>
+</tr>
+</tbody>
+</table>
+<p>①②③ 拿到的資訊<strong>一樣多</strong>（都是 5 bit），差別只在你問得有多笨。
+但④完全不同——<strong>不是你變聰明，是這件事本身就沒那麼不確定了</strong>。</p>
+<p>每問一個「砍一半」的問題，就拿到 <strong>1 bit</strong>。32 隊等可能時，$\log_2 32 = 5$，所以是 5 bit。</p>
 <blockquote>
 <p><strong>關鍵轉折</strong>：資訊量不是看「字數」，而是看「砍掉多少不確定性」。一封寫滿廢話的長信，資訊量可能是 0。</p>
 </blockquote>
-<p><strong>自我消化</strong>：擲一枚公正硬幣，結果的資訊量是幾 bits？（答：1 bit，因為 $\log_2 2 = 1$）</p>
+<p><strong>自己想一下</strong>：擲一枚公正硬幣，結果的資訊量是幾 bits？（答：1 bit，因為 $\log_2 2 = 1$）</p>
 <hr />
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>「資訊」在日常語言裡很模糊，Shannon 把它定成一件可以量的事：<strong>資訊就是消除掉的不確定性</strong>。</p>
 <p>想像你要猜一件事，一開始有很多種可能。每得到一則消息，可能性就少一些。
@@ -98,7 +409,18 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p><strong>雙面都正面</strong>（正面 1.0）：$H = 0$。結果早就知道，沒有任何資訊。</p>
 </li>
 </ul>
+<h4>再算兩個：骰子與世界盃</h4>
+<ul>
+<li><strong>公正骰子</strong>（六面各 1/6）：$H = \log_2 6 \approx 2.58$ bits。比硬幣不確定，因為選項多了。</li>
+<li><strong>32 隊等可能</strong>：$H = \log_2 32 = 5$ bits。這就是開場那個遊戲的答案。</li>
+<li><strong>德國 99%、其餘 31 隊平分 1%</strong>：$H \approx 0.10$ bit。</li>
+</ul>
+<p>最後這一個是本節最重要的數字。<strong>同樣是 32 隊，同樣的比賽，不確定性從 5 bit 掉到 0.1 bit</strong>——
+掉的不是隊伍數量，是你對它們的了解。所以：</p>
 <blockquote>
+<p><strong>資訊量不是消息本身的性質，是消息與接收者之間的關係。</strong> 同一則「德國奪冠」的快報，
+對懂足球的人幾乎沒有資訊量，對完全不懂的人是滿滿 5 bit。這也是為什麼「這則新聞重不重要」
+永遠要問「對誰」。</p>
 <p><strong>一張圖記住</strong>：兩種結果時，H 隨機率畫出一條倒 U——兩端（0 或 1）是 0，正中央（0.5）是最高的 1 bit。<strong>最公平 = 最不可預測 = 資訊量最大。</strong></p>
 </blockquote>
 <div class="widget" id="ent-sim">
@@ -578,7 +900,10 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <hr />
 <h4>💬 討論／分享／反思</h4>
 <ul>
-<li><strong>配對演練</strong>：互相出一個「猜 1～100 的數字」遊戲，限定只能問是非題。數一數最少幾題猜到（理想是 $\lceil\log_2 100\rceil = 7$ 題）。體會「每題砍一半 = 1 bit」。</li>
+<li><strong>配對演練</strong>：你在校園遇到一個政大學生，<strong>要如何問出他的科系？</strong> 政大約有 35 個學系，
+  兩人一組互相猜，數一數幾題猜到。理想是 $\lceil\log_2 35\rceil = 6$ 題。
+  問完之後互相檢討：哪一題是「砍一半」的好問題（例如「你在山上還是山下上課？」），
+  哪一題是浪費（例如「是不是新聞系？」）。</li>
 <li><strong>一起想一題</strong>：天氣預報說「明天 100% 出太陽」跟「明天 50% 降雨」，哪一個資訊量大？為什麼直覺上「50%」反而讓你更想多查資料？（連回：均勻 → 高 entropy → 需要更多資訊才能決策）</li>
 <li>
 <p><strong>反思</strong>：「我以前以為『資訊多』= 字多／檔案大；現在我會問——它到底消除了我多少不確定性？」</p>
@@ -586,7 +911,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <li>
 <p><strong>小作業</strong>：找一個你工作上常做的「判斷／決策」，寫下：(1) 決策前有幾種可能結果、大致機率分布長怎樣；(2) 哪一筆資料最能「砍一半」、最值得先去查。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 11:22</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:11</p>
 </div>
 </body>
 </html>

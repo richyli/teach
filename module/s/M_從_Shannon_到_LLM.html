@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 從 Shannon 到 LLM</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 從 Shannon 到 LLM</h1></div><p>1948 年的詞二階近似，跟 2026 年的 GPT，是同一條線上的東西。
+這個模組把中間那七十幾年補起來，並且交出三個主管真的用得到的詞：
+<strong>temperature、cross entropy、蒸餾</strong>。接在 <a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">M 語言的階數近似與馬可夫鏈</a> 之後。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>對應</strong>Shannon 的各階近似與 N-gram、Transformer 的關係</td>
+<td>GPT 到底新在哪裡？如果它只是接龍，為什麼比 1948 年的接龍好那麼多？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>操作</strong>temperature 這個參數，說明它如何改變輸出的熵</td>
+<td>為什麼同一個 prompt，有時給我八股文、有時給我天馬行空？那個旋鈕在哪？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>解釋</strong>交叉熵在訓練中的角色，並說出模型準確度的理論下限</td>
+<td>「模型再訓練久一點就不會出錯了」——這句話為什麼是錯的？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>貼這段給你手上任何一個 AI：</p>
+<blockquote>
+<p>請用同一個開頭「Once upon a time, in a land far away, there lived a」續寫三次，每次一句就好。
+然後用同一個開頭「The capital of France is」也續寫三次。
+最後請你說明：為什麼前者每次都不一樣、後者每次都一樣？這跟熵有什麼關係？</p>
+</blockquote>
+<p><strong>帶著它的三次輸出來。</strong> 上課時我們會用工具把那個「為什麼不一樣」拆給你看——
+那不是它心情不同，是一個叫 temperature 的參數在動。</p>
+<hr />
+<h3>那條線：從手工抽字到 Transformer</h3>
+<table>
+<thead>
+<tr>
+<th>Shannon 的階數</th>
+<th>對應的現代技術</th>
+<th>差在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零階（隨機字母）</td>
+<td>沒有上下文的隨機輸出</td>
+<td>—</td>
+</tr>
+<tr>
+<td>一階（字母頻率）</td>
+<td>最原始的統計模型</td>
+<td>只知道頻率</td>
+</tr>
+<tr>
+<td>二階、三階（前一兩個字母）</td>
+<td>N-gram 語言模型</td>
+<td>查表，看得很近</td>
+</tr>
+<tr>
+<td>詞的一階（詞頻）</td>
+<td>只靠詞頻的簡單 NLP</td>
+<td>詞是真的，句子不是</td>
+</tr>
+<tr>
+<td>詞的二階（前一個詞）</td>
+<td><strong>N-gram 的主力形態</strong></td>
+<td>已經像人話</td>
+</tr>
+<tr>
+<td>—</td>
+<td><strong>Transformer／LLM</strong></td>
+<td>看得遠、而且表示法是學出來的</td>
+</tr>
+</tbody>
+</table>
+<p><strong>LLM 新在兩件事，都不是「理解」</strong>：</p>
+<ol>
+<li><strong>看得遠</strong>。馬可夫鏈只看前一步；Transformer 用自注意力機制（self-attention）
+   同時衡量前面幾千個詞裡哪些跟現在這一步有關。<strong>它建的是長距離的依賴關係。</strong></li>
+<li><strong>不是查表，是學表示法</strong>。N-gram 要把所有組合都存起來，組合一多就爆炸；
+   LLM 把詞壓進向量空間，用學到的參數去算，因此能處理沒看過的組合。</li>
+</ol>
+<p>還有一個 Shannon 也預告過的技巧：<strong>tokenization（子詞切分）</strong>。
+<code>unhappiness</code> 被切成 <code>un</code> + <code>happiness</code>，模型不必記住每一個完整單字——
+這正是「利用語言的冗餘來壓縮」的直接應用。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>1948 年 Shannon 做的事是：統計「前一個詞是什麼，下一個詞最可能是什麼」，然後照這個機率抽字。
+2026 年的 GPT 做的事是：<strong>同一件事，但它看的是前面幾千個詞，而且用學出來的方式在算。</strong></p>
+<p>中間那七十幾年增加的是「看多遠」與「算多好」，<strong>沒有增加「理解」</strong>。
+這不是在貶低它——看得夠遠、算得夠好，本身就能做到非常多事。
+但這決定了它會在哪裡出錯：<strong>它會在「最可能」與「真的發生過」不一致的地方出錯</strong>，
+而那正是新聞工作最在意的地方。</p>
+<p>所以「AI 會不會取代記者」這個問題，可以先換成一個更精確的問法：
+<strong>哪些工作只需要「最可能」，哪些工作需要「真的發生過」？</strong></p></div>
+<hr />
+<h3>高熵、低熵，與 temperature 這個旋鈕</h3>
+<p>LLM 每一步都在輸出一個機率分布。分布的形狀決定了它的行為：</p>
+<table>
+<thead>
+<tr>
+<th>情境</th>
+<th>例子</th>
+<th>分布</th>
+<th>熵</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>低熵</strong></td>
+<td><code>The capital of France is ___</code></td>
+<td>機率幾乎全押在 Paris</td>
+<td>接近 0</td>
+</tr>
+<tr>
+<td><strong>高熵</strong></td>
+<td><code>Once upon a time... there lived a ___</code></td>
+<td>king / dragon / princess / wizard 都有機會</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<p><strong>temperature 做的事，就是人為地把這個分布壓尖或拉平。</strong></p>
+<div class="widget" id="lt-sim">
+<style>
+#lt-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+          background: #fbfbfc; margin: 1.6rem 0; }
+#lt-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#lt-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#lt-sim .panel { border-top: 1px solid #ececec; padding-top: 1rem; margin-top: 1.2rem; }
+#lt-sim .panel:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+#lt-sim button { font: inherit; font-size: .84rem; padding: .3rem .75rem; margin: .2rem .3rem .2rem 0;
+                 border: 1px solid #c9d4e4; background: #fff; color: #24528f;
+                 border-radius: 999px; cursor: pointer; }
+#lt-sim button:hover { background: #eef4fd; }
+#lt-sim button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#lt-sim .prompt { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                  padding: .7rem .95rem; font-family: ui-monospace, Menlo, Consolas, monospace;
+                  font-size: .88rem; color: #333; margin: .6rem 0; }
+#lt-sim .prompt .blank { background: #fff3cd; padding: 0 .5rem; border-radius: 3px; }
+#lt-sim .row { display: flex; align-items: center; gap: .6rem; margin: .5rem 0; }
+#lt-sim .row label { width: 7rem; font-size: .84rem; color: #444; flex: none; }
+#lt-sim input[type=range] { flex: 1; }
+#lt-sim .pct { width: 3.4rem; text-align: right; font-size: .82rem; color: #555;
+               font-variant-numeric: tabular-nums; flex: none; }
+#lt-sim .bar { display: flex; align-items: center; gap: .5rem; height: 1.25rem; margin: .2rem 0; }
+#lt-sim .bar .nm { width: 6.5rem; font-size: .8rem; color: #444; flex: none; text-align: right; }
+#lt-sim .bar .fl { height: .78rem; background: #9db8dd; border-radius: 3px; min-width: 2px;
+                   transition: width .2s; }
+#lt-sim .bar.top .fl { background: #24528f; }
+#lt-sim .bar .vl { font-size: .76rem; color: #888; font-variant-numeric: tabular-nums; }
+#lt-sim .readout { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+                   padding: .7rem .9rem; margin-top: .7rem; font-size: .89rem; line-height: 1.8; }
+#lt-sim .big { font-size: 1.4rem; font-weight: 700; color: #17395e;
+               font-variant-numeric: tabular-nums; }
+#lt-sim .verdict { color: #555; }
+</style>
+
+<h5>🎛 互動：高熵、低熵，與 temperature</h5>
+<p class="lede">LLM 每一步都在做一件 Shannon 講過的事：<strong>給出下一個詞的機率分布</strong>。
+分布尖＝低熵＝它很確定；分布平＝高熵＝它在猜。
+temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓尖</strong>。</p>
+
+<div class="panel">
+  <div>
+    <button data-c="fact" class="on">固定語法（低熵）</button>
+    <button data-c="story">創意寫作（高熵）</button>
+  </div>
+  <div class="prompt" id="lt-prompt"></div>
+
+  <div class="row">
+    <label>temperature</label>
+    <input type="range" id="lt-t" min="10" max="200" value="100">
+    <span class="pct" id="lt-tv">1.00</span>
+  </div>
+
+  <div id="lt-bars"></div>
+
+  <div class="readout">
+    這一步的熵 <span class="big" id="lt-h">—</span> bit<br>
+    它會答：<span id="lt-say" style="font-weight:600;color:#17395e;"></span><br>
+    <span class="verdict" id="lt-v"></span>
+  </div>
+</div>
+
+<div class="panel">
+  <strong>交叉熵：模型錯得多離譜</strong>
+  <p class="lede">如果正確答案是 <b id="lt-truth"></b>，模型給它的機率越低，
+  <strong>交叉熵就越高</strong>——這正是訓練 LLM 時要最小化的那個數字。</p>
+  <div class="readout">
+    模型給正確答案的機率 <b id="lt-ptrue">—</b>
+    ｜交叉熵 <span class="big" id="lt-ce">—</span> bit<br>
+    <span class="verdict" id="lt-cev"></span>
+  </div>
+  <p class="lede" style="margin-top:.7rem;">如果一個模型完美學會了語言，它的交叉熵會趨近語言本身的 Shannon 熵——
+  <strong>再往下就沒有空間了，因為那是語言本身的不確定性，不是模型的缺陷。</strong></p>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("lt-sim");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  var CTX = {
+    fact: {
+      prompt: 'The capital of France is <span class="blank">____</span>',
+      truth: "Paris",
+      base: [["Paris", 0.97], ["Lyon", 0.012], ["Marseille", 0.008],
+             ["Nice", 0.005], ["Bordeaux", 0.003], ["Toulouse", 0.002]]
+    },
+    story: {
+      prompt: 'Once upon a time, in a land far away, there lived a <span class="blank">____</span>',
+      truth: "dragon",
+      base: [["king", 0.22], ["dragon", 0.19], ["princess", 0.17],
+             ["wizard", 0.15], ["farmer", 0.14], ["merchant", 0.13]]
+    }
+  };
+  var cur = "fact";
+  var barBox = document.getElementById("lt-bars");
+
+  function build() {
+    barBox.innerHTML = "";
+    CTX[cur].base.forEach(function (b) {
+      var d = document.createElement("div");
+      d.className = "bar";
+      d.innerHTML = '<span class="nm">' + b[0] + '</span>'
+        + '<span class="fl" style="width:0"></span><span class="vl"></span>';
+      barBox.appendChild(d);
+    });
+    document.getElementById("lt-prompt").innerHTML = CTX[cur].prompt;
+    document.getElementById("lt-truth").textContent = CTX[cur].truth;
+  }
+
+  function draw() {
+    var T = +document.getElementById("lt-t").value / 100;
+    document.getElementById("lt-tv").textContent = T.toFixed(2);
+    var base = CTX[cur].base;
+    var w = base.map(function (b) { return Math.pow(b[1], 1 / T); });
+    var sum = w.reduce(function (a, x) { return a + x; }, 0);
+    var ps = w.map(function (x) { return x / sum; });
+
+    var h = 0, top = 0;
+    ps.forEach(function (p, i) {
+      if (p > 0) h -= p * Math.log2(p);
+      if (p > ps[top]) top = i;
+    });
+    ps.forEach(function (p, i) {
+      var b = barBox.children[i];
+      b.className = "bar" + (i === top ? " top" : "");
+      b.querySelector(".fl").style.width = (p * 100 * 0.6) + "%";
+      b.querySelector(".vl").textContent = (p * 100).toFixed(1) + "%";
+    });
+    document.getElementById("lt-h").textContent = h.toFixed(2);
+    document.getElementById("lt-say").textContent =
+      base[top][0] + "（機率 " + (ps[top] * 100).toFixed(0) + "%）";
+
+    var v;
+    if (T < 0.4) v = "temperature 很低＝把分布壓得更尖。它幾乎只會吐最可能的那一個，"
+      + "適合程式碼、格式化回覆這種不容許發散的任務——代價是它永遠給你同一個答案。";
+    else if (T > 1.6) v = "temperature 很高＝把分布硬拉平。冷門選項也有機會被抽到，"
+      + "看起來比較有創意，但也是<b>幻覺最容易發生的設定</b>：它被鼓勵去選不那麼有把握的字。";
+    else v = "temperature 1.0＝照模型原本的機率分布抽樣。";
+    document.getElementById("lt-v").innerHTML = v;
+
+    var ti = base.findIndex(function (b) { return b[0] === CTX[cur].truth; });
+    var pt = ps[ti];
+    var ce = -Math.log2(pt);
+    document.getElementById("lt-ptrue").textContent = (pt * 100).toFixed(1) + "%";
+    document.getElementById("lt-ce").textContent = ce.toFixed(3);
+    var cv;
+    if (ce < 0.1) cv = "幾乎沒有損失——模型對這一題很確定，而且是對的。";
+    else if (ce < 1) cv = "還可以。模型知道答案在哪，但沒有全押上去。";
+    else cv = "損失偏高。模型把機率分散給了錯的候選，訓練時就是靠這個數字去修它。";
+    document.getElementById("lt-cev").textContent = cv;
+  }
+
+  root.querySelectorAll("[data-c]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      cur = b.dataset.c;
+      root.querySelectorAll("[data-c]").forEach(function (x) {
+        x.className = x === b ? "on" : "";
+      });
+      build(); draw();
+    });
+  });
+  document.getElementById("lt-t").addEventListener("input", draw);
+  build(); draw();
+})();
+</script>
+</div>
+
+<ul>
+<li><strong>低 temperature（0.2）</strong>：把分布壓得更尖，幾乎只吐最可能的那一個。
+  適合程式碼、格式化回覆、資料抽取——<strong>代價是你永遠得到同一個答案，沒有多樣性。</strong></li>
+<li><strong>高 temperature（1.5）</strong>：把分布拉平，冷門選項也有機會被抽到。看起來比較有創意，
+  但<strong>這也是幻覺最容易發生的設定</strong>：它被鼓勵去選那些它沒那麼有把握的字。</li>
+</ul>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜temperature 是什麼，什麼時候該動它</span><p>你可以把它想成「<strong>要不要讓它冒險</strong>」的旋鈕。</p>
+<ul>
+<li>轉低：它只講最有把握的話。適合要求穩定、可重複的任務——同一份資料抽取十次結果一樣。</li>
+<li>轉高：它願意講比較冷門的選項。適合腦力激盪，<strong>但不適合任何需要正確的場合</strong>。</li>
+</ul>
+<p>常見的誤用是：要它寫新聞稿或摘要時用了偏高的 temperature，結果它把不確定的細節
+也寫得斬釘截鐵。<strong>要創意就轉高、要正確就轉低，這兩件事沒辦法同時最大化。</strong></p>
+<p>多數對話介面不讓你直接調這個參數，但 API 可以。如果你的團隊在串 API，
+這是你該問工程師的一題：<strong>「我們這個功能的 temperature 設多少？為什麼？」</strong></p></div>
+<hr />
+<h3>交叉熵：模型錯得多離譜，以及它的理論下限</h3>
+<p>訓練 LLM 時要最小化的那個數字叫<strong>交叉熵（cross entropy）</strong>：
+<strong>模型給「正確答案」的機率越低，交叉熵越高。</strong></p>
+<ul>
+<li><code>The capital of France is</code> → 模型給 Paris 99%：交叉熵 $-\log_2 0.99 \approx 0.014$ bit，幾乎沒有損失。</li>
+<li>同一題，模型給 Paris 60%、London 30%、Berlin 10%：交叉熵 $-\log_2 0.6 \approx 0.74$ bit，明顯較差。</li>
+</ul>
+<p>訓練的過程，就是不斷調整參數讓這個數字下降。<strong>但它不會降到 0。</strong></p>
+<p><strong>為什麼降不到 0</strong>：因為語言本身就有不確定性。
+<code>Once upon a time... there lived a ___</code> 的正確答案本來就不只一個。
+模型最好的情況是<strong>它的交叉熵趨近語言本身的 Shannon 熵</strong>——再往下就沒有空間了。</p>
+<blockquote>
+<p><strong>那個下限不是模型的缺陷，是語言的性質。</strong>
+所以「模型再訓練久一點就不會出錯了」這句話是錯的：
+有一部分的不確定性，不管訓練多久都消不掉，因為它不在模型裡，在語言裡。</p>
+</blockquote>
+<h4>蒸餾：用熵來壓縮模型</h4>
+<p><strong>知識蒸餾（knowledge distillation）</strong>是把大模型的能力搬到小模型上的技術：</p>
+<ul>
+<li>大模型（teacher）先學會複雜的機率分布</li>
+<li>小模型（student）不直接學原始資料，而是<strong>學大模型輸出的那個分布</strong></li>
+</ul>
+<p>這裡有一個熵的取捨：</p>
+<ul>
+<li><strong>高熵蒸餾</strong>：學生學完整的機率分布（不只學「答案是 Paris」，還學「Lyon 也有一點機率」）。
+  泛化比較好，但學起來比較難、計算量大。</li>
+<li><strong>低熵蒸餾</strong>：學生只學機率最高的那幾個。訓練快，<strong>但可能過度簡化，遇到沒看過的情況就崩</strong>。</li>
+</ul>
+<p><strong>主管視角</strong>：當供應商說「我們的小模型效果接近大模型」，你要問的是——
+<strong>在什麼分布上接近？</strong> 在常見情況接近很容易，在長尾接近才是真本事，而媒體的工作充滿長尾。</p>
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>迷思</th>
+<th>為什麼錯</th>
+<th>攔截方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「LLM 跟 N-gram 完全是兩回事」</td>
+<td>同一個問題（預測下一個詞）的不同解法；差在看多遠與表示法</td>
+<td>用對應表逐列走一遍</td>
+</tr>
+<tr>
+<td>「模型訓練夠久就不會出錯」</td>
+<td>交叉熵的下限是語言本身的熵，不是 0</td>
+<td>用「there lived a ___」問他們正確答案是什麼</td>
+</tr>
+<tr>
+<td>「temperature 調低就不會有幻覺」</td>
+<td>調低只是減少冒險，它仍然可能自信地給出錯的最可能答案</td>
+<td>連回 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>：問題在 context 不足，不在取樣</td>
+</tr>
+<tr>
+<td>「小模型便宜又一樣好」</td>
+<td>要看在什麼分布上一樣好；長尾才是媒體的日常</td>
+<td>用高熵／低熵蒸餾那一段追問</td>
+</tr>
+</tbody>
+</table>
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">M 語言的階數近似與馬可夫鏈</a>——沒有那條線，「LLM 是它的延伸」講不通</li>
+<li><strong>後續</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>（把這把尺用進日常決策）、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>（偏見從哪來）</li>
+<li><strong>平行相關</strong>：<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>、<a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a></li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：各舉一個自己部門的工作，判斷它需要的是「最可能」還是「真的發生過」，
+  並據此決定 temperature 該高該低。</li>
+<li><strong>一起想一題</strong>：如果模型的錯誤有一部分永遠消不掉，那你的流程裡誰負責接住它？</li>
+<li>
+<p><strong>反思</strong>：「我原本以為模型會越練越準到不出錯，現在我知道下限是＿＿＿。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：把今天四個模組建立的詞（entropy、冗餘、階數、temperature、交叉熵）
+  各寫一句「我會怎麼跟工程師用這個詞」，收進個人 AI 工具箱。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-05 16:11</p>
+</div>
+</body>
+</html>
