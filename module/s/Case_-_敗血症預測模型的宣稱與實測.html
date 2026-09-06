@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case - 敗血症預測模型的宣稱與實測</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>Case - 敗血症預測模型的宣稱與實測</h1></div><h2>Case — 敗血症預測模型的宣稱與實測</h2>
+<p><strong>一句話</strong>：一套內建於數百家醫院電子病歷、被廣泛採用的預測模型，廠商自稱 AUC 0.76–0.83，獨立團隊實測只有 0.63——而且每八次警示只有一次是真的。</p>
+<h3>案子</h3>
+<p>Epic Sepsis Model（ESM）由 Epic Systems 開發，內建在其電子病歷產品中，是美國部署規模最大的臨床預測模型之一。它即時計算住院病人的敗血症風險分數，超過門檻就對醫護發出警示。</p>
+<p>密西根大學醫療體系做了外部驗證：27,697 名病人、38,455 次住院，期間 2018 年 12 月至 2019 年 10 月，敗血症盛行率 6.6%。研究發表於《JAMA Internal Medicine》（Wong et al., 2021）。</p>
+<h3>數字</h3>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>廠商內部驗證</th>
+<th>外部驗證</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AUC</td>
+<td>0.76–0.83</td>
+<td><strong>0.63</strong></td>
+</tr>
+<tr>
+<td>敏感度（recall）</td>
+<td>—</td>
+<td>33%</td>
+</tr>
+<tr>
+<td>正預測值（precision）</td>
+<td>—</td>
+<td><strong>12%</strong></td>
+</tr>
+<tr>
+<td>觸發警示的住院</td>
+<td>—</td>
+<td>18%（6,971 次）</td>
+</tr>
+<tr>
+<td>每找到一例要評估幾人</td>
+<td>—</td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td>漏掉的敗血症</td>
+<td>—</td>
+<td><strong>67%</strong>（1,709／2,552 例）</td>
+</tr>
+<tr>
+<td>未觸發警示但仍及時用藥</td>
+<td>—</td>
+<td>1,030 人（60%）靠既有臨床判斷</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這個案子在說什麼</span><p>敗血症拖久了會死人，所以醫院想要一個能提早示警的系統。Epic 把這樣一套模型做進電子病歷，數百家醫院直接開來用。廠商自己驗證的成績是 AUC 0.76–0.83，聽起來可以。</p>
+<p>密西根大學拿自己醫院近四萬次住院實測，得到 0.63。更關鍵的是換算成現場感受的兩個數字：</p>
+<ul>
+<li><strong>每八次警示，只有一次真的是敗血症</strong>（正預測值 12%）。護理師被打斷八次，七次白忙。</li>
+<li><strong>它漏掉了三分之二的敗血症病例</strong>。真正需要示警的人，多數沒有被示警。</li>
+</ul>
+<p>而且有 60% 沒被警示的病人，本來就靠醫護自己的判斷及時用了藥——也就是說，這套系統在既有流程之外增加的價值，比想像中小得多。</p>
+<p>這個案子要記的不是「Epic 很糟」，是一個一般性的事實：<strong>廠商的驗證數字是在他們自己的資料上跑出來的。換一個機構、換一批病人，效能常常掉一大截。</strong> 你要問的是有沒有人在<strong>你的資料上</strong>驗過。</p></div>
+<h3>討論題</h3>
+<ol>
+<li><strong>AUC 0.63 跟 PPV 12%，哪一個數字比較能說服你的主管？</strong> 為什麼廠商的簡報上通常只有前者？</li>
+<li><strong>如果你是採購方，什麼條款可以保護你？</strong> 至少寫出三條（提示：試跑期、用誰的資料驗、達不到標準怎麼辦、誰負責持續監看）。</li>
+<li><strong>警示疲勞的代價要怎麼算？</strong> 每次誤報要花掉一位臨床人員幾分鐘？一年下來是多少人力？把它換算成錢，跟系統本身的價格比。</li>
+<li><strong>換成媒體場景</strong>：如果有廠商賣你一套「自動查證輔助」或「自動下標」系統，宣稱準確率 90%，你要求他做什麼你才會相信？</li>
+<li><strong>最難的一題</strong>：那 33% 有被抓到的案例中，有多少是醫護本來就會發現的？如果扣掉那些，這套系統真正救到的人有多少？</li>
+</ol>
+<h3>移植到媒體的檢查清單</h3>
+<p>要求供應商回答，並寫進合約：</p>
+<ol>
+<li>這個數字是在誰的資料上跑出來的？資料的組成與我們像嗎？</li>
+<li>我們可以先用<strong>我們自己的歷史資料</strong>做一次回溯測試嗎？費用多少、要多久？</li>
+<li>在我們預期的盛行率下，正預測值是多少？（不是準確率，是 PPV）</li>
+<li>每天會產生幾則警示／建議？誰要看？看一則要幾分鐘？</li>
+<li>上線後由誰持續監看效能？多久看一次？掉到什麼水準要通知我們？</li>
+<li>效能不如宣稱時，合約怎麼處理？</li>
+</ol>
+<p><strong>連結</strong>：<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">M 採購 vs 自建決策</a>｜<a href="M_%E5%B0%8E%E5%85%A5%E6%B1%BA%E7%AD%96%E8%A1%A8%E5%AF%A6%E4%BD%9C.html">M 導入決策表實作</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a></p>
+<h3>資料來源</h3>
+<ul>
+<li>Wong, A., et al. (2021). External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients. <em>JAMA Internal Medicine</em>, 181(8), 1065–1070. &lt;<a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307">https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307</a>&gt;</li>
+<li>完整筆記：wiki <code>廠商宣稱的模型效能與外部驗證的落差</code></li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-06 21:44</p>
+</div>
+</body>
+</html>
