@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 讀論文暖身：門檻是誰決定的</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>M 讀論文暖身：門檻是誰決定的</h1></div><p><strong>20 分鐘暖身</strong>，第 2 週第一件事。上週學了 confusion matrix 的四格與門檻取捨，這一節不上新東西，只做一件事：<strong>打開一篇真的論文，把那四格從它報的數字裡還原出來，然後看作者怎麼談門檻。</strong></p>
+<p>用的論文是 Wong et al. (2021)，《JAMA Internal Medicine》，六頁、沒有數學，就是 <a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">Case - 敗血症預測模型的宣稱與實測</a> 那個案子的原始出處。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>從論文報的指標反推</strong>完整的 2×2 表，不必依賴作者有沒有畫出來</td>
+<td>廠商簡報只給我敏感度跟特異度，我能不能自己算出「會誤報幾件」？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>指出</strong>一篇論文的門檻是誰、依什麼決定的</td>
+<td>那條線是模型算出來的，還是有人開會決定的？差別在哪？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>作者有沒有把兩種錯的代價講清楚、講給誰聽</td>
+<td>論文說「表現不佳」，那到底誰倒楣？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前準備（上課前完成，10 分鐘）</h4>
+<p><strong>只讀三個地方</strong>，不要讀全文：</p>
+<ol>
+<li><strong>Figure 1</strong>（Threshold Performance Plots）——sensitivity、specificity、PPV、NPV 沿著所有可能門檻的變化</li>
+<li><strong>Table 2</strong></li>
+<li>方法一節裡解釋「為什麼選 score ≥6」的那一段</li>
+</ol>
+<p>論文：&lt;<a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307">https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307</a>&gt;</p>
+<p>讀完把學習單第 1 題先填完帶來。填不出來也沒關係，那就是上課要處理的。</p>
+<hr />
+<h3>學習單（可直接印，或抄在紙上）</h3>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜第 1 題：把四格還原出來</span><p>論文報了這些數字：</p>
+<ul>
+<li>總住院次數 <strong>38,455</strong>，其中敗血症 <strong>2,552</strong> 次（6.6%）</li>
+<li>在門檻 score ≥6：<strong>警示了 6,971 次住院</strong>（占 18%）</li>
+<li><strong>漏掉 1,709 名</strong>敗血症病人（占敗血症的 67%）</li>
+</ul>
+<p>請填出這張表（四個數字加起來要等於 38,455）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>系統發出警示</th>
+<th>系統沒警示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>實際有敗血症</strong></td>
+<td>TP ＿＿＿</td>
+<td>FN ＿＿＿</td>
+</tr>
+<tr>
+<td><strong>實際沒有敗血症</strong></td>
+<td>FP ＿＿＿</td>
+<td>TN ＿＿＿</td>
+</tr>
+</tbody>
+</table>
+<p>填完再算三個數，並跟論文報的比對：</p>
+<ul>
+<li>Recall（抓到幾成）＝ TP ÷（TP＋FN）＝ ＿＿＿</li>
+<li>Precision（抓的對幾成）＝ TP ÷（TP＋FP）＝ ＿＿＿</li>
+<li>每找到一位敗血症病人，要處理幾次警示？＝ ＿＿＿</li>
+</ul></div>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜第 2 題：這條線是誰畫的</span><p>論文說明了 score ≥6 這個門檻是怎麼來的。<strong>請把那一句抄下來。</strong></p>
+<p>然後回答：這個門檻是（A）模型自己算出來的最佳解、（B）開發商規定的、（C）這家醫院的人決定的？</p>
+<p>如果換一家醫院，這條線會在同一個地方嗎？</p></div>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜第 3 題：往左移一格會怎樣</span><p>看 Figure 1。如果把門檻從 6 往左移（更容易發出警示）：</p>
+<ul>
+<li>Recall 會＿＿＿，代表漏掉的病人會＿＿＿</li>
+<li>Precision 會＿＿＿，代表誤報會＿＿＿</li>
+<li>誰的工作量會增加？誰會因此得救？</li>
+</ul></div>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜第 4 題：代價落在誰身上</span><p>這篇論文有沒有明講「誤報」的代價是什麼？找出那一句。</p>
+<p>「漏掉」的代價呢？作者講得一樣清楚嗎？</p>
+<p>最後一題：論文提到有 <strong>1,030 名（60%）沒有被警示的病人，還是靠醫護自己的判斷及時用了藥</strong>。這個數字為什麼重要？</p></div>
+<hr />
+<h3>進行方式</h3>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–3′</td>
+<td>各自把第 1 題算完（課前沒做的人現在做）</td>
+</tr>
+<tr>
+<td>3–10′</td>
+<td>兩人一組核對四格，然後一起回答第 2、3 題</td>
+</tr>
+<tr>
+<td>10–17′</td>
+<td>一起對答案。第 2 題的那句話由學員念出來</td>
+</tr>
+<tr>
+<td>17–20′</td>
+<td>收束一句，接到今天的 <a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">M COMPAS 再犯演算法個案</a></td>
+</tr>
+</tbody>
+</table>
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>——沒有四格的概念，第 1 題做不出來</li>
+<li><strong>後續</strong>：<a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">M COMPAS 再犯演算法個案</a>——同一天的下一節，把「門檻是人決定的」推到「不同族群要不要用不同門檻」</li>
+<li><strong>配套個案</strong>：<a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">Case - 敗血症預測模型的宣稱與實測</a></li>
+</ul>
+<p><strong>連結</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">M COMPAS 再犯演算法個案</a>｜<a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">Case - 敗血症預測模型的宣稱與實測</a>｜<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">M 採購 vs 自建決策</a></p>
+<h4>💬 收束</h4>
+<ul>
+<li><strong>一句話收束</strong>：<strong>那條線不是模型畫的，是一群人開會畫的。所以你要問的不是「這個模型準不準」，是「這條線是誰畫的、依什麼畫的、畫錯了誰倒楣」。</strong></li>
+<li><strong>反思（寫下）</strong>：「我原本以為門檻是技術問題，現在我會先問——＿＿＿。」</li>
+</ul>
+<h3>延伸閱讀（不指定，放給想深入的人）</h3>
+<ul>
+<li>Corbett-Davies et al. (2017), <em>Algorithmic decision making and the cost of fairness</em>, KDD：只讀前兩節。核心結論就是「最適決策等於一條風險門檻」，直接接今天的 COMPAS。&lt;<a href="https://arxiv.org/abs/1701.08230">https://arxiv.org/abs/1701.08230</a>&gt;</li>
+<li>Saito &amp; Rehmsmeier (2015), <em>PLOS ONE</em>：教學型寫法，Figure 1 就是 confusion matrix 圖解，說明為什麼資料不平衡時要看 PR 曲線而不是 ROC。篇幅長，挑圖看就好。&lt;<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432</a>&gt;</li>
+</ul>
+<h3>資料來源</h3>
+<ul>
+<li>Wong, A., et al. (2021). External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients. <em>JAMA Internal Medicine</em>, 181(8), 1065–1070. &lt;<a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307">https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307</a>&gt;</li>
+<li>四格數字由論文報告的總數、警示數與漏掉數反推，反推結果與論文自報的 sensitivity 33%、PPV 12%、NNE 8 完全一致。</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-06 22:25</p>
+</div>
+</body>
+</html>
