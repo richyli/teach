@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case - W13 Semmelweis 洗手</title>
+<link rel="stylesheet" href="../../style.42eb1156.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/Case_-_W13_Semmelweis_%E6%B4%97%E6%89%8B.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "9MXvo2ZKGK/rZYsT349xyQ==", IV = "pRfTK20pWFtuiDo6", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+      if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>
