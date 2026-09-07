@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>利害關係人地圖與使用者類型</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>利害關係人地圖與使用者類型</h1></div><p>在這個 45 分鐘的講授中，我們要學習用利害關係人地圖找出一個產品有哪幾種使用者、包括那些不付錢也不操作卻決定產品生死的人，而不是只想到「使用者就是打開 App 的那個人」。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>六類利害關係人的差別，以及各自關心什麼</td>
+<td>為什麼「使用者訪談做得很好」的產品，還是會在採購那一關被打回？</td>
+</tr>
+<tr>
+<td>2</td>
+<td>替一個真實產品<strong>畫出</strong>利害關係人地圖，每一類至少填一個具體角色</td>
+<td>你在用的學校選課系統，<strong>付錢的、使用的、維護的、被它害到的，分別是誰？</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>指認</strong>自己漏掉的那一類，說出漏掉的後果</td>
+<td>大多數人第一次畫都會漏掉同兩類——<strong>破壞者與功能性受益者</strong>。漏掉他們的產品通常死在哪裡？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動</h4>
+<p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
+<blockquote>
+<p>我要盤點一個產品的利害關係人。產品是：【貼上你的產品或服務】。請依這六類各列出至少兩個具體角色：付錢的人、實際操作的人、維護產品的人、協助別人使用產品的人、不操作但從產品獲益的人、以及產品成功會讓他受損的人。每一類請寫具體職稱或身分，不要寫「使用者」這種泛稱。先不要分析，只列清單。</p>
+</blockquote>
+<p>拿到清單之後追問一句：</p>
+<blockquote>
+<p>這六類裡，哪一類你列得最少或最勉強？那通常代表什麼？</p>
+</blockquote>
+<p>把它列得最勉強的那一類記下來。等一下小組討論時，請和組員比對，看你們是不是漏在同一類。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要逼它列「會被害到的人」</span><p>多數人盤點使用者時只想得到「會用的人」和「會買的人」。但一個產品做得越成功，越會有人因此受損——競爭者、被取代的部門、被監督的對象。這些人不會填你的問卷，卻會在你上線那天出現。</p></div>
+<hr />
+<h3>傳統商業邏輯漏掉了誰</h3>
+<ul>
+<li>傳統的問法是「誰是我們的顧客」，答案通常只有一種人：<strong>付錢又使用的那個人</strong>。</li>
+<li>真實產品裡，<strong>付錢的、使用的、維護的常常是三組不同的人</strong>，而且他們要的東西互相衝突。</li>
+<li>漏掉其中一組，產品會在你沒預期的地方卡住——常常不是功能不好，是有人不讓它上線。</li>
+</ul>
+<p>一個學校的選課系統：<strong>付錢的</strong>是學校，<strong>使用的</strong>是學生，<strong>維護的</strong>是資訊中心，<strong>支援的</strong>是系辦助教，<strong>受益但不操作的</strong>是教務處與系主任，<strong>會被它害到的</strong>是原本靠人工排課掌握彈性的那些人。</p>
+<p>只訪談學生，你會做出一個學生很愛、但資訊中心維護不動、系辦不肯教、教務處看不到報表的系統。<strong>這種產品不是被使用者否決的，是被其他五類人否決的。</strong></p>
+<blockquote>
+<p>「使用者是誰」這個問題的陷阱，在於它預設只有一種人。<strong>產品的生死通常不是由最會用它的人決定的。</strong></p>
+</blockquote>
+<hr />
+<h3>六類利害關係人</h3>
+<ul>
+<li>這張地圖出自 James Robertson 與 Suzanne Robertson 的需求工程方法（Volere），把利害關係人依「離產品多遠」排成同心圓。</li>
+<li>六類各有一句定位問句，盤點時照著問就不會漏。</li>
+<li>每一類底下都要填<strong>具體角色</strong>，填不出具體角色的那一類，就是你的盲區。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>定位問句</th>
+<th>常見的具體角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>購買者</strong></td>
+<td>誰付這筆錢？</td>
+<td>部門主管、另一個組織、一般大眾</td>
+</tr>
+<tr>
+<td><strong>使用者</strong></td>
+<td>誰實際操作產品？</td>
+<td>技術操作人員、業務操作人員、一般大眾</td>
+</tr>
+<tr>
+<td><strong>產品維護者</strong></td>
+<td>誰讓產品持續能動？</td>
+<td>硬體維護、軟體維護、機械零件維護</td>
+</tr>
+<tr>
+<td><strong>產品支援者</strong></td>
+<td>誰幫別人使用產品？</td>
+<td>客服台、教練與導師、講師、安裝人員</td>
+</tr>
+<tr>
+<td><strong>功能性受益者</strong></td>
+<td>誰不操作卻從中獲益？</td>
+<td>操作者的主管、business decision maker、操作者的家人、產品經理、專案經理、其他部門、看報表的人</td>
+</tr>
+<tr>
+<td><strong>破壞者</strong></td>
+<td>誰因為這個產品而受損？</td>
+<td>競爭者、駭客、政黨、壓力團體、輿論</td>
+</tr>
+</tbody>
+</table>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 420" role="img" aria-label="利害關係人同心圓地圖" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<ellipse cx="400" cy="220" rx="360" ry="200" fill="#f4f7fb" stroke="#dde6f2"/>
+<ellipse cx="400" cy="220" rx="255" ry="145" fill="#e9f0fa" stroke="#cbdcf0"/>
+<ellipse cx="400" cy="220" rx="150" ry="88" fill="#dbe8fa" stroke="#b6cdea"/>
+<text x="400" y="214" text-anchor="middle" font-size="17" fill="#1a3d6b" font-weight="700">產品</text>
+<text x="400" y="238" text-anchor="middle" font-size="13" fill="#2a5288" font-weight="400">使用者　維護者</text>
+<text x="400" y="132" text-anchor="middle" font-size="13.5" fill="#2a5288" font-weight="600">產品支援者　功能性受益者</text>
+<text x="400" y="320" text-anchor="middle" font-size="13.5" fill="#2a5288" font-weight="600">購買者</text>
+<text x="400" y="52" text-anchor="middle" font-size="13.5" fill="#8a3a52" font-weight="700">破壞者（競爭者、駭客、壓力團體、輿論）</text>
+<text x="400" y="400" text-anchor="middle" font-size="12.5" fill="#5b6b7c" font-weight="400">離產品越遠，越不會出現在使用者訪談裡——但否決權常常在那裡</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">六類的排法是照離產品多遠，不是照重要程度。</figcaption>
+</figure>
+
+<p><strong>三個要特別停下來講的</strong>：</p>
+<ul>
+<li><strong>購買者不等於使用者</strong>，這是 B2B 產品最常見的結構。買的人看的是預算與風險，用的人看的是順不順手。<strong>你的簡報要同時說服兩種完全不同的關注點。</strong></li>
+<li><strong>功能性受益者最容易被漏掉</strong>，因為他們不出現在使用畫面裡。看報表的人、操作者的主管，往往才是決定續不續約的人。</li>
+<li><strong>破壞者是唯一「你成功他就受損」的一類</strong>。他們不會來參加你的使用者訪談，但會在上線那天用你沒想過的方式出現。</li>
+</ul>
+<div class="widget" id="sh-audit">
+<style>
+#sh-audit { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#sh-audit h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#sh-audit .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#sh-audit label { font-size: .88rem; color: #444; }
+#sh-audit input[type=text] { font: inherit; font-size: .88rem; padding: .3rem .5rem;
+       border: 1px solid #c9d4e4; border-radius: 6px; width: 14rem; }
+#sh-audit .row { margin: .45rem 0; }
+#sh-audit .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#sh-audit .warn { background: #fff3f5; border-color: #e6b8c4; }
+#sh-audit .ok { background: #eef7f1; border-color: #a8d4bd; }
+#sh-audit .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+</style>
+<h5>你的盤點漏了哪一類？</h5>
+<p class="lede">想一個產品，在每一格填一個<b>具體角色</b>（職稱或身分，不要寫「使用者」）。
+填不出來的那一格就是你的盲區。</p>
+<div class="row">誰付這筆錢？　<input type="text" id="sh-1" placeholder="例：教務處"></div>
+<div class="row">誰實際操作？　<input type="text" id="sh-2" placeholder="例：修課學生"></div>
+<div class="row">誰讓它持續能動？　<input type="text" id="sh-3" placeholder="例：資訊中心工程師"></div>
+<div class="row">誰幫別人使用？　<input type="text" id="sh-4" placeholder="例：系辦助教"></div>
+<div class="row">誰不操作卻獲益？　<input type="text" id="sh-5" placeholder="例：看選課報表的系主任"></div>
+<div class="row">誰因為它而受損？　<input type="text" id="sh-6" placeholder="例：原本靠人工排課保有彈性的人"></div>
+<div class="out" id="sh-out"></div>
+<p class="hint">最常空白的是第五與第六格。它們不會出現在使用者訪談裡，卻常常握有否決權。</p>
+<script>
+(function(){
+  var N=["購買者","使用者","產品維護者","產品支援者","功能性受益者","破壞者"];
+  var BAD=["使用者","user","用戶","大家","所有人","客戶"];
+  function render(){
+    var empty=[],vague=[];
+    for(var i=1;i<=6;i++){
+      var v=(document.getElementById("sh-"+i).value||"").trim();
+      if(!v){empty.push(N[i-1]);continue;}
+      for(var j=0;j<BAD.length;j++){
+        if(v.toLowerCase()===BAD[j]){vague.push(N[i-1]);break;}
+      }
+    }
+    var o=document.getElementById("sh-out");
+    if(empty.length===0&&vague.length===0){
+      o.className="out ok";
+      o.innerHTML="六格都有具體角色了。<br>下一步是收斂：<b>圈出最重要的三個，並說出為什麼不是其他人</b>——"+
+        "全部都重要等於都不重要。";
+    }else{
+      o.className="out warn";
+      var msg="";
+      if(empty.length){msg+="還空著：<b>"+empty.join("、")+"</b>。";}
+      if(vague.length){msg+="<br>寫得太泛的：<b>"+vague.join("、")+"</b>——換成職稱或身分。";}
+      if(empty.indexOf("破壞者")>-1){
+        msg+="<br><br>破壞者那一格空白很常見。換個問法：<b>這個產品做成功了，誰會不高興？</b>"+
+             "被取代的部門、被監督的對象，都算。";
+      }
+      if(empty.indexOf("功能性受益者")>-1){
+        msg+="<br><br>功能性受益者空白也很常見，因為他們不出現在畫面裡。問：<b>誰會看這個產品產生的報表？</b>";
+      }
+      o.innerHTML=msg;
+    }
+  }
+  for(var i=1;i<=6;i++){document.getElementById("sh-"+i).addEventListener("input",render);}
+  render();
+})();
+</script>
+</div>
+
+<blockquote>
+<p>六類的排法是照「離產品多遠」，不是照重要程度。<strong>離得最遠的那兩類，常常握著最後的否決權。</strong></p>
+</blockquote>
+<hr />
+<h3>後台使用者與五種產品經理</h3>
+<ul>
+<li><strong>後台使用者</strong>是一個特別的位置：相對於一般使用者他是維護者，但他自己也是使用者。</li>
+<li>後台被忽略的產品，前台再好用也會被拖垮——因為每天在用它的人沒有被設計進去。</li>
+<li>產品經理本身也分很多種，<strong>不同種類的 PM 服務的是地圖上不同的人</strong>。</li>
+</ul>
+<p><strong>後台使用者為什麼特別</strong>：他同時佔兩格。以一個新聞網站為例，編輯後台的使用者是編輯與小編——對讀者而言他們是「維護內容的人」，但對後台系統而言他們是<strong>每天用最久的那群使用者</strong>。後台通常沒有預算、沒有設計資源、沒有人做使用者研究，因為它「不是產品」。<strong>但一個難用的後台，會讓前台的內容品質整批下降。</strong></p>
+<p><strong>五種產品經理</strong>（Peter Deng 提出的實務分類，不是研究文獻）：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>主要看的東西</th>
+<th>在地圖上主要服務誰</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>消費者與使用者經驗導向</td>
+<td>體驗、留存</td>
+<td>使用者</td>
+</tr>
+<tr>
+<td>流量與增長導向</td>
+<td>獲取、轉換</td>
+<td>使用者、購買者</td>
+</tr>
+<tr>
+<td>業績導向</td>
+<td>營收、成本</td>
+<td>購買者、功能性受益者</td>
+</tr>
+<tr>
+<td>平台與後台使用者導向</td>
+<td>內部效率、擴充性</td>
+<td>維護者、後台使用者</td>
+</tr>
+<tr>
+<td>演算法與功能導向</td>
+<td>模型與功能效果</td>
+<td>使用者、維護者</td>
+</tr>
+</tbody>
+</table>
+<p>這張表的用處不是幫你選職涯，是讓你看懂一件事：<strong>同一個團隊裡吵起來的兩個 PM，常常是因為他們服務的是地圖上不同的人。</strong></p>
+<blockquote>
+<p>後台是產品裡唯一「每天有人用最久、卻最少被研究」的地方。<strong>它難用的代價不會出現在後台的數字上，會出現在前台。</strong></p>
+</blockquote>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<p>我們可以從下列常見的想法，檢查自己的盤點有沒有缺口：</p>
+<table>
+<thead>
+<tr>
+<th>常見想法</th>
+<th>為什麼太簡化</th>
+<th>怎麼檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「使用者就是打開產品的那個人」</td>
+<td>付錢的、維護的、看報表的都不打開產品，卻可能握有否決權</td>
+<td>六類逐格填，填不出具體角色的那一格就是盲區</td>
+</tr>
+<tr>
+<td>「訪談使用者就夠了」</td>
+<td>破壞者不會來受訪，功能性受益者不覺得自己是使用者</td>
+<td>問一句：這個產品成功了，誰會不高興？</td>
+</tr>
+<tr>
+<td>「後台是工程的事」</td>
+<td>後台使用者是每天用最久的人，難用會拖垮前台產出</td>
+<td>把後台使用者也放進地圖，並問他們的一天長什麼樣</td>
+</tr>
+<tr>
+<td>「破壞者就是競爭對手」</td>
+<td>也可能是被取代的內部部門、被監督的對象、輿論</td>
+<td>分成外部與內部兩排列，內部那排通常更致命</td>
+</tr>
+<tr>
+<td>「利害關係人越多越好」</td>
+<td>全部都重要等於都不重要</td>
+<td>盤點完要收斂：挑出最重要的三個，並說出為什麼不是其他人</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>先修與後續</h3>
+<ul>
+<li><strong>後續</strong>：<a href="M_%E9%9C%80%E6%B1%82%E7%9A%84%E6%9C%80%E5%B0%8F%E5%96%AE%E4%BD%8D%E8%88%87%E9%9C%80%E6%B1%82%E6%96%87%E4%BB%B6.html">需求的最小單位與需求文件</a>——盤點完利害關係人，下一步是把他們要的東西寫成可驗收的需求。</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">利害關係人與行動者網絡</a>——<strong>這裡用的是需求工程的六類分法（誰付錢、誰操作、誰受損），那裡用的是權力／利益格局與行動者網絡理論。</strong> 前者用來盤點不遺漏，後者用來分析權力關係，兩張圖疊起來看最完整。</li>
+<li><strong>平行相關</strong>：<a href="M_PM_%E8%A7%92%E8%89%B2%E8%88%87%E7%94%A2%E5%93%81%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F.html">PM 角色與產品生命週期</a>——五種 PM 的完整版在那裡。</li>
+<li><strong>平行相關</strong>：<a href="M_%E4%BD%BF%E7%94%A8%E8%80%85%E7%A0%94%E7%A9%B6%E8%88%87_MRD_%E7%B5%84%E8%A3%9D.html">使用者研究與 MRD 組裝</a>、<a href="M_%E5%8F%97%E7%9C%BE%E7%90%86%E8%A7%A3%E8%88%87_Mom_Test.html">受眾理解與 Mom Test</a>——盤點出來的人，接著要怎麼訪談。</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%95%86%E6%A5%AD%E6%8C%87%E6%A8%99%E7%9A%84%E5%9B%9B%E5%80%8B%E8%B1%A1%E9%99%90.html">商業指標的四個象限</a>——每一類利害關係人看的是不同格的指標。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<h5>小組盤點</h5>
+<p>請各組挑一個你們共同熟悉的產品或服務，做完整盤點：</p>
+<ol>
+<li>六類各列出至少一個具體角色，寫職稱或身分，不要寫「使用者」</li>
+<li>圈出你們認為最重要的三個</li>
+<li>說出為什麼不是其他人——這一步比列清單重要</li>
+</ol>
+<h5>配對互評</h5>
+<p>請和另一組交換你們的地圖：</p>
+<ol>
+<li>指出對方哪一類填得最勉強</li>
+<li>幫對方補一個他們沒想到的角色，特別是破壞者那一格</li>
+</ol>
+<h5>寫下反思</h5>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為這個產品的使用者是＿＿＿，盤點完之後我發現真正握有否決權的是＿＿＿。</p>
+</blockquote>
+<h4>小作業</h4>
+<p>挑一個你每天在用、但不是你做的產品（校務系統、社群平台、外送 App 都可以），畫出它的六類利害關係人地圖，並寫 300 字說明：如果你是它的產品經理，你會先去訪談哪一類人、為什麼不是使用者。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:36</p>
+</div>
+</body>
+</html>

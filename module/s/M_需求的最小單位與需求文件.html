@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>需求的最小單位與需求文件</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>需求的最小單位與需求文件</h1></div><p>在這個 45 分鐘的實作中，我們要學習把一句模糊的「使用者說他想要⋯⋯」寫成一張可以被驗收的需求卡，而不是產出一份沒有人能照著做的需求文件。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>把一句需求<strong>寫成</strong>一張完整的需求卡，欄位不留空</td>
+<td>「希望系統反應快一點」——這句話工程師要怎麼知道做完了沒？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>分辨</strong>「描述」「理由」與「驗收標準」，說得出三者為什麼不能互相取代</td>
+<td>為什麼寫了滿滿三頁的需求文件，做出來還是不是客戶要的？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>一張需求卡能不能被驗收，並指出缺的是哪一欄</td>
+<td>同一句需求，<strong>加上「多快才算快」之後，估時可能差十倍</strong>——這個差距是誰的責任？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動</h4>
+<p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
+<blockquote>
+<p>我要練習寫需求。請扮演一個很難搞的客戶，針對這個產品提出五句模糊的需求：【貼上你的產品或服務】。每一句都要像真實客戶會說的話，例如「希望介面直覺一點」「東西要好找」。不要幫我寫得清楚，越模糊越好，也不要解釋。</p>
+</blockquote>
+<p>拿到五句之後追問一句：</p>
+<blockquote>
+<p>針對第一句，請告訴我一個工程師照著做，可能做出哪三種完全不同的東西？</p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要故意要它寫模糊</span><p>因為真實的需求本來就是這樣進來的。這一節要練的不是「聽懂客戶」，是把聽到的東西轉成一個做完之後可以判斷有沒有做到的敘述。那三種完全不同的做法，就是模糊需求的成本。</p></div>
+<hr />
+<h3>需求的最小單位</h3>
+<ul>
+<li>一則需求不是一句話，是<strong>一張有固定欄位的卡片</strong>——欄位固定，才不會每次漏掉不同的東西。</li>
+<li>這張卡出自 Robertson 夫婦的 Volere 需求方法，和上一節的利害關係人地圖是同一套。</li>
+<li>卡片的價值不在格式，在<strong>它逼你回答那些你原本會跳過的問題</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>填什麼</th>
+<th>不填會怎樣</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求編號</td>
+<td>唯一識別</td>
+<td>討論時對不上是哪一條</td>
+</tr>
+<tr>
+<td>需求類型</td>
+<td>功能性／非功能性（效能、資安、法遵…）</td>
+<td>非功能需求會被當成「有空再說」</td>
+</tr>
+<tr>
+<td>事件</td>
+<td>由哪個使用情境觸發</td>
+<td>不知道它什麼時候該發生</td>
+</tr>
+<tr>
+<td>描述</td>
+<td>要做什麼</td>
+<td>—</td>
+</tr>
+<tr>
+<td>理由</td>
+<td>為什麼要做</td>
+<td>砍需求時沒有判斷依據</td>
+</tr>
+<tr>
+<td>來源</td>
+<td>誰提的</td>
+<td>有疑問時找不到人問</td>
+</tr>
+<tr>
+<td><strong>驗收標準</strong></td>
+<td><strong>做到什麼程度算完成</strong></td>
+<td><strong>做完了沒有人能判斷</strong></td>
+</tr>
+<tr>
+<td>完成後客戶滿意度</td>
+<td>做到了對方多滿意</td>
+<td>排不出優先序</td>
+</tr>
+<tr>
+<td>做不到客戶不滿意度</td>
+<td>沒做到對方多不滿</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>優先級</td>
+<td>相對順序</td>
+<td>全部都最高＝沒有優先級</td>
+</tr>
+<tr>
+<td>衝突</td>
+<td>和哪一條需求互斥</td>
+<td>上線前才發現兩條打架</td>
+</tr>
+<tr>
+<td>支持文件</td>
+<td>佐證、來源資料</td>
+<td>爭議時無法回溯</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>改過幾次</td>
+<td>不知道大家在看同一版嗎</td>
+</tr>
+</tbody>
+</table>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 360" role="img" aria-label="需求卡的欄位" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<rect x="40" y="24" width="720" height="300" rx="6" fill="#ffffff" stroke="#b6cdea" stroke-width="1.5"/>
+<rect x="40" y="24" width="720" height="44" rx="6" fill="#dbe8fa" stroke="#b6cdea" stroke-width="1.5"/>
+<text x="60" y="52" text-anchor="start" font-size="13" fill="#22303f" font-weight="700">需求編號</text>
+<text x="300" y="52" text-anchor="start" font-size="13" fill="#22303f" font-weight="700">需求類型</text>
+<text x="540" y="52" text-anchor="start" font-size="13" fill="#22303f" font-weight="700">事件 / 使用情境</text>
+<rect x="40" y="72" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="94" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">描述</text>
+<text x="330" y="94" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">要做什麼</text>
+<rect x="40" y="107" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="129" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">理由</text>
+<text x="330" y="129" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">為什麼值得做——砍需求時照這欄砍</text>
+<rect x="40" y="142" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="164" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">來源</text>
+<text x="330" y="164" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">誰提的</text>
+<rect x="40" y="177" width="720" height="34" rx="0" fill="#fff3d6" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="199" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">驗收標準</text>
+<text x="330" y="199" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">做到什麼程度算完成（要可量）</text>
+<rect x="40" y="212" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="234" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">完成後客戶滿意度 ／ 做不到客戶不滿意度</text>
+<text x="330" y="234" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">分開問兩次，差距大的才是真高</text>
+<rect x="40" y="247" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="269" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">優先級 ／ 衝突</text>
+<text x="330" y="269" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">和哪一條互斥</text>
+<rect x="40" y="282" width="720" height="34" rx="0" fill="#fafcff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="60" y="304" text-anchor="start" font-size="12.5" fill="#22303f" font-weight="700">支持文件 ／ 版本</text>
+<text x="330" y="304" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">佐證與改版紀錄</text>
+<path d="M28 155 L28 175" stroke="#c9a227" stroke-width="0"/>
+<text x="400" y="344" text-anchor="middle" font-size="12.5" fill="#5b6b7c" font-weight="400">空著的每一欄，都是把判斷推遲到上線前的決定</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">黃色那一欄是整張卡的心臟：沒有它，做完了沒有人能判斷。</figcaption>
+</figure>
+
+<p><strong>滿意度那兩欄要一起看</strong>：一條需求「做到很滿意、做不到也還好」跟「做到還好、做不到會爆炸」，是完全不同的優先級。<strong>只問「重不重要」問不出這個差別，要分開問兩次。</strong></p>
+<blockquote>
+<p>需求卡不是表格控的形式主義。<strong>每一個空欄位，都是一次你把判斷推遲到上線前的決定。</strong></p>
+</blockquote>
+<hr />
+<h3>三個最常寫混的欄位</h3>
+<ul>
+<li><strong>描述、理由、驗收標準</strong>三者最常被寫成同一件事，而它們回答的是三個不同的問題。</li>
+<li>描述回答「要做什麼」，理由回答「為什麼值得做」，驗收標準回答「做完了沒」。</li>
+<li>缺理由的需求砍不掉，缺驗收標準的需求做不完。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>回答的問題</th>
+<th>壞例子</th>
+<th>好例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>描述</td>
+<td>要做什麼</td>
+<td>「系統要好用」</td>
+<td>「使用者可以在搜尋結果頁直接篩選日期區間」</td>
+</tr>
+<tr>
+<td>理由</td>
+<td>為什麼值得做</td>
+<td>「因為使用者想要」</td>
+<td>「客服統計顯示每月有 200 通詢問是在問怎麼找舊資料」</td>
+</tr>
+<tr>
+<td>驗收標準</td>
+<td>做到什麼程度算完成</td>
+<td>「反應要快」</td>
+<td>「在 3,000 筆資料下，篩選結果於 2 秒內顯示」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>驗收標準是整張卡的心臟。</strong> 沒有它，「反應快一點」可以是 0.5 秒也可以是 5 秒，估時差十倍，而且<strong>做完之後沒有人能說它做到了沒</strong>。爭議會發生在最貴的時候——上線前。</p>
+<div class="widget" id="req-check">
+<style>
+#req-check { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#req-check h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#req-check .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#req-check label { font-size: .88rem; color: #444; }
+#req-check input[type=text] { font: inherit; font-size: .88rem; padding: .3rem .5rem;
+       border: 1px solid #c9d4e4; border-radius: 6px; width: 14rem; }
+#req-check .row { margin: .45rem 0; }
+#req-check .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#req-check .warn { background: #fff3f5; border-color: #e6b8c4; }
+#req-check .ok { background: #eef7f1; border-color: #a8d4bd; }
+#req-check .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#req-check textarea { font: inherit; font-size: .9rem; width: 100%; box-sizing: border-box;
+       min-height: 3.4rem; padding: .5rem .6rem; border: 1px solid #c9d4e4; border-radius: 6px;
+       margin-bottom: .5rem; }
+#req-check .lbl { font-size: .85rem; font-weight: 700; color: #444; margin-top: .5rem; }
+</style>
+<h5>這張需求卡驗收得了嗎？</h5>
+<p class="lede">把你的描述與驗收標準貼進來。檢查器只做一件事：
+看驗收標準裡有沒有<b>可量的東西</b>——數字、單位、明確條件。</p>
+<div class="lbl">描述（要做什麼）</div>
+<textarea id="rq-desc" placeholder="例：使用者可以在搜尋結果頁直接篩選日期區間"></textarea>
+<div class="lbl">驗收標準（做到什麼程度算完成）</div>
+<textarea id="rq-fit" placeholder="例：在 3,000 筆資料下，篩選結果於 2 秒內顯示"></textarea>
+<div class="out" id="rq-out"></div>
+<p class="hint">形容詞不是驗收標準。「好用」「直覺」「快」都無法判斷做完了沒——差距會在上線前才爆開，那是最貴的時候。</p>
+<script>
+(function(){
+  var VAGUE=["好用","直覺","快","順暢","方便","美觀","友善","簡單","清楚","舒服","流暢","穩定"];
+  function render(){
+    var d=(document.getElementById("rq-desc").value||"").trim();
+    var f=(document.getElementById("rq-fit").value||"").trim();
+    var o=document.getElementById("rq-out");
+    if(!d&&!f){o.className="out";o.innerHTML="兩欄都填了才會檢查。";return;}
+    var hasNum=/[0-9０-９]/.test(f);
+    var hit=[];
+    for(var i=0;i<VAGUE.length;i++){if(f.indexOf(VAGUE[i])>-1){hit.push(VAGUE[i]);}}
+    var same=(d&&f&&(d===f));
+    var msgs=[];
+    if(!f){msgs.push("驗收標準是空的——這張卡做完之後沒有人能判斷做到了沒。");}
+    if(same){msgs.push("描述和驗收標準寫成同一句了。描述是<b>要做什麼</b>，驗收標準是<b>做到什麼程度</b>，兩個不同的問題。");}
+    if(f&&!hasNum){msgs.push("驗收標準裡沒有任何數字。不是每條都需要數字，但沒有數字時，至少要有一個明確的<b>狀態或條件</b>（例如「未登入時不顯示」）。");}
+    if(hit.length){msgs.push("驗收標準裡出現形容詞：<b>"+hit.join("、")+"</b>。把它換成一個可以判斷的條件——「快」要換成「幾秒內」。");}
+    if(msgs.length===0){
+      o.className="out ok";
+      o.innerHTML="這張卡驗收得了。<br>接著檢查另外兩欄：<b>理由</b>寫得出證據來源嗎？"+
+        "（砍需求時你是照理由欄砍的）<b>優先級</b>有分開回答「做到多滿意」與「做不到多不滿」嗎？";
+    }else{
+      o.className="out warn";
+      o.innerHTML=msgs.join("<br><br>");
+    }
+  }
+  document.getElementById("rq-desc").addEventListener("input",render);
+  document.getElementById("rq-fit").addEventListener("input",render);
+  render();
+})();
+</script>
+</div>
+
+<p><strong>理由欄還有一個用途：砍需求。</strong> 當時間不夠、必須砍掉一半需求時，你是照著理由欄砍的。理由欄寫「因為使用者想要」的那些，砍起來毫無痛感，也代表當初根本沒想清楚。</p>
+<blockquote>
+<p>描述讓人知道要做什麼，理由讓人敢砍它，驗收標準讓人知道做完了沒有。<strong>三欄回答三個問題，任何一欄空著，代價都會延到最貴的時候才付。</strong></p>
+</blockquote>
+<hr />
+<h3>需求文件由什麼組成</h3>
+<ul>
+<li>一份需求文件不是一篇長文，是<strong>四種東西疊起來</strong>：文件母版、最小需求單位、商業用例、需求清單。</li>
+<li>拆成這四層的用處是：<strong>每一層可以獨立修改，不必每次重寫整份文件。</strong></li>
+<li>大多數團隊的痛苦來自把四層混寫成一份 Word 檔。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>組成</th>
+<th>是什麼</th>
+<th>誰在用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求文件母版</td>
+<td>固定的章節骨架與欄位定義</td>
+<td>寫的人，確保每次結構一致</td>
+</tr>
+<tr>
+<td>最小需求單位</td>
+<td>上一段那張卡，一條需求一張</td>
+<td>開發與測試，一條一條做、一條一條驗</td>
+</tr>
+<tr>
+<td>商業用例</td>
+<td>一段完整的業務情境，串起多條需求</td>
+<td>業務方，確認流程是通的</td>
+</tr>
+<tr>
+<td>需求清單</td>
+<td>所有需求的索引與狀態</td>
+<td>專案管理，看進度與優先序</td>
+</tr>
+</tbody>
+</table>
+<p><strong>四層之間的關係</strong>：商業用例說明「一個使用者要完成什麼事」，它會拆出好幾張需求卡；需求清單是那些卡的目錄；母版保證每張卡長得一樣。<strong>上一節盤點出來的六類利害關係人，各自會提出不同的商業用例</strong>——這就是兩節課接起來的地方。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一節和你之後會遇到的 PRD 是什麼關係</span><p>需求卡與需求文件是需求工程的傳統做法，PRD 與 user story 是產品團隊常見的做法，兩者要處理的是同一件事：<strong>把模糊的想要，變成做得出來也驗得了的東西。</strong> 名稱與欄位不同，那個核心動作一樣。</p></div>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<p>我們可以從下列常見的想法，檢查自己的需求卡有沒有寫成廢卡：</p>
+<table>
+<thead>
+<tr>
+<th>常見想法</th>
+<th>為什麼太簡化</th>
+<th>怎麼檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「需求寫清楚就是寫詳細」</td>
+<td>寫三頁但沒有驗收標準，還是驗不了</td>
+<td>逐條問：做完之後誰、用什麼方法判斷做到了</td>
+</tr>
+<tr>
+<td>「驗收標準就是描述再講一次」</td>
+<td>描述是要做什麼，驗收標準是做到什麼程度</td>
+<td>驗收標準裡要有可量的東西（數字、條件、狀態）</td>
+</tr>
+<tr>
+<td>「理由欄是廢話」</td>
+<td>砍需求時你是照理由欄砍的</td>
+<td>理由寫得出證據來源的留下，寫「使用者想要」的重寫</td>
+</tr>
+<tr>
+<td>「優先級大家都填最高」</td>
+<td>全部最高等於沒有優先級</td>
+<td>用滿意度／不滿意度兩欄分開問，差距大的才是真高</td>
+</tr>
+<tr>
+<td>「非功能需求有空再處理」</td>
+<td>效能、資安、法遵是最貴的補救</td>
+<td>需求類型那一欄如果整份都是功能性，那是漏了不是沒有</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E5%9C%B0%E5%9C%96%E8%88%87%E4%BD%BF%E7%94%A8%E8%80%85%E9%A1%9E%E5%9E%8B.html">利害關係人地圖與使用者類型</a>——需求從哪裡來？從那六類人來，而且每一類提的需求型態不同。</li>
+<li><strong>平行相關</strong>：<a href="M_PRD_%E6%92%B0%E5%AF%AB%E8%88%87%E5%A3%93%E5%8A%9B%E6%B8%AC%E8%A9%A6.html">PRD 撰寫與壓力測試</a>——<strong>這裡是需求工程的需求卡，那裡是產品團隊的 PRD</strong>，處理同一件事的兩套做法。</li>
+<li><strong>平行相關</strong>：<a href="M_User_Story_%E8%88%87%E9%A9%97%E6%94%B6%E6%A2%9D%E4%BB%B6.html">User Story 與驗收條件</a>——user story 的驗收條件和這裡的驗收標準是同一個動作。</li>
+<li><strong>平行相關</strong>：<a href="M_%E4%BD%BF%E7%94%A8%E8%80%85%E7%A0%94%E7%A9%B6%E8%88%87_MRD_%E7%B5%84%E8%A3%9D.html">使用者研究與 MRD 組裝</a>——訪談到的東西要落成需求卡才進得了開發。</li>
+<li><strong>平行相關</strong>：<a href="M_MoSCoW_%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">MoSCoW 與優先級</a>——優先級那一欄的完整方法。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<h5>動手寫一張需求卡</h5>
+<p>請每個人挑一句自己課前跑出來的模糊需求，把它寫成一張需求卡：</p>
+<ol>
+<li>描述：要做什麼（不要用形容詞）</li>
+<li>理由：為什麼值得做，附一個證據來源</li>
+<li>來源：誰提的</li>
+<li>驗收標準：做到什麼程度算完成，要有可量的東西</li>
+<li>優先級：先分別回答「做到多滿意」與「做不到多不滿」，再決定</li>
+</ol>
+<h5>配對互評</h5>
+<p>請和隔壁的人交換需求卡：</p>
+<ol>
+<li>只評「這張卡能不能被驗收」，不評需求本身好不好</li>
+<li>指出哪一欄讓你判斷不了</li>
+<li>幫對方把驗收標準裡的形容詞換成一個條件</li>
+</ol>
+<h5>寫下反思</h5>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為把需求寫清楚是＿＿＿，現在我知道關鍵在＿＿＿。</p>
+</blockquote>
+<h4>小作業</h4>
+<p>挑一個你實際用過、覺得難用的產品功能，寫三張需求卡描述你希望它變成什麼樣子。三張都要有可驗收的標準，並各標出它服務的是六類利害關係人中的哪一類。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:36</p>
+</div>
+</body>
+</html>
