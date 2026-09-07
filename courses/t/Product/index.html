@@ -12,13 +12,13 @@
   <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
   <button id="go">進入</button>
   <p class="err" id="err"></p>
-  <p class="hint">此頁含教學說明與講稿，內容加密儲存，密碼正確才會解開。<br>
+  <p class="hint">此頁內容加密儲存，密碼正確才會解開。<br>
   找課程內容請走 <a href="../../s/Product/index.html">學生版</a>。</p>
 </div>
 <div id="content" class="container" hidden></div>
 <script>
 (function () {
-  var SALT = "x08ZgERkrFX85YkYyrS2UQ==", IV = "9RcSNX+HC6k9przc", CT = "tbnpJJqwPIWA16ZToFSPhB0XbPlxQ1yPVaR4RnMuPFevObbtR1GWgv9xhNydms35GVrk58IeA6L5SJ8PivZ+OswogLRmhu9BTfm0dQNW2Lf9zRBU5ERJ92NW2wLvGAAcVjTqjS3DxV9EkzAQnhu8/w5kQLl3yzz0rMGwP0lQG9ZF3Vv5JnRvRlW+6gamPl1etS+UBk8T1LtGSNsOATbqwZw63fzEjU/6cK46OFTNqlSKYVkzR5KpB/7HdUDs0XdB7EvEDCfEwsaG0Lt8OvpCa3gI3vuhOPEjCPI5rXxs4FYwUA+XSVys4Y2DJiqKsCzvqe3ZBjbv4UHRDc51OTG0/HPCfB4WsJHoa5dZcbyAjxRwJYB6ZlTiOu381F3tI77HGp2vSHfmEqgGhOS0tT2ol45xT3j64quaFRGnD1cF+NsfgCN5JJ7q98gKi45nXcaSoj78mp7W8snjc6bEkn96FMOXeAE/bKGX3Ra80tmFVkUNOCkheswUGagQnwBHR/wE1mG38jDKbh58/XIjpkzURyU6FrrXvCdh0msHgAch8tpORrkm5iaP379mJBGzUanWOkXb+l50Vdxc0GdArgZS490hLVGRK5EempuzIeT8glsVrceR1ZEVLzUeaId1HkxAOfmnFkxXcP2tWu/pfBbk71/swlJlcVpzEjeMGPhSvEpSJ1le9tBhHdRhOuh4Dph9rasYrbrYOTYbH+7KM4S0uKxpq/CiHqkxi3i3xngBP+QG8aY3eorwSSntKjhsw6G117YXUJRpVCUSy3r+nYWSImSWEnFHCXlBFT4GdfufpLal+JtdD453j1z2fpEdelUAc1uJm37BFCnKh7PzRCWESdx3AQ8mxoyEwwoYZNhfV9hclgBqEnz99dnBuSbBQAR9Ft8qoDcKHIz1/N+YciLhwxYQ/NY2SqqVE5V3JUynvCbKZw1U+Mp8dTXGv7iqkg==", ITER = 250000, KEY = "teach_site_pw";
+  var SALT = "ArG2FmOKBciERmrnK2kqEQ==", IV = "6RSG+rrCmBQP+Cf/", CT = "n2SR9xI/Dqm0rIftvNAg41NFUB7yk3//87VnUwDMxnuo3iUOjYj5HLA+cc/NFaGUtxoF0FmIE4NGPpOQdGi4ynbzV0s2gwn/tqgJis7F5SBpoZhGS5ORFooCoWl9I0rn8oHxVIcLdLO0lrXsm5tKA33sJnNE/CVZN7C0ZT+7zWmSzmg1dWmbJz5aOr+G9HCW8GiV2vocs9nXok5K517aRkBUrJQ4q7StxAcikMmKe/ZknU/u2kxk/eQPHKLWZVzNjI+7fQBLGvTZc0YrGbM7RwcCXOiawtAKttzwZE0GUxo2591NdELUwfr2TYbhDZ99AcSP5QIJvsLYtdRyuTp1w5thS7wcB37JK8FcEHqrevxwGQVCfWwVKWuGvn+dBk3HFIxFH7X17DG0XUHd/At7MdkK5UkVrE/Hk+6kzt2m0fU5xKuWJxctSDdtYgOlFHm9oOqAcVFqzw4p5ybhRz/v4TqK5n70P4lnx8/MSyCCv00sPXT1hQoEbF0U9YLJIimYuTpfj459NU2kuGJXeEH+ilv/n5tpJ3cLkLEq8mWFw4Cdv4PyuWdAZArokrZPZ1eMM3ulH3QM1PjDlyurYitKtIoxuJZ0YAEbl2tkeeJj0V/R1bZV1zW6a9si/nYtID5GI5jSm6Qy86O4b83bGhU88Wj5o+tnQHyrgSL/vxsGUXi6eB8eC4PQlVgwxXP7GCM074TMdLkEGZ0zdn43ynVnONEFxbcymnr8ub6LgCP5R0VRLuc0sTVZzpr8Nb9w6C0EWG97GcFEifzw+Z6Ndi1auKLuUuV6wjeDhlh4oQKWgNtY+xySIEKx8QbUJXxI8J4OEXb7gxq0kt9vQsAs868Qdvdu1ylNWXZ5qIVfKwJpZfuP0qmj7KnHfz6Rpu4Wvo1ZTQMZ9rX39asNwLvpCa9wmJIVL9YFELnsPBxaMwp8nzaILzHM8YKwtYsQYvRs8A==", ITER = 250000, KEY = "teach_site_pw";
   function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
     for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
   async function unlock(pw, quiet) {

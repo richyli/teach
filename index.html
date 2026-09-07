@@ -7,8 +7,57 @@
 <link rel="stylesheet" href="style.42eb1156.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>教學模組庫</h1><p class="sub">李怡志｜模組跨課共用：改一次，所有課程同步</p></div><div class="doors"><a class="door" href="module/s/index.html"><h2>Module — 教學模組庫</h2><p>所有單元的課程內容，一個單元一頁，跨課程共用；改一次，所有課同步。單元內容本身公開，這份總目錄需要密碼。</p><span class="tag">目錄需密碼</span></a><a class="door" href="courses/s/index.html"><h2>Courses — 課程</h2><p>各課程的課程簡介、每週進度與作業，依學期分開存放。</p><span class="tag">免密碼</span></a></div><h2>教師入口</h2><div class="doors"><a class="door" href="module/t/index.html"><h2>Module（教師版）</h2><p>完整教案：逐段講稿、時間分配、投影片與板書要點、活動造稿、案例庫、模組狀態。</p><span class="tag">需密碼</span></a><a class="door" href="courses/t/index.html"><h2>Courses（教師版）</h2><p>含課程設計說明、slot 配比、評量策略與模組狀態。</p><span class="tag">需密碼</span></a></div><p class="sitefoot">更新於 2026-09-07 14:07</p>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁內容加密儲存，密碼正確才會解開。</p>
 </div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "QPrl2VfBImnA+YGZwMRMOw==", IV = "bEs6TwbEQd3c4itf", CT = "nJB1Z24TvptlPSLRTj5sYLLnpVpKsus8YvX4E3C2V5xMILdzpha6nMIWtkDexMoseeXCI209qA8QyfNuKr2sdowUxWG0qfgfFdCbvLSv2aeakZFxRjEjrNl/bIDBmoU6c7m29E7GJPU94Sk63+7838RTSWnb6BWFGI+jHxqBT+GgbBR+SzxzXacN2QCMejrfN4w96JkUL2R4z6LTnhrgR9R07DgBEBdgtO7G8IE0ZKQt1GNNxoy4IAVBOuZQgEnKGKEhwJof3ckcroRL/3WMJRTQixnh8zXAAYJ7b4lnh62i+lEvUrQqdljTGA2Wbi55Nq9k4uShyvz4zh/SdIn6hfARY/CagZo0kH03jA/nKXsE9v/fbUhW46grLpLRLvpl9oWj1BDbgtuvpvJuhIO0nSPaJG3bLNhmPonlBW3OsFw6ss0O6UmwOKlcpV8TLjr2ZooXp7G7EidmYUPiyji+gkSfkEg0+LNjG2EoZci9cTZu6G5Y9WxbPpscUrfpBUlGIeE8VeM0wDzOrGyrs3ybk0ymHD6BV0VQ5G71LMD7JaFPwdP5TV7aTVtxs7tJxESVj4qLb/6p6ARMp6N2HeRJ4ZB/7iZVvpDDWJtAltW6hm7yQiTHqPGXqmh947zYsLMmnnfOMMe1IpHv6UPBrtPF2ZHrAkof/eRYtgQICzZpuDcPQ4+31W1c9ITjHswsW/HSkT+dUBSran+OIHO+md2ZU5IvUXqctOhYIGR08yevsF0Z7GMsggAqg09K1CKzgtHFSuzuFaZfZXFFOIuaACbA5F1ADek3PEoWF5fMVDak8+wc1qIMyhxcejS5ro0UB87/CQcc6P97coZz9G1AYYyvsHEA2DUIYfC+degoN7kAN1C1GHXxQSElGPbygbQkV1nwNojRFgBvMh6NXeyBO4qhSiMsbfHHx7bqJAXS6MnnL4thDyNjAjNvrqEiQHYJwkx+ZDyD7Vnm7QBsA8h8nzEdijpx/YmtBCMUpfD5JEIE3V8ZIHg9wl4qfVcBhrNIczY4wFijSaA5Us6Rc+08N3+AHmjxpOJ2r/LvuyNSldoC/dPR37L1FEPveWDuyUd5tNNvOitvKl9Ngna3+31oGmxbhm8O+Giu8QZl8z0J+OvV/lY76qV/aj2WuXj8afdqgL8y6uKKdl38+hUoXpqhrRVs+8ej85KD/vM2GsPGPs6gpahgHpU0VvWdECPYC1QVS+/jPDiB1Vw2aAZ5parN/dkKxbRHwpL/HTZgKjiyQ9r/MlfpyOz6Tn2xZ/Ltn4fuxe396beFisD+bAwbnqzuMJX7MPElPiDRkhiKmm6q6IDrvBhNii19OUkGYO2Eo/JoE6WatKBdVP5e+4+IzHcp3QIP0u+CzCiyOciZPHeCUIbLCxhr/WSwRkZDnwHyogupRVgPBSnj4rhNpB3zq2eGHgVvgKcq34n1uqEz12jYi5nZEWbYJ7eVeNB5nBohdIIVwHec2YFp+vMBGTQzMbWPy60UIxCoB+GDe9/yH1qZojzeEkRGMCdCATR+ensxQkb4BWMkREKtVW0v5HOfDMA=", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
 </body>
 </html>
