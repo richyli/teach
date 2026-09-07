@@ -11,7 +11,7 @@
 <div class="hero"><h1>Embedding 與向量相似度</h1></div><ul>
 <li><strong>一句話</strong>：<strong>Embedding = 把一段文字（或圖、音）變成一串數字（向量），意義相近的東西向量也相近。</strong> 算兩個向量「有多近」就能做語意搜尋、檢索、推薦。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>Embedding（嵌入）</strong>：把「意義」編碼成座標。"狗" 和 "犬" 的向量很近，"狗" 和 "稅務" 很遠——<strong>靠的是意義，不是字面</strong>。這就是 latent space 落地成可計算的形式（連回 <a href="M_Latent_Space_%E6%BD%9B%E5%9C%A8%E7%A9%BA%E9%96%93.html">Latent Space 潛在空間</a>）。</p>
 <p><strong>向量相似度</strong>：常用 <strong>cosine similarity（餘弦相似度）</strong>——看兩個向量「方向多接近」，1=幾乎同義，0=無關。<strong>「找相似」就是在向量空間找鄰居。</strong></p>
 <p><strong>為什麼這是 context engineering 的引擎</strong>：
@@ -21,7 +21,8 @@
 <blockquote>
 <p><strong>一個常見誤解</strong>：語意搜尋找的是「意思像」，不是「字一樣」——所以它能找到沒有共同關鍵字但講同一件事的文件，這正是它比關鍵字搜尋強的地方，也是它偶爾撈回「看似相關其實離題」的原因。</p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>一起想一題</strong>：公司知識庫要做「問答機器人」，為什麼不能只靠關鍵字比對、需要 embedding？舉一個關鍵字會漏掉的真實提問。</li>
 <li>
@@ -30,7 +31,8 @@
 <li>
 <p><strong>小作業</strong>：想一個你想做的「找相似 / 自動撈資料」應用，描述要 embed 什麼、用相似度撈什麼餵給 AI。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

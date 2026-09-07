@@ -16,7 +16,7 @@ MathJax = {
 <body>
 <div class="container">
 <div class="hero"><h1>需求的最小單位與需求文件</h1></div><p>在這個 45 分鐘的實作中，我們要學習把一句模糊的「使用者說他想要⋯⋯」寫成一張可以被驗收的需求卡，而不是產出一份沒有人能照著做的需求文件。</p>
-<h4>🎯 學習目標</h4>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -43,7 +43,8 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h4>🤖 課前 AI 互動</h4>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動</h4>
 <p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
 <blockquote>
 <p>我要練習寫需求。請扮演一個很難搞的客戶，針對這個產品提出五句模糊的需求：【貼上你的產品或服務】。每一句都要像真實客戶會說的話，例如「希望介面直覺一點」「東西要好找」。不要幫我寫得清楚，越模糊越好，也不要解釋。</p>
@@ -54,7 +55,8 @@ MathJax = {
 </blockquote>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要故意要它寫模糊</span><p>因為真實的需求本來就是這樣進來的。這一節要練的不是「聽懂客戶」，是把聽到的東西轉成一個做完之後可以判斷有沒有做到的敘述。那三種完全不同的做法，就是模糊需求的成本。</p></div>
 <hr />
-<h3>需求的最小單位</h3>
+</section>
+<section class="mod-sec sec-content"><h3>需求的最小單位</h3>
 <ul>
 <li>一則需求不是一句話，是<strong>一張有固定欄位的卡片</strong>——欄位固定，才不會每次漏掉不同的東西。</li>
 <li>這張卡出自 Robertson 夫婦的 Volere 需求方法，和上一節的利害關係人地圖是同一套。</li>
@@ -175,7 +177,8 @@ MathJax = {
 <p>需求卡不是表格控的形式主義。<strong>每一個空欄位，都是一次你把判斷推遲到上線前的決定。</strong></p>
 </blockquote>
 <hr />
-<h3>三個最常寫混的欄位</h3>
+</section>
+<section class="mod-sec sec-content"><h3>三個最常寫混的欄位</h3>
 <ul>
 <li><strong>描述、理由、驗收標準</strong>三者最常被寫成同一件事，而它們回答的是三個不同的問題。</li>
 <li>描述回答「要做什麼」，理由回答「為什麼值得做」，驗收標準回答「做完了沒」。</li>
@@ -280,7 +283,8 @@ MathJax = {
 <p>描述讓人知道要做什麼，理由讓人敢砍它，驗收標準讓人知道做完了沒有。<strong>三欄回答三個問題，任何一欄空著，代價都會延到最貴的時候才付。</strong></p>
 </blockquote>
 <hr />
-<h3>需求文件由什麼組成</h3>
+</section>
+<section class="mod-sec sec-content"><h3>需求文件由什麼組成</h3>
 <ul>
 <li>一份需求文件不是一篇長文，是<strong>四種東西疊起來</strong>：文件母版、最小需求單位、商業用例、需求清單。</li>
 <li>拆成這四層的用處是：<strong>每一層可以獨立修改，不必每次重寫整份文件。</strong></li>
@@ -320,7 +324,8 @@ MathJax = {
 <p><strong>四層之間的關係</strong>：商業用例說明「一個使用者要完成什麼事」，它會拆出好幾張需求卡；需求清單是那些卡的目錄；母版保證每張卡長得一樣。<strong>上一節盤點出來的六類利害關係人，各自會提出不同的商業用例</strong>——這就是兩節課接起來的地方。</p>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這一節和你之後會遇到的 PRD 是什麼關係</span><p>需求卡與需求文件是需求工程的傳統做法，PRD 與 user story 是產品團隊常見的做法，兩者要處理的是同一件事：<strong>把模糊的想要，變成做得出來也驗得了的東西。</strong> 名稱與欄位不同，那個核心動作一樣。</p></div>
 <hr />
-<h4>⚠️ 迷思攔截</h4>
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
 <p>我們可以從下列常見的想法，檢查自己的需求卡有沒有寫成廢卡：</p>
 <table>
 <thead>
@@ -359,7 +364,8 @@ MathJax = {
 </tbody>
 </table>
 <hr />
-<h3>先修與後續</h3>
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E5%9C%B0%E5%9C%96%E8%88%87%E4%BD%BF%E7%94%A8%E8%80%85%E9%A1%9E%E5%9E%8B.html">利害關係人地圖與使用者類型</a>——需求從哪裡來？從那六類人來，而且每一類提的需求型態不同。</li>
 <li><strong>平行相關</strong>：<a href="M_PRD_%E6%92%B0%E5%AF%AB%E8%88%87%E5%A3%93%E5%8A%9B%E6%B8%AC%E8%A9%A6.html">PRD 撰寫與壓力測試</a>——<strong>這裡是需求工程的需求卡，那裡是產品團隊的 PRD</strong>，處理同一件事的兩套做法。</li>
@@ -367,7 +373,8 @@ MathJax = {
 <li><strong>平行相關</strong>：<a href="M_%E4%BD%BF%E7%94%A8%E8%80%85%E7%A0%94%E7%A9%B6%E8%88%87_MRD_%E7%B5%84%E8%A3%9D.html">使用者研究與 MRD 組裝</a>——訪談到的東西要落成需求卡才進得了開發。</li>
 <li><strong>平行相關</strong>：<a href="M_MoSCoW_%E8%88%87%E5%84%AA%E5%85%88%E7%B4%9A.html">MoSCoW 與優先級</a>——優先級那一欄的完整方法。</li>
 </ul>
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <h5>動手寫一張需求卡</h5>
 <p>請每個人挑一句自己課前跑出來的模糊需求，把它寫成一張需求卡：</p>
 <ol>
@@ -389,8 +396,10 @@ MathJax = {
 <blockquote>
 <p>我原本以為把需求寫清楚是＿＿＿，現在我知道關鍵在＿＿＿。</p>
 </blockquote>
-<h4>小作業</h4>
-<p>挑一個你實際用過、覺得難用的產品功能，寫三張需求卡描述你希望它變成什麼樣子。三張都要有可驗收的標準，並各標出它服務的是六類利害關係人中的哪一類。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</section>
+<section class="mod-sec sec-homework"><h4>小作業</h4>
+<p>挑一個你實際用過、覺得難用的產品功能，寫三張需求卡描述你希望它變成什麼樣子。三張都要有可驗收的標準，並各標出它服務的是六類利害關係人中的哪一類。</p></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

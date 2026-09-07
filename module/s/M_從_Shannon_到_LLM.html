@@ -18,7 +18,7 @@ MathJax = {
 <div class="hero"><h1>從 Shannon 到 LLM</h1></div><p>1948 年的詞二階近似，跟 2026 年的 GPT，是同一條線上的東西。
 這一堂把中間那七十幾年補起來，並且交出三個主管真的用得到的詞：
 <strong>temperature、cross entropy、蒸餾</strong>。接在 <a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">語言的階數近似與馬可夫鏈</a> 之後。</p>
-<h4>🎯 學習目標</h4>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -45,7 +45,8 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
 <p>貼這段給你手上任何一個 AI：</p>
 <blockquote>
 <p>請用同一個開頭「Once upon a time, in a land far away, there lived a」續寫三次，每次一句就好。
@@ -55,7 +56,8 @@ MathJax = {
 <p><strong>帶著它的三次輸出來。</strong> 上課時我們會用工具把那個「為什麼不一樣」拆給你看——
 那不是它心情不同，是一個叫 temperature 的參數在動。</p>
 <hr />
-<h3>那條線：從手工抽字到 Transformer</h3>
+</section>
+<section class="mod-sec sec-content"><h3>那條線：從手工抽字到 Transformer</h3>
 <table>
 <thead>
 <tr>
@@ -116,7 +118,8 @@ MathJax = {
 <p>所以「AI 會不會取代記者」這個問題，可以先換成一個更精確的問法：
 <strong>哪些工作只需要「最可能」，哪些工作需要「真的發生過」？</strong></p></div>
 <hr />
-<h3>高熵、低熵，與 temperature 這個旋鈕</h3>
+</section>
+<section class="mod-sec sec-content"><h3>高熵、低熵，與 temperature 這個旋鈕</h3>
 <p>LLM 每一步都在輸出一個機率分布。分布的形狀決定了它的行為：</p>
 <table>
 <thead>
@@ -328,7 +331,8 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 <p>多數對話介面不讓你直接調這個參數，但 API 可以。如果你的團隊在串 API，
 這是你該問工程師的一題：<strong>「我們這個功能的 temperature 設多少？為什麼？」</strong></p></div>
 <hr />
-<h3>交叉熵：模型錯得多離譜，以及它的理論下限</h3>
+</section>
+<section class="mod-sec sec-content"><h3>交叉熵：模型錯得多離譜，以及它的理論下限</h3>
 <p>訓練 LLM 時要最小化的那個數字叫<strong>交叉熵（cross entropy）</strong>：
 <strong>模型給「正確答案」的機率越低，交叉熵越高。</strong></p>
 <ul>
@@ -344,7 +348,8 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 所以「模型再訓練久一點就不會出錯了」這句話是錯的：
 有一部分的不確定性，不管訓練多久都消不掉，因為它不在模型裡，在語言裡。</p>
 </blockquote>
-<h4>蒸餾：用熵來壓縮模型</h4>
+</section>
+<section class="mod-sec sec-content"><h4>蒸餾：用熵來壓縮模型</h4>
 <p><strong>知識蒸餾（knowledge distillation）</strong>是把大模型的能力搬到小模型上的技術：</p>
 <ul>
 <li>大模型（teacher）先學會複雜的機率分布</li>
@@ -358,7 +363,8 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 </ul>
 <p><strong>主管視角</strong>：當供應商說「我們的小模型效果接近大模型」，你要問的是——
 <strong>在什麼分布上接近？</strong> 在常見情況接近很容易，在長尾接近才是真本事，而媒體的工作充滿長尾。</p>
-<h4>⚠️ 迷思攔截</h4>
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
 <tr>
@@ -390,13 +396,15 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 </tr>
 </tbody>
 </table>
-<h3>先修與後續</h3>
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">語言的階數近似與馬可夫鏈</a>——沒有那條線，「LLM 是它的延伸」講不通</li>
 <li><strong>後續</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>（把這把尺用進日常決策）、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>（偏見從哪來）</li>
 <li><strong>平行相關</strong>：<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a>、<a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">Autoregressive 生成與取樣</a></li>
 </ul>
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>配對分享</strong>：各舉一個自己部門的工作，判斷它需要的是「最可能」還是「真的發生過」，
   並據此決定 temperature 該高該低。</li>
@@ -408,7 +416,8 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 <p><strong>小作業</strong>：把今天四個模組建立的詞（entropy、冗餘、階數、temperature、交叉熵）
   各寫一句「我會怎麼跟工程師用這個詞」，收進個人 AI 工具箱。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

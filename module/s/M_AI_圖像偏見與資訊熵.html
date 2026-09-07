@@ -13,7 +13,7 @@
 <li><strong>誰該聽</strong>：用 AI 生圖做內容、品牌、教學素材的人；要對「AI 視覺偏見」說得出所以然的主管。</li>
 </ul>
 <hr />
-<h3>把「偏見」翻譯成「分布變窄」</h3>
+<section class="mod-sec sec-content"><h3>把「偏見」翻譯成「分布變窄」</h3>
 <p>先做一個現場實驗：請大家各下一個 prompt——「a photo of a CEO」「a nurse」「a criminal」「a Taiwanese person」——看跑出來的人長什麼樣。</p>
 <p><strong>現實世界的真相</strong>：CEO 有各種性別、年齡、族裔；護理師也是。所以「CEO 的長相」這個分布，本該是<strong>高 entropy</strong>（很多種可能、相對均勻）。</p>
 <p><strong>AI 生圖實際給的</strong>：一面倒的中年白人男 CEO、清一色女性護理師、特定膚色的 criminal。模型把那個本該寬的分布，<strong>塌縮成一根尖峰</strong>——這就是<strong>低 entropy</strong>。</p>
@@ -22,20 +22,24 @@
 </blockquote>
 <p><strong>自我消化</strong>：如果你要一個「公正、無刻板印象」的 CEO 生圖系統，它輸出的性別／族裔分布，entropy 應該<strong>高</strong>還是<strong>低</strong>？（答：高——貼近真實世界的多樣性）</p>
 <hr />
-<h3>entropy 從哪裡被壓掉的？三道閘門</h3>
+</section>
+<section class="mod-sec sec-content"><h3>entropy 從哪裡被壓掉的？三道閘門</h3>
 <p>模型不是憑空變偏，是在三個地方把 entropy 一路砍窄。用 entropy 語言，每一道都看得很清楚。</p>
-<h4>閘門一：訓練資料本身就偏斜（先天 entropy 不足）</h4>
+</section>
+<section class="mod-sec sec-content"><h4>閘門一：訓練資料本身就偏斜（先天 entropy 不足）</h4>
 <p>模型學的是<strong>資料裡的共現頻率</strong>。如果網路圖庫裡「CEO」配的圖九成是西裝白人男，那「CEO → 長相」的條件分布，在資料端就已經是低 entropy 的尖峰了。</p>
 <ul>
 <li>entropy 語言：模型忠實地學到了一個<strong>被壓窄的分布</strong>。資料的 entropy 不足，模型不會自己長出多樣性。</li>
 <li>連回 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>：偏見的源頭是資料的代表性，不是模型「壞心」。</li>
 </ul>
-<h4>閘門二：模型放大偏斜（entropy 比資料還低）</h4>
+</section>
+<section class="mod-sec sec-content"><h4>閘門二：模型放大偏斜（entropy 比資料還低）</h4>
 <p>更糟的是，生成模型常<strong>比訓練資料更極端</strong>。資料裡 CEO 也許是 80% 男，模型生出來可能 95% 男——它學到「最可能 = 安全」，傾向往機率最高的那根尖峰收斂（mode collapse / 放大效應）。</p>
 <ul>
 <li>entropy 語言：<strong>輸出分布的 entropy 比訓練分布還低。</strong> 偏見在生成階段被進一步壓縮，不是只反映資料、是<strong>惡化</strong>了資料。</li>
 </ul>
-<h4>閘門三：取樣參數把多樣性關掉（人為調低 entropy）</h4>
+</section>
+<section class="mod-sec sec-content"><h4>閘門三：取樣參數把多樣性關掉（人為調低 entropy）</h4>
 <p>生圖／生文都有「溫度 temperature」之類的取樣旋鈕。<strong>溫度低 = 只取最可能的 = 輸出 entropy 低 = 更刻板</strong>；溫度高 = 容許低機率選項 = entropy 高 = 更多樣但也更不可控。</p>
 <ul>
 <li>很多預設值為了「穩定、好看」把溫度壓低 → 副作用就是<strong>把刻板印象鎖死</strong>。</li>
@@ -45,7 +49,8 @@
 <p><strong>三道閘門一句話</strong>：資料先天 entropy 不足 → 模型生成時又放大偏斜（entropy 更低）→ 取樣參數再把 entropy 關小。<strong>刻板印象是 entropy 被連砍三刀的結果。</strong></p>
 </blockquote>
 <hr />
-<h3>怎麼辦：把 entropy「該寬的地方還它寬」</h3>
+</section>
+<section class="mod-sec sec-content"><h3>怎麼辦：把 entropy「該寬的地方還它寬」</h3>
 <p>關鍵心法：<strong>不是所有 entropy 都要拉高，是「該多樣的維度」要還它應有的 entropy。</strong>（你要「紅色蘋果」時不該隨機變藍——那個維度本來就該低 entropy；但「CEO 的性別」這維度本該高。）</p>
 <p><strong>使用者 / 創作者能做的</strong>
 1. <strong>明確指定該寬的維度</strong>：prompt 直接寫出多樣性（"a CEO, diverse gender and ethnicity"），等於手動把那一維的 entropy 撐回來。
@@ -60,13 +65,15 @@
 <p><strong>這一堂收束成一句話</strong>：<strong>AI 圖像偏見 = 該高 entropy 的分布被系統性壓成低 entropy 尖峰。 資料、放大、取樣三道閘門各砍一刀；要修，就把「該寬的維度」的 entropy 還回去，但別動到「該精準的維度」。</strong></p>
 </blockquote>
 <hr />
-<h4>🔗 延伸案例</h4>
+</section>
+<section class="mod-sec sec-content"><h4>🔗 延伸案例</h4>
 <ul>
 <li><a href="../AI%20Creativity/Case%20-%20八仙的角色設計與%20AI%20的收斂.md">Case - 八仙的角色設計與 AI 的收斂</a>：把這一堂的「該寬的維度被壓窄」換成一個<strong>有文本正解</strong>的題目。八仙的多樣性是被設計出來的（庶民信仰要覆蓋各階層，所以每個人都要不一樣），因此「該有多寬」不是估計值而是已知值；同時補上這一堂沒有的<strong>文化維度</strong>（七福神的三個文明來源被壓成單一和風）與<strong>屬性配對</strong>（法器有沒有配對正確）。另附一條這一堂最需要的判準：<strong>照正典畫是還原，沒有正典時也照那個比例畫才是偏誤</strong>（兩組都只放一位女性，因此測得出來）。</li>
 <li>練習卡：<a href="../_exercises/E%20八仙還原率探針.md">E 八仙還原率探針</a>（八仙三路：指名中文／指名英文／不指名；七福神兩路：文化來源存活／正典外溢。60′ 或 90′）。</li>
 </ul>
 <hr />
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>現場數分布</strong>：兩人一組，各跑同一個容易出偏見的 prompt（CEO／工程師／看護／罪犯）10–20 張，數出性別／族裔比例，互報「這一維的 entropy 被壓得多窄」。</li>
 <li><strong>一起想一題</strong>：哪些維度<strong>該低 entropy</strong>（指定了就不該亂變）、哪些維度<strong>該高 entropy</strong>（不該被鎖死成刻板）？用一個你工作上的真實素材需求舉例。</li>
@@ -76,7 +83,8 @@
 <li>
 <p><strong>小作業</strong>：挑一個你會用 AI 生圖的真實情境，列出：(1) 哪些維度該精準（低 entropy）、哪些該多樣（高 entropy）；(2) 用什麼 prompt／參數把該寬的維度 entropy 撐回來；(3) 怎麼用「跑一批數比例」驗證它真的變寬了。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

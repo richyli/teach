@@ -16,7 +16,7 @@ MathJax = {
 <body>
 <div class="container">
 <div class="hero"><h1>COMPAS 再犯演算法個案</h1></div><p>接在第 1 週的 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a> 與本週 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a> 之後。上一節說「偏誤從訓練資料來」，這一節用一個真實案子把它演完：<strong>同一個系統，兩個族群的正確率一樣，錯誤卻落在完全相反的方向。</strong> 這一堂為 EMA 課綱第 2 週模組。</p>
-<h4>🎯 學習目標</h4>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -43,21 +43,24 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
 <p>貼這段給任何一個 AI：</p>
 <blockquote>
 <p>2016 年 ProPublica 報導美國 COMPAS 再犯風險演算法對黑人被告有偏見，開發商 Northpointe 反駁說系統是公平的。請說明雙方各自用了什麼「公平」的定義、各自的數據是什麼，以及為什麼兩邊可能同時成立。請標示哪些是有共識的事實、哪些仍有爭議。</p>
 </blockquote>
 <p><strong>它很可能會偏袒其中一方，或把「兩邊都對」講得太順。</strong> 把它最篤定的那一句圈起來帶來——上課會用真實數字檢驗那一句。</p>
 <hr />
-<h3>一、案子是什麼</h3>
+</section>
+<section class="mod-sec sec-content"><h3>一、案子是什麼</h3>
 <p>2016 年 5 月，ProPublica 發表《Machine Bias》系列，同時公開了一篇方法論說明文，交代資料怎麼來、每個數字怎麼算。</p>
 <p><strong>COMPAS</strong> 是美國法院用來預測被告再犯風險的商用演算法，由 Northpointe 開發，在保釋、量刑、假釋決定時被參考。系統本身是專有的，外界拿不到原始碼。</p>
 <p>ProPublica 的做法：以公開資訊請求取得佛州 Broward County 2013–2014 年 18,610 名被告的風險分數，比對到 2016 年 4 月的刑事紀錄，針對兩年追蹤期的 6,172 人做分析，並把資料與程式碼公開在 GitHub。</p>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>這個案子之所以成為所有 AI 倫理課的教材，是因為它同時滿足三個條件：<strong>高風險</strong>（決定一個人要不要被關）、<strong>不透明</strong>（商用系統，拿不到原始碼）、<strong>可稽核</strong>（風險分數與後續紀錄都是公開資訊，外部者查得到）。</p>
 <p>ProPublica 沒有破解演算法，他們做的是<strong>從輸出端反推</strong>：拿到每個人的分數，再去查這個人後來到底有沒有再犯，然後把兩者兜起來看。這個方法對記者特別重要——<strong>你幾乎永遠拿不到別人的模型，但你常常拿得到它的輸出與後果。</strong></p></div>
 <hr />
-<h3>二、讀數字：同樣的準確率，相反的錯誤</h3>
+</section>
+<section class="mod-sec sec-content"><h3>二、讀數字：同樣的準確率，相反的錯誤</h3>
 <p>先給整體正確率：<strong>白人被告 62.5%，黑人被告 62.3%。</strong> 幾乎一樣。</p>
 <p>再把 confusion matrix 依族群拆開：</p>
 <table>
@@ -703,7 +706,8 @@ MathJax = {
 </div>
 
 <hr />
-<h3>三、它預測的到底是什麼</h3>
+</section>
+<section class="mod-sec sec-content"><h3>三、它預測的到底是什麼</h3>
 <p>ProPublica 把再犯定義為：「評估之後發生的、有指紋建檔且含起訴立案的逮捕」，排除交通與地方性違規。</p>
 <p>這是資料上唯一可行的定義。但<strong>逮捕不等於犯罪</strong>：巡邏密度、攔查機率、起訴裁量在不同社區並不相同。當某些社區被更密集地執法，那裡的人「被逮捕」的機率就高於他們實際犯罪率所應對應的水準。</p>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜標籤決定了模型在學什麼</span><p>任何預測系統，實際預測的都是<strong>它的標籤</strong>，不是那個標籤想代表的東西。</p>
@@ -742,13 +746,15 @@ MathJax = {
 </table>
 <p>所以驗收一個 AI 系統時，除了問「準不準」，一定要問：<strong>這個標籤是誰決定的、怎麼產生的？</strong></p></div>
 <hr />
-<h3>四、分組攻防</h3>
+</section>
+<section class="mod-sec sec-content"><h3>四、分組攻防</h3>
 <p>分三組，各拿一個角色，準備兩分鐘，各講兩分鐘：</p>
 <p><strong>A 組｜ProPublica 的編輯</strong>：你要決定這則報導發不發。你手上有上面那些數字，也知道對方會用校準的定義反駁。你的標題要怎麼下才不會被說誇大？</p>
 <p><strong>B 組｜Northpointe 的公關主管</strong>：你要準備回應。你的數據是真的，但你也知道誤判率的落差是真的。你要怎麼說，才不會變成狡辯？</p>
 <p><strong>C 組｜佛州某地方法院的院長</strong>：兩邊都看完了。<strong>明天要不要繼續用這個系統？</strong> 停用會怎樣、繼續用又要加什麼條件？</p>
 <p><strong>規則</strong>：每組講完，另外兩組各問一題。禁止用「這要看情況」結尾——每組最後都要給一個明確的決定。</p>
-<h4>⚠️ 迷思攔截</h4>
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
 <tr>
@@ -780,7 +786,8 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h3>先修與後續</h3>
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>——沒有四格與 FPR／FNR 的概念，這一節的核心表格看不懂</li>
 <li><strong>先修</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>——本週前一個模組，講偏誤從訓練資料來</li>
@@ -788,7 +795,8 @@ MathJax = {
 <li><strong>後續</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%88%87%E6%A9%9F%E6%A7%8B%E5%80%AB%E7%90%86%E8%B2%AC%E4%BB%BB.html">AI 取代工作與機構倫理責任</a>——第 9 週的責任盤點會回頭引用本案</li>
 </ul>
 <p><strong>連結</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>｜<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>｜<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">AI 界線討論</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a></p>
-<h4>💬 討論／分享／反思（內建於分組攻防）</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思（內建於分組攻防）</h4>
 <ul>
 <li><strong>一起想一題</strong>：如果台灣有一個政府單位在用類似的評分系統，你的編輯台要拿到哪三份資料才查得下去？</li>
 <li>
@@ -798,18 +806,21 @@ MathJax = {
 <p><strong>小作業</strong>：挑一個你部門正在用或考慮用的自動判斷（推薦、審核、分類、評分），寫一頁：它實際預測的標籤是什麼、那個標籤怎麼產生、如果拆開來看不同群體，你猜哪一種錯誤會落在誰身上。</p>
 </li>
 </ul>
-<h3>資料來源</h3>
+</section>
+<section class="mod-sec sec-content"><h3>資料來源</h3>
 <ul>
 <li>ProPublica 方法論說明文（2016-05-23）：&lt;<a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm</a>&gt;</li>
 <li>完整筆記與數字：wiki <code>ProPublica如何檢驗COMPAS再犯演算法</code>、<code>準確率相同誤判卻落在不同族群</code>、<code>以逮捕紀錄當再犯的代理變項</code></li>
 <li>公平性判準衝突的形式化證明：Chouldechova (2017)；Kleinberg, Mullainathan &amp; Raghavan (2016)</li>
 </ul>
-<h3>延伸個案</h3>
+</section>
+<section class="mod-sec sec-content"><h3>延伸個案</h3>
 <ul>
 <li><a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a>：同樣是標籤問題，但錯在目標函數本身——通過公平性檢查仍有嚴重偏誤</li>
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">Case - 敗血症預測模型的宣稱與實測</a>：廠商宣稱 AUC 0.76–0.83，外部驗證 0.63；每八次警示一次是真的</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Case - Rite Aid 人臉辨識被禁用五年</a>：同一種偽陽性分布不均，但已進入監理處分階段</li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

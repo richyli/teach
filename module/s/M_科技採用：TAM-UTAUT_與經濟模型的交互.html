@@ -23,20 +23,23 @@ MathJax = {
 <p><strong>三層交互一句話</strong>：<strong>TAM/UTAUT 告訴你「為什麼一個人想用」，經濟模型告訴你「這些想法在市場裡會長成什麼形狀」。</strong> 一個是因，一個是果的演化。</p>
 </blockquote>
 <hr />
-<h3>微觀層：經濟模型是 TAM 的「上位翻譯」</h3>
+<section class="mod-sec sec-content"><h3>微觀層：經濟模型是 TAM 的「上位翻譯」</h3>
 <p>TAM 的核心是 $\text{BI} = f(\text{PU}, \text{PEOU})$——行為意圖由知覺有用性、易用性決定。但 <strong>TAM 從沒說「意圖怎麼變成實際選擇」</strong>。</p>
-<h4>McFadden 隨機效用正好接在 TAM 下游</h4>
+</section>
+<section class="mod-sec sec-content"><h4>McFadden 隨機效用正好接在 TAM 下游</h4>
 <p>把 PU、PEOU 當成效用函數的解釋變數：</p>
 $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsilon_{ij}$$
 <p>於是 TAM 的潛在構念變成 logit 模型裡<strong>可估計的係數</strong>，採用機率有了明確的機率形式 $P_{ij}=e^{V_{ij}}/\sum_k e^{V_{ik}}$。</p>
 <blockquote>
 <p><strong>教學張力</strong>：TAM 是心理測量（量表 → SEM），McFadden 是選擇行為（選項 → logit）。兩者可以是<strong>同一個效用函數的兩種觀測方式</strong>。conjoint 研究就站在這個接縫上——用選擇資料反推 TAM 式的構念權重。</p>
 </blockquote>
-<h4>Prospect Theory 修正 TAM 的隱含假設</h4>
+</section>
+<section class="mod-sec sec-content"><h4>Prospect Theory 修正 TAM 的隱含假設</h4>
 <p>TAM 假設使用者線性、理性評估有用性。換成<strong>價值函數 + 損失趨避</strong>後，能解釋 TAM 解釋不了的「現狀偏誤」——為何高 PU 的科技仍被舊系統的沉沒成本綁住。UTAUT 的「使用條件（Facilitating Conditions）」其實是這塊的粗糙代理。</p>
 <p><strong>自我消化</strong>：用一句話說，McFadden 補了 TAM 的哪個缺口？（答：把「意圖」這個態度變數，變成「選擇機率」這個可估、可加總的行為輸出。）</p>
 <hr />
-<h3>中觀層：經濟模型補上 UTAUT 缺的「他人」</h3>
+</section>
+<section class="mod-sec sec-content"><h3>中觀層：經濟模型補上 UTAUT 缺的「他人」</h3>
 <p>UTAUT 比 TAM 多了 <strong>Social Influence（社會影響）</strong>，但它只是一個橫斷面的態度變數——「我覺得重要的人認為我該用」。它<strong>沒有動態、沒有人數</strong>。這正是擴散與網路模型切入的地方。</p>
 <table>
 <thead>
@@ -74,11 +77,13 @@ $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsil
 </blockquote>
 <p><strong>自我消化</strong>：UTAUT 說「社會影響 → 採用意圖」。Bass 模型把同一件事改寫成什麼？（答：採用速度正比於已採用人數，社會影響不再是常數而是會隨時間放大的力量。）</p>
 <hr />
-<h3>宏觀層：把個人意圖加總成市場軌跡</h3>
+</section>
+<section class="mod-sec sec-content"><h3>宏觀層：把個人意圖加總成市場軌跡</h3>
 <p>TAM/UTAUT 預測<strong>一個人</strong>的採用機率；Bass、Romer、GPT 預測<strong>一個市場</strong>的採用曲線。兩者用「加總（aggregation）」連起來：</p>
 <p>個體 logit 機率 $P_i(t)$ → 對人群積分 → 總採用 $N(t)$ → 這就是 Bass 的 S 曲線。<strong>有微觀基礎（micro-foundation）的擴散模型，本質就是「把一堆 TAM 決策加起來」。</strong></p>
 <p>再往上，<strong>GPT 理論</strong>解釋為何 AI 這種通用技術即使個人 PU 很高，總體生產力仍延遲顯現（Solow 悖論）——因為要等互補投資、組織重構到位。這是 TAM 完全觸及不到的時間尺度。</p>
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>配對演練</strong>：挑一個科技（如 ChatGPT、行動支付），請你分別用「TAM 層（個人為何想用）」「network 層（為何臨界後爆發）」「GPT 層（為何生產力沒馬上跟上）」各講一句，體會三層接力。</li>
 <li><strong>一起想一題</strong>：UTAUT 的「社會影響」是個常數係數。若要讓它「會隨時間長大」，你會接上哪個經濟模型？為什麼？</li>
@@ -88,7 +93,8 @@ $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsil
 <li>
 <p><strong>小作業</strong>：找一份用 TAM/UTAUT 的論文，指出它「停在哪一層」（多半停在個人意圖），並寫下若要延伸到市場演化，你會接上這一堂哪一個經濟模型、補什麼假設。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

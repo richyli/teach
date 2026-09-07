@@ -18,7 +18,7 @@ MathJax = {
 <div class="hero"><h1>Entropy 與 Shannon 資訊理論</h1></div><ul>
 <li><strong>先修</strong>：無。只需要會「機率是 0 到 1 的數字」。</li>
 </ul>
-<h4>🎯 學習目標</h4>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了算數，是為了能回答你本來就好奇的事。</p>
 <table>
 <thead>
@@ -62,7 +62,8 @@ MathJax = {
 而 Weaver 也是數學家。<strong>你在傳播理論課本看到的那個框框圖，原本是電路圖。</strong></p>
 <p>這件事本身就值得記住：一個為了省電話線成本而發展出來的量尺，
 七十幾年後變成解釋 AI 為什麼會胡說八道的工具。</p></div>
-<h3>資訊就是「消除不確定性」（直覺）</h3>
+</section>
+<section class="mod-sec sec-content"><h3>資訊就是「消除不確定性」（直覺）</h3>
 <p><strong>先玩再說</strong>：世界盃足球賽 32 隊，你心裡選一隊當冠軍，我來猜。<strong>只能問是非題，每問一次算你一次代價。</strong></p>
 <div class="widget" id="wc-guess">
 <style>
@@ -383,17 +384,20 @@ MathJax = {
 老闆八百字的勉勵信講的全是你早就知道的事，資訊量趨近於零。</p>
 <p>量尺的單位是 <strong>bit</strong>：能把可能性砍成一半的消息，就是 1 bit。
 猜 1 到 100 的數字，每次問一個能砍一半的是非題，大約七題就會收斂。</p></div>
-<h3>Shannon 的 entropy 公式（量化）</h3>
+</section>
+<section class="mod-sec sec-content"><h3>Shannon 的 entropy 公式（量化）</h3>
 <p>Shannon（1948）把上面的直覺寫成一條公式。對一個有 $n$ 種可能結果、每種發生機率為 $p_i$ 的隨機事件，它的<strong>熵 entropy</strong>是：</p>
 $$H = -\sum_{i=1}^{n} p_i \log_2 p_i$$
 <p>讀法：把每個結果的「意外程度」$-\log_2 p_i$（機率越小、越意外、值越大），用它自己的機率 $p_i$ 加權平均。<strong>H 就是「平均每次結果帶來的資訊量（bits）」，也就是這個系統的平均不確定性。</strong></p>
-<h4>三個直覺要記住</h4>
+</section>
+<section class="mod-sec sec-content"><h4>三個直覺要記住</h4>
 <ol>
 <li><strong>越意外 → 資訊量越大</strong>：單一結果的資訊量 $-\log_2 p_i$。機率 $p=1$（一定發生）→ 資訊量 $0$（毫不意外）；機率越小 → 值越大。</li>
 <li><strong>越均勻 → entropy 越高</strong>：所有結果一樣可能時最不確定、H 最大。</li>
 <li><strong>越偏斜 → entropy 越低</strong>：某個結果幾乎必然發生時，幾乎沒有不確定性、H 接近 0。</li>
 </ol>
-<h4>算一遍：硬幣</h4>
+</section>
+<section class="mod-sec sec-content"><h4>算一遍：硬幣</h4>
 <ul>
 <li>
 <p><strong>公正硬幣</strong>（正反各 0.5）：
@@ -409,7 +413,8 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p><strong>雙面都正面</strong>（正面 1.0）：$H = 0$。結果早就知道，沒有任何資訊。</p>
 </li>
 </ul>
-<h4>再算兩個：骰子與世界盃</h4>
+</section>
+<section class="mod-sec sec-content"><h4>再算兩個：骰子與世界盃</h4>
 <ul>
 <li><strong>公正骰子</strong>（六面各 1/6）：$H = \log_2 6 \approx 2.58$ bits。比硬幣不確定，因為選項多了。</li>
 <li><strong>32 隊等可能</strong>：$H = \log_2 32 = 5$ bits。這就是開場那個遊戲的答案。</li>
@@ -858,7 +863,8 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p>結論只要記三句：<strong>分布越平均，entropy 越高；越偏斜，entropy 越低；
 只有一種結果時 entropy 是 0</strong>（沒有不確定性，也就沒有資訊可言）。
 上面那個互動工具就是在讓你把這三句話拉出來看。</p></div>
-<h4>⚠️ 常見迷思</h4>
+</section>
+<section class="mod-sec sec-content"><h4>⚠️ 常見迷思</h4>
 <p>學生算完硬幣後最容易卡在這三點，講授時主動點破：</p>
 <table>
 <thead>
@@ -887,7 +893,8 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 </tbody>
 </table>
 <hr />
-<h3>為什麼這跟「資料、壓縮、AI」有關（應用橋接）</h3>
+</section>
+<section class="mod-sec sec-content"><h3>為什麼這跟「資料、壓縮、AI」有關（應用橋接）</h3>
 <p>Shannon 的 entropy 不只是數學玩具，它定了三件現實世界的底線：</p>
 <ol>
 <li><strong>壓縮的極限</strong>：一段資料平均最少要用 $H$ 個 bits 才能無損表示。entropy 低（很有規律）→ 可以壓很小（zip 很有效）；entropy 高（很隨機）→ 壓不動。<strong>「壓不壓得動」直接反映「有多少真資訊」。</strong></li>
@@ -898,7 +905,8 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p><strong>這一堂收束成一句話</strong>：<strong>資訊 = 消除不確定性；entropy = 平均不確定性的量尺（單位 bit）。記住那條倒 U——越均勻越不確定，給的資訊越多。</strong></p>
 </blockquote>
 <hr />
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>配對演練</strong>：你在校園遇到一個政大學生，<strong>要如何問出他的科系？</strong> 政大約有 35 個學系，
   兩人一組互相猜，數一數幾題猜到。理想是 $\lceil\log_2 35\rceil = 6$ 題。
@@ -911,7 +919,8 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <li>
 <p><strong>小作業</strong>：找一個你工作上常做的「判斷／決策」，寫下：(1) 決策前有幾種可能結果、大致機率分布長怎樣；(2) 哪一筆資料最能「砍一半」、最值得先去查。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

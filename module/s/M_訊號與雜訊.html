@@ -11,7 +11,7 @@
 <div class="hero"><h1>訊號與雜訊</h1></div><ul>
 <li><strong>一句話</strong>：<strong>訊號（signal）= 你真正要的資訊；雜訊（noise）= 混進來的干擾。</strong> 塞給 AI 的 context 不是越多越好，是<strong>訊噪比越高越好</strong>。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>訊號 vs 雜訊</strong>：同一份資料裡，有用的部分是訊號，無關/誤導/重複的是雜訊。<strong>訊噪比（SNR）越高，越容易抓到真相。</strong> 加更多資料若加的是雜訊，反而把訊號淹掉。</p>
 <p><strong>為什麼這是 context engineering 的關鍵紀律</strong>：
 1. <strong>「塞滿 context」是反模式</strong>：把所有沾邊的資料一股腦丟給模型，訊號被雜訊稀釋，模型更難聚焦、甚至被無關內容帶偏（連回 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a>：無關 context 會把 entropy 加回去）。<strong>少而精 &gt; 多而雜。</strong>
@@ -21,7 +21,8 @@
 <p><strong>連回 <a href="M_%E6%B3%9B%E5%8C%96%E8%88%87%E9%81%8E%E6%93%AC%E5%90%88.html">泛化與過擬合</a></strong>：訓練時，把雜訊當訊號學進去就是過擬合。Context 也一樣——餵進雜訊，模型就根據雜訊作答。
 <strong>連回 <a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">Sampling Theory 抽樣理論</a></strong>：大數據不等於好數據；一堆低訊噪比的資料，不如一小份高訊噪比的。</p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>配對</strong>：各拿一份自己常餵給 AI 的長 context（報告/對話/資料），互相圈出「其實是雜訊、刪掉不影響任務」的部分，估一估能砍多少。</li>
 <li>
@@ -30,7 +31,8 @@
 <li>
 <p><strong>小作業</strong>：拿一份你會丟給 AI 的資料，做「訊噪比手術」：只留下對任務有直接幫助的，記錄砍掉多少、回答有沒有變好。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

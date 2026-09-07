@@ -18,7 +18,7 @@ MathJax = {
 <div class="hero"><h1>語言的階數近似與馬可夫鏈</h1></div><p>1948 年 Shannon 手工翻書抽字，做出了世界上第一個語言模型。
 這一堂把那個實驗跑一次給你看——<strong>你會看見 GPT 的祖先，而且它長得比你想像的簡單。</strong>
 接在 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a> 之後，接往 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a>。</p>
-<h4>🎯 學習目標</h4>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -45,7 +45,8 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
 <p>貼這段給任何一個 AI：</p>
 <blockquote>
 <p>請你模擬 Shannon 1948 年的英文近似實驗：分別產生零階、一階、二階、三階的假英文各一行，
@@ -55,7 +56,8 @@ MathJax = {
 <p><strong>它幾乎一定會作弊</strong>——因為它是高階模型，要它假裝成零階很難，它產出的「零階」通常還是有點像英文。
 把它的產出帶來，上課時跟工具現場算出來的比對。<strong>這個作弊本身就是本節的教材。</strong></p>
 <hr />
-<h3>六個階數：模型多看一點，就多像人話一點</h3>
+</section>
+<section class="mod-sec sec-content"><h3>六個階數：模型多看一點，就多像人話一點</h3>
 <p>Shannon 用<strong>馬可夫鏈</strong>建立不同層級的機率模型，來模擬英文的結構。</p>
 <div class="widget" id="ta-sim">
 <style>
@@ -374,7 +376,8 @@ MathJax = {
 這就是為什麼階數越高，熵越低。</p>
 <p>重點在於：<strong>這一整條線上沒有任何一步「理解了意思」。</strong> 它只是在算「接下來哪個字比較可能」。
 今天的 GPT 是這條線的延伸——看得更遠、算得更好，但做的還是同一件事。</p></div>
-<h4>馬可夫鏈：只看前一步的機率</h4>
+</section>
+<section class="mod-sec sec-content"><h4>馬可夫鏈：只看前一步的機率</h4>
 <p>上面二階近似的背後就是一個馬可夫鏈。舉個最小的例子，只有三個字母 A、B、C：</p>
 <ul>
 <li>目前是 A → 下一個是 B 的機率 80%、是 C 的機率 20%</li>
@@ -382,7 +385,8 @@ MathJax = {
 </ul>
 <p>畫成圖：<strong>狀態是節點，轉移機率是箭頭</strong>，而且從任一狀態射出的所有箭頭機率加起來必須是 1。
 「只看前一步」是馬可夫鏈的定義性質，也是它的限制——它記不住更早以前發生過什麼。</p>
-<h4>遍歷（ergodic）：長期來看，統計性質是穩定的</h4>
+</section>
+<section class="mod-sec sec-content"><h4>遍歷（ergodic）：長期來看，統計性質是穩定的</h4>
 <p>Shannon 假設訊息來源是<strong>遍歷的</strong>：觀察夠久，每一種符號組合都會照它的機率出現，
 而且長期的平均行為與機率模型描述的一致。</p>
 <ul>
@@ -395,7 +399,8 @@ MathJax = {
 那份資料的統計性質不能推廣到全體讀者。</strong> 這是所有「用自家數據訓練模型」的第一個陷阱。</p>
 </blockquote>
 <hr />
-<h3>熵是怎麼一路掉下來的</h3>
+</section>
+<section class="mod-sec sec-content"><h3>熵是怎麼一路掉下來的</h3>
 <table>
 <thead>
 <tr>
@@ -435,7 +440,8 @@ MathJax = {
 <li><strong>抗雜訊</strong>：那一半冗餘正是 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a> 講的保險——<strong>丟了一點也還原得回來。</strong></li>
 </ol>
 <hr />
-<h3>主管視角：流暢不等於正確</h3>
+</section>
+<section class="mod-sec sec-content"><h3>主管視角：流暢不等於正確</h3>
 <p>這條線一路走到今天，變成了 GPT。中間沒有任何一步引入「理解」。所以：</p>
 <p><strong>AI 寫出流暢的段落，證明的是它高階接龍做得好，不是它知道那件事是真的。</strong></p>
 <p>這句話有三個實務含意：</p>
@@ -448,7 +454,8 @@ MathJax = {
 </ol>
 <p><strong>該問工程師的一題</strong>：「這個模型的 context window 多大？」——那就是它的「階數」，
 它往回看得到多遠。看不到的東西，它就會用最可能的內容補上（連回 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>）。</p>
-<h4>⚠️ 迷思攔截</h4>
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
 <tr>
@@ -480,13 +487,15 @@ MathJax = {
 </tr>
 </tbody>
 </table>
-<h3>先修與後續</h3>
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>（熵的定義）、<a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a>（冗餘）</li>
 <li><strong>後續</strong>：<a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a>——這條線走到 Transformer 之後發生了什麼</li>
 <li><strong>平行相關</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a></li>
 </ul>
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>配對分享</strong>：各舉一次「AI 寫得很順但內容是錯的」的經驗，互相判斷錯的是哪一類
   （專有名詞／數字／引述／因果關係），並找出共同點。</li>
@@ -498,7 +507,8 @@ MathJax = {
 <p><strong>小作業</strong>：拿一段 AI 產出的文字，標出三處「它猜得最用力」的地方（專有名詞、數字、引述），
   各查證一次，記錄對錯。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

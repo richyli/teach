@@ -11,7 +11,7 @@
 <div class="hero"><h1>設計系統與元件化</h1></div><ul>
 <li><strong>為何 vibe coding 時代反而更該學</strong>：你一頁一頁叫 AI 生畫面時，<strong>它每次都會「重新發明」按鈕、顏色、間距</strong>——結果十個畫面長得像十個不同產品，按鈕一頁圓一頁方、藍色有五種。設計系統與元件化是「<strong>定義一次、到處重用</strong>」的紀律，讓 AI 生出來的東西一致、專業、好維護。這在「畫面生成超便宜」的時代，反而是品質的分水嶺。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>元件化（componentization）= 把介面拆成可重用的積木</strong>：按鈕、輸入框、卡片、導覽列各做成一個「元件」，<strong>定義一次、到處用</strong>。改一次元件，所有用到的地方一起更新（連回 <a href="M_ERD_%E8%B3%87%E6%96%99%E6%A8%A1%E5%9E%8B.html">ERD 資料模型</a> 的「同一事實只存一處」——這裡是「同一個按鈕只定義一處」）。</p>
 <p><strong>設計系統（design system）= 一整套「視覺與互動的共同規範」</strong>，通常含：
 - <strong>設計 token</strong>：顏色、字級、間距、圓角的標準值（主色就這一個藍、間距只用 4/8/16…）。<strong>不准每次隨手挑</strong>。
@@ -24,7 +24,8 @@
 <blockquote>
 <p><strong>vibe coding 接法</strong>：<strong>別讓 AI 每頁自由發揮。</strong> 開工前先和 AI 定一份輕量設計系統——主色、字級階、間距尺、幾個核心元件——<strong>然後每生一頁都要求它「沿用既有元件與 token，不要新造樣式」</strong>。或直接讓它套用現成 UI 框架（如某個元件庫），一致性免費拿到。<strong>一致性是規定出來的，不是 AI 自動會的。</strong></p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>一起想一題</strong>：你連續叫 AI 生了 8 個畫面，怎麼確保它們看起來像「同一個產品」而不是 8 個產品？（先定 token + 元件，每頁要求沿用）</li>
 <li>
@@ -33,7 +34,8 @@
 <li>
 <p><strong>小作業</strong>：替你的產品定一份最小設計系統（1 主色 + 3 字級 + 1 套間距 + 3 個核心元件），下次生畫面時要求 AI 全程沿用，比較一致性差多少。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

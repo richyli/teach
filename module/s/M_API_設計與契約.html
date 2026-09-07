@@ -11,7 +11,7 @@
 <div class="hero"><h1>API 設計與契約</h1></div><ul>
 <li><strong>為何 vibe coding 時代反而更該學</strong>：你做的東西幾乎都要「串別人的服務」（金流、地圖、AI 模型、登入），或讓「前端串自己的後端」。這些接點就是 <strong>API</strong>。AI 能幫你呼叫 API，但<strong>如果你不懂「契約」——誰要傳什麼、會回什麼、出錯回什麼——它接錯了你也看不出來</strong>。API 契約是讓兩邊（前後端、你和第三方、你和 AI）<strong>先講好規格再各做各的</strong>的技術。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>API = 一個服務對外開放的「點餐窗口」</strong>：你不必知道廚房怎麼運作，只要照菜單點、它就照規格回。<strong>契約（contract）= 那張菜單寫死的規格</strong>：有哪些端點、每個要傳什麼、會回什麼。</p>
 <p><strong>最該認得的觀念（以常見的 REST 為例）</strong>：
 - <strong>端點與動作</strong>：用網址 + HTTP 動詞表達「對什麼做什麼」——<code>GET /orders</code>（查訂單）、<code>POST /orders</code>（建訂單）、<code>DELETE /orders/123</code>（刪第 123 筆）。
@@ -22,7 +22,8 @@
 <blockquote>
 <p><strong>vibe coding 接法</strong>：(1) 串第三方前，先讀它的 API 文件，搞清楚契約（要金鑰嗎？回什麼格式？錯誤碼？）再叫 AI 寫串接；(2) 自己做前後端時，<strong>先請 AI 產一份 OpenAPI 契約並和你對齊</strong>，再讓它分別實作兩端。<strong>契約是兩邊之間的單一事實來源</strong>（連回 <a href="M_%E8%A6%8F%E6%A0%BC%E6%9B%B8%E8%88%87_Gherkin_%E8%A1%8C%E7%82%BA%E8%A6%8F%E6%A0%BC.html">規格書與 Gherkin 行為規格</a>）。</p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>一起想一題</strong>：你要串一個「寄 email」的第三方服務，動工前該先搞清楚契約的哪 4 件事？（要金鑰嗎？傳什麼欄位？成功/失敗怎麼回？有沒有次數限制？）</li>
 <li>
@@ -31,7 +32,8 @@
 <li>
 <p><strong>小作業</strong>：挑一個你想串的服務，列出它契約的關鍵欄位與錯誤碼；或請 AI 為你的小產品產一份 OpenAPI 契約，檢查端點與回應結構合不合理。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

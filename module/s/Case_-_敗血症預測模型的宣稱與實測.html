@@ -16,10 +16,11 @@ MathJax = {
 <body>
 <div class="container">
 <div class="hero"><h1>Case — 敗血症預測模型的宣稱與實測</h1></div><p><strong>一句話</strong>：一套內建於數百家醫院電子病歷、被廣泛採用的預測模型，廠商自稱 AUC 0.76–0.83，獨立團隊實測只有 0.63——而且每八次警示只有一次是真的。</p>
-<h3>案子</h3>
+<section class="mod-sec sec-content"><h3>案子</h3>
 <p>Epic Sepsis Model（ESM）由 Epic Systems 開發，內建在其電子病歷產品中，是美國部署規模最大的臨床預測模型之一。它即時計算住院病人的敗血症風險分數，超過門檻就對醫護發出警示。</p>
 <p>密西根大學醫療體系做了外部驗證：27,697 名病人、38,455 次住院，期間 2018 年 12 月至 2019 年 10 月，敗血症盛行率 6.6%。研究發表於《JAMA Internal Medicine》（Wong et al., 2021）。</p>
-<h3>數字</h3>
+</section>
+<section class="mod-sec sec-content"><h3>數字</h3>
 <table>
 <thead>
 <tr>
@@ -74,7 +75,8 @@ MathJax = {
 </ul>
 <p>而且有 60% 沒被警示的病人，本來就靠醫護自己的判斷及時用了藥——也就是說，這套系統在既有流程之外增加的價值，比想像中小得多。</p>
 <p>這個案子要記的不是「Epic 很糟」，是一個一般性的事實：<strong>廠商的驗證數字是在他們自己的資料上跑出來的。換一個機構、換一批病人，效能常常掉一大截。</strong> 你要問的是有沒有人在<strong>你的資料上</strong>驗過。</p></div>
-<h3>討論題</h3>
+</section>
+<section class="mod-sec sec-content"><h3>討論題</h3>
 <ol>
 <li><strong>AUC 0.63 跟 PPV 12%，哪一個數字比較能說服你的主管？</strong> 為什麼廠商的簡報上通常只有前者？</li>
 <li><strong>如果你是採購方，什麼條款可以保護你？</strong> 至少寫出三條（提示：試跑期、用誰的資料驗、達不到標準怎麼辦、誰負責持續監看）。</li>
@@ -82,7 +84,8 @@ MathJax = {
 <li><strong>換成媒體場景</strong>：如果有廠商賣你一套「自動查證輔助」或「自動下標」系統，宣稱準確率 90%，你要求他做什麼你才會相信？</li>
 <li><strong>最難的一題</strong>：那 33% 有被抓到的案例中，有多少是醫護本來就會發現的？如果扣掉那些，這套系統真正救到的人有多少？</li>
 </ol>
-<h3>移植到媒體的檢查清單</h3>
+</section>
+<section class="mod-sec sec-content"><h3>移植到媒體的檢查清單</h3>
 <p>要求供應商回答，並寫進合約：</p>
 <ol>
 <li>這個數字是在誰的資料上跑出來的？資料的組成與我們像嗎？</li>
@@ -93,11 +96,13 @@ MathJax = {
 <li>效能不如宣稱時，合約怎麼處理？</li>
 </ol>
 <p><strong>連結</strong>：<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">採購 vs 自建決策</a>｜<a href="M_%E5%B0%8E%E5%85%A5%E6%B1%BA%E7%AD%96%E8%A1%A8%E5%AF%A6%E4%BD%9C.html">導入決策表實作</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a></p>
-<h3>資料來源</h3>
+</section>
+<section class="mod-sec sec-content"><h3>資料來源</h3>
 <ul>
 <li>Wong, A., et al. (2021). External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients. <em>JAMA Internal Medicine</em>, 181(8), 1065–1070. &lt;<a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307">https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307</a>&gt;</li>
 <li>完整筆記：wiki <code>廠商宣稱的模型效能與外部驗證的落差</code></li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

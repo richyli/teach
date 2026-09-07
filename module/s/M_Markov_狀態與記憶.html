@@ -18,7 +18,7 @@ MathJax = {
 <div class="hero"><h1>Markov 狀態與記憶</h1></div><ul>
 <li><strong>一句話</strong>：<strong>Markov 性質 = 下一步只看當下狀態，不看更早的歷史。</strong> AI agent 的每一步要不要只看當下、要不要外掛記憶，是 looping/harness 設計的核心抉擇。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>狀態（state）</strong>：描述「現在情況」的那組資訊。<strong>Markov 假設</strong>：「未來只取決於現在，與如何走到現在無關」——下一步機率 $P(\text{下一狀態}\mid\text{當前狀態})$ 不需要更早的歷史。</p>
 <p><strong>LLM 的兩難</strong>：模型本身<strong>沒有跨對話的長期記憶</strong>，它「記得」的只有塞進 context window 的東西（連回 <a href="M_Token_%E8%88%87%E5%88%86%E8%A9%9E.html">Token 與分詞</a>）。所以：
 - <strong>純 Markov 式 agent</strong>：每一步只看「當前 context」就決定下一步。簡單、省 token，但<strong>會忘</strong>——上一輪辛苦消除的不確定性，下一輪可能又冒回來。
@@ -30,7 +30,8 @@ MathJax = {
 <blockquote>
 <p><strong>連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">Autoregressive 生成與取樣</a></strong>：autoregressive 是「把自己的輸出餵回自己」的短期 Markov 鏈；agent loop 把它放大成「把上一輪的結論餵回下一輪」。狀態設計好不好，決定 loop 會收斂還是鬼打牆。</p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>一起想一題</strong>：一個跑很多輪的 AI agent，做到第 8 輪忘了第 2 輪的關鍵決定，又重做一遍——問題出在「狀態」還是「記憶」？該怎麼補？</li>
 <li>
@@ -39,7 +40,8 @@ MathJax = {
 <li>
 <p><strong>小作業</strong>：設計一個你想交給 agent 的多步任務，列出每一輪「一定要記住、帶到下一輪」的 3 件事，其餘可丟。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

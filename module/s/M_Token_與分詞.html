@@ -11,7 +11,7 @@
 <div class="hero"><h1>Token 與分詞</h1></div><ul>
 <li><strong>一句話</strong>：LLM 不是一個字一個字讀，而是把文字切成 <strong>token</strong>（介於字與詞之間的碎片）。模型的「視野」「記憶」「帳單」全部以 token 計。</li>
 </ul>
-<h4>核心</h4>
+<section class="mod-sec sec-content"><h4>核心</h4>
 <p><strong>什麼是 token</strong>：一段文字被切成小塊。英文約「4 個字元 ≈ 1 token」「一個常見單字 ≈ 1 token」；中文常常<strong>一字一 token 甚至更碎</strong>。"unbelievable" 可能切成 <code>un + believ + able</code> 三塊。</p>
 <p>三個必須記住的後果：</p>
 <ol>
@@ -22,7 +22,8 @@
 <blockquote>
 <p><strong>連回 entropy／生成</strong>：模型每一步預測的是「下一個 <strong>token</strong>」的機率分布（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">Autoregressive 生成與取樣</a>），不是下一個「字」。理解 token 才理解它真正在預測什麼。</p>
 </blockquote>
-<h4>💬 互動</h4>
+</section>
+<section class="mod-sec sec-content"><h4>💬 互動</h4>
 <ul>
 <li><strong>配對</strong>：估一估——你常用的一份 prompt 大概幾百 token？一份 10 頁 PDF 塞得進 20 萬 token 的 context 嗎？（粗估：1 頁約 500 字 ≈ 700+ token）</li>
 <li>
@@ -31,7 +32,8 @@
 <li>
 <p><strong>小作業</strong>：把一段你常丟給 AI 的長 prompt，試著砍掉一半 token 又不掉資訊，記錄前後差別。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

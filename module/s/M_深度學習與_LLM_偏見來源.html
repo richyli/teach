@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>深度學習與 LLM 偏見來源</h1></div><h4>🎯 學習目標</h4>
+<div class="hero"><h1>深度學習與 LLM 偏見來源</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背神經網路結構，是為了搞懂 AI 為什麼會一本正經地胡說，以及它的偏見從哪來。</p>
 <table>
 <thead>
@@ -40,7 +40,8 @@
 <li><strong>誰該聽</strong>：要跟工程師談 AI 系統、要決定「哪些內容能交給 AI、哪些不能」、或自己天天用 ChatGPT／Claude 寫東西的媒體主管。</li>
 </ul>
 <hr />
-<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
 <p>上課前做一個兩步小實驗（ChatGPT／Claude／Gemini 皆可）：</p>
 <p><strong>第一步</strong>，貼給 AI：</p>
 <blockquote>
@@ -48,9 +49,11 @@
 </blockquote>
 <p><strong>第二步</strong>，實測它的失準邊界：問 AI 三個你這一行「<strong>最新的、最冷門的、最在地的</strong>」問題（例如上個月的法規變動、你們家鄉的地方新聞人物），看哪一題它開始胡說。</p>
 <p>把<strong>它胡說得最離譜的一題、以及你是怎麼識破的</strong>帶進課堂——這就是 15′b「偏見與失準從訓練資料來」的活教材。</p>
-<h3>LLM 是怎麼「學」的（不碰數學）</h3>
+</section>
+<section class="mod-sec sec-content"><h3>LLM 是怎麼「學」的（不碰數學）</h3>
 <p>開場先破一個最常見的誤會：<strong>LLM 不是一個會查資料的搜尋引擎，也不是一個裝滿事實的資料庫。</strong> 它是一個被訓練到「<strong>看前文、猜下一個字最可能是什麼</strong>」的機率機器。</p>
-<h4>一句話心智模型：它在預測下一個字，不是在查資料</h4>
+</section>
+<section class="mod-sec sec-content"><h4>一句話心智模型：它在預測下一個字，不是在查資料</h4>
 <p>把訓練想像成這樣：拿網路上海量的文字，反覆玩克漏字——「台灣的首都是 ___」，模型猜，猜錯就微調內部幾億個參數，下次猜準一點。重複幾兆次之後，它對「哪些字常接在哪些字後面」建立了極細緻的統計直覺。所以它能把「台北」接上去——<strong>不是因為它「知道」台北是首都，而是因為在它讀過的文字裡，這個位置幾乎都是「台北」。</strong></p>
 <table>
 <thead>
@@ -74,18 +77,22 @@
 </tr>
 </tbody>
 </table>
-<h4>表徵學習：它把「意思」壓成一堆數字</h4>
+</section>
+<section class="mod-sec sec-content"><h4>表徵學習：它把「意思」壓成一堆數字</h4>
 <p>模型內部沒有一本字典，而是把每個詞、每段話轉成一串數字（向量）——意思相近的東西，數字也靠近：「醫師」和「護理師」靠得近，「醫師」和「香蕉」離得遠。這叫<strong>表徵學習（representation learning）</strong>。神經網路就是一層層把這些數字做變換、抽取愈來愈抽象的模式。你不需要會這背後的數學，只要記住一件事：<strong>它學到的是「資料裡的關聯」，資料裡有什麼偏斜，它就忠實學進這些數字裡。</strong>（這條直接連到 15′ b 的偏見。）</p>
-<h4>它有一個「截止日」，且天生不會自己更新</h4>
+</section>
+<section class="mod-sec sec-content"><h4>它有一個「截止日」，且天生不會自己更新</h4>
 <p>模型是用<strong>某個時間點之前</strong>的資料訓練的，這個時間點叫<strong>訓練截止日（knowledge cutoff）</strong>。截止日之後發生的事——上週的判決、今早的新法規、剛改的公司政策——它<strong>一無所知</strong>，但被問到時往往不會說「我不知道」，而是<strong>用舊資料硬湊一個聽起來合理的答案</strong>。這就是為什麼問它「最新的」任何東西特別危險。</p>
 <p>補救的主流做法叫<strong>檢索增強（RAG，Retrieval-Augmented Generation）</strong>：在它回答前，先即時去「外接資料源」（你的資料庫、最新新聞、內部文件）撈出相關片段，塞進它的輸入裡，讓它<strong>照著新撈到的資料講</strong>，而不是靠記憶硬掰。RAG 的本質不是讓模型變聰明，是<strong>把它本來不確定的東西，先餵成確定的</strong>（這點在 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a> 用 entropy 講得更透）。</p>
 <blockquote>
 <p><strong>LLM 不是在查答案，是在猜「下一個最像的字」。它流暢，是因為它很會接話；不是因為它查證過。</strong></p>
 </blockquote>
 <hr />
-<h3>幻覺與偏見從哪來</h3>
+</section>
+<section class="mod-sec sec-content"><h3>幻覺與偏見從哪來</h3>
 <p>這一段把兩個最常被混為一談的問題拆開：<strong>幻覺</strong>（它編造不存在的事）和<strong>偏見</strong>（它系統性地偏向某一邊）。兩者來源不同，但都能用「資料分布」一句話講清楚。</p>
-<h4>幻覺：高不確定性下，它硬生成最像的字</h4>
+</section>
+<section class="mod-sec sec-content"><h4>幻覺：高不確定性下，它硬生成最像的字</h4>
 <p>當模型對「下一個字該是什麼」很<strong>沒把握</strong>時——例如你問一個它資料裡很少見、或截止日後才發生的事——它對各種答案的機率分布是<strong>很平的</strong>（一堆似是而非的選項機率差不多）。用上一系列模組的話講，這是<strong>高 entropy 的分布</strong>（見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>、<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>）。但模型<strong>還是得吐一個字出來</strong>，於是它從這團模糊裡抽一個「最像對的」——結果就是<strong>一本正經地編造</strong>：捏造的論文、不存在的引文、查無此人的法條。</p>
 <p>關鍵在於：<strong>它編造時的語氣，跟它講真話時一模一樣自信。</strong> 模型沒有一個「我其實在亂猜」的警示燈。所以幻覺最毒的地方不是它會錯，而是<strong>它錯得很流暢、很有説服力</strong>。</p>
 <table>
@@ -119,10 +126,12 @@
 </tr>
 </tbody>
 </table>
-<h4>偏見：訓練資料的偏斜被忠實複製</h4>
+</section>
+<section class="mod-sec sec-content"><h4>偏見：訓練資料的偏斜被忠實複製</h4>
 <p>偏見不是模型「學壞了」或「有惡意」，而是更冷酷的事實：<strong>它把資料裡早就存在的偏斜，原封不動學了起來。</strong> 如果網路文字裡「護理師」後面接「她」遠多於「他」、「CEO」後面接「他」遠多於「她」，模型就學到這個近乎必然的關聯——於是它寫護理師預設女性、寫 CEO 預設男性。這跟 AI 生圖裡護理師清一色女性、CEO 清一色中年男性，是<strong>同一個機制的文字版</strong>（詳見 <a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>）。</p>
 <p>更系統地說：模型學到的是<strong>資料的分布</strong>。資料怎麼偏，輸出就怎麼偏；甚至常常<strong>比資料更極端</strong>（它傾向往機率最高那邊收斂）。這就是為什麼「資料偏誤」是 AI 偏見的真正源頭（<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>）——<strong>問題在進料端，不在模型的品德。</strong></p>
-<h4>在新聞／媒體這一行，它最可能失準的三個地方</h4>
+</section>
+<section class="mod-sec sec-content"><h4>在新聞／媒體這一行，它最可能失準的三個地方</h4>
 <ul>
 <li><strong>最新法規與時事</strong>：截止日後的修法、判決、人事，它要嘛不知道、要嘛拿舊版硬講。<strong>凡是「最新」都要當它在猜。</strong></li>
 <li><strong>冷門的在地題目</strong>：地方議題、小眾產業、台灣特有脈絡，在它的訓練資料裡樣本稀少 → 高 entropy → 容易編。問「某偏鄉小鎮的歷史」比問「美國總統」危險得多。</li>
@@ -132,7 +141,8 @@
 <p><strong>偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。幻覺也不是它說謊，是它在不確定時，仍被迫吐出一個最像的字。</strong></p>
 </blockquote>
 <hr />
-<h3>主管視角：該問工程師什麼</h3>
+</section>
+<section class="mod-sec sec-content"><h3>主管視角：該問工程師什麼</h3>
 <p>你不需要會寫模型，但你要會<strong>問對問題</strong>，才不會被「我們上了 AI」這句話唬住。把上面兩段濃縮成三個你一定要問的問題。</p>
 <p><strong>該問工程師／廠商的三題</strong></p>
 <ol>
@@ -152,7 +162,8 @@
 <p><strong>主管的工作不是會用 AI，是會問「它怎麼知道」「它何時不知道」——並要求一個能驗證的答案，而不是一句很流暢的保證。</strong></p>
 </blockquote>
 <hr />
-<h4>🧯 迷思攔截</h4>
+</section>
+<section class="mod-sec sec-myths"><h4>🧯 迷思攔截</h4>
 <p>媒體主管最常帶著這三個直覺進教室，講授時逐一攔下：</p>
 <table>
 <thead>
@@ -186,7 +197,8 @@
 </tbody>
 </table>
 <hr />
-<h4>🔗 連結 / 關係</h4>
+</section>
+<section class="mod-sec sec-links"><h4>🔗 連結 / 關係</h4>
 <ul>
 <li><strong>同源偏見模組</strong>：<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>（生圖版，同一套「資料偏斜被複製」邏輯，用 entropy 把偏見定義成「分布變窄」）。</li>
 <li><strong>偏見的根</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>（為什麼問題出在進料端的資料代表性）。</li>
@@ -200,7 +212,8 @@
 <p><strong>這一堂收束成一句話</strong>：<strong>LLM 是一台很會接話、停在截止日、不會說「我不知道」的機率機器。幻覺＝不確定下硬猜，偏見＝忠實複製資料的偏斜。主管要做的，是問「資料哪來、多新、偏見怎麼測」，並用探針題親自驗證它在你這一行會不會胡說。</strong></p>
 </blockquote>
 <hr />
-<h4>💬 討論／分享／反思</h4>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>領域配對</strong>：同領域兩人一組，各舉一個「AI 在我們這行最可能講錯/有偏見」的例子，互相挑戰是不是真的偏見、還是只是過時。</li>
 <li><strong>一起想一題</strong>：「如果 AI 的訓練資料裡你的族群/觀點被低估，會怎麼影響你的工作？」收斂 2 個具體後果。</li>
@@ -211,11 +224,13 @@
 <p><strong>小作業</strong>：設計三個「測 LLM 在你領域會不會胡說」的提問，記錄結果並標出哪題它最容易出錯。</p>
 </li>
 </ul>
-<h3>延伸個案</h3>
+</section>
+<section class="mod-sec sec-content"><h3>延伸個案</h3>
 <ul>
 <li><a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a>：偏誤來自標籤選擇，不是訓練資料或模型架構</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Case - Rite Aid 人臉辨識被禁用五年</a>：偽陽性在不同社區分布不均的實際後果</li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:37</p>
+</ul></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 13:49</p>
 </div>
 </body>
 </html>

@@ -166,8 +166,16 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
   }
   .content { padding: 1.5rem 1.2rem 4rem; }
 }
+/* ============================================================
+   教學站樣式表（richyli/teach）
+   build_course_site.py 會把本檔接在 publish_wiki 的基礎排版之後，
+   輸出成站台的 style.css。
 
-/* site additions */
+   要改外觀，只要改這個檔，不必動 Python。
+   模組正文的每一個區塊都有自己的 class（見最下方「模組區塊」）。
+   ============================================================ */
+
+/* ── 站台元件 ── */
 .hero { border-bottom: 1px solid #e3e3e3; margin-bottom: 1.6rem; padding-bottom: 1rem; }
 .hero h1 { margin-bottom: .2rem; }
 .hero .sub { color: #666; font-size: .95rem; }
@@ -188,18 +196,6 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 .modtable { width: 100%; border-collapse: collapse; font-size: .92rem; }
 .modtable th, .modtable td { border-bottom: 1px solid #eee; padding: .4rem .5rem; text-align: left; }
 .sitefoot { margin-top: 2rem; color: #999; font-size: .8rem; }
-/* 段落節奏（O17）：一段一屏，看起來像投影片。
-   來源的 `##` 在站上會降一級成 <h3>，所以選擇器打 h3。
-   :has() 限定在 3 條以內的清單——只有「講點」會被放大，段落本身的長清單不受影響。 */
-hr { border: 0; border-top: 1px solid #e6e6e6; margin: 2.8rem 0 2.2rem; }
-h3 { margin-top: 2rem; }
-h3 + ul:not(:has(> li:nth-child(4))) {
-    list-style: none; margin: .9rem 0 1.5rem; padding: .8rem 1.1rem .8rem 1.2rem;
-    border-left: 3px solid #0055cc; background: #f7faff; border-radius: 0 6px 6px 0; }
-h3 + ul:not(:has(> li:nth-child(4))) > li {
-    margin: .35rem 0; font-size: 1.02rem; line-height: 1.8; font-weight: 600; color: #22303f; }
-h3 + ul:not(:has(> li:nth-child(4))) > li::before {
-    content: "▪"; color: #0055cc; margin-right: .55rem; }
 .doors { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 1.6rem 0; }
 .door { flex: 1 1 260px; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.3rem 1.4rem;
         background: #fcfcfc; text-decoration: none; color: inherit; display: block; }
@@ -207,6 +203,8 @@ h3 + ul:not(:has(> li:nth-child(4))) > li::before {
 .door h2 { margin: 0 0 .4rem; font-size: 1.12rem; }
 .door p { margin: 0; color: #666; font-size: .9rem; line-height: 1.6; }
 .door .tag { display: inline-block; margin-top: .8rem; font-size: .78rem; color: #888; }
+
+/* ── callout（學生／教師分層）── */
 .callout { border-radius: 0 8px 8px 0; padding: .7rem 1rem; margin: 1.1rem 0;
             border-left: 3px solid #ccc; background: #f7f7f7; }
 .callout .co-title { display: block; font-size: .72rem; letter-spacing: .08em;
@@ -219,10 +217,114 @@ h3 + ul:not(:has(> li:nth-child(4))) > li::before {
 .callout-teacher { background: #fffaf0; border-left-color: #e6c964; color: #55483a; }
 .callout-teacher .co-title { color: #9a7a12; }
 .callout-note { background: #f6f6f6; border-left-color: #d0d0d0; }
+
+/* ── 教師版密碼閘 ── */
 #gate { max-width: 26rem; margin: 5rem auto; text-align: center; }
 #gate input { padding: .5rem .8rem; font-size: 1.05rem; border: 1px solid #ccc;
               border-radius: 6px; width: 9rem; text-align: center; letter-spacing: .2em; }
 #gate button { padding: .5rem 1.3rem; font-size: 1rem; background: #0055cc; color: #fff;
                border: none; border-radius: 6px; cursor: pointer; margin-left: .4rem; }
-#gate .err { color: #c00; font-size: .85rem; margin-top: .8rem; min-height: 1.2em; }
-#gate .hint { color: #999; font-size: .82rem; margin-top: 1.4rem; }
+
+/* ============================================================
+   模組區塊
+   每個區塊由 build_course_site.py 依標題文字包成
+   <section class="mod-sec sec-xxx">，改型式只改這一段。
+   ============================================================ */
+
+.mod-sec { margin: 0 0 1.5rem; }
+.mod-sec > h3:first-child,
+.mod-sec > h4:first-child { margin-top: 0; }
+
+/* 區塊已經把段落分開了，來源的 --- 分隔線不再需要。
+   想把分隔線找回來，把下面這一行刪掉即可。 */
+.mod-sec hr { display: none; }
+
+/* 段落講點（O17）：標題正下方 2–3 條，放大成可直接投影的樣子。
+   :has() 限定 3 條以內，段落本身的長清單不受影響。 */
+.mod-sec h3 + ul:not(:has(> li:nth-child(4))),
+.mod-sec h4 + ul:not(:has(> li:nth-child(4))) {
+    list-style: none; margin: .9rem 0 1.5rem; padding: .8rem 1.1rem .8rem 1.2rem;
+    border-left: 3px solid #0055cc; background: #f7faff; border-radius: 0 6px 6px 0; }
+.mod-sec h3 + ul:not(:has(> li:nth-child(4))) > li,
+.mod-sec h4 + ul:not(:has(> li:nth-child(4))) > li {
+    margin: .35rem 0; font-size: 1.02rem; line-height: 1.8; font-weight: 600; color: #22303f; }
+.mod-sec h3 + ul:not(:has(> li:nth-child(4))) > li::before,
+.mod-sec h4 + ul:not(:has(> li:nth-child(4))) > li::before {
+    content: "▪"; color: #0055cc; margin-right: .55rem; }
+
+/* 段落收束金句：內容主段裡獨立的引言 */
+.sec-content > blockquote {
+    border-left: 3px solid #b6cdea; background: #f9fbfe; margin: 1.4rem 0;
+    padding: .8rem 1.1rem; color: #22303f; font-size: 1.02rem; line-height: 1.9; }
+
+/* ── 學習目標 ── */
+.sec-objectives { background: #fbfcfe; border: 1px solid #e3e9f2; border-radius: 10px;
+                  padding: 1rem 1.2rem .6rem; }
+.sec-objectives table { font-size: .92rem; }
+
+/* ── 課前 AI 互動 ── */
+.sec-ai { background: #fbf9ff; border: 1px solid #e3ddf2; border-radius: 10px;
+          padding: 1rem 1.2rem .6rem; }
+.sec-ai blockquote { background: #ffffff; border-left: 3px solid #8a7bc8;
+                     padding: .8rem 1rem; margin: .8rem 0; font-size: .94rem;
+                     line-height: 1.9; color: #3a3350; }
+
+/* ── 內容主段 ── */
+.sec-content { padding: 0; }
+
+/* ── 迷思攔截 ── */
+.sec-myths { background: #fffaf6; border: 1px solid #f0dcc8; border-radius: 10px;
+             padding: 1rem 1.2rem .6rem; }
+.sec-myths table { font-size: .9rem; }
+
+/* ── 連結／關係、先修與後續 ── */
+.sec-links, .sec-prereq { background: #fafafa; border: 1px solid #ececec;
+                          border-radius: 10px; padding: .9rem 1.2rem .5rem;
+                          font-size: .92rem; }
+
+/* ── 小作業 ── */
+.sec-homework { background: #fffdf2; border: 1px solid #ece0b0; border-left: 4px solid #d8b93c;
+                border-radius: 8px; padding: .9rem 1.2rem .7rem; }
+
+/* ============================================================
+   討論／分享／反思 — 與前面明顯區隔
+   ============================================================ */
+
+.sec-discussion {
+    margin-top: 3.2rem;
+    padding: 1.2rem 1.6rem 1.4rem;
+    background: #f2f8f4;
+    border: 1px solid #cbe0d3;
+    border-top: 4px solid #2e7d55;
+    border-radius: 12px;
+}
+/* 上方再壓一條分隔，讓它從內文明顯斷開 */
+.sec-discussion::before {
+    content: "課堂活動";
+    display: inline-block;
+    margin-bottom: .5rem;
+    padding: .2rem .8rem;
+    background: #2e7d55;
+    color: #fff;
+    font-size: .74rem;
+    letter-spacing: .1em;
+    border-radius: 999px;
+}
+.sec-discussion > h4 { margin: .2rem 0 1rem; color: #1f5c3e; font-size: 1.1rem; }
+/* 每個活動一張卡 */
+.sec-discussion > h5 {
+    margin: 1.3rem 0 .5rem;
+    padding: .45rem .9rem;
+    background: #ffffff;
+    border: 1px solid #cbe0d3;
+    border-left: 4px solid #2e7d55;
+    border-radius: 0 6px 6px 0;
+    font-size: 1rem;
+    color: #1f5c3e;
+}
+.sec-discussion ol { padding-left: 1.4rem; }
+.sec-discussion ol li { margin: .35rem 0; }
+.sec-discussion blockquote {
+    background: #ffffff; border-left: 3px solid #7fb79a; margin: .7rem 0;
+    padding: .7rem 1rem; color: #2b4a3a; }
+.sec-discussion p { margin: .5rem 0; }
