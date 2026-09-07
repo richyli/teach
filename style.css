@@ -226,6 +226,35 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
                border: none; border-radius: 6px; cursor: pointer; margin-left: .4rem; }
 
 /* ============================================================
+   圖片與寬度保護
+   來源圖是原始像素（例如 1551×1580），沒有這一段就會撐破版面。
+   ============================================================ */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.4rem auto .4rem;
+}
+
+/* markdown 的 ![alt](path) 後面那行斜體，就是圖說 */
+p > img + em {
+    display: block;
+    text-align: center;
+    color: #777;
+    font-size: .82rem;
+    font-style: normal;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+/* widget 的內嵌 SVG 已自帶 max-width，這裡再保一層 */
+svg { max-width: 100%; height: auto; }
+
+/* 程式碼區塊過寬時自己捲，不要推寬頁面 */
+pre { max-width: 100%; overflow-x: auto; }
+
+/* ============================================================
    模組區塊
    每個區塊由 build_course_site.py 依標題文字包成
    <section class="mod-sec sec-xxx">，改型式只改這一段。
