@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M 深度學習與 LLM 偏見來源</title>
+<title>深度學習與 LLM 偏見來源</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M 深度學習與 LLM 偏見來源</h1></div><h4>🎯 學習目標</h4>
+<div class="hero"><h1>深度學習與 LLM 偏見來源</h1></div><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背神經網路結構，是為了搞懂 AI 為什麼會一本正經地胡說，以及它的偏見從哪來。</p>
 <table>
 <thead>
@@ -78,7 +78,7 @@
 <p>模型內部沒有一本字典，而是把每個詞、每段話轉成一串數字（向量）——意思相近的東西，數字也靠近：「醫師」和「護理師」靠得近，「醫師」和「香蕉」離得遠。這叫<strong>表徵學習（representation learning）</strong>。神經網路就是一層層把這些數字做變換、抽取愈來愈抽象的模式。你不需要會這背後的數學，只要記住一件事：<strong>它學到的是「資料裡的關聯」，資料裡有什麼偏斜，它就忠實學進這些數字裡。</strong>（這條直接連到 15′ b 的偏見。）</p>
 <h4>它有一個「截止日」，且天生不會自己更新</h4>
 <p>模型是用<strong>某個時間點之前</strong>的資料訓練的，這個時間點叫<strong>訓練截止日（knowledge cutoff）</strong>。截止日之後發生的事——上週的判決、今早的新法規、剛改的公司政策——它<strong>一無所知</strong>，但被問到時往往不會說「我不知道」，而是<strong>用舊資料硬湊一個聽起來合理的答案</strong>。這就是為什麼問它「最新的」任何東西特別危險。</p>
-<p>補救的主流做法叫<strong>檢索增強（RAG，Retrieval-Augmented Generation）</strong>：在它回答前，先即時去「外接資料源」（你的資料庫、最新新聞、內部文件）撈出相關片段，塞進它的輸入裡，讓它<strong>照著新撈到的資料講</strong>，而不是靠記憶硬掰。RAG 的本質不是讓模型變聰明，是<strong>把它本來不確定的東西，先餵成確定的</strong>（這點在 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a> 用 entropy 講得更透）。</p>
+<p>補救的主流做法叫<strong>檢索增強（RAG，Retrieval-Augmented Generation）</strong>：在它回答前，先即時去「外接資料源」（你的資料庫、最新新聞、內部文件）撈出相關片段，塞進它的輸入裡，讓它<strong>照著新撈到的資料講</strong>，而不是靠記憶硬掰。RAG 的本質不是讓模型變聰明，是<strong>把它本來不確定的東西，先餵成確定的</strong>（這點在 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a> 用 entropy 講得更透）。</p>
 <blockquote>
 <p><strong>LLM 不是在查答案，是在猜「下一個最像的字」。它流暢，是因為它很會接話；不是因為它查證過。</strong></p>
 </blockquote>
@@ -86,7 +86,7 @@
 <h3>幻覺與偏見從哪來</h3>
 <p>這一段把兩個最常被混為一談的問題拆開：<strong>幻覺</strong>（它編造不存在的事）和<strong>偏見</strong>（它系統性地偏向某一邊）。兩者來源不同，但都能用「資料分布」一句話講清楚。</p>
 <h4>幻覺：高不確定性下，它硬生成最像的字</h4>
-<p>當模型對「下一個字該是什麼」很<strong>沒把握</strong>時——例如你問一個它資料裡很少見、或截止日後才發生的事——它對各種答案的機率分布是<strong>很平的</strong>（一堆似是而非的選項機率差不多）。用上一系列模組的話講，這是<strong>高 entropy 的分布</strong>（見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>、<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>）。但模型<strong>還是得吐一個字出來</strong>，於是它從這團模糊裡抽一個「最像對的」——結果就是<strong>一本正經地編造</strong>：捏造的論文、不存在的引文、查無此人的法條。</p>
+<p>當模型對「下一個字該是什麼」很<strong>沒把握</strong>時——例如你問一個它資料裡很少見、或截止日後才發生的事——它對各種答案的機率分布是<strong>很平的</strong>（一堆似是而非的選項機率差不多）。用上一系列模組的話講，這是<strong>高 entropy 的分布</strong>（見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>、<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>）。但模型<strong>還是得吐一個字出來</strong>，於是它從這團模糊裡抽一個「最像對的」——結果就是<strong>一本正經地編造</strong>：捏造的論文、不存在的引文、查無此人的法條。</p>
 <p>關鍵在於：<strong>它編造時的語氣，跟它講真話時一模一樣自信。</strong> 模型沒有一個「我其實在亂猜」的警示燈。所以幻覺最毒的地方不是它會錯，而是<strong>它錯得很流暢、很有説服力</strong>。</p>
 <table>
 <thead>
@@ -120,13 +120,13 @@
 </tbody>
 </table>
 <h4>偏見：訓練資料的偏斜被忠實複製</h4>
-<p>偏見不是模型「學壞了」或「有惡意」，而是更冷酷的事實：<strong>它把資料裡早就存在的偏斜，原封不動學了起來。</strong> 如果網路文字裡「護理師」後面接「她」遠多於「他」、「CEO」後面接「他」遠多於「她」，模型就學到這個近乎必然的關聯——於是它寫護理師預設女性、寫 CEO 預設男性。這跟 AI 生圖裡護理師清一色女性、CEO 清一色中年男性，是<strong>同一個機制的文字版</strong>（詳見 <a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>）。</p>
-<p>更系統地說：模型學到的是<strong>資料的分布</strong>。資料怎麼偏，輸出就怎麼偏；甚至常常<strong>比資料更極端</strong>（它傾向往機率最高那邊收斂）。這就是為什麼「資料偏誤」是 AI 偏見的真正源頭（<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>）——<strong>問題在進料端，不在模型的品德。</strong></p>
+<p>偏見不是模型「學壞了」或「有惡意」，而是更冷酷的事實：<strong>它把資料裡早就存在的偏斜，原封不動學了起來。</strong> 如果網路文字裡「護理師」後面接「她」遠多於「他」、「CEO」後面接「他」遠多於「她」，模型就學到這個近乎必然的關聯——於是它寫護理師預設女性、寫 CEO 預設男性。這跟 AI 生圖裡護理師清一色女性、CEO 清一色中年男性，是<strong>同一個機制的文字版</strong>（詳見 <a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>）。</p>
+<p>更系統地說：模型學到的是<strong>資料的分布</strong>。資料怎麼偏，輸出就怎麼偏；甚至常常<strong>比資料更極端</strong>（它傾向往機率最高那邊收斂）。這就是為什麼「資料偏誤」是 AI 偏見的真正源頭（<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>）——<strong>問題在進料端，不在模型的品德。</strong></p>
 <h4>在新聞／媒體這一行，它最可能失準的三個地方</h4>
 <ul>
 <li><strong>最新法規與時事</strong>：截止日後的修法、判決、人事，它要嘛不知道、要嘛拿舊版硬講。<strong>凡是「最新」都要當它在猜。</strong></li>
 <li><strong>冷門的在地題目</strong>：地方議題、小眾產業、台灣特有脈絡，在它的訓練資料裡樣本稀少 → 高 entropy → 容易編。問「某偏鄉小鎮的歷史」比問「美國總統」危險得多。</li>
-<li><strong>少數族群／非主流觀點被低估</strong>：資料裡聲量小的群體，模型對他們的「預設描繪」會被主流敘事蓋過——做專題時若全靠 AI 起稿，等於<strong>讓資料裡的多數偏見替你定調</strong>，這正是媒體最該警覺的編輯責任問題（延伸 <a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>）。</li>
+<li><strong>少數族群／非主流觀點被低估</strong>：資料裡聲量小的群體，模型對他們的「預設描繪」會被主流敘事蓋過——做專題時若全靠 AI 起稿，等於<strong>讓資料裡的多數偏見替你定調</strong>，這正是媒體最該警覺的編輯責任問題（延伸 <a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 倫理論文報告</a>）。</li>
 </ul>
 <blockquote>
 <p><strong>偏見不是 AI 變壞，是它忠實複製了資料裡早就存在的偏斜。幻覺也不是它說謊，是它在不確定時，仍被迫吐出一個最像的字。</strong></p>
@@ -140,7 +140,7 @@
 <li><strong>「多新？」</strong>——訓練截止日是什麼時候？有沒有外接即時資料（RAG）？「最新」的查詢它是現查還是靠記憶？（→ 揪出<strong>過時</strong>與<strong>幻覺</strong>風險）</li>
 <li><strong>「偏見怎麼測？」</strong>——你們<strong>怎麼知道</strong>它在我們領域不會胡說、不會系統性偏向某一邊？有沒有量過、給得出數字嗎？（→ 逼出有沒有<strong>驗證機制</strong>，而不是「感覺還不錯」）</li>
 </ol>
-<p><strong>為什麼一定要外接即時資料</strong>：只要任務牽涉「最新」「精確出處」「我們自己的內部事實」，就<strong>不能讓模型靠記憶硬答</strong>——記憶停在截止日、且不確定時會編。外接即時資料（RAG／工具呼叫）等於在它回答前先把答案餵給它，把高 entropy 的猜測壓成低 entropy 的照本宣科（機制見 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>）。<strong>沒有外接資料的 LLM，本質上是一個很會講話但停在過去、且不會說「我不知道」的實習生。</strong></p>
+<p><strong>為什麼一定要外接即時資料</strong>：只要任務牽涉「最新」「精確出處」「我們自己的內部事實」，就<strong>不能讓模型靠記憶硬答</strong>——記憶停在截止日、且不確定時會編。外接即時資料（RAG／工具呼叫）等於在它回答前先把答案餵給它，把高 entropy 的猜測壓成低 entropy 的照本宣科（機制見 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a>）。<strong>沒有外接資料的 LLM，本質上是一個很會講話但停在過去、且不會說「我不知道」的實習生。</strong></p>
 <p><strong>怎麼設計「測它會不會在你領域胡說」的探針題（probe）</strong>：別只問你不知道答案的問題——那樣你無法判斷它對錯。設計探針題的訣竅：</p>
 <ul>
 <li><strong>選你「確知標準答案」的題目</strong>：這樣它一胡說你立刻看得出來。</li>
@@ -176,7 +176,7 @@
 <tr>
 <td>「重新訓練一次就能把偏見去掉」</td>
 <td>只要訓練資料的分布還偏，重訓出來照樣偏；去偏要校正<strong>資料代表性</strong>＋輸出端多樣性檢查，不是按一次重訓</td>
-<td>連 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>：問題在資料分布，不在訓練次數</td>
+<td>連 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>：問題在資料分布，不在訓練次數</td>
 </tr>
 <tr>
 <td>「它說『根據某研究』就表示真有那研究」</td>
@@ -188,16 +188,16 @@
 <hr />
 <h4>🔗 連結 / 關係</h4>
 <ul>
-<li><strong>同源偏見模組</strong>：<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>（生圖版，同一套「資料偏斜被複製」邏輯，用 entropy 把偏見定義成「分布變窄」）。</li>
-<li><strong>偏見的根</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>（為什麼問題出在進料端的資料代表性）。</li>
-<li><strong>幻覺的數學直覺</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>、<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>（高 entropy = 高不確定 = 硬猜 = 幻覺）。</li>
-<li><strong>補救工程</strong>：<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>（RAG／工具呼叫＝幫模型把 entropy 砍下來）。</li>
-<li><strong>誤判代價</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>（把「它什麼時候會錯、錯了多嚴重」放進決策）。</li>
-<li><strong>倫理與編輯責任</strong>：<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>（讓資料的多數偏見替你定調，是媒體最該警覺的責任問題）。</li>
+<li><strong>同源偏見模組</strong>：<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>（生圖版，同一套「資料偏斜被複製」邏輯，用 entropy 把偏見定義成「分布變窄」）。</li>
+<li><strong>偏見的根</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>（為什麼問題出在進料端的資料代表性）。</li>
+<li><strong>幻覺的數學直覺</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>、<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>（高 entropy = 高不確定 = 硬猜 = 幻覺）。</li>
+<li><strong>補救工程</strong>：<a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a>（RAG／工具呼叫＝幫模型把 entropy 砍下來）。</li>
+<li><strong>誤判代價</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>（把「它什麼時候會錯、錯了多嚴重」放進決策）。</li>
+<li><strong>倫理與編輯責任</strong>：<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 倫理論文報告</a>（讓資料的多數偏見替你定調，是媒體最該警覺的責任問題）。</li>
 </ul>
 <hr />
 <blockquote>
-<p><strong>本模組收束成一句話</strong>：<strong>LLM 是一台很會接話、停在截止日、不會說「我不知道」的機率機器。幻覺＝不確定下硬猜，偏見＝忠實複製資料的偏斜。主管要做的，是問「資料哪來、多新、偏見怎麼測」，並用探針題親自驗證它在你這一行會不會胡說。</strong></p>
+<p><strong>這一堂收束成一句話</strong>：<strong>LLM 是一台很會接話、停在截止日、不會說「我不知道」的機率機器。幻覺＝不確定下硬猜，偏見＝忠實複製資料的偏斜。主管要做的，是問「資料哪來、多新、偏見怎麼測」，並用探針題親自驗證它在你這一行會不會胡說。</strong></p>
 </blockquote>
 <hr />
 <h4>💬 討論／分享／反思</h4>
@@ -215,7 +215,7 @@
 <ul>
 <li><a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a>：偏誤來自標籤選擇，不是訓練資料或模型架構</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Case - Rite Aid 人臉辨識被禁用五年</a>：偽陽性在不同社區分布不均的實際後果</li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

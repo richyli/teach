@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M 流程圖與 BPMN</title>
+<title>流程圖與 BPMN</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M 流程圖與 BPMN</h1></div><ul>
+<div class="hero"><h1>流程圖與 BPMN</h1></div><ul>
 <li><strong>為何 vibe coding 時代反而更該學</strong>：產品的價值常常不是單一畫面，而是<strong>一條跨多步、有判斷、有分支的流程</strong>（下單到出貨、投稿到刊登）。把流程畫清楚，AI 才知道每個判斷點、每條分支該怎麼接。流程圖也是你和非技術夥伴對齊「business logic」最快的共同語言。</li>
 </ul>
 <h4>核心</h4>
 <p><strong>流程圖（Flowchart）= 用標準符號畫「一件事怎麼一步步走」</strong>。記四個符號就夠：
 - <strong>橢圓</strong>：開始／結束
 - <strong>矩形</strong>：一個動作步驟
-- <strong>菱形</strong>：一個判斷（是/否分岔）—— <strong>菱形是重點</strong>，每個菱形都是一條 AI 容易漏的分支（連回 <a href="M_Use_Case_%E8%88%87%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83.html">M Use Case 與使用情境</a> 的例外流程）
+- <strong>菱形</strong>：一個判斷（是/否分岔）—— <strong>菱形是重點</strong>，每個菱形都是一條 AI 容易漏的分支（連回 <a href="M_Use_Case_%E8%88%87%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83.html">Use Case 與使用情境</a> 的例外流程）
 - <strong>箭頭</strong>：流向</p>
 <p><strong>BPMN（商業流程建模標記）= 流程圖的進階版</strong>，多了<strong>跨角色泳道（swimlane）</strong>：把「誰負責哪一步」分行畫清楚——使用者做什麼、系統做什麼、後台人員做什麼。<strong>一看就知道每步的責任歸屬與交接點</strong>，這正是多角色協作產品最容易出包的地方。</p>
 <p><strong>畫流程的紀律</strong>：
 1. <strong>每個判斷（菱形）都要有出口</strong>：是會怎樣、否會怎樣，不能只畫「是」那條。
-2. <strong>找出「卡住」與「回頭」</strong>：哪裡會等待、哪裡會打回重來（連回 <a href="M_%E5%9B%9E%E9%A5%8B%E8%BF%B4%E8%B7%AF%E8%88%87%E6%94%B6%E6%96%82%E7%99%BC%E6%95%A3.html">M 回饋迴路與收斂發散</a>）。
+2. <strong>找出「卡住」與「回頭」</strong>：哪裡會等待、哪裡會打回重來（連回 <a href="M_%E5%9B%9E%E9%A5%8B%E8%BF%B4%E8%B7%AF%E8%88%87%E6%94%B6%E6%96%82%E7%99%BC%E6%95%A3.html">回饋迴路與收斂發散</a>）。
 3. <strong>標出交接點</strong>：BPMN 泳道之間的箭頭，是責任轉移的地方，最容易掉球。</p>
 <blockquote>
 <p><strong>vibe coding 接法</strong>：先用 mermaid 請 AI 把流程畫出來，<strong>重點檢查每個菱形的「否」那條路 AI 有沒有設計</strong>——demo 通常只走「是」，真實世界全卡在「否」。流程圖讓你在寫程式前就看見所有分支。</p>
@@ -34,7 +34,7 @@
 <li>
 <p><strong>小作業</strong>：挑一個你產品裡的關鍵流程，用 mermaid 請 AI 生流程圖，數一數有幾個菱形，逐一確認「否」那條路有沒有被處理。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

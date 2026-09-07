@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M 語言的階數近似與馬可夫鏈</title>
+<title>語言的階數近似與馬可夫鏈</title>
 <link rel="stylesheet" href="../../style.css">
 <script>
 MathJax = {
@@ -15,9 +15,9 @@ MathJax = {
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M 語言的階數近似與馬可夫鏈</h1></div><p>1948 年 Shannon 手工翻書抽字，做出了世界上第一個語言模型。
-這個模組把那個實驗跑一次給你看——<strong>你會看見 GPT 的祖先，而且它長得比你想像的簡單。</strong>
-接在 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a> 之後，接往 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">M 從 Shannon 到 LLM</a>。</p>
+<div class="hero"><h1>語言的階數近似與馬可夫鏈</h1></div><p>1948 年 Shannon 手工翻書抽字，做出了世界上第一個語言模型。
+這一堂把那個實驗跑一次給你看——<strong>你會看見 GPT 的祖先，而且它長得比你想像的簡單。</strong>
+接在 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a> 之後，接往 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a>。</p>
 <h4>🎯 學習目標</h4>
 <table>
 <thead>
@@ -432,7 +432,7 @@ MathJax = {
 <li><strong>壓縮</strong>：既然有一半是可預測的，就可以用更少的位元表示——ZIP、JPEG 就建在這上面。</li>
 <li><strong>編碼效率</strong>：常出現的東西用短代碼、罕見的用長代碼（Huffman 編碼的核心想法）。
    <code>E</code> 用短碼、<code>Z</code> 用長碼，整體長度就變短。</li>
-<li><strong>抗雜訊</strong>：那一半冗餘正是 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a> 講的保險——<strong>丟了一點也還原得回來。</strong></li>
+<li><strong>抗雜訊</strong>：那一半冗餘正是 <a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a> 講的保險——<strong>丟了一點也還原得回來。</strong></li>
 </ol>
 <hr />
 <h3>主管視角：流暢不等於正確</h3>
@@ -447,7 +447,7 @@ MathJax = {
 <li><strong>驗收要對著事實，不能對著語感。</strong> 「讀起來很順」是它一定會做到的，不構成任何證據。</li>
 </ol>
 <p><strong>該問工程師的一題</strong>：「這個模型的 context window 多大？」——那就是它的「階數」，
-它往回看得到多遠。看不到的東西，它就會用最可能的內容補上（連回 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>）。</p>
+它往回看得到多遠。看不到的東西，它就會用最可能的內容補上（連回 <a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>）。</p>
 <h4>⚠️ 迷思攔截</h4>
 <table>
 <thead>
@@ -482,9 +482,9 @@ MathJax = {
 </table>
 <h3>先修與後續</h3>
 <ul>
-<li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>（熵的定義）、<a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">M Shannon-Weaver 模式與冗餘</a>（冗餘）</li>
-<li><strong>後續</strong>：<a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">M 從 Shannon 到 LLM</a>——這條線走到 Transformer 之後發生了什麼</li>
-<li><strong>平行相關</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">M 資訊理論與不確定性</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a></li>
+<li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>（熵的定義）、<a href="M_Shannon-Weaver_%E6%A8%A1%E5%BC%8F%E8%88%87%E5%86%97%E9%A4%98.html">Shannon-Weaver 模式與冗餘</a>（冗餘）</li>
+<li><strong>後續</strong>：<a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a>——這條線走到 Transformer 之後發生了什麼</li>
+<li><strong>平行相關</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a></li>
 </ul>
 <h4>💬 討論／分享／反思</h4>
 <ul>
@@ -498,7 +498,7 @@ MathJax = {
 <p><strong>小作業</strong>：拿一段 AI 產出的文字，標出三處「它猜得最用力」的地方（專有名詞、數字、引述），
   各查證一次，記錄對錯。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

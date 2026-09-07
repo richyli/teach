@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M AI 取代工作與機構倫理責任</title>
+<title>AI 取代工作與機構倫理責任</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M AI 取代工作與機構倫理責任</h1></div><h4>🎯 學習目標</h4>
+<div class="hero"><h1>AI 取代工作與機構倫理責任</h1></div><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -73,9 +73,9 @@
 <hr />
 <h3>偏誤從哪裡來：資料、目標、流程</h3>
 <p>「AI 有偏見」講一百次也沒用，因為它不指向任何可以修的東西。拆成三個來源，每一個對應不同的修法：</p>
-<p><strong>① 資料</strong>：訓練資料本身就偏斜。台灣的護理人員約九成是女性，模型說「護理師是女性」是忠實反映——但它把統計上的多數，輸出成看起來像必然的敘述（詳見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>、<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>）。<strong>修法</strong>：換資料、補樣本、標註。</p>
+<p><strong>① 資料</strong>：訓練資料本身就偏斜。台灣的護理人員約九成是女性，模型說「護理師是女性」是忠實反映——但它把統計上的多數，輸出成看起來像必然的敘述（詳見 <a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>、<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>）。<strong>修法</strong>：換資料、補樣本、標註。</p>
 <p><strong>② 目標函數</strong>：系統被要求最佳化的東西，跟你真正想要的東西不一樣。推薦系統被要求最大化停留時間，於是它學會推煽動性內容——它沒有壞掉，它把你交代的事做得很好。<strong>修法</strong>：改指標，而且要改的是被獎勵的那個指標，不是牆上貼的那個。</p>
-<p><strong>③ 使用流程</strong>：模型輸出被放在什麼位置。同一個信心分數，放在「給編輯參考」跟「自動下架」是完全不同的東西（回想 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a> 的門檻）。<strong>修法</strong>：改流程，不用改模型。</p>
+<p><strong>③ 使用流程</strong>：模型輸出被放在什麼位置。同一個信心分數，放在「給編輯參考」跟「自動下架」是完全不同的東西（回想 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a> 的門檻）。<strong>修法</strong>：改流程，不用改模型。</p>
 <blockquote>
 <p>這三個裡面，主管能直接動的是②和③。多數機構卻把力氣全花在要求供應商改①——那是最慢、最貴、也最不受你控制的一個。</p>
 </blockquote>
@@ -165,11 +165,11 @@
 </table>
 <h3>與其他模組的關係</h3>
 <ul>
-<li><strong>偏誤的技術來源</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>｜<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a></li>
-<li><strong>門檻與誤判代價</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<strong>法規框架</strong>：<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></li>
-<li><strong>寫成規範</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<strong>同週論文報告</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 取代工作論文報告</a>、<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a></li>
+<li><strong>偏誤的技術來源</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>｜<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>｜<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">AI 偏誤探針實作</a></li>
+<li><strong>門檻與誤判代價</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>｜<strong>法規框架</strong>：<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">AI 地景與主管決策框架</a></li>
+<li><strong>寫成規範</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<strong>同週論文報告</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 取代工作論文報告</a>、<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 倫理論文報告</a></li>
 </ul>
-<p><strong>連結</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 取代工作論文報告</a>｜<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>｜<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">M AI 界線討論</a></p>
+<p><strong>連結</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">AI 地景與主管決策框架</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 取代工作論文報告</a>｜<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 倫理論文報告</a>｜<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">AI 界線討論</a></p>
 <h4>💬 討論／分享／反思</h4>
 <ul>
 <li><strong>配對分享</strong>：各自把自己部門一個職務拆成十項任務，互相指出哪幾項落在第 ④ 格（會被重組但沒人宣布）。</li>
@@ -185,7 +185,7 @@
 <ul>
 <li><a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">Case - 醫療演算法把花費當成健康需求</a>：三種偏誤來源裡「目標函數」那一格的標準案例</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Case - Rite Aid 人臉辨識被禁用五年</a>：責任四層裡「制度」那一層真的動手的樣子</li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M Confusion Matrix 與誤判代價</title>
+<title>Confusion Matrix 與誤判代價</title>
 <link rel="stylesheet" href="../../style.css">
 <script>
 MathJax = {
@@ -15,7 +15,7 @@ MathJax = {
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M Confusion Matrix 與誤判代價</h1></div><h4>🎯 學習目標</h4>
+<div class="hero"><h1>Confusion Matrix 與誤判代價</h1></div><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了看懂一張表格，是為了不被「準確率 95%」這種數字騙過去。</p>
 <table>
 <thead>
@@ -479,7 +479,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 </tr>
 </tbody>
 </table>
-<p><strong>這是本模組最重要的一張表。</strong> 同樣的 accuracy、同樣的 F-score，
+<p><strong>這是這一堂最重要的一張表。</strong> 同樣的 accuracy、同樣的 F-score，
 一個是獨裁者的世界，一個是 Blackstone 的世界。
 <strong>任何把兩種錯壓成單一分數的指標，都會把這個差別抹掉。</strong></p>
 <h4>極端的準確率：恐怖份子</h4>
@@ -1320,10 +1320,10 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 <li><strong>用門檻分流，不是門檻決生死</strong>：高信心的自動處理、模糊地帶（接近門檻）一律送人複核。讓 AI 處理量、讓人處理風險。</li>
 <li><strong>記錄與回饋</strong>：人複核的每一筆都是在告訴模型「這格你判錯了」，回頭可以重新校準門檻與重訓。</li>
 </ul>
-<p>延伸閱讀（這套思路在治理層怎麼落地）：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>。</p>
+<p>延伸閱讀（這套思路在治理層怎麼落地）：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>。</p>
 <p>真實個案（效率數字如何蓋住誤判代價）：<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">Case - DOGE 用 AI 砍法規而政府拒絕揭露</a> — DOGE 宣稱 AI 把法規審查「快 90%（36 小時→2.4 小時）」，但把「錯刪一條反歧視住房法規」與「漏刪一條冗規」的極不對稱代價整個藏了起來。是「當有人拿效率數字說服你導入 AI，先問代價換的是什麼」最好的討論素材。</p>
 <blockquote>
-<p><strong>本模組收束成一句話：模型給你分數，門檻替你的場景決定『寧可錯抓還是寧可放過』，而人複核把關點要設在你最賠不起的那種錯上。AI 負責量，人負責風險。</strong></p>
+<p><strong>這一堂收束成一句話：模型給你分數，門檻替你的場景決定『寧可錯抓還是寧可放過』，而人複核把關點要設在你最賠不起的那種錯上。AI 負責量，人負責風險。</strong></p>
 </blockquote>
 <hr />
 <h3>⚠️ 迷思攔截</h3>
@@ -1357,11 +1357,11 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 <hr />
 <h3>與其他模組的關係</h3>
 <ul>
-<li><strong>偏見從哪來</strong>：模型為什麼系統性地對某類內容判錯（某一格特別高），常是訓練資料的問題 → <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>。</li>
-<li><strong>怎麼落地成制度</strong>：門檻、人複核把關點、誤判責任歸屬，要寫進編輯室規範與對外揭露 → <a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>。</li>
-<li><strong>放進主管決策框架</strong>：「驗收 AI 別只看一個數字」是主管面對所有 AI 系統的通則 → <a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a>。</li>
+<li><strong>偏見從哪來</strong>：模型為什麼系統性地對某類內容判錯（某一格特別高），常是訓練資料的問題 → <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>。</li>
+<li><strong>怎麼落地成制度</strong>：門檻、人複核把關點、誤判責任歸屬，要寫進編輯室規範與對外揭露 → <a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>。</li>
+<li><strong>放進主管決策框架</strong>：「驗收 AI 別只看一個數字」是主管面對所有 AI 系統的通則 → <a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">AI 地景與主管決策框架</a>。</li>
 </ul>
-<p><strong>連結</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>｜<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">M AI 地景與主管決策框架</a></p>
+<p><strong>連結</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>｜<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">AI 地景與主管決策框架</a></p>
 <hr />
 <h4>💬 討論／分享／反思</h4>
 <ul>
@@ -1380,8 +1380,8 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 <h3>延伸個案</h3>
 <ul>
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">Case - 敗血症預測模型的宣稱與實測</a>：正預測值 12%、漏掉 67%，一個門檻在真實場域的代價</li>
-<li><a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">M COMPAS 再犯演算法個案</a>：把四格依族群拆開之後才看得到的落差</li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+<li><a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">COMPAS 再犯演算法個案</a>：把四格依族群拆開之後才看得到的落差</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

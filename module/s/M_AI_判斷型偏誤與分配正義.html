@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M AI 判斷型偏誤與分配正義</title>
+<title>AI 判斷型偏誤與分配正義</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M AI 判斷型偏誤與分配正義</h1></div><h4>🎯 學習目標</h4>
+<div class="hero"><h1>AI 判斷型偏誤與分配正義</h1></div><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了再說一次「演算法有偏見」，是為了在真的有人被拒貸、被刷掉、被排到候補名單時，<strong>拿得出可以呈堂的證據</strong>。</p>
 <table>
 <thead>
@@ -42,7 +42,7 @@
 </tbody>
 </table>
 <ul>
-<li><strong>本模組跟姊妹模組的分工</strong>：<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a> 測的是 AI <strong>創作</strong>時的預設值（取名、描寫）；本模組測的是 AI <strong>判斷與分配</strong>時的分數與排序。<strong>兩者的實際損害完全不同等級</strong>——沒有人因為 AI 把護理師寫成女性而失去房子，但有人因為演算法評分而失去。</li>
+<li><strong>這一堂跟姊妹模組的分工</strong>：<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">AI 偏誤探針實作</a> 測的是 AI <strong>創作</strong>時的預設值（取名、描寫）；這一堂測的是 AI <strong>判斷與分配</strong>時的分數與排序。<strong>兩者的實際損害完全不同等級</strong>——沒有人因為 AI 把護理師寫成女性而失去房子，但有人因為演算法評分而失去。</li>
 <li><strong>誰該聽</strong>：要導入或採購 AI 決策系統的主管；要報導演算法爭議、需要自己做出證據的記者；任何一個未來會被演算法評分的人。</li>
 </ul>
 <hr />
@@ -58,7 +58,7 @@
 <hr />
 <h3>配對審計法：不用看程式碼也能舉證</h3>
 <p>把課前作業的數字彙整起來看。多數情況下 H 版會低幾分，而且模型的理由裡<strong>不會提到體重</strong>——它會說「整體風險偏保守」「建議再觀察一期」。</p>
-<p>這帶出本模組的核心處境：<strong>你永遠拿不到那個系統的程式碼，廠商也永遠會說「我們沒有把性別放進模型」。而這句話通常是真的——但沒有意義。</strong></p>
+<p>這帶出這一堂的核心處境：<strong>你永遠拿不到那個系統的程式碼，廠商也永遠會說「我們沒有把性別放進模型」。而這句話通常是真的——但沒有意義。</strong></p>
 <h4>為什麼「沒有放進去」不代表沒有用到</h4>
 <p>模型不需要看到「性別」這個欄位，就能重建它。姓名、就業空窗理由、「配偶無獨立收入申報」——每一個都是性別的<strong>代理變數（proxy）</strong>。同理，郵遞區號是族裔與階級的代理，畢業學校是家庭背景的代理，通勤方式是收入的代理。<strong>把受保護屬性拿掉，模型只會改用代理欄位重建它，而且從此更難被抓到。</strong></p>
 <p>所以檢查程式碼是死路。要走的是另一條路：<strong>不看它怎麼想，看它怎麼做。</strong></p>
@@ -159,11 +159,11 @@
 <h4>界線二：稀缺會逼出模型真正的判準</h4>
 <p>一般情況下，你問模型「這個人適合嗎」，它會給一段四平八穩的回答。<strong>但當你說「只有一個名額」，它必須犧牲誰</strong>——而它犧牲誰的順序，就是它真正的價值排序。</p>
 <p>醫療分配題最尖銳的地方在此：模型必須在四個人之間選一個活下來。它引用的每一個欄位，都是它認為「值得活」的判準。<strong>當「配偶可全職照顧」進入排序，模型實際上在說：有人照顧的人比較值得救。</strong></p>
-<p>現場辯論題（本模組的高潮，<strong>不要收斂</strong>）：<strong>BMI 34 那一欄，什麼時候是醫學判斷、什麼時候是體態歧視穿上白袍？</strong> 分成兩邊。支持「是醫學判斷」那一邊的最強理由：某些適應症的預後確實與 BMI 相關，忽略它才是對病人不負責。支持「是歧視」那一邊的最強理由：模型引用 BMI 的方式沒有伴隨任何具體適應症推理，它只是把「胖」當成一個減分項——<strong>用醫學語彙包裝的直覺，不等於醫學判斷。</strong></p>
+<p>現場辯論題（這一堂的高潮，<strong>不要收斂</strong>）：<strong>BMI 34 那一欄，什麼時候是醫學判斷、什麼時候是體態歧視穿上白袍？</strong> 分成兩邊。支持「是醫學判斷」那一邊的最強理由：某些適應症的預後確實與 BMI 相關，忽略它才是對病人不負責。支持「是歧視」那一邊的最強理由：模型引用 BMI 的方式沒有伴隨任何具體適應症推理，它只是把「胖」當成一個減分項——<strong>用醫學語彙包裝的直覺，不等於醫學判斷。</strong></p>
 <h4>界線三：回饋迴路——模型只是照做，但那個「合理」會自我實現</h4>
 <p>治安配置題：甲里報案數 340，乙里 95，模型把大部分警力派去甲里。<strong>這個決定完全合理，而且用任何標準看都無可指摘。</strong></p>
 <p>問題在下一步：警力多 → 查獲多 → 報案與查獲數字上升 → 明年資料顯示甲里更危險 → 派更多警力。<strong>資料變成了它自己造成的結果。</strong> 追問模型「如果甲里明年報案數上升，你會怎麼調整」，看它是否察覺這個迴路——多數時候不會。</p>
-<p>這連回 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a> 的<strong>測量偏誤</strong>：用「報案／逮捕數」當「犯罪率」的代理，起點就已經歪了；再讓模型照著它做資源配置，歪的地方會被放大並固定下來。</p>
+<p>這連回 <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a> 的<strong>測量偏誤</strong>：用「報案／逮捕數」當「犯罪率」的代理，起點就已經歪了；再讓模型照著它做資源配置，歪的地方會被放大並固定下來。</p>
 <blockquote>
 <p><strong>判斷型偏誤最危險的形態，不是模型做出不合理的決定，而是它做出完全合理的決定——然後那個決定回頭改寫了下一批資料。合理與公平，在有回饋迴路的系統裡不是同一件事。</strong></p>
 </blockquote>
@@ -209,16 +209,16 @@
 <h4>🔗 連結 / 關係</h4>
 <ul>
 <li><strong>配套練習卡</strong>：<a href="../_exercises/E%20AI%20判斷型偏誤探針.md">E AI 判斷型偏誤探針</a>（四領域完整 synthetic persona＋配對變項表＋persona 建構模板）。</li>
-<li><strong>姊妹模組（創作生成型）</strong>：<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">M AI 偏誤探針實作</a>（測 AI 填空的預設值；本模組測它給的分數）。</li>
-<li><strong>偏誤的根</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">M Data Bias 資料偏誤</a>（測量偏誤——用逮捕率當犯罪率，正是治安題的理論來源）。</li>
-<li><strong>量化底盤</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">M Confusion Matrix 與誤判代價</a>（誤拒一個好客戶 vs 誤准一個壞客戶，代價不對稱；判斷型偏誤最終要落到這張表上）。</li>
-<li><strong>機制解釋</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>、<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>。</li>
-<li><strong>抽樣紀律</strong>：<a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">M Sampling Theory 抽樣理論</a>（n 太小就不要下結論）。</li>
-<li><strong>倫理與治理</strong>：<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">M AI 倫理論文報告</a>、<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">M 編輯室 AI 治理與揭露</a>、<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">M 利害關係人與行動者網絡</a>（誰有權質疑一個分數？）。</li>
+<li><strong>姊妹模組（創作生成型）</strong>：<a href="M_AI_%E5%81%8F%E8%AA%A4%E6%8E%A2%E9%87%9D%E5%AF%A6%E4%BD%9C.html">AI 偏誤探針實作</a>（測 AI 填空的預設值；這一堂測它給的分數）。</li>
+<li><strong>偏誤的根</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>（測量偏誤——用逮捕率當犯罪率，正是治安題的理論來源）。</li>
+<li><strong>量化底盤</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>（誤拒一個好客戶 vs 誤准一個壞客戶，代價不對稱；判斷型偏誤最終要落到這張表上）。</li>
+<li><strong>機制解釋</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>、<a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>。</li>
+<li><strong>抽樣紀律</strong>：<a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">Sampling Theory 抽樣理論</a>（n 太小就不要下結論）。</li>
+<li><strong>倫理與治理</strong>：<a href="M_AI_%E5%80%AB%E7%90%86%E8%AB%96%E6%96%87%E5%A0%B1%E5%91%8A.html">AI 倫理論文報告</a>、<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>、<a href="M_%E5%88%A9%E5%AE%B3%E9%97%9C%E4%BF%82%E4%BA%BA%E8%88%87%E8%A1%8C%E5%8B%95%E8%80%85%E7%B6%B2%E7%B5%A1.html">利害關係人與行動者網絡</a>（誰有權質疑一個分數？）。</li>
 </ul>
 <hr />
 <blockquote>
-<p><strong>本模組收束成一句話</strong>：<strong>要證明 AI 判斷有偏誤，你不需要它的程式碼，只需要兩份只差一欄的申請書、十次重跑、和一次消融測試。但真正難的在後面——分辨哪些差異是正當的實質關聯、哪些是代理變數穿上專業語彙；以及認清最危險的偏誤不是不合理的決定，而是完全合理、卻回頭改寫下一批資料的那種。</strong></p>
+<p><strong>這一堂收束成一句話</strong>：<strong>要證明 AI 判斷有偏誤，你不需要它的程式碼，只需要兩份只差一欄的申請書、十次重跑、和一次消融測試。但真正難的在後面——分辨哪些差異是正當的實質關聯、哪些是代理變數穿上專業語彙；以及認清最危險的偏誤不是不合理的決定，而是完全合理、卻回頭改寫下一批資料的那種。</strong></p>
 </blockquote>
 <hr />
 <h4>💬 討論／分享／反思</h4>
@@ -231,7 +231,7 @@
 <li>
 <p><strong>小作業</strong>：針對你關心的領域（獎學金審查／租屋／保險核保／兒少保護通報／內容申訴／升遷評估），照模板寫一份 <strong>15 欄以上的 synthetic persona</strong>，設計至少三個配對變項，實測每版 10 次，繳交：(1) 記錄表含平均與標準差 (2) 一次消融測試 (3) 理由文本逐句並排 (4) <strong>一段反面論證——你抓到的差異，最強的「這其實是正當專業判斷」的解釋是什麼？你為什麼仍然（或不再）認為那是偏誤？</strong></p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

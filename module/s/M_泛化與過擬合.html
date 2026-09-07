@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M 泛化與過擬合</title>
+<title>泛化與過擬合</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M 泛化與過擬合</h1></div><ul>
+<div class="hero"><h1>泛化與過擬合</h1></div><ul>
 <li><strong>一句話</strong>：<strong>泛化 = 在沒見過的新狀況也表現好；過擬合 = 把訓練資料背得太死，連雜訊都當規律，一換場景就垮。</strong> 好的 AI、好的 prompt，都要泛化而非死背。</li>
 </ul>
 <h4>核心</h4>
 <p><strong>泛化（generalization）</strong>：模型的價值在於<strong>對沒看過的資料也準</strong>。死記訓練資料不算學會——背答案的學生換題就不會。</p>
 <p><strong>過擬合（overfitting）</strong>：模型把訓練資料的<strong>偶然細節、雜訊</strong>也學了進去，在訓練集滿分、一上真實世界就崩。徵兆是「訓練表現好得異常，實測很差」。
 - 反面是<strong>欠擬合</strong>：模型太簡單，連訓練資料的規律都沒抓到。
-- 目標是兩者之間的甜蜜點：抓住真規律、忽略雜訊（連回 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">M 訊號與雜訊</a> 的訊號 vs 雜訊）。</p>
+- 目標是兩者之間的甜蜜點：抓住真規律、忽略雜訊（連回 <a href="M_%E8%A8%8A%E8%99%9F%E8%88%87%E9%9B%9C%E8%A8%8A.html">訊號與雜訊</a> 的訊號 vs 雜訊）。</p>
 <p><strong>為什麼這直接撐起 context / prompt engineering</strong>：
-1. <strong>Few-shot 例子 = 一種「擬合」</strong>：你在 prompt 裡給的範例，模型會去「擬合」它們。<strong>例子選得偏／太特殊 → 模型過擬合到你的例子，把你沒料到的個案也套同一招。</strong> 例子要有代表性、要涵蓋變異（呼應 <a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">M Sampling Theory 抽樣理論</a>）。
+1. <strong>Few-shot 例子 = 一種「擬合」</strong>：你在 prompt 裡給的範例，模型會去「擬合」它們。<strong>例子選得偏／太特殊 → 模型過擬合到你的例子，把你沒料到的個案也套同一招。</strong> 例子要有代表性、要涵蓋變異（呼應 <a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">Sampling Theory 抽樣理論</a>）。
 2. <strong>Prompt 過度雕琢的陷阱</strong>：把 prompt 調到「在我這幾個測試案例上完美」，很可能是過擬合到那幾個案例——換真實輸入就破。<strong>要拿沒調過的新案例驗證</strong>（等於 ML 的「測試集」紀律）。
 3. <strong>「在我電腦上好好的」</strong>：demo 漂亮不代表會泛化。AI 產品上線翻車，常常就是把 demo 案例過擬合了。</p>
 <blockquote>
@@ -32,7 +32,7 @@
 <li>
 <p><strong>小作業</strong>：拿一個你調過的 prompt，找 3 個你「設計時沒想到」的新輸入測它，記錄它泛化得好不好。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

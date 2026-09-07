@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M Token 與分詞</title>
+<title>Token 與分詞</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M Token 與分詞</h1></div><ul>
+<div class="hero"><h1>Token 與分詞</h1></div><ul>
 <li><strong>一句話</strong>：LLM 不是一個字一個字讀，而是把文字切成 <strong>token</strong>（介於字與詞之間的碎片）。模型的「視野」「記憶」「帳單」全部以 token 計。</li>
 </ul>
 <h4>核心</h4>
 <p><strong>什麼是 token</strong>：一段文字被切成小塊。英文約「4 個字元 ≈ 1 token」「一個常見單字 ≈ 1 token」；中文常常<strong>一字一 token 甚至更碎</strong>。"unbelievable" 可能切成 <code>un + believ + able</code> 三塊。</p>
 <p>三個必須記住的後果：</p>
 <ol>
-<li><strong>Context window 是用 token 算的</strong>：模型一次能看的上限（例如 20 萬 token）是 token 數，不是字數。<strong>塞進去的資料、對話歷史、你的指令，全部一起佔額度</strong>——爆了就從最舊的開始被擠掉（截斷）。這是 context engineering 的核心約束（連回 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M Harness Engineering 與資訊熵</a>）。</li>
+<li><strong>Context window 是用 token 算的</strong>：模型一次能看的上限（例如 20 萬 token）是 token 數，不是字數。<strong>塞進去的資料、對話歷史、你的指令，全部一起佔額度</strong>——爆了就從最舊的開始被擠掉（截斷）。這是 context engineering 的核心約束（連回 <a href="M_Harness_Engineering_%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">Harness Engineering 與資訊熵</a>）。</li>
 <li><strong>成本與速度按 token 計</strong>：API 收費、回應快慢都跟 token 數成正比。「把 prompt 寫精簡」不只是文風問題，是<strong>省錢省 context</strong>。</li>
 <li><strong>分詞會造成怪 bug</strong>：模型「看不清」一個被切碎的詞——所以它常算錯「strawberry 有幾個 r」、處理罕見專有名詞或數字會出錯。<strong>那不是它笨，是它根本沒看到完整的字。</strong></li>
 </ol>
 <blockquote>
-<p><strong>連回 entropy／生成</strong>：模型每一步預測的是「下一個 <strong>token</strong>」的機率分布（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">M Autoregressive 生成與取樣</a>），不是下一個「字」。理解 token 才理解它真正在預測什麼。</p>
+<p><strong>連回 entropy／生成</strong>：模型每一步預測的是「下一個 <strong>token</strong>」的機率分布（連回 <a href="M_Autoregressive_%E7%94%9F%E6%88%90%E8%88%87%E5%8F%96%E6%A8%A3.html">Autoregressive 生成與取樣</a>），不是下一個「字」。理解 token 才理解它真正在預測什麼。</p>
 </blockquote>
 <h4>💬 互動</h4>
 <ul>
@@ -31,7 +31,7 @@
 <li>
 <p><strong>小作業</strong>：把一段你常丟給 AI 的長 prompt，試著砍掉一半 token 又不掉資訊，記錄前後差別。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>

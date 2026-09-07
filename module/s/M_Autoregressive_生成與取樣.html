@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M Autoregressive 生成與取樣</title>
+<title>Autoregressive 生成與取樣</title>
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>M Autoregressive 生成與取樣</h1></div><ul>
+<div class="hero"><h1>Autoregressive 生成與取樣</h1></div><ul>
 <li><strong>一句話</strong>：LLM 是<strong>逐 token、一次一個、回頭看自己剛寫的</strong>來生成（autoregressive）。每一步它都從一個機率分布裡「抽」下一個 token——抽的方式（取樣）決定它有多穩、多有創意、多容易跑掉。</li>
 </ul>
 <h4>核心</h4>
@@ -18,7 +18,7 @@
 - <strong>Temperature 高</strong>：容許低機率選項出頭 → 多樣、有創意、但也更容易跑題或胡說（高 entropy）。
 - <strong>Top-p / Top-k</strong>：只在「最可能的一小撮」裡抽，砍掉長尾爛選項。</p>
 <blockquote>
-<p>連回 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">M Entropy 與 Shannon 資訊理論</a>：temperature 就是在<strong>手動調輸出分布的 entropy</strong>。連回 <a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">M AI 圖像偏見與資訊熵</a>：低溫把刻板印象鎖死，正是同一回事。</p>
+<p>連回 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>：temperature 就是在<strong>手動調輸出分布的 entropy</strong>。連回 <a href="M_AI_%E5%9C%96%E5%83%8F%E5%81%8F%E8%A6%8B%E8%88%87%E8%B3%87%E8%A8%8A%E7%86%B5.html">AI 圖像偏見與資訊熵</a>：低溫把刻板印象鎖死，正是同一回事。</p>
 </blockquote>
 <p><strong>為什麼這對 looping engineering 致命</strong>：
 1. <strong>誤差會累積（雪球效應）</strong>：因為它把自己的輸出餵回自己，<strong>早一步的小錯會被當成既定事實</strong>，越滾越偏。多步 agent loop 尤其明顯——第 1 步歪一點，第 10 步可能完全跑掉。
@@ -33,7 +33,7 @@
 <li>
 <p><strong>小作業</strong>：拿一個你會用 AI 多步完成的任務，標出最該插入「驗證 / 可回頭修正」的那一步。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:50</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:02</p>
 </div>
 </body>
 </html>
