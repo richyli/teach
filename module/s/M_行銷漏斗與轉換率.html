@@ -86,6 +86,82 @@ MathJax = {
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">每一階都比上一階少；轉換率永遠是「哪兩階之間」的比值。</figcaption>
 </figure>
 
+<div class="widget" id="fn-calc">
+<style>
+#fn-calc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#fn-calc h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#fn-calc .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#fn-calc label { font-size: .86rem; color: #444; }
+#fn-calc input[type=number], #fn-calc input[type=text] { font: inherit; font-size: .88rem;
+       padding: .3rem .5rem; border: 1px solid #c9d4e4; border-radius: 6px; width: 7.5rem; }
+#fn-calc button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#fn-calc button:hover { background: #eef4fd; }
+#fn-calc button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#fn-calc table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#fn-calc th, #fn-calc td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#fn-calc th { background: #f2f5fa; font-weight: 700; }
+#fn-calc .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#fn-calc .warn { background: #fff3f5; border-color: #e6b8c4; }
+#fn-calc .ok { background: #eef7f1; border-color: #a8d4bd; }
+#fn-calc .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#fn-calc .bar { height: 26px; background: #24528f; border-radius: 4px; }
+#fn-calc .barwrap { background: #eaeef4; border-radius: 4px; }
+#fn-calc td.num { text-align: right; font-variant-numeric: tabular-nums; }
+#fn-calc tr.worst td { background: #fff3f5; font-weight: 700; }
+</style>
+<h5>漏斗轉換率計算器</h5>
+<p class="lede">填入你自己的五個階段人數，看每一段的轉換率，以及最窄的是哪一段。
+預設值是課堂用的那組數字，直接改成你的。</p>
+<div>
+<label>曝光 <input type="number" id="fn-0" value="20000"></label>
+<label>點擊 <input type="number" id="fn-1" value="800"></label>
+<label>商品頁 <input type="number" id="fn-2" value="600"></label>
+<label>加入購物車 <input type="number" id="fn-3" value="120"></label>
+<label>結帳 <input type="number" id="fn-4" value="30"></label>
+</div>
+<table><thead><tr><th>從 → 到</th><th>人數</th><th>這一段轉換率</th><th></th></tr></thead>
+<tbody id="fn-rows"></tbody></table>
+<div class="out" id="fn-out"></div>
+<p class="hint">整體轉換率是所有段相乘的結果，它會被最窄的那一段拖住——所以先修最窄的，不是先加大最上面的。</p>
+<script>
+(function(){
+  var names=["曝光","點擊","商品頁","加入購物車","結帳"];
+  function render(){
+    var v=[];for(var i=0;i<5;i++){v.push(Math.max(0,Number(document.getElementById("fn-"+i).value)||0));}
+    var rows="",rates=[],min=1e9,minIdx=-1;
+    for(var i=1;i<5;i++){
+      var r=v[i-1]>0?v[i]/v[i-1]:0;rates.push(r);
+      if(r<min){min=r;minIdx=i-1;}
+    }
+    for(var i=1;i<5;i++){
+      var r=rates[i-1],pct=(r*100).toFixed(1);
+      var w=Math.min(100,r*100);
+      rows+="<tr data-i='"+(i-1)+"'><td>"+names[i-1]+" → "+names[i]+"</td>"+
+        "<td class='num'>"+v[i].toLocaleString()+"</td>"+
+        "<td class='num'>"+pct+"%</td>"+
+        "<td><div class='barwrap'><div class='bar' style='width:"+w+"%'></div></div></td></tr>";
+    }
+    document.getElementById("fn-rows").innerHTML=rows;
+    var tr=document.querySelector("#fn-rows tr[data-i='"+minIdx+"']");
+    if(tr){tr.className="worst";}
+    var total=v[0]>0?(v[4]/v[0]*100):0;
+    document.getElementById("fn-out").innerHTML=
+      "整體轉換率 <b>"+total.toFixed(2)+"%</b>（"+v[4].toLocaleString()+" ÷ "+v[0].toLocaleString()+"）"+
+      "<br>最窄的一段是 <b>"+names[minIdx]+" → "+names[minIdx+1]+"</b>，只有 "+(min*100).toFixed(1)+"%。"+
+      "<br>把這一段從 "+(min*100).toFixed(1)+"% 拉到 "+((min*1.5)*100).toFixed(1)+"%，整體會變成 "+
+      (total*1.5).toFixed(2)+"%——同樣的力氣花在最上面那一段，效果小得多。";
+  }
+  for(var i=0;i<5;i++){document.getElementById("fn-"+i).addEventListener("input",render);}
+  render();
+})();
+</script>
+</div>
+
 <blockquote>
 <p>漏斗不是一個總分，是一串接力。<strong>總轉換率好看不代表每一棒都跑得動，會斷的是最窄的那一段。</strong></p>
 </blockquote>
@@ -272,7 +348,7 @@ MathJax = {
 <p>我原本以為轉換率是＿＿＿，現在我會先問——是哪兩階之間、哪一段時間。</p>
 </blockquote>
 <h4>小作業</h4>
-<p>挑一個你在經營或關注的帳號、品牌或產品，畫出它的四階段漏斗，每一階至少填兩個實際在用的手法，並標出你認為最窄的那一段與理由。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+<p>挑一個你在經營或關注的帳號、品牌或產品，畫出它的四階段漏斗，每一階至少填兩個實際在用的手法，並標出你認為最窄的那一段與理由。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>

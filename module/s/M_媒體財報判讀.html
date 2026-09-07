@@ -93,6 +93,132 @@ MathJax = {
 <li>利息保障倍數：愈大愈好</li>
 </ul>
 <p><strong>動手</strong>：打開你課前挑的那家公司，算出這三組裡各挑兩個比率，寫在紙上。算不出來的，記下是卡在哪個欄位找不到——那個欄位就是你今天真正要學的東西。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 356" role="img" aria-label="財報三組比率" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<rect x="40" y="30" width="720" height="92" rx="6" fill="#fafcff" stroke="#0055cc" stroke-width="1.5"/>
+<text x="60" y="60" text-anchor="start" font-size="16" fill="#0055cc" font-weight="700">獲利能力</text>
+<text x="60" y="82" text-anchor="start" font-size="13" fill="#5b6b7c" font-weight="400">賺不賺錢</text>
+<text x="60" y="108" text-anchor="start" font-size="12" fill="#8a97a4" font-weight="400">四個率一路往下看，差在哪一層就是問題在哪一層</text>
+<rect x="230" y="56" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="292" y="81" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">毛利率</text>
+<rect x="362" y="56" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="424" y="81" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">營業利益率</text>
+<rect x="494" y="56" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="556" y="81" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">淨利率</text>
+<rect x="626" y="56" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="688" y="81" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">ROA</text>
+<rect x="40" y="138" width="720" height="92" rx="6" fill="#fafcff" stroke="#1a7f5a" stroke-width="1.5"/>
+<text x="60" y="168" text-anchor="start" font-size="16" fill="#1a7f5a" font-weight="700">經營能力</text>
+<text x="60" y="190" text-anchor="start" font-size="13" fill="#5b6b7c" font-weight="400">東西轉得動嗎</text>
+<text x="60" y="216" text-anchor="start" font-size="12" fill="#8a97a4" font-weight="400">收錢要快，付錢要慢</text>
+<rect x="230" y="164" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="292" y="189" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">存貨週轉率 ↑</text>
+<rect x="362" y="164" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="424" y="189" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">收帳天數 ↓</text>
+<rect x="494" y="164" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="556" y="189" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">應付週轉率 ↓</text>
+<rect x="626" y="164" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="688" y="189" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">固定資產週轉率 ↑</text>
+<rect x="40" y="246" width="720" height="92" rx="6" fill="#fafcff" stroke="#a4571b" stroke-width="1.5"/>
+<text x="60" y="276" text-anchor="start" font-size="16" fill="#a4571b" font-weight="700">償債能力</text>
+<text x="60" y="298" text-anchor="start" font-size="13" fill="#5b6b7c" font-weight="400">會不會倒</text>
+<text x="60" y="324" text-anchor="start" font-size="12" fill="#8a97a4" font-weight="400">門檻是經驗法則，跨產業要調整</text>
+<rect x="230" y="272" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="292" y="297" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">流動比 > 2</text>
+<rect x="362" y="272" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="424" y="297" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">速動比 > 1</text>
+<rect x="494" y="272" width="124" height="40" rx="6" fill="#ffffff" stroke="#dde6f2" stroke-width="1.5"/>
+<text x="556" y="297" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="400">利息保障倍數 ↑</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">三組比率回答三個不同的問題，缺一組就只問了一半。</figcaption>
+</figure>
+
+<div class="widget" id="fr-calc">
+<style>
+#fr-calc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#fr-calc h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#fr-calc .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#fr-calc label { font-size: .86rem; color: #444; }
+#fr-calc input[type=number] { font: inherit; font-size: .88rem; padding: .3rem .5rem;
+       border: 1px solid #c9d4e4; border-radius: 6px; width: 7rem; }
+#fr-calc button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#fr-calc button:hover { background: #eef4fd; }
+#fr-calc button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#fr-calc table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#fr-calc th, #fr-calc td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#fr-calc th { background: #f2f5fa; font-weight: 700; }
+#fr-calc .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#fr-calc .warn { background: #fff3f5; border-color: #e6b8c4; }
+#fr-calc .ok { background: #eef7f1; border-color: #a8d4bd; }
+#fr-calc .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#fr-calc td.v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+#fr-calc td.good { color: #1a6b45; }
+#fr-calc td.bad { color: #a83a52; }
+#fr-calc .grid { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+</style>
+<h5>財報三組比率計算器</h5>
+<p class="lede">填入一家公司的數字，看三組比率同時亮起來。門檻是跨產業的經驗法則，不是法律——
+真的要判斷，還要跟同業與自己過去比。</p>
+<div class="grid">
+<label>營業收入 <input type="number" id="fr-rev" value="1000"></label>
+<label>營業成本 <input type="number" id="fr-cogs" value="620"></label>
+<label>營業費用 <input type="number" id="fr-opex" value="250"></label>
+<label>稅後淨利 <input type="number" id="fr-ni" value="95"></label>
+<label>流動資產 <input type="number" id="fr-ca" value="520"></label>
+<label>存貨 <input type="number" id="fr-inv" value="180"></label>
+<label>流動負債 <input type="number" id="fr-cl" value="240"></label>
+<label>應收帳款 <input type="number" id="fr-ar" value="150"></label>
+<label>營業活動現金流 <input type="number" id="fr-ocf" value="60"></label>
+</div>
+<table><thead><tr><th>比率</th><th>數值</th><th>常見門檻</th><th>讀出什麼</th></tr></thead>
+<tbody id="fr-rows"></tbody></table>
+<div class="out" id="fr-out"></div>
+<p class="hint">預設值是刻意設計的：帳上有淨利，但 OCF ÷ 淨利偏低。這正是「有利潤不等於有現金」最常見的樣子。</p>
+<script>
+(function(){
+  function n(id){return Number(document.getElementById("fr-"+id).value)||0;}
+  function row(name,val,fmt,pass,thr,read){
+    var cls=pass===null?"v":(pass?"v good":"v bad");
+    return "<tr><td>"+name+"</td><td class='"+cls+"'>"+fmt+"</td><td>"+thr+"</td><td>"+read+"</td></tr>";
+  }
+  function render(){
+    var rev=n("rev"),cogs=n("cogs"),opex=n("opex"),ni=n("ni"),ca=n("ca"),inv=n("inv"),
+        cl=n("cl"),ar=n("ar"),ocf=n("ocf");
+    var gm=rev?(rev-cogs)/rev:0, om=rev?(rev-cogs-opex)/rev:0, nm=rev?ni/rev:0;
+    var cr=cl?ca/cl:0, qr=cl?(ca-inv)/cl:0;
+    var dso=rev?ar/rev*365:0;
+    var oq=ni?ocf/ni:0;
+    var r="";
+    r+=row("毛利率",(gm*100).toFixed(1)+"%","",null,"跟同業比","扣掉成本還剩多少");
+    r+=row("營業利益率",(om*100).toFixed(1)+"%","",null,"跟自己過去比","本業真正的賺錢能力");
+    r+=row("淨利率",(nm*100).toFixed(1)+"%","",null,"—","毛利好但淨利差＝問題在費用或業外");
+    r+=row("流動比率",(cr*100).toFixed(0)+"%","",cr>2,"> 200%","短期還得出錢嗎");
+    r+=row("速動比率",(qr*100).toFixed(0)+"%","",qr>1,"> 100%","不靠賣存貨還得出錢嗎");
+    r+=row("應收帳款天數",dso.toFixed(0)+" 天","",dso<60,"< 60 天算體質強","賣給誰、怎麼收錢");
+    r+=row("OCF ÷ 淨利",(oq*100).toFixed(0)+"%","",oq>0.8,"> 80%","帳上的利潤有沒有變成現金");
+    document.getElementById("fr-rows").innerHTML=r;
+    var o=document.getElementById("fr-out");
+    var bad=[];
+    if(cr<=2){bad.push("流動比率");}
+    if(qr<=1){bad.push("速動比率");}
+    if(oq<=0.8){bad.push("OCF ÷ 淨利");}
+    if(dso>=60){bad.push("收帳天數");}
+    if(bad.length===0){o.className="out ok";o.innerHTML="四個有門檻的項目都過關。接著要做的是跟<b>同業</b>與<b>自己過去兩年</b>比，單看一期沒有意義。";}
+    else{o.className="out warn";o.innerHTML="沒過門檻的是：<b>"+bad.join("、")+"</b>。"+
+      (bad.indexOf("OCF ÷ 淨利")>-1?"<br>其中 OCF ÷ 淨利偏低最值得追——它代表帳上的利潤沒有變成現金，可能卡在應收或存貨。":"");}
+  }
+  var ids=["rev","cogs","opex","ni","ca","inv","cl","ar","ocf"];
+  for(var i=0;i<ids.length;i++){document.getElementById("fr-"+ids[i]).addEventListener("input",render);}
+  render();
+})();
+</script>
+</div>
+
 <blockquote>
 <p>三組比率回答三個不同的問題。只看獲利能力，就是只問「它今年賺了嗎」，沒問「它明年還在嗎」。</p>
 </blockquote>
@@ -291,7 +417,7 @@ MathJax = {
 <p>我原本以為看一家公司好不好要看＿＿＿，現在我會先看——＿＿＿。</p>
 </blockquote>
 <h4>小作業</h4>
-<p>挑一家上市的媒體或內容公司，抓連續兩年的財報，做一張對照表（三組比率＋三條現金流），寫 300 字說明它這兩年變好還是變壞、證據是哪幾個數字。請用 AI 輔助計算，並附上你查核出的錯誤與修正。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+<p>挑一家上市的媒體或內容公司，抓連續兩年的財報，做一張對照表（三組比率＋三條現金流），寫 300 字說明它這兩年變好還是變壞、證據是哪幾個數字。請用 AI 輔助計算，並附上你查核出的錯誤與修正。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>

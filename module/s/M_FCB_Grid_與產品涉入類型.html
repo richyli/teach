@@ -127,6 +127,77 @@ MathJax = {
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">兩個軸各答一次，就知道消費者會先做哪一件事。</figcaption>
 </figure>
 
+<div class="widget" id="fcb-pick">
+<style>
+#fcb-pick { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#fcb-pick h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#fcb-pick .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#fcb-pick label { font-size: .86rem; color: #444; }
+#fcb-pick input[type=number], #fcb-pick input[type=text] { font: inherit; font-size: .88rem;
+       padding: .3rem .5rem; border: 1px solid #c9d4e4; border-radius: 6px; width: 7.5rem; }
+#fcb-pick button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#fcb-pick button:hover { background: #eef4fd; }
+#fcb-pick button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#fcb-pick table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#fcb-pick th, #fcb-pick td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#fcb-pick th { background: #f2f5fa; font-weight: 700; }
+#fcb-pick .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#fcb-pick .warn { background: #fff3f5; border-color: #e6b8c4; }
+#fcb-pick .ok { background: #eef7f1; border-color: #a8d4bd; }
+#fcb-pick .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#fcb-pick .q { margin: .6rem 0 .2rem; font-size: .9rem; font-weight: 700; }
+</style>
+<h5>這個產品落在哪一象限？</h5>
+<p class="lede">想一個你最近買過的東西，回答兩個問題，看它落在哪一格、以及該用什麼廣告。
+兩個軸是獨立的——貴不一定高涉入，感性不一定低涉入。</p>
+<div class="q">1. 這次購買，你會不會去查資料、比較好幾家？</div>
+<button data-ax="inv" data-v="high">會，我查了很久</button>
+<button data-ax="inv" data-v="low">不會，很快就決定</button>
+<div class="q">2. 最後推你決定的，比較像哪一種？</div>
+<button data-ax="app" data-v="think">規格、價格、功能（用想的）</button>
+<button data-ax="app" data-v="feel">感覺、形象、當下想要（用感覺的）</button>
+<div class="out" id="fcb-out">兩題都選完就會出現判斷。</div>
+<script>
+(function(){
+  var st={inv:null,app:null};
+  var map={
+    "high|think":["資訊型 Informative","Learn → Feel → Do",
+      "歷程很長、反覆比較。適合：資訊型廣告、內容行銷、規格比較、深度評測。",
+      "典型：房、車、專業設備"],
+    "high|feel":["情感型 Affective","Feel → Learn → Do",
+      "歷程長而且沉浸。適合：品牌廣告、公關、形象經營。","典型：精品、珠寶"],
+    "low|think":["習慣型 Habitual","Do → Learn → Feel",
+      "決策快、高頻。適合：促銷、賣場端 POP、試用品、廣播電視廣告。","典型：肥皂、洗衣精"],
+    "low|feel":["滿足型 Satisfaction","Do → Feel → Learn",
+      "快，幾乎不查資料。適合：戶外看板、口碑、品牌與情緒廣告。","典型：餅乾、菸、酒"]
+  };
+  function render(){
+    var o=document.getElementById("fcb-out");
+    if(!st.inv||!st.app){o.className="out";o.innerHTML="兩題都選完就會出現判斷。";return;}
+    var d=map[st.inv+"|"+st.app];
+    o.className="out ok";
+    o.innerHTML="<b>"+d[0]+"</b>　決策順序：<b>"+d[1]+"</b><br>"+d[2]+"<br><span style='color:#666'>"+d[3]+"</span>"+
+      "<br><br>回頭檢查：你當時真的看到的廣告或內容，和這一格對得上嗎？對不上的話，是你判斷錯了，還是那個品牌把自己放錯格？";
+  }
+  var bs=document.querySelectorAll("#fcb-pick button");
+  for(var i=0;i<bs.length;i++){
+    bs[i].addEventListener("click",function(){
+      var ax=this.getAttribute("data-ax");
+      st[ax]=this.getAttribute("data-v");
+      var sib=document.querySelectorAll("#fcb-pick button[data-ax='"+ax+"']");
+      for(var j=0;j<sib.length;j++){sib[j].className="";}
+      this.className="on";render();
+    });
+  }
+})();
+</script>
+</div>
+
 <p><strong>兩個低涉入象限最違反直覺</strong>：習慣型與滿足型都是 <strong>Do 排在最前面</strong>——先買了再說，之後才形成想法或感覺。牙膏、洗衣精、餅乾、啤酒都是這樣買的。<strong>對這類產品做深度說明，是在對一個根本不打算查資料的人上課。</strong></p>
 <blockquote>
 <p>涉入程度決定歷程有多長，理性或感性決定入口是資訊還是感受。<strong>兩個軸各答一次，就知道消費者會先做哪一件事。</strong></p>
@@ -252,7 +323,7 @@ MathJax = {
 <p>我原本以為好的內容對什麼產品都有用，現在我會先問——＿＿＿。</p>
 </blockquote>
 <h4>小作業</h4>
-<p>挑一個你熟悉的品牌，找出它三則實際投放的廣告或貼文，判斷它把自己放在哪一象限，並寫 300 字說明證據是什麼、以及你認為它有沒有放錯。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+<p>挑一個你熟悉的品牌，找出它三則實際投放的廣告或貼文，判斷它把自己放在哪一象限，並寫 300 字說明證據是什麼、以及你認為它有沒有放錯。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>

@@ -86,6 +86,101 @@ MathJax = {
 </tbody>
 </table>
 <p><strong>動手</strong>：每人拿出一個自己手上真實的數字（IG 後台、YouTube 後台、社團貼文都可以），寫下你原本想問的那句話，然後用三個檢查改寫成一句問得出答案的問題。改寫完唸給隔壁的人聽，讓他挑你還缺哪一項。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 280" role="img" aria-label="把壞問題改寫成好問題的三個檢查" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<rect x="40" y="34" width="300" height="92" rx="6" fill="#fdeef2" stroke="#e0a8b6" stroke-width="1.5"/>
+<text x="190" y="62" text-anchor="middle" font-size="15" fill="#8a3a52" font-weight="700">壞問題</text>
+<text x="190" y="90" text-anchor="middle" font-size="13.5" fill="#8a3a52" font-weight="400">「我這篇觸及 8,000 好嗎？」</text>
+<text x="190" y="112" text-anchor="middle" font-size="11.5" fill="#a8788a" font-weight="400">沒有分母、沒有比較對象、沒有時間窗</text>
+<defs><marker id="a2" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#0055cc"/></marker></defs>
+<path d="M348 80 L448 80" stroke="#0055cc" stroke-width="2" marker-end="url(#a2)"/>
+<rect x="460" y="34" width="300" height="92" rx="6" fill="#eef7f1" stroke="#8fc0a6" stroke-width="1.5"/>
+<text x="610" y="62" text-anchor="middle" font-size="15" fill="#1a6b45" font-weight="700">好問題</text>
+<text x="610" y="88" text-anchor="middle" font-size="12.5" fill="#1a6b45" font-weight="400">「這篇的觸及，跟我近三個月</text>
+<text x="610" y="106" text-anchor="middle" font-size="12.5" fill="#1a6b45" font-weight="400">同類型貼文的中位數比，差多少？」</text>
+<rect x="40" y="160" width="230" height="76" rx="6" fill="#f7faff" stroke="#c9d9ef" stroke-width="1.5"/>
+<circle cx="70" cy="188" r="14" fill="#0055cc"/>
+<text x="70" y="193" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">1</text>
+<text x="95" y="193" text-anchor="start" font-size="14.5" fill="#22303f" font-weight="700">分母</text>
+<text x="155" y="220" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">這個數字是誰除以誰？</text>
+<rect x="285" y="160" width="230" height="76" rx="6" fill="#f7faff" stroke="#c9d9ef" stroke-width="1.5"/>
+<circle cx="315" cy="188" r="14" fill="#0055cc"/>
+<text x="315" y="193" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">2</text>
+<text x="340" y="193" text-anchor="start" font-size="14.5" fill="#22303f" font-weight="700">比較對象</text>
+<text x="400" y="220" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">跟自己的上週、同類的別人、還是目標？</text>
+<rect x="530" y="160" width="230" height="76" rx="6" fill="#f7faff" stroke="#c9d9ef" stroke-width="1.5"/>
+<circle cx="560" cy="188" r="14" fill="#0055cc"/>
+<text x="560" y="193" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="700">3</text>
+<text x="585" y="193" text-anchor="start" font-size="14.5" fill="#22303f" font-weight="700">時間窗</text>
+<text x="645" y="220" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">哪一段？裡面有沒有特殊事件？</text>
+<text x="400" y="262" text-anchor="middle" font-size="12.5" fill="#0055cc" font-weight="400">最後一問：答案是 A 我會做什麼、是 B 我會做什麼？兩邊一樣，這題就不值得問</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">答案出來以後行動不會變的問題，叫好奇心，不叫分析。</figcaption>
+</figure>
+
+<div class="widget" id="gq-check">
+<style>
+#gq-check { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#gq-check h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#gq-check .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#gq-check label { font-size: .86rem; color: #444; }
+#gq-check input[type=number], #gq-check input[type=text] { font: inherit; font-size: .88rem;
+       padding: .3rem .5rem; border: 1px solid #c9d4e4; border-radius: 6px; width: 7.5rem; }
+#gq-check button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#gq-check button:hover { background: #eef4fd; }
+#gq-check button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#gq-check table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#gq-check th, #gq-check td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#gq-check th { background: #f2f5fa; font-weight: 700; }
+#gq-check .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#gq-check .warn { background: #fff3f5; border-color: #e6b8c4; }
+#gq-check .ok { background: #eef7f1; border-color: #a8d4bd; }
+#gq-check .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#gq-check textarea { font: inherit; font-size: .9rem; width: 100%; box-sizing: border-box;
+       min-height: 4.2rem; padding: .5rem .6rem; border: 1px solid #c9d4e4; border-radius: 6px; }
+#gq-check .chk { margin: .5rem 0; font-size: .9rem; }
+</style>
+<h5>好問題檢查器</h5>
+<p class="lede">把你想問的那句話貼進來，然後誠實回答三個檢查。三項都有，才是問得出答案的問題。</p>
+<textarea id="gq-text" placeholder="例：我這篇貼文的觸及 8,000，這樣算好嗎？"></textarea>
+<div class="chk"><label><input type="checkbox" id="gq-1"> <b>分母</b>：這個數字是誰除以誰？我講清楚了嗎</label></div>
+<div class="chk"><label><input type="checkbox" id="gq-2"> <b>比較對象</b>：跟自己的上週、同類的別人、還是目標比？</label></div>
+<div class="chk"><label><input type="checkbox" id="gq-3"> <b>時間窗</b>：看的是哪一段？裡面有沒有特殊事件？</label></div>
+<div class="chk"><label><input type="checkbox" id="gq-4"> <b>行動檢驗</b>：答案是 A 我會做什麼、是 B 我會做什麼？兩邊不一樣</label></div>
+<div class="out" id="gq-out">勾完會給你判斷。</div>
+<script>
+(function(){
+  var ids=["gq-1","gq-2","gq-3","gq-4"];
+  var names=["分母","比較對象","時間窗","行動檢驗"];
+  function render(){
+    var miss=[];
+    for(var i=0;i<ids.length;i++){if(!document.getElementById(ids[i]).checked){miss.push(names[i]);}}
+    var o=document.getElementById("gq-out");
+    var t=(document.getElementById("gq-text").value||"").trim();
+    if(miss.length===0){
+      o.className="out ok";
+      o.innerHTML="四項都有了。<br>最後唸一次你寫的那句話："+(t?"<b>"+t+"</b>":"（還沒填）")+
+        "<br>如果它現在讀起來變長變囉嗦，那是正常的——問得出答案的問題本來就比較長。";
+    }else{
+      o.className="out warn";
+      o.innerHTML="還缺 <b>"+miss.join("、")+"</b>。<br>"+
+        (miss.indexOf("行動檢驗")>-1&&miss.length===1
+          ? "前三項到齊了，但答案出來以後你的行動如果不會變，這個問題只是好奇心。"
+          : "缺任何一項，答案都會飄——別人補不出你少講的那部分。");
+    }
+  }
+  for(var i=0;i<ids.length;i++){document.getElementById(ids[i]).addEventListener("change",render);}
+  document.getElementById("gq-text").addEventListener("input",render);
+  render();
+})();
+</script>
+</div>
+
 <blockquote>
 <p>「這樣算好嗎」不是問題，是感想。問題要有分母、有比較對象、有時間窗，三個到齊才會有答案。</p>
 </blockquote>
@@ -129,6 +224,37 @@ MathJax = {
 </tr>
 </tbody>
 </table>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 270" role="img" aria-label="指標如何進入選稿" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<rect x="30" y="44" width="168" height="82" rx="6" fill="#eaf1fc" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="114" y="74" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">編輯監看點擊</text>
+<text x="114" y="148" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">Vu 2014</text>
+<text x="114" y="165" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">318 位美國編輯</text>
+<path d="M202 85 L222 85" stroke="#0055cc" stroke-width="2" marker-end="url(#a2)"/>
+<rect x="225" y="44" width="168" height="82" rx="6" fill="#eaf1fc" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="309" y="74" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">高流量文章</text>
+<text x="309" y="94" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">放到更顯著位置</text>
+<text x="309" y="148" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">Vu 2014</text>
+<text x="309" y="165" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">最常見的調整</text>
+<path d="M397 85 L417 85" stroke="#0055cc" stroke-width="2" marker-end="url(#a2)"/>
+<rect x="420" y="44" width="168" height="82" rx="6" fill="#eaf1fc" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="504" y="74" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">高點擊事件線</text>
+<text x="504" y="94" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">後續獲更多報導</text>
+<text x="504" y="148" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">Welbers 2016</text>
+<text x="504" y="165" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">荷蘭 5 報交叉落後</text>
+<path d="M592 85 L612 85" stroke="#0055cc" stroke-width="2" marker-end="url(#a2)"/>
+<rect x="615" y="44" width="168" height="82" rx="6" fill="#eaf1fc" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="699" y="74" text-anchor="middle" font-size="13" fill="#22303f" font-weight="600">內容整體變形</text>
+<text x="699" y="148" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">Fürst 2020</text>
+<text x="699" y="165" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">63 份研究：多為負面</text>
+<defs><marker id="a2" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#0055cc"/></marker></defs>
+<rect x="30" y="196" width="740" height="58" rx="6" fill="#fff8e8" stroke="#e6c964" stroke-width="1.5"/>
+<text x="400" y="220" text-anchor="middle" font-size="13.5" fill="#7a5b00" font-weight="700">而編輯普遍否認點擊影響選稿（Welbers 2016 的說做落差）</text>
+<text x="400" y="242" text-anchor="middle" font-size="12" fill="#7a5b00" font-weight="400">「最多人閱讀」使文章被移出首頁的風險降約 25%，且品質報比小報更明顯（Bright & Nicholls 2014）</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">變形不是從作弊開始，是從「只是把表現好的放前面一點」開始。</figcaption>
+</figure>
+
 <p><strong>三個要學生自己看出來的點</strong>：</p>
 <ol>
 <li><strong>變形不是從「作弊」開始的</strong>，是從「我們只是把表現好的放前面一點」開始的。Vu（2014）那個「最常見的調整」聽起來完全合理。</li>
@@ -238,7 +364,7 @@ MathJax = {
 <p>我原本以為有數據就比較客觀，現在我會先問——＿＿＿。</p>
 </blockquote>
 <h4>小作業</h4>
-<p>挑一個你自己在經營或關注的帳號，寫出三個好問題（每個都要有分母、比較對象、時間窗），並各補一行「答案是什麼的話，我會怎麼做」。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+<p>挑一個你自己在經營或關注的帳號，寫出三個好問題（每個都要有分母、比較對象、時間窗），並各補一行「答案是什麼的話，我會怎麼做」。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>

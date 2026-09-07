@@ -107,10 +107,100 @@ MathJax = {
 </tbody>
 </table>
 <p>授課方式比例：講述 50%／數位學習 30%／討論 10%／小組活動 10%。本課採半翻轉，部分週次線上學習，課堂時間留給工作坊。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 220" role="img" aria-label="課程評分比重" style="width:100%;height:auto;max-width:740px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<rect x="50" y="60" width="455" height="54" rx="3" fill="#0055cc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="277.5" y="84" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700">35%</text>
+<text x="277.5" y="104" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="400">作業與小考</text>
+<rect x="509" y="60" width="260" height="54" rx="3" fill="#1a7f5a" stroke="#1a7f5a" stroke-width="1.5"/>
+<text x="639.0" y="84" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700">20%</text>
+<text x="639.0" y="104" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="400">證照加分</text>
+<rect x="773" y="60" width="195" height="54" rx="3" fill="#1a7f5a" stroke="#1a7f5a" stroke-width="1.5"/>
+<text x="870.5" y="84" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700">15%</text>
+<text x="870.5" y="104" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="400">期中 GA 證照考</text>
+<rect x="972" y="60" width="130" height="54" rx="3" fill="#0055cc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="1037.0" y="84" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700">10%</text>
+<text x="1037.0" y="104" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="400">AI 分析報告</text>
+<rect x="1106" y="60" width="260" height="54" rx="3" fill="#5b6b7c" stroke="#5b6b7c" stroke-width="1.5"/>
+<text x="1236.0" y="84" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700">20%</text>
+<text x="1236.0" y="104" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="400">期末考</text>
+<text x="400" y="40" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">一學期的分數怎麼分配</text>
+<rect x="50" y="140" width="340" height="62" rx="6" fill="#eef7f1" stroke="#1a7f5a" stroke-width="1.5"/>
+<text x="220" y="165" text-anchor="middle" font-size="16" fill="#1a7f5a" font-weight="700">證照相關合計 35%</text>
+<text x="220" y="187" text-anchor="middle" font-size="12.5" fill="#4a6b5a" font-weight="400">證照加分 20% ＋ 期中證照考 15%</text>
+<rect x="410" y="140" width="340" height="62" rx="6" fill="#f2f2f2" stroke="#aaa" stroke-width="1.5"/>
+<text x="580" y="165" text-anchor="middle" font-size="16" fill="#555" font-weight="700">期末考 20%</text>
+<text x="580" y="187" text-anchor="middle" font-size="12.5" fill="#666" font-weight="400">準備期是 W3–W8，不是期末那一週</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">證照相關比期末考重，而它的準備期在學期前半。</figcaption>
+</figure>
+
 <p><strong>為什麼作業要你寫「AI 哪裡錯」。</strong> 因為只看最終答案的話，抄 AI 和自己想的成品長得一模一樣，改作業的人分不出來——而<strong>業界分得出來，通常是在你出錯的那一天分出來的</strong>。把查核過程寫下來，等於逼你真的查一次。</p>
 <blockquote>
 <p>評分不獎勵「用了 AI」，也不懲罰「用了 AI」。它獎勵的是你在哪裡不相信它、以及你怎麼證明自己是對的。</p>
 </blockquote>
+<div class="widget" id="gs-sim">
+<style>
+#gs-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#gs-sim h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#gs-sim .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#gs-sim label { font-size: .86rem; color: #444; }
+#gs-sim input[type=number] { font: inherit; font-size: .88rem; padding: .3rem .5rem;
+       border: 1px solid #c9d4e4; border-radius: 6px; width: 7rem; }
+#gs-sim button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#gs-sim button:hover { background: #eef4fd; }
+#gs-sim button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#gs-sim table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#gs-sim th, #gs-sim td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#gs-sim th { background: #f2f5fa; font-weight: 700; }
+#gs-sim .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#gs-sim .warn { background: #fff3f5; border-color: #e6b8c4; }
+#gs-sim .ok { background: #eef7f1; border-color: #a8d4bd; }
+#gs-sim .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#gs-sim input[type=range] { width: 11rem; vertical-align: middle; }
+#gs-sim .row { margin: .45rem 0; font-size: .9rem; }
+#gs-sim .big { font-size: 1.6rem; font-weight: 700; color: #24528f; }
+</style>
+<h5>學期成績試算</h5>
+<p class="lede">拉一拉看每一項各拿幾分、總分會變成多少。比重是課綱上的實際數字。</p>
+<div class="row">作業與小考（35%）<input type="range" id="gs-a" min="0" max="100" value="80"> <span id="gs-av">80</span></div>
+<div class="row">證照加分（20%）<input type="range" id="gs-b" min="0" max="100" value="0"> <span id="gs-bv">0</span></div>
+<div class="row">期中 GA 證照考（15%）<input type="range" id="gs-c" min="0" max="100" value="70"> <span id="gs-cv">70</span></div>
+<div class="row">AI 分析報告（10%）<input type="range" id="gs-d" min="0" max="100" value="80"> <span id="gs-dv">80</span></div>
+<div class="row">期末考（20%）<input type="range" id="gs-e" min="0" max="100" value="70"> <span id="gs-ev">70</span></div>
+<div class="out" id="gs-out"></div>
+<p class="hint">預設值是「作業有寫、但沒去考證照」的樣子。把證照那一條拉到 80 看看差多少。</p>
+<script>
+(function(){
+  var W=[["a",35],["b",20],["c",15],["d",10],["e",20]];
+  function render(){
+    var t=0;
+    for(var i=0;i<W.length;i++){
+      var v=Number(document.getElementById("gs-"+W[i][0]).value);
+      document.getElementById("gs-"+W[i][0]+"v").textContent=v;
+      t+=v*W[i][1]/100;
+    }
+    var cert=Number(document.getElementById("gs-b").value)*20/100
+            +Number(document.getElementById("gs-c").value)*15/100;
+    var o=document.getElementById("gs-out");
+    o.className="out"+(t>=60?" ok":" warn");
+    o.innerHTML="總分 <span class='big'>"+t.toFixed(1)+"</span>"+
+      "<br>其中證照相關（證照加分＋期中證照考）貢獻了 <b>"+cert.toFixed(1)+" 分</b>，"+
+      "滿分是 35 分——比期末考的 20 分還重。"+
+      (Number(document.getElementById("gs-b").value)===0
+        ? "<br><b>你現在沒有拿證照加分，等於一開始就少了 20 分的空間。</b>" : "");
+  }
+  for(var i=0;i<W.length;i++){document.getElementById("gs-"+W[i][0]).addEventListener("input",render);}
+  render();
+})();
+</script>
+</div>
+
 <hr />
 <h3>證照路徑與分組</h3>
 <ul>
@@ -188,7 +278,7 @@ MathJax = {
 <li>開好 Google Skillshop 帳號</li>
 <li>到認證頁面看當期公告，把題數、及格標準、有效期抄下來</li>
 <li>把你預定的考試日期寫進行事曆，下週上課回報那個日期</li>
-</ol><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+</ol><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>

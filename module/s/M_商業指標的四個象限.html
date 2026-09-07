@@ -115,6 +115,94 @@ MathJax = {
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">任何指標先問兩題：內部還是外部、想增加還是想減少。</figcaption>
 </figure>
 
+<div class="widget" id="mq-drill">
+<style>
+#mq-drill { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#mq-drill h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#mq-drill .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#mq-drill label { font-size: .86rem; color: #444; }
+#mq-drill input[type=number], #mq-drill input[type=text] { font: inherit; font-size: .88rem;
+       padding: .3rem .5rem; border: 1px solid #c9d4e4; border-radius: 6px; width: 7.5rem; }
+#mq-drill button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+       cursor: pointer; }
+#mq-drill button:hover { background: #eef4fd; }
+#mq-drill button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#mq-drill table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#mq-drill th, #mq-drill td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#mq-drill th { background: #f2f5fa; font-weight: 700; }
+#mq-drill .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.75; }
+#mq-drill .warn { background: #fff3f5; border-color: #e6b8c4; }
+#mq-drill .ok { background: #eef7f1; border-color: #a8d4bd; }
+#mq-drill .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+
+#mq-drill .item { font-size: 1.05rem; font-weight: 700; margin: .6rem 0 .4rem; }
+#mq-drill .score { color: #666; font-size: .82rem; }
+</style>
+<h5>這個指標在哪一格？</h5>
+<p class="lede">兩題就定位：公司控制得了嗎、公司希望它變大還是變小。答完會告訴你這一格通常綁著誰的考績。</p>
+<div class="item" id="mq-item"></div>
+<div>
+<button data-ax="loc" data-v="in">內部（公司控制得了）</button>
+<button data-ax="loc" data-v="out">外部（外面決定的）</button>
+</div>
+<div>
+<button data-ax="dir" data-v="up">想增加</button>
+<button data-ax="dir" data-v="down">想減少</button>
+</div>
+<div class="out" id="mq-out">選完兩題就會判分。</div>
+<p class="score" id="mq-score"></p>
+<button id="mq-next" style="margin-top:.6rem">下一題</button>
+<script>
+(function(){
+  var Q=[
+   ["客訴數量","in","down","Weakness 弱點","客服與品管的考績"],
+   ["市場占有率","out","up","Opportunity 機會","策略與業務的考績"],
+   ["毛利率","in","up","Strength 優勢","營運與財務的考績"],
+   ["資安事件數","in","down","Weakness 弱點","資安與法務的考績"],
+   ["新訂閱數","out","up","Opportunity 機會","行銷與業務的考績"],
+   ["獲客成本 CAC","in","down","Strength 優勢（成本面）","行銷的考績"],
+   ["競爭者數量","out","down","Threat 威脅","策略的考績"],
+   ["顧客流失率 Churn","out","down","Threat 威脅","產品與客服的考績"]
+  ];
+  var i=0,st={loc:null,dir:null},right=0,done=0;
+  function show(){
+    st={loc:null,dir:null};
+    document.getElementById("mq-item").textContent=Q[i][0];
+    var bs=document.querySelectorAll("#mq-drill button[data-ax]");
+    for(var j=0;j<bs.length;j++){bs[j].className="";}
+    var o=document.getElementById("mq-out");o.className="out";o.textContent="選完兩題就會判分。";
+  }
+  function check(){
+    if(!st.loc||!st.dir){return;}
+    var q=Q[i],o=document.getElementById("mq-out");
+    var good=(st.loc===q[1]&&st.dir===q[2]);
+    done++;if(good){right++;}
+    o.className="out "+(good?"ok":"warn");
+    o.innerHTML=(good?"<b>對。</b>":"<b>再想一次。</b>")+
+      "「"+q[0]+"」是<b>"+(q[1]==="in"?"內部":"外部")+"</b>、公司<b>想"+(q[2]==="up"?"增加":"減少")+"</b>，"+
+      "落在 <b>"+q[3]+"</b>。這一格通常綁著"+q[4]+"。";
+    document.getElementById("mq-score").textContent="已作答 "+done+" 題，答對 "+right+" 題。";
+  }
+  var bs=document.querySelectorAll("#mq-drill button[data-ax]");
+  for(var k=0;k<bs.length;k++){
+    bs[k].addEventListener("click",function(){
+      var ax=this.getAttribute("data-ax");st[ax]=this.getAttribute("data-v");
+      var sib=document.querySelectorAll("#mq-drill button[data-ax='"+ax+"']");
+      for(var j=0;j<sib.length;j++){sib[j].className="";}
+      this.className="on";check();
+    });
+  }
+  document.getElementById("mq-next").addEventListener("click",function(){
+    i=(i+1)%Q.length;show();
+  });
+  show();
+})();
+</script>
+</div>
+
 <p><strong>怎麼用這張表</strong>：拿到任何一個指標，問兩句話——「這是公司自己控制得了的，還是外面決定的？」「公司希望它往上還是往下？」兩題答完，格子就出來了。格子出來，你就知道<strong>這個數字該拿去說服誰</strong>。</p>
 <blockquote>
 <p>SWOT 在別的課上是四個形容詞，在這門課裡是四堆可以被量的數字。能被量，才能被爭取。</p>
@@ -217,7 +305,7 @@ MathJax = {
 <p>我原本以為＿＿＿是重要的數字，現在我會先問——它綁著誰的考績？</p>
 </blockquote>
 <h4>小作業</h4>
-<p>找一家你關注的媒體或內容品牌，列出你猜它最在乎的三個指標，各標出象限，並寫一句「我怎麼驗證這個猜測」。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 11:57</p>
+<p>找一家你關注的媒體或內容品牌，列出你猜它最在乎的三個指標，各標出象限，並寫一句「我怎麼驗證這個猜測」。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
 </div>
 </body>
 </html>
