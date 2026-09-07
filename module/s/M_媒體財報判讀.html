@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>媒體財報判讀</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>媒體財報判讀</h1></div><p>在這個 45 分鐘的實作中，我們要學習用三組比率讀出一家媒體公司賺不賺錢、轉得動嗎、會不會倒，而不是背下財報比率的公式。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>用<strong>獲利、經營、償債</strong>三組比率<strong>讀出</strong>一家公司的體質</td>
+<td>一家帳面上有賺錢的公司，為什麼會突然倒？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>分辨</strong>「有利潤」與「有現金」的差別，說得出兩者為什麼會背離</td>
+<td>2021 年恆大的問題不是沒有資產，是<strong>現金進不來</strong>——這在財報上會先出現在哪一行？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>同一家公司，散戶與機構投資人為什麼盯不同的數字</td>
+<td>為什麼公司公布「營收創新高」的同一天，股價會跌？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>找一家上市媒體或內容公司的財報（公開資訊觀測站、公司投資人關係頁都可以），把主要數字貼給 AI：</p>
+<blockquote>
+<p>「這是一家公司的財報數字：【貼上】。請計算並列出：毛利率、營業利益率、淨利率、流動比率、速動比率、應收帳款週轉天數、營業活動現金流。<strong>每一個都要把算式和用到的欄位寫出來。</strong>」</p>
+</blockquote>
+<p>然後追這一句：</p>
+<blockquote>
+<p>「你剛才用的每一個欄位，請告訴我它在原始報表的哪一張表、哪一行。有任何一個是你<strong>推估</strong>而不是<strong>讀到</strong>的，直接標出來。」</p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>財報是這門課裡最容易讓 AI 出錯的材料：欄位名稱相近（營業利益 vs 稅前淨利）、單位不一（千元 vs 百萬元）、期間不一（單季 vs 累計）。<strong>它算得飛快，也錯得很自然。</strong> 這一節就是要你有能力抓。</p></div>
+<hr />
+<h3>進行方式 ① 三組比率，三個問題</h3>
+<ul>
+<li>財報比率再多，先問三題就夠：<strong>賺不賺錢（獲利）、東西轉得動嗎（經營）、會不會倒（償債）。</strong></li>
+<li>每一組都有幾條課堂上直接用的門檻值，<strong>是經驗法則不是法律</strong>，跨產業要調整。</li>
+<li>這一段結束你手上要有三組算好的數字，不是三個定義。</li>
+</ul>
+<p><strong>① 獲利能力——賺不賺錢</strong></p>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>看什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>損益表層級</td>
+<td>營業額與成長率、毛利率、營業利益率、淨利率；以及成本有沒有降下來</td>
+</tr>
+<tr>
+<td>資產負債表層級</td>
+<td>資產報酬率 ROA</td>
+</tr>
+</tbody>
+</table>
+<p>四個率要<strong>一路往下看</strong>：毛利率好但淨利率差，代表問題出在營業費用；營業利益率好但淨利率差，代表問題出在業外或利息。</p>
+<p><strong>② 經營能力——東西轉得動嗎</strong></p>
+<ul>
+<li>資產報酬率 ROA：愈高愈好</li>
+<li>存貨週轉率：愈高愈好；<strong>銷貨天數愈低愈好</strong>（COGS ÷ 存貨）</li>
+<li>應收帳款週轉率：愈大愈好，<strong>收帳天數愈小愈好</strong></li>
+<li>應付帳款週轉率：通常低一點比較好（付得慢，現金留在手上），<strong>最好低於應收帳款週轉率</strong>——也就是<strong>收錢比付錢快</strong></li>
+<li>固定資產週轉率：通常愈大愈好</li>
+</ul>
+<p><strong>③ 償債能力——會不會倒</strong></p>
+<ul>
+<li>流動比率＝流動資產 ÷ 流動負債 × 100%，<strong>通常看 &gt; 2</strong></li>
+<li>速動比率＝（流動資產 − 存貨 − 預付款項）÷ 流動負債 × 100%，<strong>通常看 &gt; 1</strong></li>
+<li>利息保障倍數：愈大愈好</li>
+</ul>
+<p><strong>動手</strong>：打開你課前挑的那家公司，算出這三組裡各挑兩個比率，寫在紙上。算不出來的，記下是卡在哪個欄位找不到——那個欄位就是你今天真正要學的東西。</p>
+<blockquote>
+<p>三組比率回答三個不同的問題。<strong>只看獲利能力，就是只問「它今年賺了嗎」，沒問「它明年還在嗎」。</strong></p>
+</blockquote>
+<hr />
+<h3>進行方式 ② 利潤不等於現金</h3>
+<ul>
+<li>帳上有利潤和戶頭裡有錢是兩件事，<strong>倒閉的公司多半死在後者。</strong></li>
+<li>三條現金流的正負號組合，比單一數字更能說明一家公司的處境。</li>
+<li>2021 年恆大是最好的教材：問題不是沒有資產，是<strong>現金進不來、又借不到新的。</strong></li>
+</ul>
+<p><strong>三條現金流怎麼看</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>現金流</th>
+<th>健康的樣子</th>
+<th>代表什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>營業活動現金流 OCF</td>
+<td><strong>&gt; 0</strong></td>
+<td>本業真的收得到錢</td>
+</tr>
+<tr>
+<td>投資活動現金流 ICF</td>
+<td><strong>&lt; 0</strong></td>
+<td>有在投資（買設備、併購）</td>
+</tr>
+<tr>
+<td>籌資活動現金流 FCF</td>
+<td><strong>&gt; 0</strong></td>
+<td>還找得到錢（借得到、募得到）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>幾個直接用的門檻</strong>：</p>
+<ul>
+<li>自由現金流 ＝ OCF − 資本支出（Capex），<strong>要 &gt; 0</strong></li>
+<li>現金流量比率 ＝ OCF ÷ 流動負債，<strong>要 &gt; 1</strong></li>
+<li>OCF ÷ 稅後淨利 <strong>&gt; 80%</strong>——這條最重要：<strong>帳上的利潤有沒有變成現金。</strong></li>
+<li>現金流量允當比率 ＝ 五年 OCF ÷ 五年（資本支出＋存貨＋現金股利）</li>
+</ul>
+<p><strong>投資活動現金流的組成</strong>：流出主要是資本支出（Capex，購置不動產廠房及設備 PP&amp;E）、併購、買有價證券；流入則是這些東西的處分。<strong>一家公司如果靠賣資產撐現金流，帳面上很好看，體質卻在惡化。</strong></p>
+<p><strong>恆大 2021 為什麼是好教材</strong>：它有龐大的資產，但賣不掉（賣不出去的房子是存貨，不是現金）、收不回（應收拖長）、借不到（籌資現金流斷掉）。<strong>三條線同時出問題</strong>，而損益表在更早之前不一定看得出來。</p>
+<p><strong>動手</strong>：回到你那家公司，找出三條現金流的正負號，算 OCF ÷ 淨利。低於 80% 的，去看是哪一項把利潤吃掉了。</p>
+<blockquote>
+<p>利潤是會計上的意見，現金是事實。<strong>看一家公司會不會倒，先看 OCF 有沒有跟上淨利。</strong></p>
+</blockquote>
+<hr />
+<h3>進行方式 ③ 誰在看哪個數字</h3>
+<ul>
+<li>同一家公司，<strong>散戶盯的和機構盯的不是同一組數字</strong>——這解釋了為什麼好消息會伴隨股價下跌。</li>
+<li>收帳天數是最能一眼看出商業模式的指標之一：<strong>你賣給誰、怎麼收錢，全寫在這個數字裡。</strong></li>
+<li>收尾：每個人交出一句話——「這家公司我最擔心的一項是＿＿，因為＿＿」。</li>
+</ul>
+<p><strong>兩組期待</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>盯什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>散戶</strong></td>
+<td>每股盈餘 EPS、殖利率、股價、營收成長、淨利成長、淨利率</td>
+</tr>
+<tr>
+<td><strong>機構投資人</strong></td>
+<td>利潤最大化、資本利潤率最大化、股東財富最大化、股價最大化</td>
+</tr>
+</tbody>
+</table>
+<p>差別在時間尺度與槓桿：散戶多半看<strong>單期的、看得懂的數字</strong>；機構看<strong>資本的報酬率</strong>——同樣賺一億，用十億賺的和用一百億賺的，對他們是完全不同的兩件事。所以「營收創新高」對散戶是好消息，對機構可能只是「投入更多資本換來的成長」。</p>
+<p><strong>收帳天數看商業模式</strong>（經驗分級）：</p>
+<table>
+<thead>
+<tr>
+<th>應收帳款天數</th>
+<th>代表的生意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 15 天</td>
+<td>現金生意</td>
+</tr>
+<tr>
+<td>15–30 天</td>
+<td>信用卡生意</td>
+</tr>
+<tr>
+<td>30–60 天</td>
+<td>體質強的生意</td>
+</tr>
+<tr>
+<td>60–90 天</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>&gt; 90 天</td>
+<td>體質弱</td>
+</tr>
+</tbody>
+</table>
+<p>課堂上用三家公司對照（<strong>數字來自 2022 年的課堂投影片，上課前請自行重查當期財報</strong>）：台積電約 40 天、鴻海約 60 天、7-Eleven 約 7 天。<strong>7-Eleven 為什麼是 7 天？因為顧客當場付現。</strong> 收帳天數不是財務技巧，是商業模式的直接投影。</p>
+<p><strong>動手</strong>：算出你那家公司的收帳天數，對照上表，然後回答：<strong>它像哪一種生意？和你原本以為的一樣嗎？</strong></p>
+<blockquote>
+<p>同一份財報，散戶看單期數字，機構看資本效率。<strong>你要先知道自己站在哪一邊，才知道哪個數字對你是好消息。</strong></p>
+</blockquote>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「有賺錢就不會倒」</td>
+<td>利潤是應計基礎，現金才是收付基礎。倒閉多半是現金斷了</td>
+<td>每次看到淨利，就去對 OCF ÷ 淨利</td>
+</tr>
+<tr>
+<td>「營收成長就是好消息」</td>
+<td>要看是用多少資本換來的；機構看的是資本報酬率</td>
+<td>成長率要配著 ROA、ROE 一起看</td>
+</tr>
+<tr>
+<td>「流動比 &gt; 2 就安全」</td>
+<td>這是跨產業的粗略門檻，零售與製造業的合理值差很多</td>
+<td>門檻是經驗法則，要跟同業比、跟自己過去比</td>
+</tr>
+<tr>
+<td>「應付帳款週轉率高比較好」</td>
+<td>付得快代表現金離開得快。通常低一點、且低於應收帳款週轉率較有利</td>
+<td>記一句話：<strong>收錢要快，付錢要慢</strong></td>
+</tr>
+<tr>
+<td>「AI 可以幫我算財報比率」</td>
+<td>它會混淆相近欄位、搞錯單位與期間，而且算得很順</td>
+<td>每個比率都要它列算式與欄位出處，關鍵數字自己重算</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E8%B2%AC%E4%BB%BB%E4%B8%AD%E5%BF%83%E5%88%B6%E8%88%87%E7%B5%84%E7%B9%94%E7%9A%84%E8%B2%A1%E5%8B%99%E7%9B%AE%E6%A8%99.html">責任中心制與組織的財務目標</a>——利潤中心有自己的損益表，這一節讀的就是那張表。</li>
+<li><strong>先修</strong>：<a href="M_%E5%95%86%E6%A5%AD%E6%8C%87%E6%A8%99%E7%9A%84%E5%9B%9B%E5%80%8B%E8%B1%A1%E9%99%90.html">商業指標的四個象限</a>——三組比率分別落在獲利、風險兩格。</li>
+<li><strong>平行相關</strong>：<a href="M_ESG_%E8%88%87%E5%BD%B1%E9%9F%BF%E5%8A%9B%E6%8C%87%E6%A8%99.html">ESG 與影響力指標</a>——財務與非財務數字要一起看。</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%AA%92%E9%AB%94%E7%87%9F%E6%94%B6%E9%98%B2%E5%AE%88%E8%88%87%E9%80%B2%E6%94%BB.html">媒體營收防守與進攻</a>、<a href="M_AI_%E5%95%86%E6%A5%AD%E6%A8%A1%E5%BC%8F%E8%A1%9D%E6%93%8A.html">AI 商業模式衝擊</a>——財報看出問題之後，對策在那兩堂。</li>
+<li><strong>平行相關</strong>：<a href="M_%E6%95%B8%E6%93%9A%E7%B4%A0%E9%A4%8A%E6%9A%96%E8%BA%AB_%E5%A5%BD%E5%95%8F%E9%A1%8C_vs_%E5%A3%9E%E5%95%8F%E9%A1%8C.html">數據素養暖身 好問題 vs 壞問題</a>——比率也是指標，一樣會被當成目標而變形。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對互評</strong>：互看對方算的三組比率，挑出「你漏看的那一項」與「你算錯的那一項」。互相追問一句「這個欄位你是在哪一張表看到的」。</li>
+<li><strong>一起想一題</strong>：「一家帳上連續三年賺錢、但 OCF 連續三年低於淨利一半的公司，你敢不敢投資？為什麼？」</li>
+<li>
+<p><strong>反思</strong>：「我原本以為看一家公司好不好要看＿＿＿，現在我會先看——＿＿＿。」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：挑一家上市的媒體或內容公司，抓<strong>連續兩年</strong>的財報，做一張對照表（三組比率＋三條現金流），寫 300 字說明它這兩年變好還是變壞、證據是哪幾個數字。<strong>用 AI 輔助計算，並附上你查核出的錯誤與修正。</strong></p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:56</p>
+</div>
+</body>
+</html>
