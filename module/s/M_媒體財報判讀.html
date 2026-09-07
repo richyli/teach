@@ -182,9 +182,9 @@ MathJax = {
 <script>
 (function(){
   function n(id){return Number(document.getElementById("fr-"+id).value)||0;}
-  function row(name,val,fmt,pass,thr,read){
+  function row(name,val,pass,thr,read){
     var cls=pass===null?"v":(pass?"v good":"v bad");
-    return "<tr><td>"+name+"</td><td class='"+cls+"'>"+fmt+"</td><td>"+thr+"</td><td>"+read+"</td></tr>";
+    return "<tr><td>"+name+"</td><td class='"+cls+"'>"+val+"</td><td>"+thr+"</td><td>"+read+"</td></tr>";
   }
   function render(){
     var rev=n("rev"),cogs=n("cogs"),opex=n("opex"),ni=n("ni"),ca=n("ca"),inv=n("inv"),
@@ -194,13 +194,13 @@ MathJax = {
     var dso=rev?ar/rev*365:0;
     var oq=ni?ocf/ni:0;
     var r="";
-    r+=row("毛利率",(gm*100).toFixed(1)+"%","",null,"跟同業比","扣掉成本還剩多少");
-    r+=row("營業利益率",(om*100).toFixed(1)+"%","",null,"跟自己過去比","本業真正的賺錢能力");
-    r+=row("淨利率",(nm*100).toFixed(1)+"%","",null,"—","毛利好但淨利差＝問題在費用或業外");
-    r+=row("流動比率",(cr*100).toFixed(0)+"%","",cr>2,"> 200%","短期還得出錢嗎");
-    r+=row("速動比率",(qr*100).toFixed(0)+"%","",qr>1,"> 100%","不靠賣存貨還得出錢嗎");
-    r+=row("應收帳款天數",dso.toFixed(0)+" 天","",dso<60,"< 60 天算體質強","賣給誰、怎麼收錢");
-    r+=row("OCF ÷ 淨利",(oq*100).toFixed(0)+"%","",oq>0.8,"> 80%","帳上的利潤有沒有變成現金");
+    r+=row("毛利率",(gm*100).toFixed(1)+"%",null,"跟同業比","扣掉成本還剩多少");
+    r+=row("營業利益率",(om*100).toFixed(1)+"%",null,"跟自己過去比","本業真正的賺錢能力");
+    r+=row("淨利率",(nm*100).toFixed(1)+"%",null,"—","毛利好但淨利差＝問題在費用或業外");
+    r+=row("流動比率",(cr*100).toFixed(0)+"%",cr>2,"> 200%","短期還得出錢嗎");
+    r+=row("速動比率",(qr*100).toFixed(0)+"%",qr>1,"> 100%","不靠賣存貨還得出錢嗎");
+    r+=row("應收帳款天數",dso.toFixed(0)+" 天",dso<60,"&lt; 60 天算體質強","賣給誰、怎麼收錢");
+    r+=row("OCF ÷ 淨利",(oq*100).toFixed(0)+"%",oq>0.8,"> 80%","帳上的利潤有沒有變成現金");
     document.getElementById("fr-rows").innerHTML=r;
     var o=document.getElementById("fr-out");
     var bad=[];
@@ -417,7 +417,7 @@ MathJax = {
 <p>我原本以為看一家公司好不好要看＿＿＿，現在我會先看——＿＿＿。</p>
 </blockquote>
 <h4>小作業</h4>
-<p>挑一家上市的媒體或內容公司，抓連續兩年的財報，做一張對照表（三組比率＋三條現金流），寫 300 字說明它這兩年變好還是變壞、證據是哪幾個數字。請用 AI 輔助計算，並附上你查核出的錯誤與修正。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:07</p>
+<p>挑一家上市的媒體或內容公司，抓連續兩年的財報，做一張對照表（三組比率＋三條現金流），寫 300 字說明它這兩年變好還是變壞、證據是哪幾個數字。請用 AI 輔助計算，並附上你查核出的錯誤與修正。</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 12:16</p>
 </div>
 </body>
 </html>
