@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 在數據分析的角色與限度</title>
+<link rel="stylesheet" href="../../style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>AI 在數據分析的角色與限度</h1></div><p>在動手用 AI 讀報表之前，先把它的能力邊界畫出來：它在哪一段幫得上、在哪一段會安靜地把你帶偏，以及為什麼責任沒辦法跟著轉移。</p>
+<h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>AI 在數據分析裡幫得上的四件事，以及它做這四件事的方式</td>
+<td>為什麼把一堆數字貼給它，它能立刻寫出一段像模像樣的分析？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>辨識</strong>產出裡「講得很順但沒有根據」的部分，說得出它為什麼會那樣錯</td>
+<td><strong>AI 算的百分比為什麼常常錯？</strong>它不是電腦嗎？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一個任務落在 AI 的能力範圍內還是範圍外，並說得出判準</td>
+<td>有一份研究發現：顧問用 AI 做「範圍外」的任務時，<strong>答對率反而比不用的人低 19 個百分點</strong>——你怎麼知道自己現在在範圍的哪一邊？</td>
+</tr>
+</tbody>
+</table>
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>隨便找一份有數字的表（社群後台、YouTube 後台、任何一篇報導裡的統計表都行），貼給 AI，然後照順序問這三句：</p>
+<blockquote>
+<p>「這是我的數據：【貼上】。請幫我算出成長率，並用一段話總結趨勢。」</p>
+</blockquote>
+<p>接著，<strong>不要告訴它哪裡有問題</strong>，直接問：</p>
+<blockquote>
+<p>「你剛才算的每一個數字，請把算式列出來，分母分別是什麼。」</p>
+</blockquote>
+<p>最後：</p>
+<blockquote>
+<p>「你剛才的回答裡，哪些部分是<strong>資料裡真的有的</strong>、哪些是你<strong>照著常見寫法補出來的</strong>？請逐句標示，補出來的直接標成『我不確定』。」</p>
+</blockquote>
+<p><strong>把這個帶進課堂</strong>：帶第二問或第三問<strong>抓到的那個東西</strong>來——算式對不上、分母講不清楚、或者它自己承認某句是補的。抓不到也可以，那就帶「我抓不到」來，我們會當場示範怎麼抓。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>重點不是證明 AI 很爛。它多數時候算得對、寫得順。重點是<strong>你要能在它錯的那一次抓到</strong>，而那一次不會有任何提示——錯的答案和對的答案讀起來一樣有自信。</p></div>
+<hr />
+<h3>AI 在數據分析幫得上什麼</h3>
+<ul>
+<li>它幫得上四件事：<strong>把表讀成一段話、找出異常、生成假設、擬報告草稿</strong>——全部集中在「表達」與「窮舉」。</li>
+<li>有一場 758 人的隨機對照實驗顯示，在 AI 能力範圍內的任務上，用 AI 的人<strong>多完成 12.2% 的任務、快 25.1%</strong>，品質也明顯較高。</li>
+<li>它的強項全部落在你<strong>已經知道要問什麼</strong>之後；決定問什麼的那一步，它幫不上。</li>
+</ul>
+<p><strong>四件真的有用的事</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>它能做的</th>
+<th>具體長什麼樣</th>
+<th>為什麼它做得好</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>把表讀成一段話</strong></td>
+<td>貼上 GA 報表，要它寫出三句話的趨勢摘要</td>
+<td>這是語言任務，不是計算任務</td>
+</tr>
+<tr>
+<td><strong>找出異常</strong></td>
+<td>「哪一天的數字明顯偏離其他天？」</td>
+<td>模式比對是它的主場</td>
+</tr>
+<tr>
+<td><strong>生成假設</strong></td>
+<td>「這個掉幅可能有哪些原因？列 10 個。」</td>
+<td>窮舉可能性，量大又快</td>
+</tr>
+<tr>
+<td><strong>擬草稿</strong></td>
+<td>週報、KPI 建議、圖表型式建議</td>
+<td>有大量既有寫法可以模仿</td>
+</tr>
+</tbody>
+</table>
+<p><strong>能力提升有實證，但形狀是鋸齒狀的。</strong> Dell'Acqua 等人（2023）與波士頓顧問公司合作，把 758 名管理顧問隨機分派到「無 AI／GPT-4／GPT-4 加提示工程導覽」三組做真實顧問任務：在 18 項落在 AI 能力<strong>前沿之內</strong>的任務上，用 AI 的顧問多完成 12.2% 的任務、快 25.1%，品質高出四成以上。</p>
+<p><img alt="Figure1_jagged_ai_frontier" src="../../img/DellAcqua_2023/Figure1_jagged_ai_frontier.png" />
+<em>看起來難度相近的任務，有些在 AI 的能力前沿之內、有些在外，而邊界從外表看不出來。（Dell'Acqua et al., 2023, HBS Working Paper 24-013）</em></p>
+<blockquote>
+<p>它強在「把你已經知道要問的東西做出來」。<strong>決定要問什麼、以及數字對不對，這兩端還在你身上。</strong></p>
+</blockquote>
+<hr />
+<h3>它在哪裡會錯</h3>
+<ul>
+<li>四種錯法：<strong>算錯、編造、分母搞錯、引用不存在的來源</strong>——前三種在數據課裡最致命。</li>
+<li>同一場實驗的另一半：在刻意設計於能力<strong>前沿之外</strong>的任務上，用 AI 的顧問<strong>答對率反而低 19 個百分點</strong>——而且他們沒察覺。</li>
+<li>它對「講得順」的敏感遠高於對「算得對」，所以<strong>錯誤不會以錯誤的樣子出現</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>錯誤型態</th>
+<th>你會看到什麼</th>
+<th>怎麼抓</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>算錯</strong></td>
+<td>百分比、成長率、平均值對不上</td>
+<td>要它列算式；自己用計算機重算一次關鍵數字</td>
+</tr>
+<tr>
+<td><strong>編造數字</strong></td>
+<td>出現一個你資料裡沒有的數字，而且很合理</td>
+<td>逐一比對回原始表，問「這個數字在第幾列」</td>
+</tr>
+<tr>
+<td><strong>分母搞錯</strong></td>
+<td>轉換率用「工作階段」當分母、卻寫成「使用者」</td>
+<td>每個比率都問一次：分子是什麼、分母是什麼</td>
+</tr>
+<tr>
+<td><strong>編造來源</strong></td>
+<td>引用一份看起來完全正常、但不存在的報告</td>
+<td>任何可查證的來源一律去查</td>
+</tr>
+</tbody>
+</table>
+<p><strong>它會把你帶偏，而且不出聲。</strong> 在那項刻意設計在能力前沿<strong>之外</strong>的任務上，用 AI 的顧問答對率比沒用 AI 的人<strong>低了 19 個百分點</strong>。關鍵不在於它答錯，而在於<strong>受測者沒有察覺自己被帶偏</strong>——這正是它危險的地方：它不會標示「這題我不行」。</p>
+<p><strong>還有一件跟能力無關、但跟你有關的事。</strong> 同一份研究發現提升幅度並不平均：原本表現<strong>低於平均者提升 43%，高於平均者只提升 17%</strong>。</p>
+<p><img alt="Figure5_skill_leveling_bottom_vs_top" src="../../img/DellAcqua_2023/Figure5_skill_leveling_bottom_vs_top.png" />
+<em>技能拉平效果：底層提升幅度明顯大於頂層。（Dell'Acqua et al., 2023）</em></p>
+<p>意思很直接：<strong>AI 把地板抬高了，天花板沒有跟著上去。</strong> 兩年後你進職場，「會用 AI」不會是你的優勢，因為每個人都會。優勢要往別處找，而這門課認為那個地方是<strong>查核</strong>。</p>
+<blockquote>
+<p>錯的答案和對的答案讀起來一樣有自信。<strong>你抓不到，不是因為它藏得好，是因為你沒有去對。</strong></p>
+</blockquote>
+<hr />
+<h3>所以你的工作是什麼</h3>
+<ul>
+<li>你的位置在它<strong>前面</strong>（決定問什麼）和<strong>後面</strong>（決定信不信），不在中間。</li>
+<li>三個查核動作要變成反射：<strong>要算式、對分母、查來源</strong>。</li>
+<li>交出去的東西掛的是你的名字——<strong>責任不會跟著任務一起外包出去。</strong></li>
+</ul>
+<p><strong>三個查核動作</strong>，每次用 AI 讀數據都做，不要挑：</p>
+<ol>
+<li><strong>要算式</strong>：「把你剛才每個數字的算式列出來。」——算式一列出來，錯的通常自己現形。</li>
+<li><strong>對分母</strong>：每個百分比都問「分子是什麼、分母是什麼」。GA 裡「使用者、工作階段、瀏覽量」是三個不同的分母，換一個結論就變了。</li>
+<li><strong>查來源</strong>：資料裡沒有的數字一律追問「這在第幾列」；引用的報告一律去查。</li>
+</ol>
+<p><strong>為什麼這門課的作業要你附「AI 哪裡錯、你改了什麼」。</strong> 因為只看成品的話，查過的和沒查過的長得一樣。把查核過程寫下來，等於逼你真的做一次；而業界會在你出錯的那一天才發現你沒做——那時候代價比一次作業大得多。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>一句話記住這一節：<strong>AI 負責產出，你負責背書。</strong> 你可以用它做任何事，但你不能用「AI 說的」當理由。這門課接下來每一份作業，都會要你把「我查了什麼」寫出來。</p></div>
+<blockquote>
+<p>把它當一個很會講、但不知道自己哪裡不知道的實習生。他交來的東西你一定要看——<strong>因為簽名的是你。</strong></p>
+</blockquote>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 是電腦，算術一定對」</td>
+<td>它不是在計算，是在接續最像答案的文字。算術是它的弱項之一</td>
+<td>關鍵數字自己用計算機重算，或要它列算式</td>
+</tr>
+<tr>
+<td>「它講得這麼有條理，應該沒錯」</td>
+<td>它優化的是「像不像好答案」。條理和正確是兩回事</td>
+<td>有條理只代表表達好，不代表算對</td>
+</tr>
+<tr>
+<td>「AI 現在很強，什麼都能做」</td>
+<td>能力是鋸齒狀的：看起來難度相近的兩件事，一件在前沿內、一件在外，邊界從外表看不出來</td>
+<td>不確定時，<strong>先自己做一次再問它</strong>，用差異定位邊界</td>
+</tr>
+<tr>
+<td>「會用 AI 就是我的優勢」</td>
+<td>拉平效果：低於平均者提升 43%、高於平均者只有 17%。地板被抬高，天花板沒有</td>
+<td>優勢不在會用，在你查得比別人細</td>
+</tr>
+<tr>
+<td>「用了 AI 就要在作業裡道歉」</td>
+<td>評分表明列要附 AI 過程與查核。不附反而失分</td>
+<td>誠實寫「它給了什麼、我查出什麼、我改了什麼」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E8%AA%B2%E7%A8%8B%E4%BB%8B%E7%B4%B9%E8%88%87%E8%AD%89%E7%85%A7%E8%B7%AF%E5%BE%91.html">課程介紹與證照路徑</a>——沒有它，「對數字負責」為什麼跟評分綁在一起會聽不懂。</li>
+<li><strong>後續</strong>：<a href="M_AI_%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E4%B8%8A%E6%89%8B.html">AI 數據分析上手</a>（W2）——本節畫邊界，那一節第一次真的把報表貼給 AI。</li>
+<li><strong>後續</strong>：<a href="M_%E6%95%B8%E6%93%9A%E7%B4%A0%E9%A4%8A%E6%9A%96%E8%BA%AB_%E5%A5%BD%E5%95%8F%E9%A1%8C_vs_%E5%A3%9E%E5%95%8F%E9%A1%8C.html">數據素養暖身 好問題 vs 壞問題</a>——本節說「決定問什麼那一步 AI 幫不上」，那一節就在練那一步。</li>
+<li><strong>平行相關</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>、<a href="M_Sampling_Theory_%E6%8A%BD%E6%A8%A3%E7%90%86%E8%AB%96.html">Sampling Theory 抽樣理論</a>——分母與抽樣搞錯的機制層解釋。</li>
+<li><strong>平行相關</strong>：<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a>（W10）——判斷錯誤的代價怎麼量化。</li>
+</ul>
+<h4>💬 討論／分享／反思</h4>
+<ul>
+<li><strong>配對分享</strong>：兩人一組，交換你在課前互動裡抓到的東西——它算錯了什麼、分母講不清楚哪一項、或者哪一句它自己承認是補的。互相追問一句「你怎麼確定那是錯的」。</li>
+<li><strong>一起想一題</strong>：「你在什麼情況下，<strong>反而不該</strong>用 AI 幫你分析？」——不接受「有機密資料」這個答案，要從「我需要的是<strong>對</strong>、還是<strong>不一樣</strong>」重新想。收斂出 2–3 個情境。</li>
+<li>
+<p><strong>反思</strong>：「我目前把 AI 當什麼——一個幫我算數字的工具，還是一個我必須查核的合作者？」</p>
+</li>
+<li>
+<p><strong>小作業</strong>：拿一份你自己的真實數據（社群後台、YouTube 後台都可以），用 AI 做一次分析，然後跑完「要算式、對分母、查來源」三個動作，寫下你改了什麼。</p>
+</li>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 09:44</p>
+</div>
+</body>
+</html>
