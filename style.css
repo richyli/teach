@@ -188,6 +188,18 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 .modtable { width: 100%; border-collapse: collapse; font-size: .92rem; }
 .modtable th, .modtable td { border-bottom: 1px solid #eee; padding: .4rem .5rem; text-align: left; }
 .sitefoot { margin-top: 2rem; color: #999; font-size: .8rem; }
+/* 段落節奏（O17）：一段一屏，看起來像投影片。
+   來源的 `##` 在站上會降一級成 <h3>，所以選擇器打 h3。
+   :has() 限定在 3 條以內的清單——只有「講點」會被放大，段落本身的長清單不受影響。 */
+hr { border: 0; border-top: 1px solid #e6e6e6; margin: 2.8rem 0 2.2rem; }
+h3 { margin-top: 2rem; }
+h3 + ul:not(:has(> li:nth-child(4))) {
+    list-style: none; margin: .9rem 0 1.5rem; padding: .8rem 1.1rem .8rem 1.2rem;
+    border-left: 3px solid #0055cc; background: #f7faff; border-radius: 0 6px 6px 0; }
+h3 + ul:not(:has(> li:nth-child(4))) > li {
+    margin: .35rem 0; font-size: 1.02rem; line-height: 1.8; font-weight: 600; color: #22303f; }
+h3 + ul:not(:has(> li:nth-child(4))) > li::before {
+    content: "▪"; color: #0055cc; margin-right: .55rem; }
 .doors { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 1.6rem 0; }
 .door { flex: 1 1 260px; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.3rem 1.4rem;
         background: #fcfcfc; text-decoration: none; color: inherit; display: block; }
