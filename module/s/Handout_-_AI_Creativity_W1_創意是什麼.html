@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handout - AI Creativity W1 創意是什麼</title>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<div class="container">
+<nav class="topnav"><a href="../../index.html">回首頁</a></nav><div class="hero"><h1>Handout - AI Creativity W1 創意是什麼</h1></div><blockquote>
+<p><strong>主要工具：Claude 或 ChatGPT（純文字對話，免費版就夠）。</strong>
+替代工具：Gemini（等價，可直接代換）。<strong>課後</strong>才會用到 NotebookLM（見本講義最後一節）。圖像生成工具（Midjourney／DALL·E／Stable Diffusion）<strong>這週不需要</strong>，W7 才開始用——這週先把「判斷」練起來，不急著生圖。
+本講義的所有理論與數字都可回溯到具體論文，出處列在最後一節。<strong>看到任何你不相信的說法，去查——這件事本身就是這門課要練的。</strong></p>
+</blockquote>
+<hr />
+<h3>這一週要處理的問題</h3>
+<p>你已經會用 AI 生圖、寫文案、做簡報了。所以這門課不教那個。</p>
+<p>這門課教一件事：<strong>如何用 AI 幫自己看見既有的思考框架，然後跳出去。</strong></p>
+<p>第一週的任務是建立語言。因為接下來 14 週我們會不斷爭論「這算不算創意」「AI 有沒有創意」，如果沒有共用的詞彙，那些爭論會變成情緒對撞。這一週結束時，你要能做三件事：</p>
+<ol>
+<li>看到一個創意成果，說得出它屬於哪一型、<strong>為什麼不是另外兩型</strong>。</li>
+<li>看到一場「AI 有沒有創意」的爭吵，說得出雙方在爭<strong>哪一格</strong>。</li>
+<li>看到 AI 給你的答案，說得出它<strong>流暢</strong>跟它<strong>正確</strong>是兩件事。</li>
+</ol>
+<p><strong>這一週的核心提問</strong>：你（用 AI）打破了哪個隱形假設？——這句話會在往後每一週出現。</p>
+<h4>今天的時間表</h4>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>內容</th>
+<th>對應模組</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–10 min</td>
+<td>課程介紹、學期弧線</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10–20 min</td>
+<td>本週案例：Fleming</td>
+<td><a href="M_%E6%AF%8F%E9%80%B1_Reframing_%E6%A1%88%E4%BE%8B.html">M 每週 Reframing 案例</a></td>
+</tr>
+<tr>
+<td>20–45 min</td>
+<td>理論：創意是什麼</td>
+<td><a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">M 創意理論導論</a></td>
+</tr>
+<tr>
+<td>45–75 min</td>
+<td>AI 的心法 + 實作說明</td>
+<td><a href="M_%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8_AI_%E7%9A%84%E5%BF%83%E6%B3%95.html">M 深度使用 AI 的心法</a></td>
+</tr>
+<tr>
+<td>75–120 min</td>
+<td><strong>實作：AI × Combinational 三回合</strong></td>
+<td>本講義 Phase 3</td>
+</tr>
+<tr>
+<td>120–145 min</td>
+<td>成果分享與討論</td>
+<td>—</td>
+</tr>
+<tr>
+<td>145–150 min</td>
+<td>週記題目、下週預告</td>
+<td><a href="M_%E5%89%B5%E6%84%8F%E9%80%B1%E8%A8%98%E8%88%87%E8%A9%95%E9%87%8F%E5%B0%8E%E5%BC%95.html">M 創意週記與評量導引</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Phase 0｜上課前 30 分鐘要做的事</h3>
+<p><strong>這一段請在上課前完成。</strong>不做也能上課，但你會少掉發言的材料，而發言材料就是你的 Peer Review 分數來源。</p>
+<h4>Step 0-1｜打開任一個 AI（Claude／ChatGPT／Gemini），貼這段</h4>
+<pre><code>我要學 Margaret Boden 的創意三型（combinational／explorative／transformational）。
+請「先不要」解釋定義。
+
+先給我三件真實存在、可查證的作品或發明（不要虛構），
+一件屬於組合、一件屬於探索、一件屬於轉化，
+但「不要告訴我哪件是哪一型」。
+
+我猜完之後你再公布答案，並指出我判斷時抓錯了哪個線索。
+最後問我一個我大概答不出來的問題。
+</code></pre>
+<h4>Step 0-2｜猜。<strong>先自己猜完再看答案。</strong></h4>
+<p>猜錯很好，猜錯的那一題就是你今天上課最該注意的地方。<strong>把你猜錯的那一題抄在紙上</strong>。</p>
+<h4>Step 0-3｜再貼這段，逼它替兩邊辯護</h4>
+<pre><code>你是 AI。請先用你最強的理由論證「你自己沒有創意」，
+再換邊用最強的理由論證「你有創意」。
+
+兩邊都講完之後，告訴我：
+這兩套論證真正的分歧，其實卡在哪一個詞的定義上？
+</code></pre>
+<p><strong>帶進課堂的東西</strong>：(a) 你猜錯的那一題，(b) AI 說的那個「卡住的詞」。</p>
+<blockquote>
+<p>💡 <strong>會發生的事</strong>：全班的「卡住的詞」高度重疊，通常是「新」「理解」「意圖」其中之一。這不是巧合——<strong>那個詞就是這門課整學期要處理的東西</strong>。</p>
+</blockquote>
+<hr />
+<h3>Phase 1｜本週案例：Fleming 的培養皿（1928）</h3>
+<p>每一週上課都從一個真實的「重新框架」案例開始，格式固定成<strong>四問</strong>。四問的順序不能換，它是一條由外往內、再由內往外的路線。</p>
+<h4>四問是什麼</h4>
+<table>
+<thead>
+<tr>
+<th>問</th>
+<th>問什麼</th>
+<th>最常講歪的地方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一、舊框架是什麼</td>
+<td>當時的標準做法、大家公認的正解</td>
+<td>講成「當時的人很笨」。<strong>他們不笨，他們在既有前提下是理性的</strong></td>
+</tr>
+<tr>
+<td>二、隱形假設是什麼</td>
+<td>那條<strong>沒人講出口</strong>、因此沒人驗證的前提</td>
+<td>把「他們做錯的事」當成隱形假設。做錯是結果，假設是原因</td>
+</tr>
+<tr>
+<td>三、如何被打破</td>
+<td>誰、在什麼處境、用什麼動作換掉了那條前提</td>
+<td>講成靈光一閃。<strong>要講出他為什麼「準備好了」</strong></td>
+</tr>
+<tr>
+<td>四、遇到什麼阻力、結果如何</td>
+<td>領域接不接得住、場域承不承認、花了多久</td>
+<td>直接跳到成功結局，略過幾十年的不被接受</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分辨第一問與第二問的一句話</strong>：舊框架是<strong>大家講得出來的做法</strong>，隱形假設是<strong>大家講不出來、因為根本沒意識到自己相信它</strong>的前提。前者寫在教科書上，後者寫在沒人翻的那一頁。</p>
+<h4>Fleming 四問完整版</h4>
+<p><strong>一、舊框架</strong>
+細菌培養皿要保持純淨；長了黴菌就是<strong>污染</strong>，實驗失敗，丟掉重來。這在當時完全正確——無菌操作是微生物學的基本功。</p>
+<p><strong>二、隱形假設</strong></p>
+<blockquote>
+<p><strong>「培養皿上出現的異物，是干擾，不是資料。」</strong></p>
+</blockquote>
+<p>沒有人講過這句話，因為沒有人覺得這需要講。整個學科的操作規範都建立在它上面。</p>
+<p><strong>三、如何被打破</strong>
+1928 年 9 月，Fleming 休假回到倫敦聖瑪麗醫院的實驗室，一疊還沒清洗的葡萄球菌培養皿中，有一皿長了黴菌——而<strong>黴菌周圍出現一圈沒有細菌的空白</strong>。他沒有把它當污染丟掉，而是當成一個現象追下去。</p>
+<p>關鍵不是運氣。他 1922 年就發現過溶菌酶（lysozyme），<strong>已經找「能殺菌但不傷人體的東西」找了六年</strong>。所以他看得懂那一圈空白代表什麼。</p>
+<p><strong>四、阻力與結果</strong>
+他 1929 年把發現發表在《British Journal of Experimental Pathology》，<strong>接下來將近十年幾乎沒有引起注意</strong>；他自己也純化不出可用的藥。直到 1930 年代末，牛津的 Florey 與 Chain 團隊把青黴素做成能大量生產、能救人的藥物。1945 年，三人共同獲得諾貝爾生理醫學獎。</p>
+<h4>同樣的現象，兩種框架</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>框架</th>
+<th>他問的問題</th>
+<th>結論</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>其他人</td>
+<td>污染 ＝ 失敗</td>
+<td>如何避免污染？</td>
+<td>丟掉</td>
+</tr>
+<tr>
+<td><strong>Fleming</strong></td>
+<td><strong>污染 ＝ 訊號</strong></td>
+<td><strong>黴菌在做什麼？</strong></td>
+<td>青黴素</td>
+</tr>
+</tbody>
+</table>
+<p>這不是誰比較聰明——是<strong>問了不同的問題</strong>。</p>
+<blockquote>
+<p>⚠️ <strong>史料誠實</strong>：「Fleming 偶然發現青黴素」這個故事被講了近百年，細節在不同史料裡並不一致（培養皿的確切狀況、他當下有多重視、後續被忽視的程度），也有科學史研究認為這個乾淨俐落的版本有事後美化的成分。<strong>這一點本身就是教材</strong>——被整理過的成功故事，正是最容易讓人學不到東西的東西。你在課堂上聽到任何「他忽然想到」的敘事，都該問一句：這是當時的樣子，還是後來被寫成的樣子？</p>
+</blockquote>
+<hr />
+<h3>Phase 2｜理論：創意觀搬過四次家</h3>
+<p>創意這個概念，兩千年來搬過四次家。<strong>每一次搬家都是把「創意存放的位置」往外挪一格。</strong></p>
+<table>
+<thead>
+<tr>
+<th>時期</th>
+<th>創意在哪裡</th>
+<th>誰擁有它</th>
+<th>教得來嗎</th>
+<th>代表說法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>古代</td>
+<td><strong>在人之外</strong>（神、繆思）</td>
+<td>沒人擁有，人只是通道</td>
+<td>不能教，只能等</td>
+<td>「我被靈感附身了」</td>
+</tr>
+<tr>
+<td>文藝復興—浪漫主義</td>
+<td><strong>在人之內，但天生</strong></td>
+<td>稀有的天才（genius）</td>
+<td>不能教，只能挑</td>
+<td>「他就是有天分」</td>
+</tr>
+<tr>
+<td>20 世紀</td>
+<td><strong>在歷程裡</strong></td>
+<td>每個人都有，程度不同</td>
+<td><strong>可以教</strong></td>
+<td>「創意是可研究的認知歷程」</td>
+</tr>
+<tr>
+<td>當代</td>
+<td><strong>在人與環境的互動裡</strong></td>
+<td>個人 × 領域 × 場域</td>
+<td>可以教，但還要有人認可</td>
+<td>「你想到不算數，要被接受才算」</td>
+</tr>
+</tbody>
+</table>
+<p>第三站是關鍵轉折。Wallas 1926 年《The Art of Thought》把創意拆成四個階段，第一次讓創意變成有結構、可描述的東西；Guilford 1950 年的美國心理學會主席演說點名創意研究被忽視，把 擴散性思考 推上研究議程。<strong>這門課能存在，靠的就是第三站。</strong></p>
+<h4>用 Fleming 走一遍四站</h4>
+<table>
+<thead>
+<tr>
+<th>站</th>
+<th>這一站會怎麼講 Fleming</th>
+<th>這個講法的問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>神賜</td>
+<td>他運氣好，孢子剛好飄進來</td>
+<td>什麼都沒解釋，也學不到</td>
+</tr>
+<tr>
+<td>天才</td>
+<td>因為他是 Fleming，換人就看不出來</td>
+<td>無法驗證，也無法學習</td>
+</tr>
+<tr>
+<td><strong>歷程</strong></td>
+<td>他找了六年，<strong>準備階段做足了</strong>，所以看得懂那一圈空白</td>
+<td>✅ <strong>可以學：準備決定你看不看得見</strong></td>
+</tr>
+<tr>
+<td><strong>系統</strong></td>
+<td>他發表後十年沒人理；要等 Florey 與 Chain 接手、等場域承認</td>
+<td>✅ <strong>可以學：想到不等於完成</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>創意觀每搬一次家，就多解釋一點、少神祕一點。你如果還覺得「創意是天生的」，你不是在陳述事實，你是站在 18 世紀的那一站。</strong></p>
+</blockquote>
+<h4>Big-C 與 little-c：一把常被誤用的尺</h4>
+<p>課堂上會反覆用到這組詞：<strong>Big-C</strong> 指改變歷史的創意（青黴素、演化論），<strong>little-c</strong> 指日常的創意解決（換個角度看問題、找到新的比喻）。這門課關注 little-c，但<strong>用 Big-C 案例來學思維動作</strong>。</p>
+<p>三件事要先講清楚，否則你會用錯：</p>
+<ol>
+<li><strong>這組詞的來源其實不清楚。</strong> Merrotsy（2013）考據後認為出處不明，可能是從「大 C 文化／小 c 文化」漂移過來的。</li>
+<li><strong>Kaufman 與 Beghetto（2009）補了中間兩格</strong>，成為四 C 模型：mini-c（只對自己是新的）／little-c／Pro-c（專業但未成名家）／Big-C。中間那兩格才是大部分人一輩子待的地方。</li>
+<li><strong>Runco（2020）直接主張這是假二分</strong>：創意是<strong>連續</strong>的、不是類別的；而且 Big-C 的標籤常被「顯赫（eminence）」污染——名家之所以有名，有一大部分來自堅持、自我推銷、時機這些<strong>跟創造力無關的特質</strong>。</li>
+</ol>
+<p>Boden 自己用的是另一組詞：<strong>P-creative</strong>（對創作者本人是新的）與 <strong>H-creative</strong>（對整個人類歷史是新的）。這組比 Big-C／little-c 乾淨，因為它明講了「相對於誰而言是新的」。</p>
+<blockquote>
+<p>📌 <strong>本課立場</strong>：沿用 Big-C／little-c 是為了溝通方便。<strong>它是一把刻度尺，不是兩個抽屜。</strong>（相關筆記：Creativity Magnitude Big C little c and the Four-C Model Synthesis、Runco 2020 Big C）</p>
+</blockquote>
+<h4>另外三家：歷程、系統、燃料</h4>
+<p>Boden 回答「是什麼型」，但回答不了「怎麼發生」「誰說了算」「為什麼做得下去」。</p>
+<p><strong>① Wallas 四階段（1926）——同時也是 AI 介入點對照表</strong></p>
+<table>
+<thead>
+<tr>
+<th>階段</th>
+<th>在做什麼</th>
+<th>AI 能幫多少</th>
+<th>為什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>準備 Preparation</td>
+<td>廣泛蒐集、讓問題滲透</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>蒐集、摘要、找反例正是它最強的</td>
+</tr>
+<tr>
+<td>醞釀 Incubation</td>
+<td>放著不管，讓潛意識工作</td>
+<td>⭐</td>
+<td><strong>它沒有「放著不管」這個動作</strong>；你一問它就一定要答</td>
+</tr>
+<tr>
+<td>頓悟 Illumination</td>
+<td>忽然接起來</td>
+<td>⭐⭐</td>
+<td>它能給撞擊素材，但接起來的是你</td>
+</tr>
+<tr>
+<td>驗證 Verification</td>
+<td>測試、細化、做出來</td>
+<td>⭐⭐⭐⭐</td>
+<td>快速原型、找漏洞、反駁自己</td>
+</tr>
+</tbody>
+</table>
+<p>這張表解釋了一個你八成有過的經驗：<strong>用 AI 之後想點子變快，交出去的東西卻沒有更好。</strong> 因為 AI 加速的是頭尾兩階，而多數人真正缺的是中間的醞釀——你一直在問，它一直在答，<strong>你沒有留白給自己。</strong></p>
+<p><strong>② Csikszentmihalyi 系統論——「這算不算創意」永遠是三格的問題</strong></p>
+<p>創意不在腦袋裡，在三者交會處：<strong>個人</strong>（知識、動機、人格）× <strong>領域</strong>（既有的知識與規則）× <strong>場域</strong>（守門人、評審、決定「這算不算」的人）。</p>
+<p>用它拆一場真實爭議：2022 年 Jason Allen 用 Midjourney 生成的《Théâtre D'opéra Spatial》拿下美國科羅拉多州博覽會數位藝術類首獎，爭議極大。反對的聲音其實混了三件不同的事：</p>
+<ul>
+<li><strong>個人格</strong>：「這不是他畫的」→ 爭的是技能歸屬。</li>
+<li><strong>領域格</strong>：「這種東西不屬於這個類別」→ 爭的是規則邊界。</li>
+<li><strong>場域格</strong>：「評審不懂，不該由他們判」→ 爭的是<strong>守門人的資格</strong>。</li>
+</ul>
+<p><strong>大部分爭吵吵不完，是因為兩邊在爭不同格。</strong></p>
+<p><strong>③ Amabile 成分論——創意的燃料，以及外在獎勵怎麼把它燒光</strong></p>
+<p>三個成分缺一不可：<strong>領域相關技能</strong> × <strong>創意相關流程</strong> × <strong>內在動機</strong>。前兩者決定你<strong>能</strong>做到什麼，第三者決定你<strong>會不會真的去做</strong>。Amabile 的內在動機原則有個不舒服的推論：<strong>外在評價與獎勵（尤其是「被評分」的預期）會侵蝕內在動機。</strong></p>
+<p>這直接解釋了本課的評量設計——而且你可以拿這個原則<strong>回頭挑戰它</strong>：</p>
+<ul>
+<li>創意週記 <strong>13 篇取最佳 10 篇</strong>：保留三次「寫壞也沒關係」的空間。</li>
+<li>大量<strong>同儕互評</strong>：呼應 Amabile 的共識評估技術（Consensual Assessment Technique）——創意的操作型定義就是「一群夠格的評審獨立評分後的共識」。</li>
+<li>媒體輸出<strong>不評漂亮／悅耳／逼真</strong>：那些標準會把注意力從「概念有沒有被具象化」拉走。</li>
+</ul>
+<hr />
+<h3>Phase 3｜Boden 三型：判準三問（全課主幹）</h3>
+<p>Boden 的三型不是三個等級，是<strong>三種不同的移動方式</strong>。理解它們的前提是先接受：任何創作領域都有一個看不見的「<strong>概念空間</strong>」——一組規則，決定什麼算合法的走法。俳句有音節規則，爵士有和聲規則，新聞寫作有導言規則，連迷因都有梗的規則。</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>你做了什麼移動</th>
+<th>比喻</th>
+<th>AI 的能力</th>
+<th>你的角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Combinational</strong>（組合）</td>
+<td>把兩個原本不相干的既有元素接在一起</td>
+<td>在地圖上連兩座城市</td>
+<td>⭐⭐⭐⭐⭐ 非常強</td>
+<td>判斷哪個有意義</td>
+</tr>
+<tr>
+<td><strong>Explorative</strong>（探索）</td>
+<td>在同一個空間裡走到沒人去過的角落</td>
+<td>在同一張地圖上走到邊界</td>
+<td>⭐⭐⭐⭐ 很強</td>
+<td>設計探索路徑</td>
+</tr>
+<tr>
+<td><strong>Transformational</strong>（轉化）</td>
+<td>改寫空間本身的規則</td>
+<td>把地圖重畫</td>
+<td>⭐ 很弱</td>
+<td><strong>這是你的工作</strong></td>
+</tr>
+</tbody>
+</table>
+<h4>判準三問（判不出來時照順序問，不要憑感覺）</h4>
+<ol>
+<li><strong>這件事的概念空間是什麼？</strong> 規則是什麼、什麼算合法的走法？（答不出來就先別判型，你連地圖都還沒畫）</li>
+<li><strong>它有沒有走出這個空間？</strong> 還是在空間裡走到了一個沒人到過的角落？</li>
+<li><strong>走完之後，空間的規則有沒有被改寫？</strong> 有沒有讓「以前不可能」變成「現在可以做」？</li>
+</ol>
+<h4>Worked example：同一個題目跑三型</h4>
+<p>題目：<strong>便利商店</strong>。</p>
+<ul>
+<li><strong>Combinational</strong>：便利商店 ＋ 郵局 ＝ 店到店寄件。兩個既有的東西接起來，<strong>規則沒變</strong>——它還是一間便利商店，只是多賣一項服務。</li>
+<li><strong>Explorative</strong>：便利商店的概念空間是「高頻、低單價、24 小時、標準化」。往邊界走：無人店、鮮食現做、店內座位區——每一項都還在同一組規則裡，但走到了角落。<strong>規則沒變，地圖被走滿了。</strong></li>
+<li><strong>Transformational</strong>：把「便利商店是一個零售通路」這條規則換掉，改成「便利商店是一個<strong>都市基礎設施節點</strong>」。一旦換掉，代收費用、繳稅、取貨、身分驗證、甚至防災據點全部變成合理的——<strong>這些在舊規則下根本不會被提出來</strong>，因為它們不賺零售的錢。</li>
+</ul>
+<p>注意第三型的特徵：<strong>新的可能性不是被「想」出來的，是換掉規則之後自動出現的。</strong> 這就是為什麼 transformational 難——難的不是想點子，是<strong>先看見那條沒人質疑的規則</strong>。</p>
+<blockquote>
+<p><strong>AI 幫你把地圖走滿，但重畫地圖的筆在你手上——而且你得先發現自己一直在照著一張地圖走。</strong></p>
+</blockquote>
+<hr />
+<h3>Phase 4｜課堂實作：AI × Combinational 三回合（75 分鐘）</h3>
+<p><strong>目標</strong>：親身感受 AI 的組合能力，以及<strong>它的限制在哪裡</strong>。三個回合，每回合 12 分鐘操作 + 記錄。</p>
+<p><strong>你需要的</strong>：手機或電腦、任一個 AI 聊天工具、一張紙（或筆記檔）記三件事。</p>
+<h4>回合一｜奇怪的組合（12 min）</h4>
+<p><strong>Step 1</strong>：想一個你熟悉的東西（你的科系、你的興趣、你常去的店都可以）。
+<strong>Step 2</strong>：貼這段，把方括號換掉：</p>
+<pre><code>把「[你選的任何東西]」和「[完全不相關的東西]」組合，
+產生一個有意義的新概念、產品或服務。
+給我 5 個組合，從最普通到最荒謬排序。
+</code></pre>
+<p><strong>Step 3｜你來做的事</strong>：挑一個你<strong>最意外、但覺得「說不定真的有用」</strong>的組合，記下來。</p>
+<p><strong>Step 4｜記錄</strong>：為什麼是這一個？<strong>你判斷「有意義」用的標準是什麼？</strong>（這一題等一下要用）</p>
+<hr />
+<h4>回合二｜跨域比喻（12 min）</h4>
+<p><strong>Step 1</strong>：貼這段：</p>
+<pre><code>用一個自然界的現象，比喻「台灣年輕人不想生小孩」這個社會問題。
+給我 5 個不同的比喻，並解釋每個比喻的洞見是什麼。
+</code></pre>
+<p><strong>Step 2｜你來做的事</strong>，兩個問題都要答：
+- 哪個比喻讓你看到了這個問題的<strong>新角度</strong>？
+- 哪個比喻只是<strong>表面相似</strong>，其實沒有真正的洞見？</p>
+<p><strong>Step 3｜記錄</strong>：把「表面相似」的那一個記下來，並寫出你怎麼判斷它是空的。</p>
+<blockquote>
+<p>💡 <strong>為什麼要挑出空的那一個</strong>：AI 產出「聽起來很有洞見」的比喻幾乎零成本。你的能力不在生成，在<strong>分辨</strong>。</p>
+</blockquote>
+<hr />
+<h4>回合三｜失敗的組合（12 min）</h4>
+<p><strong>Step 1</strong>：貼這段：</p>
+<pre><code>把「醫院」和「遊樂園」組合，設計一個產品或服務。
+</code></pre>
+<p><strong>Step 2</strong>：等它答完，<strong>接著</strong>貼這段：</p>
+<pre><code>現在告訴我，這個組合最大的問題是什麼？為什麼它可能行不通？
+</code></pre>
+<p><strong>Step 3｜你來做的事</strong>：
+- AI 提出問題的方式，有沒有打破你對這個組合原本的興奮感？
+- <strong>關鍵題：AI 對自己的輸出有判斷能力嗎？</strong>它是「真的判斷」，還是「你叫它批評，它就生產批評」？</p>
+<p><strong>Step 4｜記錄</strong>：把你的答案寫成一句話。</p>
+<hr />
+<h4>分享與討論（25 min）</h4>
+<p>每人準備三件事：</p>
+<ol>
+<li>你最喜歡的一個 AI 組合是什麼？為什麼？</li>
+<li>AI 生成了什麼讓你覺得「這不對」的東西？</li>
+<li><strong>你有沒有在過程中，自己產生了一個 AI 沒有想到的組合？</strong></li>
+</ol>
+<p><strong>課堂討論題</strong>：</p>
+<blockquote>
+<p>你判斷「這個組合有意義」的標準是什麼？<strong>AI 有這個標準嗎？</strong></p>
+</blockquote>
+<h4>🩺 自我診斷一｜做完三回合，你覺得「AI 好厲害」——該警覺什麼？</h4>
+<p>如果你的結論停在「AI 好強」，代表這 75 分鐘只練到一半。逐項自查：</p>
+<ul>
+<li>☐ 我有沒有把「數量多」誤當成「創意強」？五個組合裡有幾個是真的可用的？</li>
+<li>☐ 回合二我挑得出「表面相似」的那一個嗎？<strong>挑不出來，代表我還沒有判準</strong>——而判準才是我的部分。</li>
+<li>☐ 回合三 AI 的自我批評，是真的發現問題，還是<strong>我叫它批評、它就照著批評的格式生產</strong>？（試試看：叫它「稱讚同一個組合」，它會不會一樣流暢？）</li>
+<li>☐ 我全程有沒有產生<strong>一個 AI 沒說的組合</strong>？如果完全沒有，我在這 75 分鐘裡是操作者還是旁觀者？</li>
+<li>☐ 用 Boden 判：AI 今天做的是哪一型？<strong>它有沒有任何一刻改寫了規則？</strong></li>
+</ul>
+<blockquote>
+<p>對照 <a href="M_%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8_AI_%E7%9A%84%E5%BF%83%E6%B3%95.html">M 深度使用 AI 的心法</a>：AI 是一台 combinational 機器。你今天看到的「厲害」，正好是它最強的那一型——<strong>這不是它的上限被突破，是你在看它的主場。</strong></p>
+</blockquote>
+<hr />
+<h3>Phase 5｜課後作業</h3>
+<h4>① 本週創意週記（300–500 字）</h4>
+<p><strong>題目</strong>：</p>
+<blockquote>
+<p><strong>你認為「創意」和「聰明」有什麼不同？</strong></p>
+</blockquote>
+<ul>
+<li>回應今天的課和實作，<strong>不是寫感想</strong>。</li>
+<li>這是你的起點——學期末你會再回來看它。</li>
+<li><strong>截止</strong>：下次上課前。</li>
+</ul>
+<p><strong>四段結構</strong>（不是規定格式，是拿分最省力的路徑）：</p>
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>寫什麼</th>
+<th>約略字數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>一句話立場</strong>：我認為＿＿。先把判斷講出來，不要鋪陳</td>
+<td>50</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>扣回當週理論</strong>：用今天的框架做一次判斷，不是提名詞</td>
+<td>150</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>一個具體的自身例子</strong>：你的作品、你看到的廣告、你今天和 AI 的對話</td>
+<td>150</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>一個你還沒解決的疑問</strong></td>
+<td>50</td>
+</tr>
+</tbody>
+</table>
+<p><strong>同儕評分實際用的 rubric（1–4 分）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>維度</th>
+<th>1（不足）</th>
+<th>2</th>
+<th>3</th>
+<th>4（優秀）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>概念連結</strong></td>
+<td>未連結課堂理論</td>
+<td>提及但表面</td>
+<td>正確使用理論</td>
+<td>深入且延伸</td>
+</tr>
+<tr>
+<td><strong>個人觀點</strong></td>
+<td>只有描述</td>
+<td>有淺層意見</td>
+<td>有清晰立場</td>
+<td>有原創質疑或洞見</td>
+</tr>
+</tbody>
+</table>
+<p><strong>讀懂這張表的關鍵</strong>：兩個維度都<strong>不含</strong>「文筆」「結構」「字數」「感人」。寫得順不加分，寫得樸素不扣分。1 分和 3 分的差別在「有沒有用理論做出一次判斷」；3 分和 4 分的差別在「有沒有你自己的質疑」——<strong>第 4 段就是拿 4 分的唯一入口。</strong></p>
+<h4>🩺 自我診斷二｜週記交出去之前，先自查五題</h4>
+<ul>
+<li>☐ 把全文的<strong>形容詞全部刪掉</strong>，還剩下什麼判斷？如果剩不到一句，那是感想不是週記。</li>
+<li>☐ 我有沒有<strong>用</strong>理論，還是只<strong>提</strong>了理論？（「這屬於 combinational，因為概念空間的規則沒有被改寫」＝用；「我覺得這很 combinational」＝提）</li>
+<li>☐ 第 3 段的例子是<strong>我自己的</strong>，還是網路上的通用案例？</li>
+<li>☐ 第 4 段的疑問，是<strong>真的還沒解決</strong>，還是我裝作有疑問的修辭？</li>
+<li>☐ 我有沒有讓 AI 幫我潤稿到很順，結果反而落進「提及但表面」＝2 分？<strong>AI 潤過的順稿是 2 分的重災區。</strong></li>
+</ul>
+<h4>② 課後探索（非必繳，但下週會用到）</h4>
+<p>選一個你認為有創意的東西（任何領域），用 NotebookLM 建一個小型知識庫，試著回答：<strong>這個東西的創意，是換了什麼框架？</strong>（操作見本講義最後一節）</p>
+<hr />
+<h3>📖 批判反思：跟真實論文對話</h3>
+<p>這門課不把論文當成「權威範例」展示，而是教你<strong>質疑它們</strong>——包括質疑老師用的框架。以下三題，課堂討論與週記都可以直接用。</p>
+<h4>反思一｜老師用的分類，被文獻批評為「假二分」，你贊成嗎？</h4>
+<p>本講義 Phase 2 用了 Big-C／little-c，而且課綱明講「本課關注 little-c」。但 Runco 2020 Big C（Springer 創造力百科條目）主張這組二分<strong>根本不成立</strong>：創造力是連續的而非類別的；Big-C 標籤常被「顯赫」污染——名家的顯赫來自堅持、自我推銷、時機這些跟創造力無關的特質。</p>
+<p>同時，OECD 2022 Thinking Outside the Box 走完全相反的路：把 little-c 當成<strong>可教可學、可跨國施測的能力</strong>，做成 PISA 2022 的創造性思考評量（三個 facets、四個領域情境）。</p>
+<ol>
+<li>一個說「別再用這些類別」，一個說「我們用這個類別測了數十國的 15 歲學生」。<strong>這兩者可以同時成立嗎？</strong></li>
+<li>如果 Runco 是對的，這門課該怎麼改？（提示：Boden 的 P-creative／H-creative 是不是更好的替代？它避開了什麼問題、又付出什麼代價？）</li>
+<li>換你是老師，你會保留這組詞還是換掉？<strong>寫出你的判準，不是你的偏好。</strong></li>
+</ol>
+<blockquote>
+<p>這一題沒有標準答案。它是本課「不同論點可以並存」的第一次示範——Creativity Magnitude Big C little c and the Four-C Model Synthesis 這篇綜合筆記就是把兩邊並陳，不強行判誰對。</p>
+</blockquote>
+<h4>反思二｜盲審之下人類贏不了 AI，這算「AI 有創意」嗎？</h4>
+<p>Grassini 2025 Artificial Creativity（<em>International Journal of Human–Computer Interaction</em>, 41(7), 4037–4048）用 FIQ 圖形創意測驗比較 ChatGPT-4 與人類：</p>
+<ul>
+<li>AI 在<strong>彈性（flexibility）</strong>上明顯超越人類；</li>
+<li>但在<strong>盲審</strong>條件下，評審對 AI 與人類作品的創意品質評分<strong>沒有顯著差異</strong>（AI and human creativity rated equally by blind judges）；</li>
+<li>
+<p>人類的心像（mental imagery）能力與創意表現正相關，<strong>AI 不依賴這個機制</strong>（AI creativity lacks embodied cognitive grounding）。</p>
+</li>
+<li>
+<p>用 Csikszentmihalyi 三格拆：這個結果證明的是<strong>個人格</strong>的什麼？它對<strong>場域格</strong>有沒有說任何話？</p>
+</li>
+<li>「盲審評不出差異」＝「一樣有創意」嗎？<strong>如果評審評不出差異，是 AI 太強，還是這個測驗測到的東西太窄？</strong></li>
+<li>Boden 說 AI 創意的終極驗證是「生成初看令人困惑甚至排斥、但最終能說服我們具有價值的新想法」（見 Boden creativity framework）。<strong>FIQ 測驗測得到這個嗎？</strong></li>
+</ul>
+<h4>反思三｜如果全班都用同一台 AI 做今天的作業，會發生什麼？</h4>
+<p>DellAcqua 2023 Jagged Frontier 是一場預先註冊的隨機控制田野實驗（758 名 BCG 顧問，隨機分派無 AI／GPT-4／GPT-4 加提示工程導覽）：</p>
+<p><img alt="Figure1_jagged_ai_frontier" src="../../img/DellAcqua_2023/Figure1_jagged_ai_frontier.png" />
+<em>AI 能力的「鋸齒狀前沿」：看起來難度相近的任務，有些在前沿之內、有些在外，而邊界從外表看不出來。（Dell'Acqua et al., 2023, HBS Working Paper 24-013）</em></p>
+<ul>
+<li>在 18 項落在前沿<strong>之內</strong>的任務：用 AI 者<strong>多完成 12.2% 的任務、快 25.1%</strong>，品質高出四成以上。</li>
+<li>在一項刻意設計在前沿<strong>之外</strong>的任務：用 AI 者<strong>答對率反而低 19 個百分點</strong>。</li>
+<li><strong>技能拉平</strong>：原本低於平均者提升 43%，高於平均者只提升 17%。</li>
+</ul>
+<p><img alt="Figure5_skill_leveling_bottom_vs_top" src="../../img/DellAcqua_2023/Figure5_skill_leveling_bottom_vs_top.png" />
+<em>技能拉平效果：底層提升幅度明顯大於頂層。（Dell'Acqua et al., 2023）</em></p>
+<p>同一份研究還發現：用 GPT-4 的人<strong>點子品質更高，但點子之間的多樣性明顯下降</strong>（AI reduces the diversity of ideas generated by knowledge workers）。</p>
+<ol>
+<li>如果全班 40 個人都用同一個 AI 做回合一，<strong>交上來的 40 份作業會有多像</strong>？</li>
+<li>「技能拉平」對你是好消息還是壞消息？<strong>如果「會用 AI」已經不再是優勢，優勢應該往哪裡找？</strong></li>
+<li>作者建議用<strong>多個不同的 AI</strong>、或保留純人力的一輪來對抗同質化。這個建議在你身上實際可行嗎？成本是什麼？</li>
+</ol>
+<hr />
+<h3>🤖 用 LLM 自學這一週（可直接複製）</h3>
+<h4>(a) 抓盲點：讓 AI 當嚴格的審查者</h4>
+<pre><code>你是這門課的助教，評分標準只有兩個維度，各 1–4 分：
+(1) 概念連結：有沒有真的用到課堂理論？是正確使用、還是只提了名詞？
+(2) 個人觀點：有沒有清晰立場或原創質疑？還是只有描述？
+
+以下是我的創意週記草稿：
+[貼上全文]
+
+請直接給分數與理由。「不要」給我鼓勵，「不要」先講優點。
+給完分數後，指出我全文最像廢話的那一句，說明它為什麼沒有承載任何判斷。
+最後告訴我：要從現在的分數拉到 4 分，我需要補上什麼「我目前沒有的東西」——
+不要幫我改寫句子，只告訴我缺什麼。
+</code></pre>
+<h4>(b) 練判型：讓 AI 出題考你</h4>
+<pre><code>我要練習用 Boden 三型判斷創意類型。
+請給我 10 個真實存在、可查證的案例（作品、產品、發明、社會制度都可以），
+每個只給 2–3 句描述，「不要」標示類型。
+
+我逐題作答後，你再逐題公布答案與理由。
+我判錯的題目，請告訴我：我是用什麼線索判斷的？那個線索為什麼不可靠？
+</code></pre>
+<h4>(c) 概念釐清：用真實案例當錨</h4>
+<pre><code>我在讀 Boden 的三型分類，但我分不清 explorative 和 transformational。
+請：
+1. 用「概念空間的規則有沒有被改寫」這個判準解釋兩者的差別
+2. 給我一組「幾乎一樣、但一個是 E 一個是 T」的對照案例，並說明分界點在哪
+3. 給我 3 個問題，讓我以後可以自己判斷
+4. 如果我判錯方向，後果是什麼？
+</code></pre>
+<h4>(d) ⚠️ LLM 在這個主題會幻覺的地方，務必交叉驗證</h4>
+<blockquote>
+<ol>
+<li><strong>捏造參考文獻</strong>：AI 生成的引用常常格式完美、作者真實、期刊真實，<strong>但那篇文章不存在</strong>。Boden、Wallas、Amabile、Csikszentmihalyi 的書名與年份特別容易被混植。每個引用都去 Google Scholar 查。</li>
+<li><strong>把三組不同的軸線混成一鍋</strong>：Boden 三型（combinational／explorative／transformational）、Kaufman 四 C（mini-c／little-c／Pro-c／Big-C）、Guilford 的擴散／收斂思考——<strong>這是三條不同的軸</strong>，AI 常把它們混講成一個階層。</li>
+<li><strong>把「AI 不可能有創意」栽給 Boden</strong>：她的立場比這細緻得多（她談的是 AI 在哪一型強、哪一型弱，以及什麼樣的產出才算通過驗證）。看到 AI 說「Boden 認為 AI 沒有創意」，去查原文。</li>
+<li><strong>過度稱讚你的作業</strong>：它預設要讓你開心。你必須明講「不要給我鼓勵」，並對「這是一篇很有洞見的文章」這種開場一律無視。<strong>AI 給你 4 分不代表你會拿 4 分。</strong></li>
+<li><strong>把 Big-C／little-c 講成公認定論</strong>：它多半不會告訴你 Runco（2020）批評這是假二分。<strong>AI 給你的是「已經被寫進教科書的框架」，不是還在爭論中的現況。</strong></li>
+<li><strong>編造歷史案例的細節</strong>：Fleming 的故事有多個版本，日期、培養皿狀況、被忽視的年數在不同史料裡不一致。要它「標註這一點的史料有多可靠、有沒有爭議」，它才會誠實一點。</li>
+<li><strong>編造課程資訊</strong>：它不知道這門課的評分比重、截止日、rubric。<strong>課務問題以本講義與課綱為準，不要問 AI。</strong></li>
+</ol>
+</blockquote>
+<hr />
+<h3>📋 一鍵清單（這一週你要交出去／帶走的東西）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>項目</th>
+<th>何時</th>
+<th>是否計分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>課前 AI 互動：猜錯的那一題 ＋ AI 說的「卡住的詞」</td>
+<td>上課前</td>
+<td>否（但是你的發言材料）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>回合一：最意外的組合 ＋ <strong>你的判準是什麼</strong></td>
+<td>課堂</td>
+<td>否</td>
+</tr>
+<tr>
+<td>3</td>
+<td>回合二：那個「表面相似」的比喻 ＋ 你怎麼判斷它是空的</td>
+<td>課堂</td>
+<td>否</td>
+</tr>
+<tr>
+<td>4</td>
+<td>回合三：一句話回答「AI 對自己的輸出有判斷能力嗎」</td>
+<td>課堂</td>
+<td>否</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>創意週記 1（300–500 字）：創意和聰明有什麼不同</strong></td>
+<td>下次上課前</td>
+<td><strong>✅ 15% 的一部分</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>課後探索：用 NotebookLM 分析一個有創意的東西</td>
+<td>下週前</td>
+<td>否（W2 會用到）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>帶走一個問題：<strong>Fleming 用的是哪種 Boden 創意？你今天用 AI 做的又是哪種？</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>NotebookLM 課後探索（選作）</h3>
+<p><strong>這是課後工具，課堂上不用。</strong> 目的是體驗「把一批來源餵給 AI，讓它只根據這些來源回答」和「直接問 AI」的差別。</p>
+<p><strong>Step 1</strong>：打開 <a href="https://notebooklm.google.com">NotebookLM</a>，用 Google 帳號登入，建立新的 notebook。
+<strong>Step 2</strong>：選一個你認為有創意的東西（一部作品、一個產品、一個社會制度都可以）。
+<strong>Step 3</strong>：蒐集 3–5 份關於它的來源（新聞報導、維基頁面、訪談、官方說明），逐一加入 Sources（可貼網址，也可上傳 PDF）。
+<strong>Step 4</strong>：在對話框問這三題，一題一題問：</p>
+<pre><code>1. 這個東西出現之前，這個領域的標準做法是什麼？
+2. 這個標準做法背後，有哪一條當時沒有人質疑的前提？
+3. 這個東西改變的是「做法」，還是「前提」？請只根據我提供的來源回答，
+   如果來源裡沒有足夠資訊，請直接說沒有。
+</code></pre>
+<p><strong>Step 5｜關鍵動作</strong>：把同樣三題<strong>直接問一次 Claude／ChatGPT</strong>（不給任何來源），比較兩邊的答案。</p>
+<p><strong>你要注意的</strong>：哪一邊比較敢說「來源裡沒有」？哪一邊講得比較滿？<strong>講得比較滿的那一邊，多出來的內容是從哪裡來的？</strong></p>
+<blockquote>
+<p>🔧 <strong>卡住的話</strong>：來源加不進去（網頁有付費牆）→ 改貼文字內容，或換一個公開來源。回答一直很空泛 → 你的來源太少或太表面，補到 5 份、且至少 1 份是深度報導或訪談。</p>
+</blockquote>
+<hr />
+<h3>下週預告</h3>
+<p><strong>W2｜Boden 的三種創意：一個分類工具</strong>
+案例：John Harrison 與經度問題。
+實作：同一個問題，分別用 AI 做三種 Boden 創意——感受 Combinational、Explorative、Transformational 的真正差異。</p>
+<p><strong>帶著這個問題來</strong>：</p>
+<blockquote>
+<p>Fleming 用的是哪種 Boden 創意？你今天用 AI 做的，又是哪種？</p>
+</blockquote>
+<hr />
+<h3>出處與延伸閱讀</h3>
+<p><strong>本週引用的實證研究（皆可在 wiki/ 找到完整筆記）</strong></p>
+<table>
+<thead>
+<tr>
+<th>出處</th>
+<th>用在哪</th>
+<th>關鍵數字／主張</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grassini 2025 Artificial Creativity｜<em>Int. J. Human–Computer Interaction</em>, 41(7), 4037–4048（DOI: 10.1080/10447318.2024.2345430）</td>
+<td>反思二</td>
+<td>AI 彈性高於人類；盲審下創意品質<strong>無顯著差異</strong></td>
+</tr>
+<tr>
+<td>DellAcqua 2023 Jagged Frontier｜HBS Working Paper 24-013（SSRN 4573321）</td>
+<td>Phase 2、反思三</td>
+<td>前沿內 +12.2% 任務、快 25.1%；前沿外<strong>低 19 個百分點</strong>；低於平均者提升 43%、高於平均者 17%；點子多樣性下降</td>
+</tr>
+<tr>
+<td>Runco 2020 Big C｜Springer《Encyclopedia of Creativity, Invention, Innovation and Entrepreneurship》（DOI: 10.1007/978-1-4614-6616-1_200060-2）</td>
+<td>Phase 2、反思一</td>
+<td>Big-C／little-c 是<strong>假二分</strong>；顯赫混淆了創造力與自我推銷</td>
+</tr>
+<tr>
+<td>OECD 2022 Thinking Outside the Box｜OECD Publishing（PISA 2022 創造性思考評量框架）</td>
+<td>Phase 2、反思一</td>
+<td>把 little-c 操作化為可教可學、可跨國施測的能力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>理論框架的概念筆記</strong></p>
+<p>Boden creativity framework、Creativity Magnitude Big C little c and the Four-C Model Synthesis、divergent thinking、convergent thinking、AI creativity、AI creativity lacks embodied cognitive grounding、AI and human creativity rated equally by blind judges、AI reduces the diversity of ideas generated by knowledge workers</p>
+<p><strong>本週用到的課程模組</strong></p>
+<p><a href="M_%E6%AF%8F%E9%80%B1_Reframing_%E6%A1%88%E4%BE%8B.html">M 每週 Reframing 案例</a>（Phase 1）、<a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">M 創意理論導論</a>（Phase 2–3）、<a href="M_%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8_AI_%E7%9A%84%E5%BF%83%E6%B3%95.html">M 深度使用 AI 的心法</a>（Phase 4 心法）、<a href="M_%E5%89%B5%E6%84%8F%E9%80%B1%E8%A8%98%E8%88%87%E8%A9%95%E9%87%8F%E5%B0%8E%E5%BC%95.html">M 創意週記與評量導引</a>（Phase 5）</p>
+<p><strong>課程文件</strong></p>
+<p>人工智慧生成圖像與創造力 2026 課綱、評量設計細則、理論框架與案例庫</p><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:13</p>
+</div>
+</body>
+</html>

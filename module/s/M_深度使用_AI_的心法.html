@@ -12,10 +12,219 @@
 <blockquote>
 <p>對象已有 AI 使用經驗，重點是<strong>方法論而非技術</strong>：怎麼用得更深。</p>
 </blockquote>
+<h4>🎯 學習目標</h4>
+<p>你已經會用 AI 了，所以這個模組不教操作。它要處理的是一件更難堪的事：<strong>大部分人用 AI 用了兩年，用法還停在第一週</strong>——問一句、拿一段、貼上去。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說明</strong>為什麼 AI 擅長組合與延伸、卻不擅長提出問題</td>
+<td>為什麼你要它「給我 20 個點子」它給得又快又滿，你要它「告訴我這個題目真正的問題在哪」卻總是講些正確的廢話？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>改寫</strong>一次真實的提問：加角色、加限制、要它反問、多輪逼近</td>
+<td><strong>為什麼同一個問題，你問跟別人問，拿到的東西差這麼多？</strong>——差的不是模型，是問題的資訊量。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>辨識</strong>AI 產出中「講得順但沒有根據」的部分，並設計交叉驗證動作</td>
+<td>為什麼 AI 給的參考文獻看起來完全正確，一查卻不存在？</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>判斷</strong>哪些任務不該交給 AI，並說得出判準</td>
+<td>Dell'Acqua 等人（2023）發現顧問在 AI 能力「前沿之內」的任務表現大幅提升，但在<strong>刻意設計於前沿之外</strong>的任務上，用 AI 的人答對率反而<strong>低了 19 個百分點</strong>——你怎麼知道自己現在站在前沿的哪一邊？</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4>🤖 課前 AI 互動（10 分鐘，上課前完成）</h4>
+<p>這個模組的課前互動就是<strong>當場示範它的弱點</strong>。拿你自己手上一個真實、還沒解決的任務（不是練習題），跑這三段：</p>
+<p><strong>第一段｜先用你平常的方式問一次。</strong> 不要優化，就用你平常會打的那句。把結果留著。</p>
+<p><strong>第二段｜換一種問法，同一個任務：</strong></p>
+<blockquote>
+<p>「我要處理【貼上你的真實任務】。<strong>先不要給我答案。</strong> 請先做三件事：(1) 列出你在回答這題時，會預設哪些我沒告訴你的前提；(2) 反問我 3 個你必須知道、否則會答錯的問題；(3) 告訴我這個任務裡，有哪一部分是<strong>你做不好、應該由我自己做</strong>的。」</p>
+</blockquote>
+<p><strong>第三段｜逼它拆自己的台：</strong></p>
+<blockquote>
+<p>「你剛剛的回答裡，哪些部分是你<strong>有根據</strong>的、哪些是你<strong>照著常見寫法補出來的</strong>？請逐段標示，把補出來的部分直接標成『我不確定』。」</p>
+</blockquote>
+<p><strong>把這個帶進課堂</strong>：帶第一段和第二段的<strong>產出差異</strong>來——不是帶答案，是帶「差在哪裡」。課堂配對診斷時直接拿它當材料。多數人會發現：第二段慢很多，但它逼你把自己都還沒想清楚的東西講清楚了，而<strong>那才是真正的瓶頸所在</strong>。</p>
 <ul>
 <li><strong>15′ a｜AI 是什麼樣的思考夥伴</strong>：把 AI 當 combinational 機器——擅長組合/探索、不擅長提問；建立正確心智模型，不神化也不貶低。</li>
 <li><strong>15′ b｜提問與對話設計</strong>：問題品質決定產出品質；從「要答案」到「要它幫你想」；給角色、給限制、要它反問你、多輪逼近。</li>
 <li><strong>15′ c｜批判地讀 AI 產出</strong>：把 AI 當「很會講但常錯的實習生」；防幻覺不靠技術靠習慣——交叉驗證、要它列假設、要它反駁自己。</li>
+</ul>
+<hr />
+<h3>AI 是什麼樣的思考夥伴：一台很強的組合機器</h3>
+<p>先把心智模型調對，後面兩段才有意義。<strong>不要神化，也不要貶低</strong>——兩種態度都會讓你用得很淺。</p>
+<p><strong>它到底在做什麼</strong>：生成式模型在做的事，本質上是根據你給的上下文，一次又一次地挑「接下來最合理的一段」。這件事有三個直接後果，你每天都會撞到：</p>
+<table>
+<thead>
+<tr>
+<th>它的機制</th>
+<th>直接後果</th>
+<th>你會看到的現象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>從龐大語料學到「什麼跟什麼常一起出現」</td>
+<td><strong>組合與延伸極強</strong></td>
+<td>你要 20 個跨領域點子，它給得又快又滿</td>
+</tr>
+<tr>
+<td>規則與前提本身就是它學來的東西</td>
+<td><strong>它不會主動質疑前提</strong></td>
+<td>你問錯問題，它會很流暢地回答那個錯問題</td>
+</tr>
+<tr>
+<td>它優化的是「像不像好答案」</td>
+<td><strong>對流暢度的敏感遠高於對正確性</strong></td>
+<td>錯的答案讀起來跟對的答案一樣有自信</td>
+</tr>
+</tbody>
+</table>
+<p>把它放回 Boden 的三型（見 <a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">M 創意理論導論</a>）：<strong>它是一台 combinational 機器，兼很強的 explorative 引擎，但它不做 transformational</strong>——因為改寫規則的前提是先懷疑規則，而規則正是它學來的東西。</p>
+<p><strong>它強在哪、弱在哪，是鋸齒狀的，不是一條線。</strong> Dell'Acqua 等人（2023）與波士頓顧問公司合作，把 758 名管理顧問隨機分派到「無 AI／GPT-4／GPT-4 加提示工程導覽」三組，做真實的顧問任務。結果：</p>
+<p><img alt="Figure1_jagged_ai_frontier" src="../../img/DellAcqua_2023/Figure1_jagged_ai_frontier.png" />
+<em>AI 能力的「鋸齒狀前沿」：看起來難度相近的任務，有些在前沿之內、有些在外，而邊界從外表看不出來。（Dell'Acqua et al., 2023, HBS Working Paper 24-013）</em></p>
+<ul>
+<li>在 18 項落在前沿<strong>之內</strong>的任務上，用 AI 的顧問<strong>多完成 12.2% 的任務、快 25.1%</strong>，品質也高出四成以上。</li>
+<li>在一項刻意設計在前沿<strong>之外</strong>的任務上，用 AI 的顧問<strong>答對率反而低了 19 個百分點</strong>——AI 把他們帶偏了，而且他們沒察覺。</li>
+<li>提升幅度不平均：<strong>原本表現低於平均者提升 43%，高於平均者只提升 17%</strong>（各自相對基線）。</li>
+</ul>
+<p><img alt="Figure5_skill_leveling_bottom_vs_top" src="../../img/DellAcqua_2023/Figure5_skill_leveling_bottom_vs_top.png" />
+<em>技能拉平效果：底層提升幅度明顯大於頂層。（Dell'Acqua et al., 2023）</em></p>
+<p>第三點對你的意思很直接：<strong>AI 把地板抬高了，天花板卻沒有同幅上升。</strong> 如果你原本就在平均之上，「會用 AI」本身不再是你的優勢——優勢要往別的地方找，而這門課認為那個地方是<strong>提問</strong>。</p>
+<blockquote>
+<p><strong>AI 很擅長「把答案做出來」，但它不會替你決定「這是不是該問的問題」——而那正好是你唯一還很難被取代的位置。</strong></p>
+</blockquote>
+<hr />
+<h3>提問與對話設計：把「要答案」換成「要它幫你想」</h3>
+<p>多數人的提問只有一句話，資訊量太低，所以拿到的是<strong>所有人都會拿到的那個平均答案</strong>。四個動作能把資訊量拉起來：</p>
+<table>
+<thead>
+<tr>
+<th>動作</th>
+<th>為什麼有效</th>
+<th>一句話範例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>給角色</strong></td>
+<td>把它拉進特定語料區，答案不再是通用平均值</td>
+<td>「你是負責審這類提案的評審，看過 200 份。」</td>
+</tr>
+<tr>
+<td><strong>給限制</strong></td>
+<td>限制迫使取捨，取捨才會產生判斷</td>
+<td>「預算只有原本的三分之一、時間剩兩週、不能加人。」</td>
+</tr>
+<tr>
+<td><strong>要它反問你</strong></td>
+<td>把它從答題者換成訪談者，逼出你自己沒說清楚的東西</td>
+<td>「先不要回答，反問我 3 個你必須知道的問題。」</td>
+</tr>
+<tr>
+<td><strong>多輪逼近</strong></td>
+<td>第一版必然是平均值；價值在你對它的每一次不滿意</td>
+<td>「這三個太安全了。給我三個你自己覺得會被打槍的。」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worked example — 同一個任務，兩種問法</strong></p>
+<ul>
+<li>
+<p>❌ <strong>一句話版</strong>：「幫我想一個關於減塑的社群企劃。」
+  → 你會拿到：淨灘活動、環保杯打卡、限時挑戰。<strong>這不是 AI 不好，是這個問題誰問都長這樣。</strong></p>
+</li>
+<li>
+<p>✅ <strong>設計過的版本</strong>：</p>
+<blockquote>
+<p>「你是一個環保 NGO 的社群負責人，我們過去兩年做過淨灘和環保杯打卡，成效都在下滑。<strong>先不要給我企劃</strong>。第一步：列出你認為『減塑社群企劃』這個題目背後有哪些大家默認、但其實沒被驗證的前提。第二步：反問我 3 個你必須知道才不會答錯的問題。等我回答完，再給我 3 個方案，其中至少一個要<strong>違反你第一步列出的某一條前提</strong>。」</p>
+</blockquote>
+</li>
+</ul>
+<p>差別不在字多，在於：<strong>你把「要答案」換成了「陪我把問題想清楚」。</strong> 第一步逼它列前提（這是你在替它做它不會主動做的事），第三步逼它違反前提（這是你在人工模擬 transformational）。</p>
+<blockquote>
+<p><strong>問題的資訊量決定產出的資訊量。你給一句話，它只能還你一句話等級的東西——而那個東西，全班每個人都拿得到。</strong></p>
+</blockquote>
+<hr />
+<h3>批判地讀 AI 產出：把它當「很會講但常錯的實習生」</h3>
+<p>這個比喻要精確：實習生的問題不是笨，是<strong>沒有判斷自己哪裡不知道的能力</strong>，而且<strong>急著交件</strong>。所以防幻覺靠的不是技術，是三個習慣：</p>
+<ol>
+<li><strong>交叉驗證</strong>：凡是可查證的東西——文獻、數字、法條、日期、人名——一律去查。<strong>特別是參考文獻</strong>：AI 生成的引用常常格式完美、作者真實、期刊真實，但那篇文章不存在。</li>
+<li><strong>要它列假設</strong>：「你在回答這題時預設了哪些我沒說的前提？」——答案裡經常藏著你不同意的前提，而它不會主動告訴你。</li>
+<li><strong>要它反駁自己</strong>：「請用最強的理由反駁你剛才的答案。」——如果反駁比原答案還有力，你原本差點就採用了那個較弱的版本。</li>
+</ol>
+<p><strong>還有第四個習慣，跟其他三個不同層次：注意你正在被平均化。</strong> Dell'Acqua 等人（2023）在同一組實驗裡發現，使用 GPT-4 的受測者<strong>點子品質更高，但點子之間的多樣性明顯下降</strong>——語意相似度整體右移（見 AI reduces the diversity of ideas generated by knowledge workers）。作者的推論很值得放在心上：<strong>當所有人都用同一台 AI 想同一件事，沒用 AI 或用得不一樣的人，反而因為「不像大家」而突出。</strong></p>
+<p>實務上的意思是：AI 的第一版產出是<strong>分布的中心</strong>。你要的東西如果剛好在中心，那很好；但如果你要的是「別人想不到的」，那第一版正好是你要離開的地方。</p>
+<blockquote>
+<p><strong>把 AI 當實習生：它交來的東西你一定要看，因為它不會告訴你哪裡不確定；而且全班的實習生是同一個人，你們會交出很像的東西。</strong></p>
+</blockquote>
+<hr />
+<h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 現在很強了，什麼都能做」</td>
+<td>能力是鋸齒狀的：看起來難度相近的兩件事，一件在前沿內、一件在外，而<strong>邊界從外表看不出來</strong>。前沿外用 AI 的人答對率低了 19 個百分點</td>
+<td>不確定在哪一邊時，<strong>先自己做一次再問它</strong>，用差異定位邊界</td>
+</tr>
+<tr>
+<td>「提示工程就是背咒語、蒐集 prompt 模板」</td>
+<td>有效的不是句型，是<strong>你放進去的資訊量與限制</strong>。同一個模板換個人用，效果差很多</td>
+<td>四個動作（角色／限制／反問／多輪）是資訊注入，不是咒語</td>
+</tr>
+<tr>
+<td>「AI 說得很有條理，應該沒錯」</td>
+<td>它優化的是「像不像好答案」，流暢度與正確性是兩回事。<strong>錯答案跟對答案一樣有自信</strong></td>
+<td>凡可查證一律查；尤其參考文獻與數字</td>
+</tr>
+<tr>
+<td>「用 AI 讓我比別人有優勢」</td>
+<td>拉平效果：低於平均者提升 43%、高於平均者 17%。<strong>地板被抬高，天花板沒有</strong></td>
+<td>優勢不在「會用」，在你問得比別人深；這正是本模組要練的</td>
+</tr>
+<tr>
+<td>「多用 AI 想點子，點子就會更多元」</td>
+<td>恰好相反：品質上升、多樣性下降，產出向分布中心收斂</td>
+<td>把 AI 的第一版當<strong>起點而非終點</strong>；或刻意用不同模型、保留純人力的一輪</td>
+</tr>
+<tr>
+<td>「不該用 AI 的情境＝有機密資料的時候」</td>
+<td>那只是合規問題。真正該小心的是<strong>任務落在前沿之外</strong>、以及<strong>你需要的是離開平均值的東西</strong></td>
+<td>判準：這件事我需要的是「對」還是「不一樣」？需要「不一樣」時，AI 只能當對手不能當作者</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4>🔗 連結 / 關係</h4>
+<ul>
+<li><a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">M 創意理論導論</a>：本模組的心智模型（AI 是 combinational 機器）直接接在 Boden 三型上；那裡解釋為什麼它做不到 transformational。</li>
+<li><a href="M_%E7%94%A8_AI_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92.html">M 用 AI 深度學習</a>：本模組講怎麼用 AI 工作，那一模組講怎麼用 AI 學東西。</li>
+<li><a href="M_%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AB%96%E8%88%87%E5%8F%8D%E6%8E%A8%E5%81%87%E8%A8%AD.html">M 提示工程方法論與反推假設</a>：<code>15′ b</code> 的四個動作在那裡展開成完整方法論，並加上「反推 AI 的預設假設」。</li>
+<li><a href="M_%E7%94%A8_AI_%E5%88%97%E8%88%89%E8%88%87%E6%8C%91%E6%88%B0%E5%81%87%E8%A8%AD.html">M 用 AI 列舉與挑戰假設</a>：把「要它列假設」這個習慣升級成正式的操作流程。</li>
+<li><a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">M 深度學習與 LLM 偏見來源</a>：為什麼它會有分布中心、為什麼會有偏見——機制層的解釋。</li>
+<li><a href="M_%E5%AD%B8%E7%BF%92%E6%B3%95%E8%A9%A6%E8%B7%91%E8%88%87%E5%9B%9E%E9%A5%8B.html">M 學習法試跑與回饋</a>：本模組小作業（改寫提問結構、比較前後產出）的延伸演練場。</li>
+<li>論文與概念：DellAcqua 2023 Jagged Frontier、AI reduces the diversity of ideas generated by knowledge workers、jagged technological frontier、Centaur and Cyborg。</li>
 </ul>
 <h4>💬 討論／分享／反思</h4>
 <ul>
@@ -27,7 +236,7 @@
 <li>
 <p><strong>小作業</strong>：拿一個你最近用 AI 的真實任務，改寫你的提問與對話結構，對照前後產出差異。</p>
 </li>
-</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-06 22:25</p>
+</ul><p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-07 08:13</p>
 </div>
 </body>
 </html>
