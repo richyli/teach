@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 前史 從神話到機械</title>
+<link rel="stylesheet" href="../../style.42eb1156.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>AI 前史 從神話到機械</h1></div><p>在這個 45 分鐘的講授中，我們要學習「會思考的機器」這個想像如何比技術早了兩千年出現，以及那個想像替今天的期待留下了什麼，而不是背誦一串發明年表。</p>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>在電腦出現之前，人們already 用什麼形式想像自動化與人造心智</td>
+<td>為什麼希臘神話裡就有青銅巨人守衛克里特島？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>辨識</strong>「把思考變成可計算的符號操作」這條線索，從 Llull 到 Boole</td>
+<td>為什麼一個 13 世紀的神學家會做出一台轉盤來組合概念？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一個被宣稱為自動的系統，裡面有沒有藏著人</td>
+<td>1770 年的「土耳其行棋傀儡」裡藏了一個真人。<strong>今天有多少 AI 產品是同一件事？</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動</h4>
+<p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
+<blockquote>
+<p>請列出電腦發明之前，人類想像或製造「會自己動、會思考的機器」的十個例子，時間從古希臘到 1930 年代。每一個只要一句話，並標註年代。列完之後告訴我：這十個裡面，哪幾個是真的能動的機械，哪幾個只是想像或騙局？請把三類分開標示。</p>
+</blockquote>
+<p>追問一句：</p>
+<blockquote>
+<p>那些「騙局」為什麼當時能騙到人？他們相信了什麼？</p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要特別問騙局</span><p>因為那一類最有現代感。當一個東西被宣稱為自動的，人們檢查它的動力很低——這件事從 18 世紀到今天沒有變。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>神話裡就有的自動機</h3>
+<ul>
+<li>「人造的東西會自己動、甚至會思考」這個想像，比第一台電腦早了兩千多年。</li>
+<li>希臘神話裡不只有自動機，還有大量<strong>永遠重複、不會結束的勞動</strong>——那其實是演算法的雛形。</li>
+<li>想像先行的後果是：技術還沒出現，社會對它的期待與恐懼就已經成形。</li>
+</ul>
+<p><strong>青銅巨人 Talos</strong>：荷馬史詩中守衛克里特島的青銅自動機，每天繞島三圈驅逐入侵者。它有明確的規則、固定的巡邏路徑、沒有自主意志——<strong>這是一個迴圈，不是一個心智。</strong></p>
+<p><strong>那些永無止境的懲罰</strong>：薛西弗斯推石頭、Ocnus 編繩子（驢子在後面吃掉）、Danaïdes 用破甕裝水、Tantalus 永遠碰不到食物與水、Ixion 被綁在燃燒的輪子上。這些故事在講的是<strong>規則寫定之後，執行者無從逃脫</strong>——今天我們用「演算法」形容同一件事。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 250" role="img" aria-label="AI 前史時間軸" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<text x="400" y="26" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">想像先行，技術後到</text>
+<line x1="50" y1="80" x2="750" y2="80" stroke="#c9d9ef" stroke-width="2"/>
+<circle cx="90" cy="80" r="9" fill="#8a5a9a"/>
+<text x="90" y="60" text-anchor="middle" font-size="12" fill="#8a5a9a" font-weight="700">BC 300</text>
+<text x="90" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Talos</text>
+<text x="90" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">神話裡的自動機</text>
+<circle cx="198" cy="80" r="9" fill="#0055cc"/>
+<text x="198" y="60" text-anchor="middle" font-size="12" fill="#0055cc" font-weight="700">1305</text>
+<text x="198" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Llull</text>
+<text x="198" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">轉盤組合概念</text>
+<circle cx="306" cy="80" r="9" fill="#0055cc"/>
+<text x="306" y="60" text-anchor="middle" font-size="12" fill="#0055cc" font-weight="700">1666</text>
+<text x="306" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Leibniz</text>
+<text x="306" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">推理＝符號運算</text>
+<circle cx="414" cy="80" r="9" fill="#a4571b"/>
+<text x="414" y="60" text-anchor="middle" font-size="12" fill="#a4571b" font-weight="700">1726</text>
+<text x="414" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Swift</text>
+<text x="414" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">諷刺一台生成文字</text>
+<text x="414" y="149" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">的機器</text>
+<circle cx="522" cy="80" r="9" fill="#b03a3a"/>
+<text x="522" y="60" text-anchor="middle" font-size="12" fill="#b03a3a" font-weight="700">1770</text>
+<text x="522" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">土耳其行棋傀儡</text>
+<text x="522" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">裡面藏著人</text>
+<circle cx="630" cy="80" r="9" fill="#0055cc"/>
+<text x="630" y="60" text-anchor="middle" font-size="12" fill="#0055cc" font-weight="700">1854</text>
+<text x="630" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Boole</text>
+<text x="630" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">邏輯可系統性執行</text>
+<circle cx="738" cy="80" r="9" fill="#8a5a9a"/>
+<text x="738" y="60" text-anchor="middle" font-size="12" fill="#8a5a9a" font-weight="700">1921</text>
+<text x="738" y="112" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">Čapek</text>
+<text x="738" y="132" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">robot 一詞</text>
+<text x="738" y="149" text-anchor="middle" font-size="11" fill="#5b6b7c" font-weight="400">誕生</text>
+<rect x="50" y="190" width="700" height="46" rx="6" fill="#f3f0f8" stroke="#c9bcd8" stroke-width="1.5"/>
+<text x="400" y="212" text-anchor="middle" font-size="12.5" fill="#5b4a6b" font-weight="400">紫＝想像　藍＝把思考變成計算　橘＝生成的雛形　紅＝假 AI</text>
+<text x="400" y="230" text-anchor="middle" font-size="12" fill="#5b4a6b" font-weight="400">第一台電腦（ENIAC, 1946）出現在這條線的最右邊之外</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">「會思考的機器」這個想像，比第一台電腦早了兩千多年。</figcaption>
+</figure>
+
+<blockquote>
+<p>技術還沒出現，社會對它的期待與恐懼就已經寫好了。<strong>AI 進入公共討論時，那些劇本早就等在那裡。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>把思考變成計算</h3>
+<ul>
+<li>一條清楚的線索從 13 世紀延伸到 19 世紀：<strong>把推理拆成可以機械化操作的符號</strong>。</li>
+<li>這條線上的人多半不是在做「機器人」，是在做「怎麼把想的過程寫成規則」。</li>
+<li>沒有這一步，就沒有後來的程式語言，也沒有今天談的「模型」。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>年代</th>
+<th>誰</th>
+<th>做了什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1305 前後</td>
+<td>Ramon Llull</td>
+<td>《Ars generalis ultima》用可旋轉的圓盤組合基本概念，機械式地產生命題</td>
+</tr>
+<tr>
+<td>1642</td>
+<td>Blaise Pascal</td>
+<td>做出機械式計算機</td>
+</tr>
+<tr>
+<td>1666</td>
+<td>Gottfried Leibniz</td>
+<td>《Dissertatio de arte combinatoria》主張人類的推理可以化約為符號的組合運算</td>
+</tr>
+<tr>
+<td>1726</td>
+<td>Jonathan Swift</td>
+<td>《格列佛遊記》描寫一台隨機排列字詞、自動產生書籍的「引擎」</td>
+</tr>
+<tr>
+<td>1763</td>
+<td>Thomas Bayes</td>
+<td>提出以機率更新信念的框架</td>
+</tr>
+<tr>
+<td>1837 起</td>
+<td>Babbage 與 Lovelace</td>
+<td>分析機的構想與程式概念</td>
+</tr>
+<tr>
+<td>1854</td>
+<td>George Boole</td>
+<td>主張邏輯推理可以用符號系統系統性地執行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Swift 那一台特別值得停下來看</strong>：1726 年的諷刺小說裡，一群學者搖動一台裝滿字詞的機器，把隨機組合出來的句子抄下來，宣稱可以產出所有知識。<strong>那是對生成式文字機器最早的描述，而且是拿來嘲諷的。</strong></p>
+<p><strong>Leibniz 與 Boole 合起來是同一個主張</strong>：如果推理是符號操作，那它原則上就能被機械執行。這個主張後來成為整個 AI 領域的前提——也是 1956 年達特茅斯會議那句宣言的祖宗。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>假 AI 的傳統</h3>
+<ul>
+<li>1770 年的「土耳其行棋傀儡」轟動歐洲數十年，<strong>裡面藏著一個真人棋手</strong>。</li>
+<li>它之所以成功，不是機關做得好，是<strong>觀眾想要相信</strong>。</li>
+<li>這個結構今天仍在運作：宣稱自動、實際靠人工的產品，一直都有。</li>
+</ul>
+<p>Wolfgang von Kempelen 1770 年造的行棋機器人，擊敗過包括拿破崙在內的許多對手，巡迴展示了數十年才被揭穿。它的成功關鍵是設計了一套讓觀眾<strong>自己說服自己</strong>的展示流程：打開櫃門讓人看見齒輪、移動燭火、邀請觀眾檢查。</p>
+<p><strong>同一時期真的能動的東西也存在</strong>：1912 年西班牙工程師 Torres y Quevedo 展示了真正能自動下殘局的下棋機；1898 年特斯拉在麥迪遜廣場花園展示無線遙控船，觀眾以為它有自己的意志。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段和你有關的地方</span><p>「Mechanical Turk」這個詞今天是亞馬遜一個平台的名字，內容是<strong>把人類的勞動包裝成 API 呼叫</strong>。命名者很清楚這個典故。當你看到一個號稱全自動的服務，值得問一句：那個櫃子裡有沒有人？</p></div>
+<blockquote>
+<p>被宣稱為自動的東西，人們檢查它的動力特別低。<strong>這件事從 1770 年到今天沒有變過。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見想法</th>
+<th>為什麼太簡化</th>
+<th>怎麼檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「AI 是最近幾年的事」</td>
+<td>想像有兩千年、可機械化推理的主張有三百年</td>
+<td>問這個想法最早出現在什麼時候，通常比你以為的早</td>
+</tr>
+<tr>
+<td>「以前的人只是幻想，沒有實作」</td>
+<td>Pascal、Leibniz、Babbage 都真的做了東西，只是受限於材料與工藝</td>
+<td>分開看「想像」「可行的設計」「實際運作的機器」三類</td>
+</tr>
+<tr>
+<td>「機器人就是 AI」</td>
+<td>robot 這個詞 1921 年才出現，且指的是勞動替代，不是思考</td>
+<td>問這個東西被期待取代的是<strong>體力</strong>還是<strong>判斷</strong></td>
+</tr>
+<tr>
+<td>「假 AI 是現在才有的行銷手法」</td>
+<td>1770 年就有，而且成功了數十年</td>
+<td>問「自動」的宣稱由誰驗證過</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<ul>
+<li><strong>後續</strong>：<a href="M_AI_%E7%9A%84%E8%AA%95%E7%94%9F%E8%88%87%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%86%B1%E6%BD%AE.html">AI 的誕生與第一次熱潮</a>——這裡的想像，在 1950 年代第一次遇到真的能跑的機器。</li>
+<li><strong>平行相關</strong>：AI 的虛構史與大眾想像——虛構作品這條線在那裡單獨處理。</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%89%B5%E6%84%8F%E7%90%86%E8%AB%96%E5%B0%8E%E8%AB%96.html">創意理論導論</a>——「規則能不能產生創意」這個問題，Llull 與 Swift 已經先問過一次。</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
+<h5>配對分享</h5>
+<p>請同學兩兩一組，各自找一個現在宣稱「全自動」的產品或服務：</p>
+<ol>
+<li>說出它宣稱自動完成的是哪一步</li>
+<li>猜猜看那一步裡面有沒有人，人在做什麼</li>
+<li>想出一個可以驗證的方法</li>
+</ol>
+<h5>寫下反思</h5>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為 AI 的歷史是從＿＿＿開始，現在我會先問——這個想像最早出現在什麼時候？</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h4>小作業</h4>
+<p>找一個 1900 年以前關於「會思考的機器」的想像或裝置（本節沒提到的），寫 300 字說明：它想解決什麼問題、當時的人相信了什麼、以及它和今天哪一個產品最像。</p></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-08 08:52</p>
+</div>
+</body>
+</html>

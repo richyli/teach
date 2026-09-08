@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>兩次 AI 寒冬與專家系統</title>
+<link rel="stylesheet" href="../../style.42eb1156.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>兩次 AI 寒冬與專家系統</h1></div><p>在這個 45 分鐘的講授中，我們要學習兩次 AI 資金崩塌是怎麼發生的、崩塌之後留下了什麼，以及這組模式能不能用來判斷現在，而不是把寒冬當成一段可以跳過的插曲。</p>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>兩次寒冬各自的觸發點與時間</td>
+<td>為什麼 1974 與 1987 各斷一次金流？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>拆解</strong>專家系統從商業成功到崩塌的完整路徑</td>
+<td>第一個商用專家系統替公司省下大錢，<strong>十年後整個市場消失。中間發生了什麼？</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>手上一個 AI 導入案，落在這個循環的哪一段</td>
+<td>你現在要不要投錢做這件事？寒冬的模式給得出什麼判準？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動</h4>
+<p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
+<blockquote>
+<p>請說明 AI 發展史上的兩次「AI 寒冬」：分別發生在哪一段時間、直接的觸發事件是什麼、哪些國家與機構縮減了資金。接著列出寒冬之前那一波的核心技術路線，以及那條路線遇到的具體技術瓶頸。請把「技術瓶頸」與「資金決策」分開講，不要混在一起。</p>
+</blockquote>
+<p>追問一句：</p>
+<blockquote>
+<p>這兩次寒冬之後，前一波留下了什麼真的還在用的東西？</p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要追問「留下了什麼」</span><p>因為泡沫破掉不等於什麼都沒有。專家系統的市場垮了，但規則引擎與知識庫的做法留下來了。判斷一個技術潮，要同時看它會不會退潮、以及退潮後沙灘上剩什麼。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>第一次寒冬：兩份報告</h3>
+<ul>
+<li>1974 到 1980 的資金縮減，直接觸發點是<strong>兩份政府委託的評估報告</strong>。</li>
+<li>兩份報告講的是同一件事：投進去的錢，沒有換到承諾的東西。</li>
+<li>技術瓶頸是真的，但真正切斷金流的是<strong>評估報告與預算決策</strong>。</li>
+</ul>
+<p><strong>1966 年的美國報告</strong>針對機器翻譯，結論是投資成效不佳。<strong>1973 年英國的 Lighthill 報告</strong>（後來題為 <em>Artificial Intelligence: A General Survey</em>）向英國科學研究委員會提出，批評 AI 研究未能兌現承諾，導致英國政府大幅削減補助。</p>
+<p><strong>技術上撞到的牆</strong>是組合爆炸：在小世界裡列舉得完的規則，一放到真實世界就爆掉。前一節那些系統的共同弱點，在這裡集中結帳。</p>
+<p><strong>質疑的聲音更早就有</strong>：Dreyfus 在 1965 年的〈Alchemy and AI〉主張人的心智不等同於電腦，AI 有其內在限制；1969 年 Minsky 與 Papert 的《Perceptrons》指出單層感知器的能力限制，也讓類神經網路的研究沉寂了一段時間。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 300" role="img" aria-label="AI 寒冬的循環結構" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<text x="400" y="26" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">兩次寒冬的共同結構</text>
+<rect x="30" y="52" width="112" height="52" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="86" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">具體承諾</text>
+<path d="M144 78 L156 78" stroke="#0055cc" stroke-width="2" marker-end="url(#aw)"/>
+<rect x="158" y="52" width="112" height="52" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="214" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">窄領域成功</text>
+<path d="M272 78 L284 78" stroke="#0055cc" stroke-width="2" marker-end="url(#aw)"/>
+<rect x="286" y="52" width="112" height="52" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="342" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">外推到開放</text>
+<text x="342" y="92" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">世界</text>
+<path d="M400 78 L412 78" stroke="#0055cc" stroke-width="2" marker-end="url(#aw)"/>
+<rect x="414" y="52" width="112" height="52" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
+<text x="470" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">成本與維護</text>
+<text x="470" y="92" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">暴增</text>
+<path d="M528 78 L540 78" stroke="#0055cc" stroke-width="2" marker-end="url(#aw)"/>
+<rect x="542" y="52" width="112" height="52" rx="6" fill="#fdeef2" stroke="#b03a3a" stroke-width="1.5"/>
+<text x="598" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">評估報告</text>
+<path d="M656 78 L668 78" stroke="#0055cc" stroke-width="2" marker-end="url(#aw)"/>
+<rect x="670" y="52" width="112" height="52" rx="6" fill="#fdeef2" stroke="#b03a3a" stroke-width="1.5"/>
+<text x="726" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">金流中斷</text>
+<defs><marker id="aw" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0055cc"/></marker></defs>
+<rect x="30" y="128" width="370" height="96" rx="6" fill="#fafcff" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="50" y="152" text-anchor="start" font-size="13.5" fill="#0055cc" font-weight="700">第一次　1974–1980</text>
+<text x="50" y="174" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">1966 美國機器翻譯報告</text>
+<text x="50" y="194" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">1973 英國 Lighthill 報告</text>
+<text x="50" y="214" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">技術牆：組合爆炸，規則寫不完</text>
+<rect x="410" y="128" width="360" height="96" rx="6" fill="#fafcff" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="430" y="152" text-anchor="start" font-size="13.5" fill="#0055cc" font-weight="700">第二次　1987 起</text>
+<text x="430" y="174" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">專用 Lisp 硬體市場崩盤</text>
+<text x="430" y="194" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">通用電腦更便宜，跑得動同樣的東西</text>
+<text x="430" y="214" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">規則庫維護成本非線性上升</text>
+<rect x="30" y="240" width="740" height="46" rx="6" fill="#eef7f1" stroke="#8fc0a6" stroke-width="1.5"/>
+<text x="400" y="262" text-anchor="middle" font-size="13" fill="#1a6b45" font-weight="700">退潮後留下來的：規則引擎、反向傳播、機率推論、可解釋的要求</text>
+<text x="400" y="280" text-anchor="middle" font-size="12" fill="#3a6b55" font-weight="400">判斷技術潮，不要問「會不會是泡沫」，要問「退潮後剩什麼」</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">切斷金流的往往不是技術本身，是一份寫著「投入與產出不成比例」的評估報告。</figcaption>
+</figure>
+
+<blockquote>
+<p>切斷金流的往往不是技術本身，是<strong>有人做了一份評估，寫下「投入與產出不成比例」</strong>。</p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>專家系統：成功之後才崩</h3>
+<ul>
+<li>1970 到 1980 年代中期，AI 靠<strong>專家系統</strong>回到商業市場，而且真的賺到錢。</li>
+<li>它的做法是把某個窄領域的專家知識寫成規則庫，讓機器做出可解釋的判斷。</li>
+<li>崩塌的原因不是它沒用，是<strong>維護成本與硬體綁定</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>系統</th>
+<th>年</th>
+<th>領域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DENDRAL</td>
+<td>1965 起</td>
+<td>化學結構推斷</td>
+</tr>
+<tr>
+<td>MYCIN</td>
+<td>1972</td>
+<td>細菌感染診斷</td>
+</tr>
+<tr>
+<td>XCON</td>
+<td>1978 起</td>
+<td>電腦組態設定，第一個大規模商用的專家系統</td>
+</tr>
+</tbody>
+</table>
+<p><strong>日本在 1981 年下了大注</strong>：通商產業省投入約 8.5 億美元推動第五代電腦計畫，目標是能像人一樣推理、翻譯與對話的電腦。多數目標未達成，計畫最終結束。</p>
+<p><strong>1987 年的崩塌點很具體</strong>：專用的 Lisp 硬體市場垮了。原因不是 Lisp 不好用，而是 IBM 與 Apple 的一般電腦已經跑得動 Lisp，而且更便宜、更容易取得。<strong>專用硬體的價值被通用硬體吃掉</strong>——一整批專做 Lisp 機的公司隨之倒閉。</p>
+<p><strong>規則庫本身的問題也浮現</strong>：規則要人寫、要人維護，領域一變就要重寫，而規則之間的衝突會隨數量呈非線性成長。</p>
+<blockquote>
+<p>專家系統不是因為做不出東西而死。<strong>它是因為做出來的東西太貴、太難維護、而且綁在一種很快被通用硬體取代的機器上。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>這組模式能不能用在今天</h3>
+<ul>
+<li>兩次寒冬有一個共同結構：<strong>具體承諾 → 窄領域成功 → 外推到開放世界 → 成本與維護暴增 → 評估報告 → 金流斷</strong>。</li>
+<li>這個結構可以當成檢查清單，但<strong>不能直接當成預測</strong>。</li>
+<li>最有用的問題不是「這次會不會也是泡沫」，而是「退潮之後哪些東西會留下」。</li>
+</ul>
+<p><strong>留下來的東西清單</strong>（前兩波退潮後仍在使用的）：</p>
+<ul>
+<li>規則引擎與知識庫的做法，今天仍在保險核保、醫療決策支援、法遵檢查裡運作</li>
+<li>反向傳播、機率推論、貝氏網路，成為後來這一波的地基</li>
+<li>「可解釋」這個要求，最早就是專家系統帶進來的</li>
+</ul>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜給要做導入決定的人</span><p>這一節不是要你唱衰。它給你的是一組問題：這個系統在哪個範圍內有效？走出那個範圍會怎樣？誰負責維護那些規則或資料？如果供應商倒了，你手上留下什麼？<strong>這四題在 1987 年和今天，答錯的代價是一樣的。</strong></p></div>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見想法</th>
+<th>為什麼太簡化</th>
+<th>怎麼檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「寒冬是因為技術做不出來」</td>
+<td>技術瓶頸是真的，但切斷金流的是評估報告與預算決策</td>
+<td>把技術問題與資金決策分開看</td>
+</tr>
+<tr>
+<td>「泡沫破了就什麼都沒剩」</td>
+<td>規則引擎、反向傳播、機率推論都留了下來</td>
+<td>每一波都問：退潮後沙灘上剩什麼</td>
+</tr>
+<tr>
+<td>「這次不一樣」</td>
+<td>每一次都有人這樣說，而且有時候是對的</td>
+<td>不要問「會不會是泡沫」，問「哪些部分會留下」</td>
+</tr>
+<tr>
+<td>「專家系統失敗了」</td>
+<td>它商業上成功過，而且做法今天還在用</td>
+<td>分開講「市場垮了」與「方法沒用」</td>
+</tr>
+<tr>
+<td>「日本第五代計畫是笑話」</td>
+<td>多數目標未達成，但它培養了一整代工程師</td>
+<td>計畫成敗與長期影響是兩件事</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_AI_%E7%9A%84%E8%AA%95%E7%94%9F%E8%88%87%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%86%B1%E6%BD%AE.html">AI 的誕生與第一次熱潮</a>——落空的預言在這裡變成斷掉的預算。</li>
+<li><strong>後續</strong>：<a href="M_%E5%BE%9E%E8%A6%8F%E5%89%87%E5%88%B0%E6%A9%9F%E7%8E%87%E7%9A%84%E8%BD%89%E5%90%91.html">從規則到機率的轉向</a>——規則走不下去之後，領域整個換了路線。</li>
+<li><strong>平行相關</strong>：<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">採購 vs 自建決策</a>——那四題檢查在那一節有完整的決策表。</li>
+<li><strong>平行相關</strong>：<a href="M_AI_%E5%9C%B0%E6%99%AF%E8%88%87%E4%B8%BB%E7%AE%A1%E6%B1%BA%E7%AD%96%E6%A1%86%E6%9E%B6.html">AI 地景與主管決策框架</a>、<a href="M_%E5%B0%8E%E5%85%A5%E6%B1%BA%E7%AD%96%E8%A1%A8%E5%AF%A6%E4%BD%9C.html">導入決策表實作</a>。</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
+<h5>配對分享</h5>
+<p>請同學兩兩一組，各自挑一個你關注的 AI 應用：</p>
+<ol>
+<li>它現在在哪一個範圍內有效</li>
+<li>走出那個範圍會發生什麼</li>
+<li>那些規則、資料或模型由誰維護</li>
+</ol>
+<p>互相追問一句：如果提供這個服務的公司明天倒了，你手上還剩什麼？</p>
+<h5>寫下反思</h5>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本判斷一個 AI 技術會不會成功是看＿＿＿，現在我會多問一題——退潮之後留下什麼？</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h4>小作業</h4>
+<p>挑一個 1980 年代的專家系統（DENDRAL、MYCIN、XCON 或其他），寫 300 字說明：它解決了什麼問題、為什麼商業上一度成功、以及它的做法今天還存在於哪裡。</p></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-08 08:52</p>
+</div>
+</body>
+</html>

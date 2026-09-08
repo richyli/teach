@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>從規則到機率的轉向</title>
+<link rel="stylesheet" href="../../style.42eb1156.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>從規則到機率的轉向</h1></div><p>在這個 45 分鐘的講授中，我們要學習 AI 如何從「人寫規則」換成「從資料學機率」，以及這個換軌為什麼決定了今天所有工具的性格，而不是記住一串模型名稱。</p>
+<section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>規則式與機率式兩種做法的差別，以及各自需要什麼</td>
+<td>為什麼今天的 AI 要「餵資料」，而不是「寫規則」？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>拆解</strong>這一波的三個必要條件：資料、算力、演算法</td>
+<td>反向傳播 1980 年代就有了，<strong>為什麼要等到 2012 年才爆發？</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>一個 AI 應用，判斷它的能力來自哪一項條件</td>
+<td>你手上的工具，換掉哪一項它就不能用了？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h4>🤖 課前 AI 互動</h4>
+<p>請利用 AI 當成你的學習助理，輸入下列提示：</p>
+<blockquote>
+<p>請解釋 AI 從「規則式（rule-based）」轉向「機率式、資料驅動」的過程，時間大約從 1988 年到 2012 年。請說明兩件事：一、規則式做法遇到什麼具體瓶頸；二、機率式做法需要什麼前提條件才跑得動。最後列出這段期間三個關鍵事件，每個一句話。不要用比喻，直接講機制。</p>
+</blockquote>
+<p>追問一句：</p>
+<blockquote>
+<p>反向傳播在 1980 年代就已經被提出，為什麼要到 2010 年代才發揮作用？請把原因分成資料、算力、演算法三類。</p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一題是本節的核心</span><p>同一個演算法，隔了三十年才有用。這代表「技術可不可行」不只取決於方法本身，還取決於它需要的東西什麼時候才夠便宜。這個判斷方式，你之後看任何新技術都用得上。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>換軌：從人寫規則到從資料學</h3>
+<ul>
+<li>前一節那套規則式做法，敗在規則要人寫、要人維護、而且規則之間會打架。</li>
+<li>換掉的不是某個模型，是<strong>整個知識從哪裡來的假設</strong>：以前由專家寫進去，之後從資料裡學出來。</li>
+<li>1988 年 IBM 那篇統計式機器翻譯的論文，常被當成這個轉向的標誌。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>規則式</th>
+<th>機率式／資料驅動</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>知識從哪來</td>
+<td>專家寫下來</td>
+<td>從大量資料統計出來</td>
+</tr>
+<tr>
+<td>出錯時怎麼修</td>
+<td>找到那條規則改掉</td>
+<td>換資料、換權重、重訓</td>
+</tr>
+<tr>
+<td>可解釋性</td>
+<td>高，可以指出用了哪一條</td>
+<td>低，說不出「因為第幾條」</td>
+</tr>
+<tr>
+<td>擴充成本</td>
+<td>隨規則數量非線性上升</td>
+<td>隨資料量上升，但流程固定</td>
+</tr>
+<tr>
+<td>遇到沒見過的情況</td>
+<td>沒有規則就當機</td>
+<td>會給一個看起來合理的答案</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最後一列是今天所有問題的根源</strong>：規則式系統遇到沒見過的情況會拒絕回答，機率式系統會<strong>產生一個最像答案的東西</strong>。幻覺不是 bug，是這個換軌的直接後果。</p>
+<p><strong>Judea Pearl 的貝氏網路</strong>在 1980 年代末把機率推論變成可計算的結構，讓「不確定」第一次可以被系統性地處理，而不是被當成雜訊排除。</p>
+<figure style="margin:1.6rem 0;">
+<svg viewBox="0 0 800 366" role="img" aria-label="從規則到機率的換軌與三個條件" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<text x="400" y="26" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">換掉的不是模型，是知識的來源</text>
+<rect x="40" y="46" width="340" height="118" rx="6" fill="#f5f5f5" stroke="#ccc" stroke-width="1.5"/>
+<text x="210" y="70" text-anchor="middle" font-size="14.5" fill="#555" font-weight="700">規則式</text>
+<text x="210" y="94" text-anchor="middle" font-size="12.5" fill="#666" font-weight="400">知識由專家寫進去</text>
+<text x="210" y="116" text-anchor="middle" font-size="12.5" fill="#666" font-weight="400">可解釋、可稽核</text>
+<text x="210" y="142" text-anchor="middle" font-size="12.5" fill="#8a5a2a" font-weight="700">遇到沒見過的情況 → 拒答</text>
+<rect x="420" y="46" width="340" height="118" rx="6" fill="#eaf1fc" stroke="#9dbde8" stroke-width="1.5"/>
+<text x="590" y="70" text-anchor="middle" font-size="14.5" fill="#0055cc" font-weight="700">機率式／資料驅動</text>
+<text x="590" y="94" text-anchor="middle" font-size="12.5" fill="#3a5a8a" font-weight="400">知識從大量資料統計出來</text>
+<text x="590" y="116" text-anchor="middle" font-size="12.5" fill="#3a5a8a" font-weight="400">不可解釋，說不出用了哪一條</text>
+<text x="590" y="142" text-anchor="middle" font-size="12.5" fill="#b03a3a" font-weight="700">遇到沒見過的情況 → 硬答</text>
+<path d="M386 105 L414 105" stroke="#0055cc" stroke-width="2.5" marker-end="url(#aw2)"/>
+<defs><marker id="aw2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0055cc"/></marker></defs>
+<text x="400" y="194" text-anchor="middle" font-size="14" fill="#22303f" font-weight="700">這一波為什麼是現在：三個條件各自成熟的時間</text>
+<rect x="40" y="210" width="230" height="84" rx="6" fill="#fafcff" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="155" y="236" text-anchor="middle" font-size="14" fill="#0055cc" font-weight="700">演算法</text>
+<text x="155" y="258" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">1986 反向傳播被推廣</text>
+<text x="155" y="278" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">1997 LSTM　1998 CNN</text>
+<rect x="285" y="210" width="230" height="84" rx="6" fill="#fafcff" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="400" y="236" text-anchor="middle" font-size="14" fill="#0055cc" font-weight="700">算力</text>
+<text x="400" y="258" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">2005 起 GPU 用於通用計算</text>
+<text x="400" y="278" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">平行運算變便宜</text>
+<rect x="530" y="210" width="230" height="84" rx="6" fill="#fafcff" stroke="#c9d9ef" stroke-width="1.5"/>
+<text x="645" y="236" text-anchor="middle" font-size="14" fill="#0055cc" font-weight="700">資料</text>
+<text x="645" y="258" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">2007 起 ImageNet 開建</text>
+<text x="645" y="278" text-anchor="middle" font-size="11.5" fill="#5b6b7c" font-weight="400">2010 起大規模競賽</text>
+<rect x="40" y="306" width="720" height="48" rx="6" fill="#fff8e8" stroke="#e6c964" stroke-width="1.5"/>
+<text x="400" y="328" text-anchor="middle" font-size="14" fill="#7a5b00" font-weight="700">2012 AlexNet：三者相交的那一年</text>
+<text x="400" y="346" text-anchor="middle" font-size="12" fill="#7a5b00" font-weight="400">反向傳播 1986 年就有了，等的是算力與資料——最晚到位的那一項決定爆發時間</text>
+</svg>
+<figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">幻覺不是 bug，是「從機率生成最像答案的東西」這個換軌的直接後果。</figcaption>
+</figure>
+
+<blockquote>
+<p>換掉的不是模型，是知識的來源。<strong>專家寫規則會拒答，資料學機率會硬答——今天你遇到的每一個幻覺，都可以追到這一步。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>三個條件同時到齊</h3>
+<ul>
+<li>這一波的爆發不是某個天才的靈感，是<strong>三件事各自成熟之後撞在一起</strong>。</li>
+<li>演算法最早就位、算力其次、資料最晚——而爆發點落在最後一項到位的時候。</li>
+<li>這組拆法可以直接拿來判斷下一個技術什麼時候會成熟。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>條件</th>
+<th>什麼時候就位</th>
+<th>關鍵事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>演算法</strong></td>
+<td>1986 起</td>
+<td>反向傳播被推廣；1997 年 LSTM；1998 年 CNN 的手寫辨識</td>
+</tr>
+<tr>
+<td><strong>算力</strong></td>
+<td>2005 起</td>
+<td>NVIDIA 的 GPU 被用於通用計算，讓平行運算變便宜</td>
+</tr>
+<tr>
+<td><strong>資料</strong></td>
+<td>2007 起</td>
+<td>李飛飛開始建 ImageNet；2010 年起舉辦大規模影像辨識競賽</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2012 年是三者相交的點</strong>：AlexNet 在 ImageNet 競賽上用深度卷積網路大幅拉開差距。此後每一步都建立在同一組條件上——2014 年 GAN 與 VAE、2015 年注意力機制、2017 年 Transformer、之後的 GPT 系列與擴散模型。</p>
+<p><strong>中間還有兩個標誌性的公開對決</strong>：1997 年 Deep Blue 擊敗西洋棋世界冠軍（那是搜尋與硬體的勝利，不是學習）；2016 年 AlphaGo 擊敗圍棋頂尖棋手（那才是學習）。<strong>兩者常被放在同一條線上講，但機制完全不同。</strong></p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>這一波和前兩波差在哪</h3>
+<ul>
+<li>前兩波退潮的原因是<strong>做出來的東西走不出小世界</strong>；這一波的系統確實走出去了。</li>
+<li>但它換來的代價很具體：<strong>不可解釋、需要巨量資料、而且會自信地說錯話</strong>。</li>
+<li>判斷一個 AI 應用時，問它的能力來自三個條件的哪一個，比問「它是不是 AI」有用。</li>
+</ul>
+<p><strong>歸因練習的做法</strong>：拿一個你在用的工具，問三題——</p>
+<ol>
+<li>它的能力主要來自<strong>資料</strong>（別人沒有的資料集）、<strong>算力</strong>（別人跑不起的規模）、還是<strong>演算法</strong>（別人想不到的方法）？</li>
+<li>這三項裡，哪一項最容易被別人複製？</li>
+<li>換掉哪一項，它就不能用了？</li>
+</ol>
+<p><strong>多數消費級 AI 產品的答案是：能力來自別人的模型，護城河在資料與介面。</strong> 這個判斷會直接影響你要不要自建。</p>
+<blockquote>
+<p>前兩波敗在走不出小世界，這一波走出去了，代價是<strong>它不再能解釋自己</strong>。你換到的能力與失去的東西，是同一個換軌的兩面。</p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h4>⚠️ 迷思攔截</h4>
+<table>
+<thead>
+<tr>
+<th>常見想法</th>
+<th>為什麼太簡化</th>
+<th>怎麼檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「深度學習是 2010 年代發明的」</td>
+<td>反向傳播 1980 年代就有，等的是資料與算力</td>
+<td>每個技術都問：方法、算力、資料哪一項最晚到</td>
+</tr>
+<tr>
+<td>「幻覺是可以修掉的 bug」</td>
+<td>它是「從機率生成最像答案的東西」的直接後果</td>
+<td>問這個系統遇到沒見過的情況會拒答還是硬答</td>
+</tr>
+<tr>
+<td>「Deep Blue 和 AlphaGo 是同一件事」</td>
+<td>前者靠搜尋與專用硬體，後者靠學習</td>
+<td>問它的能力是算出來的還是學出來的</td>
+</tr>
+<tr>
+<td>「資料越多一定越好」</td>
+<td>資料的品質、偏誤與涵蓋範圍比數量更關鍵</td>
+<td>問這批資料涵蓋了誰、漏掉了誰</td>
+</tr>
+<tr>
+<td>「規則式做法已經淘汰」</td>
+<td>保險核保、法遵、醫療決策支援仍大量使用</td>
+<td>需要可解釋與可稽核的場合，規則仍是主流</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E5%85%A9%E6%AC%A1_AI_%E5%AF%92%E5%86%AC%E8%88%87%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1.html">兩次 AI 寒冬與專家系統</a>——規則式走不下去，才有這次換軌。</li>
+<li><strong>平行相關</strong>：<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>——資料驅動的代價在那一節展開。</li>
+<li><strong>平行相關</strong>：<a href="M_AI_%E5%9C%A8%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E7%9A%84%E8%A7%92%E8%89%B2%E8%88%87%E9%99%90%E5%BA%A6.html">AI 在數據分析的角色與限度</a>——「會硬答」這個性格在實務上的後果。</li>
+<li><strong>平行相關</strong>：<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">採購 vs 自建決策</a>——三個條件的歸因直接接到自建與否的判斷。</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h4>💬 討論／分享／反思</h4>
+<h5>配對分享</h5>
+<p>請同學兩兩一組，各自挑一個自己在用的 AI 工具：</p>
+<ol>
+<li>判斷它的能力主要來自資料、算力還是演算法</li>
+<li>說出這三項裡哪一項最容易被別人複製</li>
+<li>回答：換掉哪一項，它就不能用了</li>
+</ol>
+<h5>寫下反思</h5>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為 AI 之所以變強是因為＿＿＿，現在我會先問——是哪一項條件最後才到位？</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h4>小作業</h4>
+<p>挑一個 1988–2017 年之間的關鍵事件（統計式翻譯、貝氏網路、LSTM、ImageNet、AlexNet、Transformer 等），寫 300 字說明：它解決了什麼卡住很久的問題，以及它需要哪些前提條件才做得到。</p></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-08 08:52</p>
+</div>
+</body>
+</html>
