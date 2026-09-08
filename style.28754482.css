@@ -260,7 +260,9 @@ pre { max-width: 100%; overflow-x: auto; }
    <section class="mod-sec sec-xxx">，改型式只改這一段。
    ============================================================ */
 
-.mod-sec { margin: 0 0 1.5rem; }
+.mod-sec { margin: 0 0 1.4rem; }
+/* 卡與卡之間的呼吸；區塊本身的邊框已經是分隔線，不再另外畫 hr。 */
+.mod-sec + .mod-sec { margin-top: 0; }
 .mod-sec > h3:first-child,
 .mod-sec > h4:first-child { margin-top: 0; }
 
@@ -306,6 +308,14 @@ pre { max-width: 100%; overflow-x: auto; }
     border-left: 3px solid #b6cdea; background: #f9fbfe; margin: 1.4rem 0;
     padding: .8rem 1.1rem; color: #22303f; font-size: 1.02rem; line-height: 1.9; }
 
+/* 每個區塊的最後一個元素不要再撐出多餘空白 */
+.sec-objectives > *:last-child,
+.sec-myths > *:last-child,
+.sec-links > *:last-child,
+.sec-prereq > *:last-child,
+.sec-homework > *:last-child,
+.sec-activity > *:last-child { margin-bottom: 0; }
+
 /* ── 學習目標 ── */
 .sec-objectives { background: #fbfcfe; border: 1px solid #e3e9f2; border-radius: 10px;
                   padding: 1rem 1.2rem .6rem; }
@@ -318,8 +328,20 @@ pre { max-width: 100%; overflow-x: auto; }
                      padding: .8rem 1rem; margin: .8rem 0; font-size: .94rem;
                      line-height: 1.9; color: #3a3350; }
 
-/* ── 內容主段 ── */
-.sec-content { padding: 0; }
+/* ── 內容主段 ──
+   每個區塊自成一張卡：扁平 H2（F10）之後區塊變多，下拉時要一眼分得出邊界。
+   想改回無框的連續排版，把 .sec-content 的 background／border／padding 拿掉即可。 */
+.sec-content {
+    /* 卡片維持白底：段落講點（#f7faff）與金句（#f9fbfe）疊在裡面才看得出層次 */
+    background: #ffffff;
+    border: 1px solid #e6ebf2;
+    border-left: 4px solid #c7d7ea;
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.3rem .9rem;
+}
+.sec-content > h3:first-child,
+.sec-content > h4:first-child { margin-top: 0; }
+.sec-content > *:last-child { margin-bottom: 0; }
 
 /* ── 迷思攔截 ── */
 .sec-myths { background: #fffaf6; border: 1px solid #f0dcc8; border-radius: 10px;
