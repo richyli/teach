@@ -281,6 +281,26 @@ pre { max-width: 100%; overflow-x: auto; }
 .mod-sec h4 + ul:not(:has(> li:nth-child(4))) > li::before {
     content: "▪"; color: #0055cc; margin-right: .55rem; }
 
+/* 段落小標（F8／F9）：來源 #### → h5、##### → h6。
+   沒有這一段時瀏覽器預設會把 h5 排成 0.83em——比內文還小，投影時完全讀不到。
+   層級：h3 區塊標題 1.2em > h4 子段 1.1em > h5 段落小標 1.05rem > 內文 1rem。 */
+.mod-sec h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #14508a;
+    line-height: 1.65;
+    margin: 1.9rem 0 .55rem;
+    padding-left: .7rem;
+    border-left: 4px solid #9dbde8;
+}
+.mod-sec h5:first-child { margin-top: 0; }
+.mod-sec h6 {
+    font-size: 1.02rem; font-weight: 700; color: #33475b; margin: 1.4rem 0 .45rem;
+}
+
+/* 討論段的活動小標另有卡片樣式（見下方 .sec-discussion > h5），
+   同層 specificity、寫在後面，所以那裡會覆蓋這一段。 */
+
 /* 段落收束金句：內容主段裡獨立的引言 */
 .sec-content > blockquote {
     border-left: 3px solid #b6cdea; background: #f9fbfe; margin: 1.4rem 0;
