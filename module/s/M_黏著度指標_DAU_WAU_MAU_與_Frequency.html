@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黏著度指標 DAU WAU MAU 與 Frequency</title>
+<link rel="stylesheet" href="../../style.28754482.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>黏著度指標 DAU WAU MAU 與 Frequency</h1></div><p>在本單元中，會介紹到達率、每人來幾次、每次看幾頁這三組比值怎麼讀，日活躍與月活躍怎麼算出黏著度，以及一個真實的校園媒體黏著度算出來是什麼樣子。</p>
+<section class="mod-sec sec-objectives"><h3>🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>用 DAU、WAU、MAU <strong>算出</strong>每週與每月造訪頻率</td>
+<td>一個網站月活躍 16,724 人，這些人一個月平均來幾次？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>判斷</strong>一個網站的黏著度是「回頭客型」還是「一次客型」</td>
+<td>為什麼《大學報》的月頻率算出來是 1.03，而這個數字代表什麼？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>一個「先行指標」適不適合當成產品的北極星</td>
+<td>Facebook 說「十天內加七個好友就會留下來」，這句話可以直接搬到你的產品嗎？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3>🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示</p>
+<blockquote>
+<p>請解釋 DAU、WAU、MAU 三個指標，並說明「DAU / MAU」這個比值在業界被拿來當什麼用。接著告訴我，一個內容網站和一個社群 App 的 DAU / MAU 合理區間分別大概是多少，並說明你這個區間的數字是有公開資料支持，還是你的推估。</p>
+</blockquote>
+<p>然後追一句：</p>
+<blockquote>
+<p>如果一個網站的每月造訪頻率算出來是 1.03，這代表什麼？請用一句沒有術語的話說給一個完全不懂分析的人聽。</p>
+</blockquote>
+<p>把它那句「沒有術語的話」抄下來，等一下我們用真實資料驗證它講得對不對。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一題要特別注意 AI 的數字來源</span><p>黏著度的「合理區間」在網路上有非常多版本，多半來自創投的演講或部落格，很少有可以查證的原始資料。AI 通常會直接給你一個看起來很具體的數字（例如「20% 以上算好」）而不標來源。<strong>你要的不是那個數字，是它有沒有誠實說自己在推估。</strong></p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>進行方式 ① 三組比值，三個不同的問題</h3>
+<ul>
+<li>黏著度不是一個指標，是<strong>三組比值</strong>：有多少人、來幾次、每次看多少。</li>
+<li>三組都是比值，所以每一組都要先問分母是誰。</li>
+<li>這一段結束你要能講出三組比值各自回答什麼問題。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>到達率問的是「市場上有多少人碰過我」</h3>
+<p>到達率（Reach Rate，也叫滲透率）＝你的月活躍人數 ÷ 整個市場的月活躍人數。</p>
+<p><img alt="2020 年 3 月台灣網域主電腦網友人數到達率 Top 10" src="../../img/wa_w2_taiwan_reach.png" /></p>
+<p><em>Comscore 的台灣到達率排名：Google 89%、Facebook 62.6%、LINE 52%、聯合報系 46.7%、ETtoday 37.7%。同一張表也給了每人平均分鐘數與每人平均頁數——LINE 到達率 52% 但每人只有 9.1 分鐘，Google 89% 卻有 588.7 分鐘。</em></p>
+<p><strong>到達率單獨看意義不大，它的用處是跟另外兩組比值一起看。</strong>到達率高、停留短，代表你是通道；到達率低、停留長，代表你是目的地。</p>
+</section>
+<section class="mod-sec sec-content"><h3>每人來幾次：工作階段 ÷ 使用者</h3>
+<p>一段時間內，一個使用者來了幾次。內容網站通常越高越好，因為那代表回頭客。</p>
+<p><strong>但它通常趨近 1.1</strong>——也就是說，大部分的人一個月只來一次。這個數字第一次算出來的時候，多數人會不相信。</p>
+</section>
+<section class="mod-sec sec-content"><h3>每次看幾頁：瀏覽頁次 ÷ 工作階段</h3>
+<p>一次造訪看了幾頁。<strong>這個數字同樣通常趨近 1.1</strong>：進來看一篇，走了。</p>
+<p>它可以被內部連結和推薦區塊拉高，所以要跟上一節的判準一起看——多的那 0.1 頁，是使用者想看的，還是被絆住的。</p>
+</section>
+<section class="mod-sec sec-content"><h3>每人看幾頁：瀏覽頁次 ÷ 使用者</h3>
+<p>前兩個比值相乘就是它。<strong>中度使用型的網站看這個才有意義</strong>——那種每天來、每次看幾頁的產品。</p>
+<p>實務上通常會分層設目標：重度、中度、輕度使用者各自該有多少。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>進行方式 ② 活躍使用者與造訪頻率</h3>
+<ul>
+<li>活躍使用者是<strong>一段時間內至少來過一次的人</strong>，常見的窗口是 1、7、14、28 天。</li>
+<li>造訪頻率＝<strong>期間內每日活躍加總 ÷ 該期間的活躍人數</strong>。</li>
+<li>這一段結束你要能自己算出一個真實網站的週頻率與月頻率。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>活躍使用者有四種窗口</h3>
+<p>報表會同時給你 1 日、7 日、14 日、28 日的活躍使用者。窗口拉長，人數一定變多——因為只要在窗口裡出現過一次就算。</p>
+<p>常用的三個縮寫：<strong>DAU</strong>（日活躍）、<strong>WAU</strong>（週活躍）、<strong>MAU</strong>（月活躍，通常用 28 天）。</p>
+</section>
+<section class="mod-sec sec-content"><h3>頻率＝把每日的人次加起來，除以不重複的人數</h3>
+<p>週頻率 <code>= 期間內每日活躍加總 ÷ 週活躍人數</code>。實務上如果只有平均 DAU，就用 <code>平均 DAU × 7 ÷ WAU</code>。</p>
+<p>月頻率同理：<code>平均 DAU × 28 ÷ MAU</code>。</p>
+<p><strong>這個比值的意思是：一個活躍使用者在這段期間內平均來了幾天。</strong>下限是 1（只來一天），上限是窗口長度（天天來）。</p>
+</section>
+<section class="mod-sec sec-content"><h3>黏著度也可以直接看比值</h3>
+<p><img alt="GA 的 User stickiness 報表：DAU/MAU 4.9%、DAU/WAU 18.0%、WAU/MAU 27.0%" src="../../img/wa_w2_user_stickiness.png" /></p>
+<p><em>同一件事的另一種寫法。DAU / MAU 4.9% 表示每天回來的人只佔月活躍的二十分之一；WAU / MAU 27% 表示每週回來的人約佔四分之一。這三條線一起往下掉，就是黏著度在流失。</em></p>
+<p>比值和頻率是同一組資訊的兩種呈現。<strong>看趨勢用比值，跟人解釋用頻率</strong>——「一個月平均來 1.03 天」比「4.9%」好懂。</p>
+</section>
+<section class="mod-sec sec-activity"><h3>動手：算出《大學報》的黏著度</h3>
+<p>政大《大學報》某年 8 月的真實數字：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>數值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>平均 DAU</td>
+<td>617</td>
+</tr>
+<tr>
+<td>平均 WAU</td>
+<td>4,198</td>
+</tr>
+<tr>
+<td>MAU（28 天）</td>
+<td>16,724</td>
+</tr>
+</tbody>
+</table>
+<p>請算出週頻率與月頻率。算完之後，用一句沒有術語的話說明這兩個數字的意思。</p>
+<p>原始投影片上的週頻率寫 1.02，用計算器四捨五入會得到 1.03。<strong>兩個都對，差別只在進位方式</strong>——這種第二位小數的差異在報告裡不必爭，要爭的是它離 1 有多近。</p>
+<div class="widget" id="freq-calc">
+<style>
+#freq-calc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#freq-calc h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#freq-calc .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#freq-calc label { font-size: .86rem; color: #444; display: inline-block; min-width: 12.5rem; }
+#freq-calc .row { margin: .38rem 0; }
+#freq-calc input[type=number] { font: inherit; font-size: .88rem; padding: .28rem .45rem;
+       border: 1px solid #c9d4e4; border-radius: 6px; width: 7.5rem; }
+#freq-calc button { font: inherit; font-size: .82rem; padding: .32rem .9rem; margin: .6rem .35rem .2rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#freq-calc button:hover { background: #eef4fd; }
+#freq-calc table { border-collapse: collapse; width: 100%; margin: .8rem 0 .3rem; font-size: .88rem; }
+#freq-calc th, #freq-calc td { border: 1px solid #e2e2e2; padding: .42rem .55rem; text-align: left; }
+#freq-calc th { background: #f2f5fa; font-weight: 700; }
+#freq-calc .out { margin-top: .9rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.8; }
+#freq-calc .warn { background: #fff3f5; border-color: #e6b8c4; }
+#freq-calc .ok { background: #eef7f1; border-color: #a8d4bd; }
+#freq-calc .hint { color: #888; font-size: .8rem; margin-top: .6rem; }
+</style>
+<h5>造訪頻率計算器</h5>
+<p class="lede">填入平均 DAU、平均 WAU 與 28 天 MAU，算出週頻率與月頻率。預設帶的是《大學報》某年 8 月的真實數字，可以直接改成自己的。</p>
+<div class="row"><label>平均 DAU（日活躍）</label><input type="number" id="fq-dau" value="617" min="0" step="1"></div>
+<div class="row"><label>平均 WAU（週活躍）</label><input type="number" id="fq-wau" value="4198" min="0" step="1"></div>
+<div class="row"><label>MAU（28 天活躍）</label><input type="number" id="fq-mau" value="16724" min="0" step="1"></div>
+<button id="fq-go">計算</button><button id="fq-reset">回到大學報的數字</button>
+<table>
+<thead><tr><th>指標</th><th>算式</th><th>結果</th><th>怎麼讀</th></tr></thead>
+<tbody>
+<tr><td>週頻率</td><td>DAU × 7 ÷ WAU</td><td id="fq-w">—</td><td id="fq-wr">—</td></tr>
+<tr><td>月頻率</td><td>DAU × 28 ÷ MAU</td><td id="fq-m">—</td><td id="fq-mr">—</td></tr>
+<tr><td>DAU / MAU</td><td>DAU ÷ MAU</td><td id="fq-s">—</td><td id="fq-sr">—</td></tr>
+<tr><td>WAU / MAU</td><td>WAU ÷ MAU</td><td id="fq-x">—</td><td id="fq-xr">—</td></tr>
+</tbody>
+</table>
+<div class="out" id="fq-out">按「計算」。</div>
+<p class="hint">頻率的下限是 1（只來一天），上限是窗口長度。一般網站的月頻率有 1.1 就很了不起，高黏著度產品可以到 10 以上。</p>
+<script>
+(function(){
+  function num(id){ var v = document.getElementById(id).value; return v === "" ? NaN : Number(v); }
+  function band(f, span){
+    if (f < 1.05) { return ["來過的人幾乎都只來一天", "warn"]; }
+    if (f < 1.5)  { return ["絕大多數是一次客，少數人多來一兩天", "warn"]; }
+    if (f < 3)    { return ["開始出現一群固定回來的人", ""]; }
+    if (f < span * 0.5) { return ["回訪相當穩定", "ok"]; }
+    return ["接近天天都來，這是高黏著度產品的區間", "ok"];
+  }
+  function run(){
+    var d = num("fq-dau"), w = num("fq-wau"), m = num("fq-mau");
+    var out = document.getElementById("fq-out");
+    if (!isFinite(d) || !isFinite(w) || !isFinite(m) || d <= 0 || w <= 0 || m <= 0) {
+      out.className = "out warn";
+      out.innerHTML = "三個數字都要填，而且要大於 0。";
+      return;
+    }
+    if (w > m) {
+      out.className = "out warn";
+      out.innerHTML = "WAU 比 MAU 還大，這在定義上不可能——窗口越長人數只會越多。先回去確認數字抄對了沒有。";
+      return;
+    }
+    var fw = d * 7 / w, fm = d * 28 / m, sd = d / m, sw = w / m;
+    var bw = band(fw, 7), bm = band(fm, 28);
+    document.getElementById("fq-w").textContent  = fw.toFixed(2) + " 天／週";
+    document.getElementById("fq-m").textContent  = fm.toFixed(2) + " 天／月";
+    document.getElementById("fq-s").textContent  = (sd * 100).toFixed(1) + "%";
+    document.getElementById("fq-x").textContent  = (sw * 100).toFixed(1) + "%";
+    document.getElementById("fq-wr").textContent = bw[0];
+    document.getElementById("fq-mr").textContent = bm[0];
+    document.getElementById("fq-sr").textContent = "每天回來的人佔月活躍的比例";
+    document.getElementById("fq-xr").textContent = "每週回來的人佔月活躍的比例";
+    out.className = "out " + (bm[1] || "");
+    out.innerHTML = "白話版：這段期間有 <b>" + m.toLocaleString() +
+      "</b> 個人來過，他們平均只來了 <b>" + fm.toFixed(2) + "</b> 天。" +
+      "<br>用術語講是「月造訪頻率 " + fm.toFixed(2) + "」，但拿去跟不做分析的人講，要用上面那一句。";
+  }
+  document.getElementById("fq-go").onclick = run;
+  document.getElementById("fq-reset").onclick = function(){
+    document.getElementById("fq-dau").value = 617;
+    document.getElementById("fq-wau").value = 4198;
+    document.getElementById("fq-mau").value = 16724;
+    run();
+  };
+})();
+</script>
+</div>
+
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>進行方式 ③ 1.03 是什麼意思</h3>
+<ul>
+<li>週頻率與月頻率都算到 1.03 上下，意思是<strong>幾乎每一個人都只來一天就消失</strong>。</li>
+<li>同一個月的工作階段頻率是 1.47、只來一次的比例是 90%，兩組數字互相印證。</li>
+<li>這一段結束你要能對這個結果給出一個不責怪讀者的解釋。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>頻率 1.03 的白話是：來過的人幾乎都只來一天</h3>
+<p>一個月裡有 16,724 個人來過，他們平均只來了 1.03 天。<strong>這不是「不夠好」，這是「幾乎沒有回訪」。</strong></p>
+<p>高黏著度的網站，月頻率可以到 10 以上；一般網站有 1.1 就很了不起。1.03 在區間的最底部。</p>
+</section>
+<section class="mod-sec sec-content"><h3>使用者頻率與工作階段頻率要分開看</h3>
+<p>同一個月，《大學報》的工作階段頻率是 1.47，只來一次的比例是 90%。</p>
+<p>工作階段頻率一定高於使用者頻率，因為一天之內可以有好幾次工作階段。<strong>兩個都要看</strong>：使用者頻率低代表沒有回訪，工作階段頻率不低代表來的那一天有多逛幾次。</p>
+</section>
+<section class="mod-sec sec-content"><h3>這個結果不是讀者的問題，是產品形態的問題</h3>
+<p>校園媒體的內容週期是週報，讀者從搜尋或臉書看到單篇進來，看完就走。<strong>在這種形態下，1.03 是結構決定的，不是編輯不努力。</strong></p>
+<p>要改變它，得改變產品——固定的更新節奏、訂閱、通知、可累積的東西。這正是上一節那四種「讓工作階段變多」的做法在講的事。</p>
+</section>
+<section class="mod-sec sec-content"><h3>參與度指標也要小心它的分母</h3>
+<p>參與度常用三個：工作階段時間長度、瀏覽深度、單頁停留時間。</p>
+<p>三個都有分母問題：<strong>只看一頁的使用者全部被低估</strong>（時間記成 0），而單頁停留時間<strong>只有兩頁以上的工作階段才算得出來</strong>。所以參與度報表其實只描述了「有多逛的那一群人」。</p>
+</section>
+<section class="mod-sec sec-content"><h3>忠誠、頻率、最近一次：RFM 的原型</h3>
+<p><img alt="RFM 熱區圖：最近一次（Recency）與頻率（Frequency）交叉，顏色是平均金額" src="../../img/wa_w2_rfm_heatmap.png" /></p>
+<p><em>電子商務常用的分群方式：最近來過而且來得頻繁的那一格（右上角），平均金額最高。</em></p>
+<p>同一組邏輯搬到內容網站，就是「最近有來、而且常來」的那群人最值得經營。<strong>分析的價值不在算出一個總數，在於把人分開來看。</strong></p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>進行方式 ④ 先行指標能不能搬</h3>
+<ul>
+<li>業界流傳幾個「神話級」的先行指標：加七個好友、放一個檔案、追蹤幾個人。</li>
+<li>這些說法多半來自演講與訪談，<strong>很少附上可以查證的原始分析</strong>。</li>
+<li>這一段結束你要能判斷一個先行指標搬不搬得到自己的產品上。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>幾個被講了十幾年的先行指標</h3>
+<table>
+<thead>
+<tr>
+<th>產品</th>
+<th>流傳的說法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Facebook</td>
+<td>使用者在註冊後 10 天內加到 7 位好友，就有機會持續回訪</td>
+</tr>
+<tr>
+<td>Zynga</td>
+<td>玩家在註冊後隔天還會回來玩，是後續持續遊玩與付費的顯著領先指標</td>
+</tr>
+<tr>
+<td>Dropbox</td>
+<td>有沒有在任一裝置放進至少一個檔案</td>
+</tr>
+<tr>
+<td>Twitter</td>
+<td>追蹤一定數量的人之後，有多少比例的人會回追</td>
+</tr>
+<tr>
+<td>LinkedIn</td>
+<td>在 Y 天內建立 X 個聯絡人，回訪率會提高</td>
+</tr>
+</tbody>
+</table>
+<p><strong>這些數字要當成故事聽，不要當成資料用。</strong>它們絕大多數出自公司高層的演講或媒體訪談，沒有公開的分析方法、樣本或期間；「7 個好友、10 天」這組數字甚至有好幾個互相矛盾的版本流傳。</p>
+</section>
+<section class="mod-sec sec-content"><h3>它們共同的結構才是可以搬的東西</h3>
+<p>五個例子的共同點是：<strong>找到一個「做過就會留下來」的早期行為，然後把整個產品的力氣壓在讓新使用者做到那件事</strong>。</p>
+<p>可以搬的是這個結構，不是那個數字。你的產品的那個行為是什麼，只能自己算。</p>
+</section>
+<section class="mod-sec sec-content"><h3>判斷先行指標的三個問題</h3>
+<p><strong>第一，這個行為是原因還是結果？</strong>會加七個好友的人本來就比較投入，那七個好友可能只是投入的證據，不是投入的原因。</p>
+<p><strong>第二，你的產品有沒有同樣的機制？</strong>Dropbox 放檔案會產生轉換成本，內容網站沒有對應的東西。</p>
+<p><strong>第三，你有沒有資料可以驗？</strong>沒有辦法自己算出來的先行指標，搬過來就只是信仰。</p>
+<blockquote>
+<p>別人的先行指標是別人算出來的答案。可以抄的是他算的方法，不是他算出來的數字。</p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「到達率高就是影響力大」</td>
+<td>LINE 到達率 52% 但每人只有 9.1 分鐘，Google 89% 有 588.7 分鐘</td>
+<td>到達率一定要跟停留時間一起看</td>
+</tr>
+<tr>
+<td>「月活躍 16,724 代表有一萬多個常客」</td>
+<td>月頻率只有 1.03，那一萬多人絕大多數只來過一天</td>
+<td>看到 MAU 先問頻率</td>
+</tr>
+<tr>
+<td>「頻率 1.03 是因為內容不好」</td>
+<td>週報型內容從搜尋單篇進站，結構上就很難有回訪</td>
+<td>先看產品形態，再看內容</td>
+</tr>
+<tr>
+<td>「DAU / MAU 20% 是業界標準」</td>
+<td>這個數字來自創投演講，沒有公開的跨產業資料支撐</td>
+<td>用自己的歷史值當比較基準，不要用聽來的門檻</td>
+</tr>
+<tr>
+<td>「加七個好友就會留下來，我們也照做」</td>
+<td>那可能是投入的結果不是原因，而且沒有公開分析可查</td>
+<td>抄方法不抄數字</td>
+</tr>
+<tr>
+<td>「參與度指標可以代表所有使用者」</td>
+<td>只看一頁的人時間記成 0，單頁停留只算得出兩頁以上的</td>
+<td>它描述的是有多逛的那一群</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E6%B5%81%E9%87%8F%E5%BE%9E%E5%93%AA%E8%A3%A1%E4%BE%86_Source_Medium_%E8%88%87_Channel.html">流量從哪裡來 Source Medium 與 Channel</a>——來源決定誰進來，這一節看的是他們會不會再來。</li>
+<li><strong>後續</strong>：<a href="M_GA_%E7%9A%84%E5%B8%B3%E6%88%B6%E7%B5%90%E6%A7%8B%E8%88%87%E5%A0%B1%E8%A1%A8%E5%9C%B0%E5%9C%96.html">GA 的帳戶結構與報表地圖</a>——這些指標分別住在哪張報表裡。</li>
+<li><strong>平行相關</strong>：<a href="M_Session_%E7%9A%84%E5%AE%9A%E7%BE%A9%E8%88%87%E5%9B%9B%E7%A8%AE%E5%88%87%E6%B3%95.html">Session 的定義與四種切法</a>——「讓工作階段變多」的四條路，就是改善黏著度的手段。</li>
+<li><strong>平行相關</strong>：<a href="M_A-B_%E6%B8%AC%E8%A9%A6%E8%88%87%E6%88%90%E9%95%B7%E5%88%86%E6%9E%90.html">A-B 測試與成長分析</a>（W12）——先行指標與北極星指標會在那一節展開成完整的成長分析。</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>判例演練</h3>
+<p>請兩人一組，用《大學報》那組數字回答：</p>
+<ol>
+<li>週頻率與月頻率各是多少</li>
+<li>如果下個月 MAU 從 16,724 漲到 25,000，但月頻率掉到 1.01，這是好消息還是壞消息</li>
+<li>如果你要提高月頻率，你會做哪一件事、放棄哪一件事</li>
+</ol>
+<p>第 2 題要寫出「兩種讀法」再選一種。</p>
+</section>
+<section class="mod-sec sec-activity"><h3>配對分享</h3>
+<p>請同學兩兩一組，各挑一個自己每天都會打開的 App：</p>
+<ol>
+<li>說出它讓你回來的那個機制是什麼</li>
+<li>對方要追問「拿掉那個機制你還會不會回來」</li>
+<li>判斷那個機制是給你價值，還是製造焦慮</li>
+</ol>
+</section>
+<section class="mod-sec sec-activity"><h3>寫下反思</h3>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我看到一個很高的月活躍人數時，我會先問＿＿＿，再決定要不要相信它。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3>小作業</h3>
+<p>找一個你有後台的帳號（IG、YouTube、部落格都可以），抄下它的日活躍與月活躍（或近似的數字），並寫出：</p>
+<ol>
+<li>算出月頻率</li>
+<li>用一句沒有術語的話說明這個數字的意思</li>
+<li>你的內容形態決定了這個數字的哪一部分——換句話說，哪一部分不是努力就改得動的</li>
+</ol></section>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-09 01:03</p>
+</div>
+</body>
+</html>
