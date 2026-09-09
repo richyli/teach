@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vibe Coding a Small Tool</title>
+<link rel="stylesheet" href="../../style.28754482.css">
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>Vibe Coding a Small Tool</h1></div><p>This unit covers writing a three-part spec before any code exists, recognising how AI output fails, and deciding whether a tool you built is worth adopting for real.</p>
+<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<p>The point is not to learn to code. It is that someone with no engineering background actually builds and ships a small tool other people can use.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Write</strong> a three-part spec — a one-line specification, a not-doing list, and a verification point — and vibe-code a working prototype from it</td>
+<td>Why does telling an AI to write code straight away usually go wrong? <strong>Every gap you leave in the spec gets filled with a default that looks reasonable and is wrong.</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Recognise</strong> how AI output fails — hallucination, invented defaults, fixing A and breaking B, blowing up at the edges — and repair it by opening a clean conversation and asking the AI to audit the work</td>
+<td>Why does it say everything is fine when you ask in the original conversation, and find a dozen problems when you ask in a fresh one? Because models are bad at grading their own work.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Decide</strong> whether a finished tool is worth adopting by a team</td>
+<td><strong>Once you can build it, what is the genuinely hard managerial judgement?</strong> Weigh time saved × frequency × number of people against maintenance cost × risk of error. An AI will never volunteer that something is too expensive to keep. That judgement is yours.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3>Working with AI: the Tekton / Yingzao method</h3>
+<p>From <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>. This shows how a person drives an AI, not how an AI does your typing.</p>
+<p><strong>Plan before you build.</strong> The winning team's first piece of advice was to map the whole project before building any of it: write the PRD (see the model in <a href="M_PRD_Writing_and_Stress_Test.html">PRD Writing and Stress Test</a>) and 50 Notion tickets first, and only then let the AI start. You control the AI with the spec instead of being led by it.</p>
+<p><strong>Do not trust the AI's self-assessment — build external verification in.</strong> The PRD states plainly that models score their own work badly, so the verifier ran <strong>in a fresh context window</strong> and scored independently. A self-correction loop ran until twenty tests passed, across 339 incremental build stages. Designing the check into the process, rather than spot-checking afterwards, is the core discipline.</p>
+<p><strong>Use the AI for tool choice and architecture, not just code.</strong> From the third-place team, Custom Universe: use Claude to choose tools, not just to write code — bring it into decisions like whether to add Apple RealityKit to the pipeline.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Hands-on</h3>
+<ol>
+<li>Write a one-line specification, a not-doing list, and one external verification checkpoint for your own small tool</li>
+<li>Vibe-code it, then build and ship it</li>
+<li>Compare what you get with a spec against what you get without one</li>
+<li>Decide whether it is worth adopting for real</li>
+</ol>
+</section>
+<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<p>Finish and publish the tool, and write a reflection on what the AI did for you and what you had to supply yourself.</p>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>Hands-on showcase</h3>
+<p>Demo the tool you published and say the one thing the AI did that surprised you most.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<p>Take one question together: is this thing worth adopting by a team? Answer it with one criterion — maintenance cost against time saved.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<p>Write one sentence to keep: "With no engineering background, did I just build something usable? Has that changed who I think can build a product?"</p>
+</section>
+<section class="mod-sec sec-links"><h3>🔗 Links</h3>
+<ul>
+<li>The chain into this: <a href="M_Claude_Code_Onboarding.html">Claude Code Onboarding</a> (install, first instruction) → this unit (turn a spec into a shipped tool).</li>
+<li>Downstream of the adoption decision: the "worth adopting" judgement at the end of this unit is the start of the personal tool → validated → productised → distributed lifecycle you saw in <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a> in W1.</li>
+<li>The weekly sharing slot: <a href="M_AI_Skill_Sharing.html">AI Skill Sharing</a> — bring the published tool to demo, critique, and archive.</li>
+<li>The uncertainty underneath: "leave a gap in the spec and the AI decides for you" is, in information terms, uncertainty you failed to remove. Every unspecified thing is a choice you handed over.</li>
+</ul></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 21:53</p>
+</div>
+</body>
+</html>

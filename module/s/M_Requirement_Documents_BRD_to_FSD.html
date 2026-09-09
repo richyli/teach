@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requirement Documents BRD to FSD</title>
+<link rel="stylesheet" href="../../style.28754482.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>Requirement Documents BRD to FSD</h1></div><p>This unit covers why product planning is really requirement communication, the four rungs of the requirement-document ladder from BRD to FSD, and why the same document name means different things at different companies.</p>
+<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>State</strong> what each of BRD, MRD, PRD and FSD is for, and name the audience each one is written <em>at</em></td>
+<td>"Which document do I write?" is the wrong question. "Whose approval am I trying to get?" picks the document for you.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Mark</strong>, on the five-element product picture, which elements a given document has to argue about</td>
+<td>Why a PRD that spends three pages on market size gets sent back: it is arguing in a ring that its readers do not own.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Diagnose</strong> a real document you are given as a BRD, MRD, PRD, FSD, or a hybrid, using its audience and scope rather than its title</td>
+<td>Every company names these differently. Example 2 in the reference table merges MRD and PRD into one document; example 4 has only an FSD.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Explain</strong> why an organisation's maturity, culture, and complexity change how many documents it needs</td>
+<td>"Our startup doesn't do documents" is a statement about organisational complexity, not a statement about good practice.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Decide</strong> which requirements a document must settle before the next document can be started, and defend cutting the rest</td>
+<td>Scope creep in W12 begins here: the requirement that was never settled in the MRD comes back as a change request during the build.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3>🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below.</p>
+<blockquote>
+<p>I am learning the difference between a BRD, an MRD, a PRD, and an FSD. Do not define them for me yet. Instead, write four short paragraphs of about 80 words each, all describing the same fictional product — a subscription newsletter for local restaurant reviews. Write one paragraph in the voice of each document type, but label them only as A, B, C and D in a random order. I will guess which is which. After I answer, tell me which clues I should have used, and name the one clue that most reliably separates a PRD from an FSD. Then ask me one question I probably cannot answer yet.</p>
+</blockquote>
+<p>Bring your guesses and the clue you missed. The clue most people miss is the audience — who the paragraph is trying to persuade — and that is the whole point of this unit.</p>
+<hr />
+<p>The spine of this unit:
+planning is requirement communication → the five elements a product sits inside → four rungs of documents, four audiences → in the real world the names do not hold → what this course actually makes you write.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>Product planning is requirement communication</h3>
+<ul>
+<li>Everything you will write this semester exists to move a requirement from one group of people to another.</li>
+<li>A product sits inside five elements: the product itself, plus business environment, company, competition, and user.</li>
+<li>Product–market fit is not a property of the product; it is a statement about the relationship between those five.</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>Planning is not designing; it is getting a requirement agreed</h3>
+<p>The reason this course is mostly documents is not bureaucratic. A requirement that lives in your head is not a requirement — it is an opinion. It becomes a requirement when a specific group of people with specific resources agrees to it in writing. Every document type below is a different group of people.</p>
+</section>
+<section class="mod-sec sec-content"><h3>A product is surrounded by four things it must answer to</h3>
+<p>The picture to keep is a ring: <strong>Product</strong> in the middle, with <strong>Business Environment</strong>, <strong>Company</strong>, <strong>Competition</strong> and <strong>User</strong> around it. Almost every argument you will lose this semester is an argument about one of those four rings, made in a document whose readers do not own that ring.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>The question it asks of your product</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Business Environment</td>
+<td>Is this a viable thing to be doing at all, given regulation, platforms, and the market's direction?</td>
+</tr>
+<tr>
+<td>Company</td>
+<td>Can <em>we</em> do this, with what we have and what we are?</td>
+</tr>
+<tr>
+<td>Competition</td>
+<td>Why us rather than the three organisations already doing something similar?</td>
+</tr>
+<tr>
+<td>User</td>
+<td>Does anyone actually want it, in a way they would pay for or return to?</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>What is the thing, concretely?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3>Product–market fit is a relationship, not a feature list</h3>
+<p>You do not achieve fit by adding features. You achieve it when the answers to those four questions stop contradicting each other. W3 to W7 walk around the ring one element at a time and assemble the answers into the MRD.</p>
+<div class="callout callout-student"><span class="co-title">For students · About the "faster horses" quote</span><p>You will see this attributed to Henry Ford everywhere: "If I had asked people what they wanted, they would have said faster horses." There is no evidence Ford ever said it — researchers have looked, and it does not appear in his writings or interviews. Keep using it as a <em>slogan</em> about the limits of asking users to design, but do not use it as <em>evidence</em>, and notice what it is often used to justify: ignoring users entirely. W6 gives you the Mom Test, which is the disciplined version of the same worry.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>Four rungs, four audiences, four scopes</h3>
+<ul>
+<li>Each document is defined by the resource-holder it must persuade, not by how detailed it is.</li>
+<li>The ladder runs BRD → MRD → PRD → FSD, from strategy down to build.</li>
+<li>As you go down the ladder the scope narrows toward Product and User, and the number of people who can veto you goes down with it.</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>The eight identities decide which document you are writing</h3>
+<p>Before the ladder makes sense, recall who is in the room, from <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a>: the Sponsor who has the money, the Approver who can veto, the Recommender who starts it, the Accountable person who carries it, the Responsible people who do it, the Informed people who will hurt you if they hear it secondhand, and the Consulted people who get angry if you did not ask. Each document below is addressed to a different subset of that list.</p>
+</section>
+<section class="mod-sec sec-content"><h3>BRD is strategic, and it argues in front of the people with the biggest budget</h3>
+<p><strong>Audience</strong>: owners of large resources — the board, investors, the CxO layer.
+<strong>It argues about</strong>: market, competition, positioning, finance, strategy, and whose interests are served.
+<strong>Scope on the ring</strong>: business environment, company, user and product all in play.
+<strong>In your career</strong>: you will not get to write one early. You will write more of them as you rise.</p>
+</section>
+<section class="mod-sec sec-content"><h3>MRD is tactical and cross-departmental, and it is the one you will write first</h3>
+<p><strong>Audience</strong>: owners of smaller resources and the people you have to work beside — the CxO layer, the people who control the money, the people who bring in revenue, the person who would be happiest if this project never happened, the department that has to lend you headcount, and the people who will work late because of it.
+<strong>It argues about</strong>: division of labour, who carries the blame, sequencing, process, organisation, relationships, resources.
+<strong>Scope on the ring</strong>: product at the centre, with user, company and competition around it; the wider business environment is assumed rather than argued.
+<strong>In your career</strong>: usually written from manager level up — but in a small content organisation you may be writing one within a year of graduating. This is the document you defend in W8.</p>
+</section>
+<section class="mod-sec sec-content"><h3>PRD is the development document, and vagueness here is now expensive</h3>
+<p><strong>Audience</strong>: the owners of development resources — research, design, engineering, legal, finance.
+<strong>It argues about</strong>: features, specifications, schedule, resources, QA, and risk.
+<strong>Scope on the ring</strong>: product and user; the outer three rings are settled elsewhere and only referenced.
+<strong>In your career</strong>: you will certainly write these early on, and hand them to juniors later.</p>
+<p>There is a new reason to be precise here. An under-specified PRD used to produce a question from an engineer. It now produces a plausible default from an AI agent, silently. W11's PRD Stress Test is built on exactly that failure.</p>
+</section>
+<section class="mod-sec sec-content"><h3>FSD is the craft-level document, written for the people who build</h3>
+<p><strong>Audience</strong>: the people doing the work — engineers, systems analysts, UI designers.
+<strong>It argues about</strong>: functions, specifications, appearance, sequencing.
+<strong>Scope on the ring</strong>: product and user, at a depth the PRD does not go to. The difference from a PRD is not breadth, it is resolution — the PRD says what and why, the FSD says exactly how it behaves.
+<strong>In your career</strong>: communication-school graduates rarely meet this document, but in a small team you may end up writing it anyway.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Read the ladder as three questions, not four documents</h3>
+<p>The reference framing that survives across companies is simpler than the four names: <strong>market and business drivers</strong> (why this, why now), <strong>using the product</strong> (what it does for whom), and <strong>what we need to build</strong> (the spec). BRD and MRD answer the first, MRD and PRD the second, PRD and FSD the third.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>In the real world the names do not hold</h3>
+<ul>
+<li>Every company names these documents differently, splits them differently, and assigns them to different people.</li>
+<li>Six real-world combinations of the same three questions are common enough to be worth recognising on sight.</li>
+<li>How many documents an organisation needs is a function of its maturity, culture, and complexity — not of best practice.</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>The same name can mean completely different documents</h3>
+<p>Five things vary between organisations, and all five vary at once: what the documents are called, what scope a given name covers, who writes it, how detailed it is, and how many of them exist at all. This is why "which document should I write" is unanswerable in the abstract and easy once you know who has to say yes.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Six combinations you will actually meet</h3>
+<p>The same three questions get packaged in at least these ways.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>"Market &amp; business drivers"</th>
+<th>"Using the product"</th>
+<th>"What we need to build"</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Example 1</td>
+<td>MRD</td>
+<td>PRD</td>
+<td>FSD</td>
+</tr>
+<tr>
+<td>Example 2</td>
+<td>MRD or PRD (single combined document)</td>
+<td></td>
+<td>FSD</td>
+</tr>
+<tr>
+<td>Example 3</td>
+<td>— or MRD</td>
+<td>MRD or PRD</td>
+<td></td>
+</tr>
+<tr>
+<td>Example 4</td>
+<td>—</td>
+<td>—</td>
+<td>FSD</td>
+</tr>
+<tr>
+<td>Example 5</td>
+<td>BRD</td>
+<td>User or Functional Requirements Doc (UCD / FRD)</td>
+<td>System Requirements Doc (SRD)</td>
+</tr>
+<tr>
+<td>Example 6</td>
+<td>— or BRD or Customer Requirements Doc (CRD)</td>
+<td>System Requirements Spec (SRS)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Source: product-arts.com, "Examples of Requirements documents". Example 4 is the one worth staring at: an organisation with only an FSD is one where nobody is required to justify <em>why</em> before people are told <em>what to build</em>.</p>
+</section>
+<section class="mod-sec sec-content"><h3>The documents overlap on purpose</h3>
+<p>BRD, MRD, PRD and FSD are not four sealed boxes in a row; they overlap at their edges. The overlap is where handover happens — the last section of one document is usually the first section of the next. When a team argues about "which document does this belong in", they are almost always standing in an overlap, and the answer is usually "both, at different resolutions".</p>
+</section>
+<section class="mod-sec sec-content"><h3>Common items that show up somewhere in the chain</h3>
+<p>Across the whole chain, these are the pieces that recur. No single company uses all of them; every company uses some.</p>
+<p>Company situation · business goals · product introduction · target market and customers · external stakeholders · internal stakeholders · competitive environment · value-proposition positioning · functional requirements · financial analysis · development cost · revenue forecast · operating cost · headcount estimate · development-process estimate · traffic estimate · persona · product features · product specifications · prototype · module list · QA plan · customer-service plan · development risks · project dependencies · glossary · closing report.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Four factors decide how heavy the paperwork gets</h3>
+<p>Organisational maturity. Organisational culture. Organisational complexity. And the complexity of the project and its goals. A three-person startup with one goal genuinely needs less paper than a public broadcaster coordinating four agencies — that is not laziness, it is a different point on those four dimensions. W14's TaiwanPlus case is the far end of this.</p>
+</section>
+<section class="mod-sec sec-content"><h3>What this course makes you write</h3>
+<p>Of the four rungs, this course puts its weight on the middle two: <strong>the MRD</strong>, assembled in W7 and defended in W8, and <strong>the PRD with wireframes</strong>, built through W9 to W11 and defended in W16. BRD-level argument appears inside your MRD's market section; FSD-level detail appears only where your wireframes force it.</p>
+<blockquote>
+<p><strong>The document is not chosen by how detailed your thinking is. It is chosen by whose signature you need, and every rung down the ladder trades away readers who could veto you for readers who could build for you.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-activity"><h3>Hands-on — Name that document</h3>
+<p>You are given three real requirement documents with their titles and company names removed.</p>
+<ol>
+<li>For each one, name its audience from the text alone — who is being persuaded?</li>
+<li>Mark which of the five ring elements it argues about</li>
+<li>Say which rung it sits on, and whether it is a hybrid</li>
+<li>Find one requirement in it that is left open, and say which later document will pay for that</li>
+</ol>
+<p>Disagreements are the useful part. If your team splits between MRD and PRD on the same document, you have probably found a real-world hybrid, which is the norm rather than the exception.</p>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3>⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"The four documents differ by level of detail"</td>
+<td>They differ by audience. A BRD can be extremely detailed about finance and say nothing about features</td>
+<td>Ask who has to sign, then write to that person</td>
+</tr>
+<tr>
+<td>"There is a correct document set"</td>
+<td>Six common combinations exist and companies invent more. The same name covers different scope in different firms</td>
+<td>Diagnose by audience and scope, never by title</td>
+</tr>
+<tr>
+<td>"A startup that skips documents is being agile"</td>
+<td>Document load tracks organisational complexity. Skipping is fine at three people and fatal at thirty</td>
+<td>Say which of the four factors justifies the skipping</td>
+</tr>
+<tr>
+<td>"The PRD is where the real work is; the MRD is marketing fluff"</td>
+<td>The MRD settles who this is for. A PRD built on an unsettled MRD produces beautifully specified features for nobody</td>
+<td>Check that every PRD section can point back to an MRD decision</td>
+</tr>
+<tr>
+<td>"The faster-horses quote proves you should ignore users"</td>
+<td>The quote is almost certainly apocryphal, and even taken at face value it argues against asking users to <em>design</em>, not against researching them</td>
+<td>Use it as a warning about question design, then go and learn the Mom Test in W6</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-links"><h3>🔗 Links</h3>
+<ul>
+<li>Before this: <a href="M_PM_Role_and_Product_Lifecycle.html">PM Role and Product Lifecycle</a> — the five lifecycle stages whose artefacts these documents are.</li>
+<li>Also before this: <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a> — the eight decision identities that decide which document you are writing.</li>
+<li>Where the MRD is assembled and defended: W7 <a href="M_User_Research_and_MRD_Assembly.html">User Research and MRD Assembly</a>, W8 <a href="M_Pitch_and_Judge_Skill_Design.html">Pitch and Judge Skill Design</a>.</li>
+<li>Where the PRD is written and attacked: W11 <a href="M_PRD_Writing_and_Stress_Test.html">PRD Writing and Stress Test</a>, with Tekton PRD (Build Day Winner) as the worked example.</li>
+<li>The theory that treats these documents as objects travelling between departments: <a href="Theory_-_Boundary_Object_Theory.html">Boundary Object Theory</a> (W7 and W11 Primary Theory). Weekly list: <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</li>
+<li>Terminology: internet_product_vocabulary.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<p>Take the product idea you brought from the orientation task and work with a partner.</p>
+<ol>
+<li>Say which of the five ring elements your idea is weakest on</li>
+<li>Say which document would be the one to settle it</li>
+<li>Name the specific person in an organisation who would have to agree before that requirement is real</li>
+</ol>
+<p>Then swap. If your partner cannot name a real person in step 3, the requirement is still an opinion.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<p>Write one sentence to keep: "The requirement I am most likely to leave unsettled in my MRD is <strong><em>_</em>_, and it will come back at me in week </strong>____."</p>
+</section>
+<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<p>Pick any product you use daily. In under 200 words, write the two or three sentences that would appear in its <strong>MRD</strong> about who it is for, and the two or three that would appear in its <strong>PRD</strong> about one single feature. Then mark the one place where you had to guess, because that is where the real document would have had evidence.</p></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 21:53</p>
+</div>
+</body>
+</html>

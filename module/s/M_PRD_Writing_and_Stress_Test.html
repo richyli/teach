@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRD Writing and Stress Test</title>
+<link rel="stylesheet" href="../../style.28754482.css">
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>PRD Writing and Stress Test</h1></div><p>This unit covers PRD structure, acceptance criteria and edge cases, and the new risk that an AI agent fills your under-specified spec with a plausible but wrong default instead of asking you a question.</p>
+<section class="mod-sec sec-content"><h3>Core</h3>
+<ul>
+<li>PRD structure, acceptance criteria, edge cases.</li>
+<li>A development philosophy for the age of Agentic AI.</li>
+<li>Primary theory: <a href="Theory_-_Boundary_Object_Theory.html">Boundary Object Theory</a> — the PRD encodes shared rules across the activity system and freezes one sensemaking outcome. Supporting: <a href="Theory_-_Activity_Theory.html">Activity Theory</a> (rules), <a href="Theory_-_Sensemaking.html">Sensemaking</a>. Together with the W7 MRD, this gives you two contrasting boundary objects in one semester.</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3>A real PRD to work from: Tekton / Yingzao</h3>
+<p>The full text is in Tekton PRD (Build Day Winner), from <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>. A real, award-winning PRD of about 6,500 words in 13 sections — far more useful as a model than an abstract list of headings.</p>
+<p><strong>The 13 sections</strong>: One-Line Punch · Product Summary · Why This Matters · Founder Story · Subject Buildings · UX (six layers, explicitly <em>Not a Chatbot</em>) · Reconstruction Pipeline (five agent sub-sections) · Build-Day Orchestration · Data Sources &amp; Rights · MVP Scope · Tech Stack · Definition of Done (nine items) · Submission Checklist.</p>
+<p><strong>The One-Line Punch is a reframing.</strong> "Make right cheaper than looks-like" — the first sentence of the PRD is a redefinition of the problem.</p>
+<p><strong>An explicit not-doing list.</strong> Section 10 forbids a chat box, accounts, a CMS, and more than three buildings. That is a model piece of anti-scope-creep, and it leads into <a href="M_Scope_Management_and_Prioritisation.html">Scope Management and Prioritisation</a>.</p>
+<p><strong>Acceptance is settled in advance, not chosen on the day.</strong> Colours are frozen as design tokens beforehand and deployment produces frozen verified artifacts with no runtime LLM — which is what Section 12's Definition of Done is enforcing.</p>
+<p><strong>Note what is not in it.</strong> The 50 work tickets live on a Notion board, not in the PRD. The spec and the tickets are two different boundary objects.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Hands-on — PRD Stress Test</h3>
+<ol>
+<li>Team A writes a PRD</li>
+<li>Team B hands it to an AI agent and ships whatever the agent produces</li>
+<li>Team C reviews the output and finds every spec gap and tacit assumption</li>
+</ol>
+</section>
+<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<p>Submit the repaired PRD plus the list of gaps found.</p>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<p>Swap PRDs with a partner and play a malicious AI agent.</p>
+<ol>
+<li>Find sentences that would produce the wrong thing if followed literally</li>
+<li>Find the edge cases that were never written down</li>
+<li>Find the tacit assumption hiding underneath</li>
+<li>Mark at least two gaps each</li>
+</ol>
+</section>
+<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<p>Write one sentence to keep: "The place my PRD is most likely to be misread by an AI is <strong><em>_</em>_, and next time I will pin it down with </strong>____" — acceptance criteria, a not-doing list, or a pre-frozen token.</p></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 21:53</p>
+</div>
+</body>
+</html>
