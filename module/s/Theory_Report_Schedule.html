@@ -202,6 +202,43 @@
 <p><strong>E. Critical and STS perspectives — thinking with and against AI products</strong>
 <a href="Theory_-_Inscription_Script_Theory.html">Inscription Script Theory</a> · <a href="Theory_-_Algorithmic_Imaginaries.html">Algorithmic Imaginaries</a> · <a href="Theory_-_Surveillance_Capitalism.html">Surveillance Capitalism</a> · <a href="Theory_-_Postphenomenology.html">Postphenomenology</a> · <a href="Theory_-_Algorithms_of_Oppression.html">Algorithms of Oppression</a></p>
 </section>
+<section class="mod-sec sec-content"><h3>Putting a theory into a prompt</h3>
+<p>An AI will summarise any theory on request. That is the least useful thing it can do with one, and it is what most reports end up quoting. The prompts below do the other three things: make the theory explain something, make it do work on a case, and make it change a product decision.</p>
+<p>Use them in order. Each one takes the output of the last. Replace the bracketed parts and paste the rest verbatim — the constraints at the end of each prompt are doing most of the work.</p>
+</section>
+<section class="mod-sec sec-content"><h3>1. Explain — force it to teach, not to define</h3>
+<blockquote>
+<p>I am preparing a 15-minute report on [THEORY] for a product-planning course. Do not give me a definition or a summary. Instead: (1) state the single mechanism this theory claims, in one sentence beginning "this theory says", using no term the theory itself invented; (2) give me the one classic empirical study that tested it, with its claim, its method and its finding; (3) give me the strongest published criticism of it, from a named critic, not a generic limitation; (4) tell me the one thing people most often get wrong when they cite this theory. Then ask me two questions I probably cannot answer yet.</p>
+</blockquote>
+<p>Then push back once:</p>
+<blockquote>
+<p>Now argue that the mechanism you just described is trivially true — that it dresses up something obvious. Make the strongest version of that attack. Then tell me what the theory would have to predict for the attack to fail.</p>
+</blockquote>
+<p>If a theory survives that second prompt with something specific, you have found what to report. If it does not, you have found your critique section.</p>
+</section>
+<section class="mod-sec sec-content"><h3>2. Apply — make it explain one concrete case</h3>
+<blockquote>
+<p>Here is a real case: [PASTE 150 WORDS ABOUT A REAL PRODUCT, INCIDENT, OR DECISION]. Using only [THEORY], explain what is happening. Rules: name which element or construct of the theory each part of the case maps onto; mark every place where the mapping is forced, and say so out loud rather than smoothing it over; then name one thing in this case that the theory cannot explain at all. Do not tell me the theory is useful. Show me where it runs out.</p>
+</blockquote>
+<p>The last instruction is the one that matters. A theory that explains everything in your case has been applied loosely, and the marker for that in a report is that nothing was left over.</p>
+<p>Then swap lenses:</p>
+<blockquote>
+<p>Now explain the same case using [THIS WEEK'S SUPPORTING THEORY]. Give me the two sentences where the two explanations genuinely disagree — not where they use different words for the same thing.</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3>3. Plan — make it change a product decision</h3>
+<blockquote>
+<p>I am planning [YOUR PRODUCT] and I have to decide [THE SPECIFIC DECISION: what to build first, who to research, how to price, what to cut]. Use [THEORY] to make this decision differently from how I would make it by instinct. Give me: (1) the question the theory forces me to ask before deciding; (2) what evidence I would have to collect to answer it; (3) the decision the theory points to, and the decision it points away from; (4) what would have to be true for the theory to be the wrong lens here. Do not give me a balanced overview. Commit to a recommendation.</p>
+</blockquote>
+<p>Then check whether the theory did any work at all:</p>
+<blockquote>
+<p>Take your recommendation and rewrite it with every reference to [THEORY] deleted. If the recommendation still reads the same, tell me plainly — that means the theory was decorative, not load-bearing.</p>
+</blockquote>
+<p>That final check is the same test the rubric applies to your report and to your pitch: a theory that could be deleted without changing the argument was never used.</p>
+</section>
+<section class="mod-sec sec-content"><h3>What to bring back to class</h3>
+<p>From prompt 1, the criticism and the thing people get wrong. From prompt 2, the part of the case the theory cannot explain. From prompt 3, the answer to the deletion test. Those three are the parts of an AI conversation that survive contact with a room full of people who have read the same theory.</p>
+</section>
 <section class="mod-sec sec-content"><h3>How to prepare, in the order that works</h3>
 <p>Read the primer page for your theory first — it gives you the claim, the lens questions, and the founding readings. Then read one founding text; the primer is not a substitute and a report built only on the primer is visible immediately. Then find your empirical study and your criticism, because those two are what separate a 4 from a 3. Write the two discussion prompts last, once you know what the theory cannot explain about this week's product topic — that gap is where the good prompts are.</p>
 <p>Use an AI to stress-test the report before you give it: ask it to argue that your theory does not apply to this week's topic at all, and prepare an answer. Somebody in the red-team round will make that argument anyway.</p>
@@ -213,7 +250,7 @@
 <li>W1 modules: <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a> · <a href="M_PM_Role_and_Product_Lifecycle.html">PM Role and Product Lifecycle</a> · <a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a></li>
 <li>The primer pages are generated from the slide decks in <code>wiki/</code> by <code>tools/build_theory_pages.py</code></li>
 </ul></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:34</p>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:38</p>
 </div>
 </body>
 </html>
