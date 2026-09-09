@@ -15,7 +15,7 @@ MathJax = {
 </head>
 <body>
 <div class="container">
-<div class="hero"><h1>PM Role and Product Lifecycle</h1></div><p>This unit covers the four kinds of product manager, the five stages every content product passes through, and what changes in that job once an AI agent is sitting in the team.</p>
+<div class="hero"><h1>PM Role and Product Lifecycle</h1></div><p>This unit covers the five stages every content product passes through, what each stage owes the next one, and which parts of that work an AI agent genuinely absorbs.</p>
 <section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
 <table>
 <thead>
@@ -28,26 +28,21 @@ MathJax = {
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Place</strong> any PM job on two axes — inbound vs outbound, and technical vs content — and say what the day looks like in each quadrant</td>
-<td>"Two companies advertise 'Product Manager' and the jobs are nothing alike." They are in different quadrants; the title hides it.</td>
-</tr>
-<tr>
-<td>2</td>
 <td><strong>Walk</strong> a product idea through the five lifecycle stages (research → MRD → PRD → launch → metrics) and name the artefact each stage owes the next one</td>
 <td>"Why did the engineers build the wrong thing when the market research was fine?" — because nothing carried the research forward into a specification.</td>
 </tr>
 <tr>
-<td>3</td>
-<td><strong>Use</strong> Activity Theory to locate where a task moved from a person to a tool, and what rule or division of labour had to change with it</td>
-<td>"We gave the AI the drafting work and the team got slower." Something else in the system did not move with it.</td>
-</tr>
-<tr>
-<td>4</td>
+<td>2</td>
 <td><strong>Distinguish</strong> the parts of PM work that an agent genuinely absorbs from the parts that only look absorbable</td>
 <td>Jared Sires at Anthropic saved 2–3 hours a day with a drafting tool and still could not delegate the judgement about which 700 accounts to call.</td>
 </tr>
 <tr>
-<td>5</td>
+<td>3</td>
+<td><strong>Explain</strong> how the barrier moving changes <em>who counts as a builder</em>, not just how fast building goes</td>
+<td>A salesperson who had never written code became a product manager in eighteen months. That is a statement about the role, not about the tool.</td>
+</tr>
+<tr>
+<td>4</td>
 <td><strong>Judge</strong> which lifecycle stage is the riskiest to hand to an AI agent, and defend that judgement against a classmate who picks a different one</td>
 <td>This is the argument you will have with a real engineering lead in W12, so it is worth losing it here first.</td>
 </tr>
@@ -58,51 +53,12 @@ MathJax = {
 <section class="mod-sec sec-ai"><h3>🤖 Pre-class AI workout</h3>
 <p>Use an AI as your study partner before class. Paste the prompt below.</p>
 <blockquote>
-<p>Engeström's Activity Theory describes human work as a six-element system: subject, object, tool, rules, community, and division of labor. Take one concrete case: a small newsroom introduces an AI agent that drafts every article summary. Fill in the six elements before the agent arrives, then fill them in again after. Then answer two questions. (1) Which element changed the most, and which one did nobody update? (2) Engeström argues that learning happens when contradictions between elements force the system to expand — name the specific contradiction this newsroom now has. Do not summarise the theory first. Fill in the table, then answer the two questions.</p>
+<p>Take one real content product you use — a news app, a newsletter, a podcast platform. Reconstruct the five stages its team must have gone through: market research, market requirements, product requirements, launch, and metrics. For each stage, write the one artefact that stage had to hand to the next one, and say how you can tell from the finished product whether that handover actually happened. Then name the stage where you can see the evidence is weakest, and say what in the product gives it away. Do not describe the product's features. Work backwards from the product to the process.</p>
 </blockquote>
-<p>Bring your filled table to class. Compare the "element nobody updated" with two classmates — that column is where most real AI adoption failures live, and you will find that people picked different elements for good reasons.</p>
+<p>Bring the stage you judged weakest. Most people will name the same one or two, and the reason they are guessable is what this unit is about.</p>
 <hr />
 <p>The spine of this unit:
-four PM archetypes → the five-stage lifecycle and what each stage hands over → Activity Theory: the team as a system, not a headcount → what an agent actually absorbs → which stage you would never hand over.</p>
-<hr />
-</section>
-<section class="mod-sec sec-content"><h3>Four product managers, one job title</h3>
-<ul>
-<li>PM work splits on two axes: inbound (defining what to build) versus outbound (taking it to market), and technical versus content.</li>
-<li>The four quadrants have different daily rhythms, different documents, and different bosses.</li>
-<li>A communication-school graduate starts strongest in the outbound-content quadrant and is most exposed in inbound-technical.</li>
-</ul>
-</section>
-<section class="mod-sec sec-content"><h3>Inbound PMs face the product; outbound PMs face the market</h3>
-<p>The inbound side is where requirements are made: talking to users, writing the MRD and PRD, arguing about scope, sitting with engineers. The outbound side is where the product meets the world: positioning, launch, pricing narrative, the story sales and marketing repeat. Both are called Product Manager. In a small company they are one exhausted person.</p>
-</section>
-<section class="mod-sec sec-content"><h3>The technical–content axis decides which arguments you can win</h3>
-<p>A technical PM's authority comes from being able to argue about feasibility with engineers. A content PM's authority comes from being able to argue about audiences, editorial judgement, and what a reader will actually do. You are being trained for the second, in an environment where the first is becoming cheaper to fake.</p>
-</section>
-<section class="mod-sec sec-content"><h3>Your quadrant is your first hire, not your last</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Technical</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Inbound</strong></td>
-<td>Specs, APIs, feasibility trade-offs, engineer-facing</td>
-<td>Audience research, editorial requirements, journey design</td>
-</tr>
-<tr>
-<td><strong>Outbound</strong></td>
-<td>Developer relations, technical positioning</td>
-<td>Launch narrative, partnerships, audience growth</td>
-</tr>
-</tbody>
-</table>
-<p>Most first jobs open in the two right-hand cells. The point of the semester is to give you enough of the left-hand cells that you can hold a conversation there.</p>
-<div class="callout callout-student"><span class="co-title">For students · Reading a Taiwanese job ad</span><p>The title tells you almost nothing. Find the sentence that says what you would be responsible for, and see whether it names <em>requirements</em> (inbound) or <em>market</em> (outbound), and whether it names <em>engineers</em> (technical) or <em>audiences</em> (content). One sentence beats the whole title.</p></div>
+the five-stage lifecycle and what each stage hands over → what an agent absorbs and what it only appears to absorb → which stage you would never hand over.</p>
 <hr />
 </section>
 <section class="mod-sec sec-content"><h3>Five stages, and what each one owes the next</h3>
@@ -126,20 +82,15 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 </section>
 <section class="mod-sec sec-content"><h3>Metrics owe research the next question</h3>
 <p>The loop closes here or it does not close at all. Metrics that nobody turns back into a research question are a report, not a lifecycle.</p>
+<div class="callout callout-student"><span class="co-title">For students · Where the person doing this work sits</span><p>The lifecycle above is what the job runs across; the taxonomy of what the job is called, and which quadrant of it you are being trained for, is <a href="M_PM_Roles.html">PM Roles</a>. The theory that explains why keeping the whole system consistent is nobody's written job description — and therefore ends up being yours — is <a href="M_Activity_Theory.html">Activity Theory</a>.</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>Activity Theory: the team is a system, and AI moved one element</h3>
+<section class="mod-sec sec-content"><h3>What an agent absorbs, and what only looks absorbable</h3>
 <ul>
-<li>Engeström models work as six elements — subject, object, tool, rules, community, division of labor — that must stay consistent with each other.</li>
-<li>Adding an AI agent changes the <em>tool</em> element instantly, and the rules and division of labor only if someone deliberately changes them.</li>
-<li>Learning, in this theory, comes from the contradiction that opens up in between.</li>
+<li>The tool changes in an afternoon; who is allowed to decide changes only when a person rewrites the rule.</li>
+<li>A non-coder productised his own job and his role changed, which is a bigger fact than the hours he saved.</li>
+<li>The agent drafted the work. It did not decide which work was worth doing.</li>
 </ul>
-</section>
-<section class="mod-sec sec-content"><h3>The PM is the one who keeps the six elements consistent</h3>
-<p>A product team is a subject (the team) acting on an object (the product) through tools, inside a community, under rules, with a division of labor. Nobody's job description says "keep these six aligned". That is what a product manager actually does, and it is why the role is hard to describe in a job ad. See <a href="Theory_-_Activity_Theory.html">Activity Theory</a>.</p>
-</section>
-<section class="mod-sec sec-content"><h3>Agentic AI changes the tool overnight and the rules never</h3>
-<p>When Claude Code arrives, the tool element changes in an afternoon. Who is allowed to ship what, who reviews whose output, what counts as done — those are rules and division of labor, and they change only when a human decides to change them. The gap between the two is where most AI-adoption pain sits, and Engeström's claim is that the contradiction is not a malfunction; it is the thing that forces the system to expand.</p>
 </section>
 <section class="mod-sec sec-content"><h3>A non-coder became a product manager by productising his own job</h3>
 <p>Jared Sires joined Anthropic in 2024 as a salesperson who had never written code, doing 10 to 15 customer calls a day and still handling email at 10pm. Using Claude Code he built CLAFTS (a drafting tool inside Gmail, around 4,300 lines, hundreds of system-prompt iterations to match his own voice, saving 2–3 hours a day), a Daily Brief that ranked 700 accounts by usage to decide who to call, and eventually a Sales Plugin that around 80% of the sales team adopted within months. His title moved from salesperson to GTM product manager. Full case: <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>.</p>
@@ -147,10 +98,13 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 <section class="mod-sec sec-content"><h3>The lesson is not "AI writes code" but "the barrier moved, so who counts as a builder moved"</h3>
 <p>His own advice was to open the tool, find a task that slows you down, and ask how to build a solution to that one task — not to start from a grand product. That is the same shape as the AI Skill Sharing assignment you signed up for.</p>
 </section>
+<section class="mod-sec sec-content"><h3>Personal tool → validated → productised → distributed is a lifecycle in miniature</h3>
+<p>He proved the value on himself first, adopted within 24 hours of a Slack post, then packaged the winners into a company-wide plugin designed for a new hire to install on day one. That is the same five stages at a smaller scale, which is why it is worth studying in week one.</p>
+</section>
 <section class="mod-sec sec-content"><h3>What the agent did not absorb</h3>
 <p>It drafted his email. It did not decide which accounts mattered, whether a deal was real, or what tone a relationship needed. Two supporting theories name this split: <a href="Theory_-_Human-AI_Teaming.html">Human-AI Teaming</a> on how tasks and authority get allocated, and <a href="Theory_-_Distributed_Cognition.html">Distributed Cognition</a> on how the thinking gets spread across people, agents, and artefacts rather than replaced.</p>
 <blockquote>
-<p><strong>An agent changes what a tool can do in an afternoon. It changes who is allowed to decide only when somebody rewrites the rule — and until somebody does, the team is running a system whose elements no longer agree with each other.</strong></p>
+<p><strong>An agent changes what a tool can do in an afternoon. It changes who is allowed to decide only when somebody rewrites the rule.</strong></p>
 </blockquote>
 <hr />
 </section>
@@ -176,11 +130,6 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 </thead>
 <tbody>
 <tr>
-<td>"PM is the person who decides what to build"</td>
-<td>In most organisations the PM has no authority to decide and no team reporting to them. Influence comes from having the evidence and the document</td>
-<td>Notice how often the answer to "who decides" is somebody you have to persuade</td>
-</tr>
-<tr>
 <td>"The lifecycle is a checklist you tick through"</td>
 <td>It is a chain of handovers. A stage with no artefact did not happen</td>
 <td>Ask of each stage: what does the next stage receive from this one</td>
@@ -191,14 +140,14 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 <td>Ask what the tool lets a non-specialist attempt, not how many hours it saves</td>
 </tr>
 <tr>
-<td>"Activity Theory is just a diagram of a team"</td>
-<td>Its claim is specifically about contradictions between elements driving change. Without the contradiction it is only an org chart with more boxes</td>
-<td>Use it to find the element nobody updated, which is where the pain is</td>
+<td>"AI can do research, so research is the safe stage to delegate"</td>
+<td>Research is where a plausible fabrication is hardest to detect and most expensive downstream, because every later stage inherits it</td>
+<td>Delegate the collection, keep the judgement about what counts as evidence</td>
 </tr>
 <tr>
-<td>"AI can do research, so research is the safe stage to delegate"</td>
-<td>Research is where a plausible-sounding fabrication is hardest to detect and most expensive downstream, because every later stage inherits it</td>
-<td>Delegate the collection, keep the judgement about what counts as evidence</td>
+<td>"Launch is the end of the lifecycle"</td>
+<td>Launch owes metrics a definition of success, and metrics owe research the next question. A loop that does not close is a report</td>
+<td>Write the success measure before launch, not after</td>
 </tr>
 </tbody>
 </table>
@@ -206,12 +155,12 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 </section>
 <section class="mod-sec sec-links"><h3>🔗 Links</h3>
 <ul>
-<li>Before this: <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a> — the roles and the eight decision identities this unit assumes you already have.</li>
-<li>After this: <a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a> — the MRD and PRD named here, seen as a document ladder with an audience for each rung.</li>
-<li>The theory: <a href="Theory_-_Activity_Theory.html">Activity Theory</a>, with <a href="Theory_-_Human-AI_Teaming.html">Human-AI Teaming</a> and <a href="Theory_-_Distributed_Cognition.html">Distributed Cognition</a> as supporting frames. Weekly list: <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</li>
+<li>The role that runs this lifecycle: <a href="M_PM_Roles.html">PM Roles</a> — six titles, two axes, and what the research says about the job in newsrooms.</li>
+<li>Who else is in the room at each stage: <a href="M_The_Eight_People_Every_Project_Contains.html">The Eight People Every Project Contains</a>.</li>
+<li>Why keeping the whole system consistent falls to you: <a href="M_Activity_Theory.html">Activity Theory</a> (W1 Primary Theory).</li>
+<li>The documents each stage produces: <a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a>, then W7 <a href="M_User_Research_and_MRD_Assembly.html">User Research and MRD Assembly</a> and W11 <a href="M_PRD_Writing_and_Stress_Test.html">PRD Writing and Stress Test</a>.</li>
 <li>The case: <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>.</li>
-<li>Where the lifecycle stages get built out: MRD in W7, wireframes in W9, PRD in W11, scope in W12, risk in W15.</li>
-<li>Scholar and concept notes: Engeström, Yrjö, Human-AI Teaming, Edwin Hutchins.</li>
+<li>Theory primers: <a href="Theory_-_Activity_Theory.html">Activity Theory</a>, <a href="Theory_-_Human-AI_Teaming.html">Human-AI Teaming</a>, <a href="Theory_-_Distributed_Cognition.html">Distributed Cognition</a>. Weekly list: <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</li>
 </ul>
 </section>
 <section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
@@ -230,7 +179,7 @@ four PM archetypes → the five-stage lifecycle and what each stage hands over �
 </section>
 <section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
 <p>Submit a one-line-per-stage lifecycle sketch for the product idea you brought from the orientation task: five lines, each referencing the one above it, plus one sentence naming the stage you would keep away from an agent and why.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:01</p>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:31</p>
 </div>
 </body>
 </html>

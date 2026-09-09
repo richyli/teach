@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Eight People Every Project Contains</title>
+<link rel="stylesheet" href="../../style.d4b8ad9a.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>The Eight People Every Project Contains</h1></div><p>This unit covers the eight identities that sit around any project, the difference between being responsible and being accountable, and the two frameworks that turn those identities into a decision your organisation can actually make.</p>
+<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Name</strong> the eight identities and say what each one can do <em>to</em> a project</td>
+<td>"Why did my proposal die after everyone said it was a good idea?" — usually because nobody asked the person who could veto it.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Separate</strong> responsible from accountable, and say why accountability cannot be split</td>
+<td>Two people were both "in charge" and when it failed each pointed at the other. That is not a personality problem; it is a design fault.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Choose</strong> between RACI and RAPID for a given situation</td>
+<td>"We already have a RACI chart, why is this decision still stuck?" — because RACI assigns tasks and this is a decision-rights problem.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Diagnose</strong> which identity is missing or doubled in a stalled project</td>
+<td>Every stalled project has one of three signatures: too many vetoes, no single decider, or a Consulted person who was handed a veto by accident.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3>🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below.</p>
+<blockquote>
+<p>I am learning two decision-rights frameworks: RACI (Responsible, Accountable, Consulted, Informed) and RAPID (Recommend, Agree, Perform, Input, Decide). Take one concrete scenario: a media company decides whether to put its news archive behind a paywall. Assign both frameworks to that decision, listing which department holds each letter. Then answer three questions. (1) Which letter in RAPID has no equivalent in RACI, and what goes wrong when a team only has RACI? (2) In RAPID, what is the difference between Input and Agree, and what happens if you confuse them? (3) Why must there be exactly one Decide and exactly one Accountable? Do not define the frameworks first. Do the assignment, then answer.</p>
+</blockquote>
+<p>Bring your answer to question 2. Input versus Agree is the distinction almost everyone gets wrong, and getting it wrong is what hands a veto to someone who should only have been advising.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>The eight identities</h3>
+<p>Job titles tell you what someone does. These identities tell you what someone can do <strong>to you</strong>. They are a different axis, and you need both.</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>Plain description</th>
+<th>What it controls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sponsor</td>
+<td>The person who decides to give you resources</td>
+<td>Money, headcount, time</td>
+</tr>
+<tr>
+<td>User</td>
+<td>The person who actually uses the product</td>
+<td>Whether any of it was worth doing</td>
+</tr>
+<tr>
+<td>Approver</td>
+<td>The person who can veto it</td>
+<td>A stop, inside their own domain</td>
+</tr>
+<tr>
+<td>Recommender</td>
+<td>The person who decides to start it and puts the proposal forward</td>
+<td>The quality of the options anyone else gets to choose from</td>
+</tr>
+<tr>
+<td>Accountable / Decide</td>
+<td>The person who gets the credit if it works and the blame if it does not</td>
+<td>The final call</td>
+</tr>
+<tr>
+<td>Responsible / Perform</td>
+<td>The person who does the work</td>
+<td>Whether it actually gets built</td>
+</tr>
+<tr>
+<td>Informed</td>
+<td>The person who will hurt you if you do not report to them</td>
+<td>Political survival</td>
+</tr>
+<tr>
+<td>Consulted / Input</td>
+<td>The person who gets angry if you do not ask them</td>
+<td>Whether your proposal rests on a gap</td>
+</tr>
+</tbody>
+</table>
+<p>The last two are written in that deliberately blunt way because that is how they behave in real organisations.</p>
+<div class="widget" id="pid-quiz">
+<style>
+#pid-quiz { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#pid-quiz h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#pid-quiz .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#pid-quiz .card { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .6rem; font-size: .92rem; }
+#pid-quiz button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#pid-quiz button:hover { background: #eef4fd; }
+#pid-quiz button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#pid-quiz button.right { background: #1a7f5a; border-color: #1a7f5a; color: #fff; }
+#pid-quiz button.wrong { background: #b03a3a; border-color: #b03a3a; color: #fff; }
+#pid-quiz .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#pid-quiz .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#pid-quiz .out.no { background: #fff3f5; border-color: #e6b8c4; }
+#pid-quiz .score { font-size: .82rem; color: #666; margin-top: .7rem; }
+#pid-quiz .nav { margin-top: .6rem; }
+</style>
+<h5>Who is this person?</h5>
+<p class="lede">Eight short scenes from a real project. For each one, name the identity.
+The two that are hardest to tell apart are Consulted and Agree — one can only advise, the other can stop you.</p>
+<div class="card" id="pid-scene">Loading…</div>
+<div id="pid-opts"></div>
+<div class="out" id="pid-out">Pick one.</div>
+<div class="score" id="pid-score"></div>
+<div class="nav"><button id="pid-next" style="display:none">Next scene →</button>
+<button id="pid-reset">Start again</button></div>
+<script>
+(function(){
+  var OPTS=["Sponsor","User","Approver","Recommender","Accountable","Responsible","Informed","Consulted"];
+  var Q=[
+   {s:"She controls the budget line this project is paid from. If she reallocates it in Q3, the project stops that afternoon.",
+    a:"Sponsor",
+    why:"Sponsor is whoever decides to give you resources. Note that this is not the same as the person who approves the plan — money and permission are often two different people."},
+   {s:"Legal has to sign off before launch. He has no opinion about the product direction, but he can stop the launch on compliance grounds.",
+    a:"Approver",
+    why:"An Approver holds a veto, but only inside their own domain. In RAPID this is the A (Agree) role: legal may veto on legal risk, and should not be vetoing product direction."},
+   {s:"He gathered the research, talked to everyone affected, and wrote the proposal that goes to the director.",
+    a:"Recommender",
+    why:"Recommend is the engine of decision quality. Bain's RAPID puts it first for a reason: if the recommendation is lazy, the decider only ever sees bad options."},
+   {s:"If this launch goes badly, she is the one who has to stand up in the review and explain it. She did not write a line of the spec.",
+    a:"Accountable",
+    why:"Accountable comes from 'give an account'. It is always one person, and it cannot be delegated — you can hand out the work, not the answering for it."},
+   {s:"Three of them are building the thing. Each owns part of it.",
+    a:"Responsible",
+    why:"Responsible can be many people; Accountable cannot be. That asymmetry is the whole point of the distinction."},
+   {s:"The data team knows exactly why the metric you plan to use is unreliable. Nobody asked them, and they cannot block you anyway.",
+    a:"Consulted",
+    why:"Consulted is two-way input with no veto. The most common failure here is not ignoring them — it is confusing Consulted with Approver and accidentally handing a veto to someone who should only advise."},
+   {s:"She does not need to give input, but if she hears about the launch from a customer instead of from you, you will pay for it for a year.",
+    a:"Informed",
+    why:"Informed is one-way. It looks like the least important identity and produces some of the most expensive damage, because the cost is political rather than technical."},
+   {s:"He is the person the product is actually built for. He is in none of the meetings.",
+    a:"User",
+    why:"The User is the identity most often present in the slide deck and absent from the room. Every method in the rest of this course exists to get this person's reality back into the decision."}
+  ];
+  var i=0,score=0,answered=false;
+  var scene=document.getElementById("pid-scene"),opts=document.getElementById("pid-opts"),
+      out=document.getElementById("pid-out"),sc=document.getElementById("pid-score"),
+      next=document.getElementById("pid-next"),reset=document.getElementById("pid-reset");
+  function draw(){
+    answered=false;
+    scene.textContent=Q[i].s;
+    opts.innerHTML="";
+    for(var k=0;k<OPTS.length;k++){
+      var b=document.createElement("button");
+      b.textContent=OPTS[k]; b.setAttribute("data-v",OPTS[k]);
+      b.addEventListener("click",pick);
+      opts.appendChild(b);
+    }
+    out.className="out"; out.textContent="Pick one.";
+    next.style.display="none";
+    sc.textContent="Scene "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+  }
+  function pick(){
+    if(answered) return;
+    answered=true;
+    var v=this.getAttribute("data-v"), ok=(v===Q[i].a);
+    if(ok){ score++; this.className="right"; }
+    else{
+      this.className="wrong";
+      var bs=opts.querySelectorAll("button");
+      for(var j=0;j<bs.length;j++){ if(bs[j].getAttribute("data-v")===Q[i].a) bs[j].className="right"; }
+    }
+    out.className="out "+(ok?"ok":"no");
+    out.innerHTML="<b>"+Q[i].a+"</b> — "+Q[i].why;
+    sc.textContent="Scene "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+    next.style.display=(i<Q.length-1)?"inline-block":"none";
+    if(i===Q.length-1){
+      out.innerHTML+="<br><br><b>Done: "+score+" of "+Q.length+".</b> If you missed Consulted or Approver, that is the standard miss, and it is the one that kills proposals late.";
+    }
+  }
+  next.addEventListener("click",function(){ i++; draw(); });
+  reset.addEventListener("click",function(){ i=0; score=0; draw(); });
+  draw();
+})();
+</script>
+</div>
+
+</section>
+<section class="mod-sec sec-content"><h3>Responsible and accountable are not the same word in a different register</h3>
+<p>The English words carry their own definitions. <strong>Responsible</strong> comes from <em>respond</em> — you did the work. <strong>Accountable</strong> comes from <em>account</em>, as in <em>give an account</em> — you have to answer for the result.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Responsible</th>
+<th>Accountable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The question it answers</td>
+<td>Who does the work</td>
+<td>Whose head is it on</td>
+</tr>
+<tr>
+<td>Focus</td>
+<td>The task</td>
+<td>The outcome</td>
+</tr>
+<tr>
+<td>How many people</td>
+<td>Can be many</td>
+<td><strong>Exactly one</strong></td>
+</tr>
+<tr>
+<td>Can it be delegated</td>
+<td>The work can</td>
+<td><strong>The accountability cannot</strong></td>
+</tr>
+<tr>
+<td>What they say afterwards</td>
+<td>"I finished my part"</td>
+<td>"It succeeded or failed on me"</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3>Accountability disappears the moment you split it</h3>
+<p>If two people are both meant to answer for a result, then when it goes wrong each points at the other, and nobody answers at all. Responsibility divides without loss; accountability does not. This is why every framework below has a uniqueness rule at its centre.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Authority and resources must match the accountability</h3>
+<p>To hold someone accountable you have to give them decision rights and resources to match. Responsibility without authority is a scapegoat; authority without responsibility is an abuse. This is the most common organisational disease you will meet as a junior PM, and naming it is most of the defence.</p>
+<div class="callout callout-student"><span class="co-title">For students · Three ways the balance fails</span><p><strong>Lots of R, no A</strong> — many people working, nobody answering for the whole; everyone optimises their own piece and when it fails there is no one to ask.
+<strong>An A with weak or absent R</strong> — someone nominally carrying it with nobody actually doing the work, or an A who cannot delegate and becomes the bottleneck.
+<strong>More than one A</strong> — responsibility diluted until it evaporates, which returns you to the first case by a longer route.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>Two frameworks, two different questions</h3>
+<p>The eight identities above are not one framework. They come from two, and using the wrong one is why some meetings never end.</p>
+</section>
+<section class="mod-sec sec-content"><h3>RACI assigns tasks</h3>
+<p>Responsible (does the work, can be many) · Accountable (answers for it, exactly one) · Consulted (two-way, advises) · Informed (one-way, told afterwards).</p>
+<p>The checking rule is mechanical: every row has exactly one A, at least one R, and not too many Cs and Is — because every C and I is a communication cost you have just signed up for. A blank cell is a normal, healthy answer.</p>
+</section>
+<section class="mod-sec sec-content"><h3>RAPID assigns decision rights</h3>
+<p>Recommend (drives it, gathers evidence, proposes) · Agree (formal sign-off, which is a veto in practice) · Perform (does it once decided) · Input (consulted, <strong>no veto</strong>) · Decide (one person, final call).</p>
+<p>The letters spell a word, not a sequence. The actual order is:</p>
+$$\text{Input} \rightarrow \text{Recommend} \rightarrow \text{Agree} \rightarrow \text{Decide} \rightarrow \text{Perform}$$
+</section>
+<section class="mod-sec sec-content"><h3>Use RACI for work, RAPID for decisions</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RAPID</th>
+<th>RACI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it governs</td>
+<td>Decision rights on one significant decision</td>
+<td>Execution of tasks and deliverables</td>
+</tr>
+<tr>
+<td>Uniqueness rule</td>
+<td>One Decide</td>
+<td>One Accountable</td>
+</tr>
+<tr>
+<td>Veto</td>
+<td>Agree holds one</td>
+<td>No such concept</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>A strategic choice: launch, acquire, allocate</td>
+<td>A project division-of-labour matrix</td>
+</tr>
+</tbody>
+</table>
+<p>If a decision keeps stalling and you already have a RACI chart, that is the diagnosis: RACI has no way to express a veto, so nobody knows who holds one. See RACI matrix and RAPID decision framework for the full cards, and 分工與權責框架全景 for the wider family of frameworks these two belong to.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Each role has a specific failure mode</h3>
+<p><strong>Recommend done lazily</strong> — the decider only ever sees bad options, so decision quality collapses at the source. <strong>Too many Agrees</strong> — everyone can block, nothing moves. <strong>A missing Agree</strong> — legal was not in the loop and the compliance mine goes off after launch. <strong>Perform brought in late</strong> — you ship a decision that cannot be executed. <strong>Input mistaken for Agree</strong> — a veto lands with someone who was only supposed to advise. <strong>More than one Decide</strong> — the decision splits and nobody owns it.</p>
+<blockquote>
+<p><strong>Job titles tell you what people do. These eight tell you what they can do to you — and the two identities students always forget, Approver and Consulted, are precisely the two that kill a proposal in week fifteen.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3>⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Accountable and responsible are the same thing"</td>
+<td>One is doing, the other is answering. One can be shared, the other cannot</td>
+<td>Ask "whose head is it on" separately from "who does the work"</td>
+</tr>
+<tr>
+<td>"The Sponsor and the Approver are the same person"</td>
+<td>Money and permission are usually held by different people</td>
+<td>List them separately every time, even when they turn out to be the same</td>
+</tr>
+<tr>
+<td>"More people consulted means a better decision"</td>
+<td>Every C is a communication cost, and a C mistaken for an A becomes a veto</td>
+<td>Keep the Consulted list short and say out loud that they have no veto</td>
+</tr>
+<tr>
+<td>"RACI covers everything"</td>
+<td>RACI has no way to express a veto or a single decider on a decision</td>
+<td>For a real decision, switch to RAPID</td>
+</tr>
+<tr>
+<td>"The User is obviously included"</td>
+<td>The User is the identity most often present in the slides and absent from the room</td>
+<td>Ask who last spoke to one, and when</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-links"><h3>🔗 Links</h3>
+<ul>
+<li>This unit came out of <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a>, which is where you first meet the roles you will play in your team.</li>
+<li>Where it comes back: <a href="M_Stakeholder_Management_and_Actor_Networks.html">Stakeholder Management and Actor Networks</a> in W14 adds the power/interest grid and the non-human stakeholders — datasets, APIs, regulators — that these eight identities do not cover.</li>
+<li>The document each identity signs: <a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a> — which rung of the ladder you write is decided by whose signature you need.</li>
+<li>Concept cards: RACI matrix, RAPID decision framework, 當責與負責, 分工與權責框架全景.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<p>Take a project you have actually been on — an internship, a student organisation, a club event.</p>
+<ol>
+<li>Name the Sponsor, the Approver, and the User</li>
+<li>Name one person who was Consulted, and one who should have been but was not</li>
+<li>Say what went wrong because of the person in step 2</li>
+<li>Then say whether the problem was a task problem (RACI) or a decision problem (RAPID)</li>
+</ol>
+<p>If neither of you can find a missing Consulted person, you have probably mislabelled the Approver.</p>
+</section>
+<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<p>Write one sentence to keep: "In my team this semester, the identity we are most likely to leave unassigned is <strong><em>_</em>_, and the first sign that we got it wrong will be </strong>____."</p></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:31</p>
+</div>
+</body>
+</html>

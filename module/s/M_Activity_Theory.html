@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Theory</title>
+<link rel="stylesheet" href="../../style.d4b8ad9a.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="container">
+<div class="hero"><h1>Activity Theory</h1></div><p>This unit covers the six elements that make up any working system, why a contradiction between them is the engine rather than the fault, and how to use that to diagnose an AI adoption that is not working.</p>
+<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Name</strong> the six elements of an activity system and say why the individual is not the unit of analysis</td>
+<td>"The team has the tool and good people, so why is nothing faster?" — because the thing that determines output is the system, not the sum of the people.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Locate</strong>, for a real AI adoption, which element changed and which one nobody updated</td>
+<td>"We gave the AI the drafting work and the team got slower." Something else in the system did not move with it.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Read</strong> a contradiction as a signal of what has to expand, rather than as a malfunction to be suppressed</td>
+<td>Every organisation treats the friction after a tool arrives as a training problem. Engeström's claim is that it is the mechanism by which the system learns.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Extend</strong> the analysis to two interacting systems when the work crosses an organisational boundary</td>
+<td>Your product team and your client's team each hold a different picture of the same object, and the design has to be negotiated between the two.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3>🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below.</p>
+<blockquote>
+<p>Engeström's Activity Theory describes human work as a six-element system: subject, object, tool, rules, community, and division of labor. Take one concrete case: a small newsroom introduces an AI agent that drafts every article summary. Fill in the six elements before the agent arrives, then fill them in again after. Then answer two questions. (1) Which element changed the most, and which one did nobody update? (2) Engeström argues that learning happens when contradictions between elements force the system to expand — name the specific contradiction this newsroom now has. Do not summarise the theory first. Fill in the table, then answer the two questions.</p>
+</blockquote>
+<p>Bring your filled table. Compare the "element nobody updated" column with two classmates — that column is where most real AI adoption failures live, and you will find that people picked different elements for good reasons.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>The unit of analysis is the system, not the person</h3>
+<p>Engeström's first move is a refusal: neither an individual action nor an individual person is a large enough unit to explain human work. The smallest thing that explains anything is the <strong>activity system</strong> — six elements held together. See activity system unit of analysis.</p>
+<p>That refusal has a practical consequence for you. When a product does not get used, the interesting question is almost never about the user's motivation. It is about which element of their activity system your product failed to fit.</p>
+</section>
+<section class="mod-sec sec-content"><h3>The six elements</h3>
+<p>The upper triangle is Vygotsky's original — subject, mediating tool, object. Engeström (1987) added the lower three, which are the social structure the work sits inside. See Engeström activity system triangle.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>The person or group doing the work</td>
+</tr>
+<tr>
+<td>Tool / mediating artifact</td>
+<td>What they work through: physical tools and symbolic ones</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>What the activity is aimed at — the problem space, the motive</td>
+</tr>
+<tr>
+<td>Community</td>
+<td>Everyone who shares that same object</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>The norms, explicit and unspoken</td>
+</tr>
+<tr>
+<td>Division of labor</td>
+<td>How tasks, power, and rewards are distributed</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>outcome</strong> sits outside the object: it is what the activity finally produces, and it is not the same thing as what the activity was aimed at.</p>
+</section>
+<section class="mod-sec sec-content"><h3>The PM is the person who keeps the six consistent</h3>
+<p>Nobody's job description says "keep these six aligned". That is what a product manager actually does, and it is why the role is hard to describe in a job ad.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>An agent changes the tool overnight, and the rules never</h3>
+<p>When an AI agent arrives, the tool element changes in an afternoon. Who is allowed to ship what, who reviews whose output, what counts as done — those are <strong>rules</strong> and <strong>division of labor</strong>, and they change only when a human decides to change them.</p>
+<p>The gap between the two is where most AI-adoption pain sits.</p>
+</section>
+<section class="mod-sec sec-content"><h3>A contradiction is the engine, not the fault</h3>
+<p>This is the part that is easy to nod at and hard to actually use. Engeström's claim is that contradictions between elements are <strong>not</strong> malfunctions to be trained away. They are what forces the system to expand into a new form. The expansive learning cycle names the seven steps that expansion runs through: questioning the existing practice, analysing where the conflict came from historically and empirically, modelling a new solution, examining the model, implementing it, reflecting, and consolidating the new practice. See expansive learning cycle and expansive learning.</p>
+<p>For a PM the operational version is short: when adoption stalls, do not ask who needs more training. Ask which two elements now disagree.</p>
+<div class="widget" id="asd">
+<style>
+#asd { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#asd h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#asd .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#asd svg { width: 100%; height: auto; max-width: 560px; display: block; margin: .6rem auto .3rem; }
+#asd .node { cursor: pointer; }
+#asd .case { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .5rem; font-size: .92rem; }
+#asd button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#asd button:hover { background: #eef4fd; }
+#asd .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#asd .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#asd .out.no { background: #fff3f5; border-color: #e6b8c4; }
+#asd .score { font-size: .82rem; color: #666; margin-top: .6rem; }
+</style>
+<h5>Which element did nobody update?</h5>
+<p class="lede">Four cases where an AI agent arrived and something went wrong. In each one the
+<b>tool</b> changed on day one. Click the element that nobody changed with it — that is where the
+contradiction sits, and in Engeström's account the contradiction is the engine, not the fault.</p>
+<svg viewBox="0 0 560 300" role="img" aria-label="Activity system triangle">
+  <line x1="280" y1="60" x2="280" y2="150" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="120" y1="150" x2="440" y2="150" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="120" y1="150" x2="280" y2="60" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="440" y1="150" x2="280" y2="60" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="120" y1="150" x2="120" y2="240" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="440" y1="150" x2="440" y2="240" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="120" y1="240" x2="440" y2="240" stroke="#c9d9ef" stroke-width="2"/>
+  <line x1="280" y1="150" x2="280" y2="240" stroke="#c9d9ef" stroke-width="2"/>
+  <g class="node" data-v="tool"><rect x="215" y="35" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="280" y="57" text-anchor="middle" font-size="13" fill="#22303f">Tool</text></g>
+  <g class="node" data-v="subject"><rect x="55" y="133" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="120" y="155" text-anchor="middle" font-size="13" fill="#22303f">Subject</text></g>
+  <g class="node" data-v="object"><rect x="375" y="133" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="440" y="155" text-anchor="middle" font-size="13" fill="#22303f">Object</text></g>
+  <g class="node" data-v="rules"><rect x="55" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="120" y="245" text-anchor="middle" font-size="13" fill="#22303f">Rules</text></g>
+  <g class="node" data-v="community"><rect x="215" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="280" y="245" text-anchor="middle" font-size="13" fill="#22303f">Community</text></g>
+  <g class="node" data-v="dol"><rect x="375" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="440" y="245" text-anchor="middle" font-size="12" fill="#22303f">Division of labor</text></g>
+</svg>
+<div class="case" id="asd-case">Loading…</div>
+<div class="out" id="asd-out">Click an element.</div>
+<div class="score" id="asd-score"></div>
+<button id="asd-next" style="display:none">Next case →</button>
+<script>
+(function(){
+  var Q=[
+   {c:"A newsroom gives every reporter an agent that drafts summaries. Three weeks later nothing ships faster, because every draft still waits for the same single editor to read it end to end.",
+    a:"dol",
+    why:"Division of labor. The drafting moved to the tool; the reviewing did not move with it, so the queue simply relocated to the editor. Engeström's point is that a tool change without a labor change produces a bottleneck, not a speed-up."},
+   {c:"A product team lets an agent write PRDs. Nobody has said whether an agent-written spec still needs a human sign-off, so two features ship with defaults nobody chose.",
+    a:"rules",
+    why:"Rules. What counts as approved, what counts as done, who signs — those are rules, and they change only when a person deliberately rewrites them. This is exactly the W11 PRD stress test in miniature."},
+   {c:"An agency adopts an agent to generate first-draft campaign concepts. The creatives now spend their time defending why the human version is better, instead of making it.",
+    a:"object",
+    why:"Object. The shared object quietly shifted from make the best campaign to justify our existence against the machine. When the object moves and nobody says so, effort keeps flowing but stops accumulating."},
+   {c:"A small publisher installs an agent that answers reader emails. It works. But the community manager, who used to know what readers were angry about, now hears nothing.",
+    a:"community",
+    why:"Community. The tool absorbed the channel through which the community reached the team. Nothing broke technically, and the organisation lost its sensing organ — a distributed-cognition loss, not a productivity one."}
+  ];
+  var i=0,score=0,answered=false;
+  var cs=document.getElementById("asd-case"),out=document.getElementById("asd-out"),
+      sc=document.getElementById("asd-score"),next=document.getElementById("asd-next");
+  function reset(){
+    var ns=document.querySelectorAll("#asd .node rect");
+    for(var k=0;k<ns.length;k++){
+      var v=ns[k].parentNode.getAttribute("data-v");
+      ns[k].setAttribute("fill",(v==="rules"||v==="community"||v==="dol")?"#eef7f1":"#eaf1fc");
+    }
+  }
+  function draw(){
+    answered=false; reset();
+    cs.textContent=Q[i].c;
+    out.className="out"; out.textContent="Click an element.";
+    next.style.display="none";
+    sc.textContent="Case "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+  }
+  var nodes=document.querySelectorAll("#asd .node");
+  for(var j=0;j<nodes.length;j++){
+    nodes[j].addEventListener("click",function(){
+      if(answered) return;
+      answered=true;
+      var v=this.getAttribute("data-v"), ok=(v===Q[i].a);
+      if(ok) score++;
+      this.querySelector("rect").setAttribute("fill", ok?"#c8e6d3":"#f6d6dc");
+      if(!ok){
+        var t=document.querySelector("#asd .node[data-v='"+Q[i].a+"'] rect");
+        if(t) t.setAttribute("fill","#c8e6d3");
+      }
+      out.className="out "+(ok?"ok":"no");
+      out.innerHTML="<b>"+Q[i].why.split(".")[0]+".</b> "+Q[i].why.substring(Q[i].why.indexOf(".")+1);
+      sc.textContent="Case "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+      if(i<Q.length-1){ next.style.display="inline-block"; }
+      else { out.innerHTML+="<br><br><b>Done: "+score+" of "+Q.length+".</b> Every one of these is a tool change with no matching change anywhere else. That gap is what you are being paid to notice."; }
+    });
+  }
+  next.addEventListener("click",function(){ i++; draw(); });
+  draw();
+})();
+</script>
+</div>
+
+<div class="callout callout-student"><span class="co-title">For students · Why "just train people" is usually the wrong prescription</span><p>Training changes the subject. If the contradiction is between the tool and the division of labor, changing the subject cannot resolve it — you will produce better-trained people queuing at the same bottleneck. Locate the contradiction first; the fix follows from where it is.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>When the work crosses a boundary, one system is not enough</h3>
+<p>Third-generation activity theory extends the unit of analysis again, to <strong>two interacting activity systems</strong>. The reason is that modern design, healthcare, and education work all cross organisational boundaries, and the thing being designed takes shape by negotiation between two systems: object 1 is the raw problem, object 2 is the separate picture each side forms of it, and object 3 is the shared, jointly constructed object. See two interacting activity systems as minimal unit of analysis.</p>
+</section>
+<section class="mod-sec sec-content"><h3>This is where the document comes in</h3>
+<p>If two systems each hold their own picture of the object, something has to travel between them and stay coherent while meaning different things to each. That is a boundary object, and it is the theory behind the MRD in W7 and the PRD in W11. Activity Theory tells you why the document is needed; <a href="Theory_-_Boundary_Object_Theory.html">Boundary Object Theory</a> tells you what makes one work.</p>
+<blockquote>
+<p><strong>A tool changes what a team can do in an afternoon. It changes who is allowed to decide only when somebody rewrites the rule — and until somebody does, the team is running a system whose elements no longer agree with each other.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3>⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"It is just a diagram of a team"</td>
+<td>Its actual claim is about contradictions between elements driving change. Without that it is an org chart with more boxes</td>
+<td>Use it to find the element nobody updated</td>
+</tr>
+<tr>
+<td>"Object means the product"</td>
+<td>Object is what the activity is <em>aimed at</em> — the motive and problem space. The product is closer to the outcome</td>
+<td>Ask what the work is for, not what it produces</td>
+</tr>
+<tr>
+<td>"A contradiction means something is broken"</td>
+<td>Engeström's claim is the reverse: it is the engine of expansive learning</td>
+<td>Ask what the contradiction is forcing the system to become</td>
+</tr>
+<tr>
+<td>"Rules means the written policy"</td>
+<td>Rules include the unspoken ones, which are usually the binding ones</td>
+<td>Ask what would get someone quietly disapproved of</td>
+</tr>
+<tr>
+<td>"Adding AI is a tool upgrade"</td>
+<td>It almost always rewrites rules and division of labor too, and those do not change by themselves</td>
+<td>Design the rule change in the same sprint as the tool</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-links"><h3>🔗 Links</h3>
+<ul>
+<li>Where it is used first: <a href="M_PM_Role_and_Product_Lifecycle.html">PM Role and Product Lifecycle</a> — the PM as the person who keeps the six elements consistent across the lifecycle.</li>
+<li>Where it returns: W11 <a href="M_PRD_Writing_and_Stress_Test.html">PRD Writing and Stress Test</a> (the PRD as codified rules) and W12 <a href="M_Scope_Management_and_Prioritisation.html">Scope Management and Prioritisation</a>.</li>
+<li>The theory primer with readings and lens questions: <a href="Theory_-_Activity_Theory.html">Activity Theory</a>. The two supporting frames for W1: <a href="Theory_-_Human-AI_Teaming.html">Human-AI Teaming</a>, <a href="Theory_-_Distributed_Cognition.html">Distributed Cognition</a>.</li>
+<li>Concept cards: Engeström activity system triangle, activity system unit of analysis, expansive learning cycle, expansive learning, two interacting activity systems as minimal unit of analysis.</li>
+<li>Scholar note: Engeström, Yrjö.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<p>Swap the six-element table you filled in before class.</p>
+<ol>
+<li>Compare the "element nobody updated" column — if you chose differently, argue it out</li>
+<li>Name the specific contradiction in your partner's case, in the form "X now disagrees with Y"</li>
+<li>Say which step of the expansive learning cycle their organisation is stuck on</li>
+</ol>
+</section>
+<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<p>Write one sentence to keep: "In my own team this semester, the element we are least likely to update alongside the tool is <strong><em>_</em>_, and the first symptom will be </strong>____."</p></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:31</p>
+</div>
+</body>
+</html>
