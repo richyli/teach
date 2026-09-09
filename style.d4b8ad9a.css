@@ -382,6 +382,9 @@ pre { max-width: 100%; overflow-x: auto; }
     letter-spacing: .1em;
     border-radius: 999px;
 }
+/* 英語授課課程的模組頁 <html lang="en">（build_course_site.is_english 判定），
+   CSS 產生的標籤也要跟著換，否則英文頁上會冒出中文徽章。 */
+html[lang="en"] .sec-discussion::before { content: "In class"; }
 .sec-discussion > h3,
 .sec-discussion > h4 { margin: .2rem 0 .4rem; color: #1f5c3e; font-size: 1.1rem; }
 
