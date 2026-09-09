@@ -187,7 +187,7 @@ The two that are hardest to tell apart are Consulted and Agree — one can only 
     }
     out.className="out"; out.textContent="Pick one.";
     next.style.display="none";
-    sc.textContent="Scene "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+    sc.textContent="Scene "+(i+1)+" of "+Q.length+" · correct so far: "+score;
   }
   function pick(){
     if(answered) return;
@@ -201,7 +201,7 @@ The two that are hardest to tell apart are Consulted and Agree — one can only 
     }
     out.className="out "+(ok?"ok":"no");
     out.innerHTML="<b>"+Q[i].a+"</b> — "+Q[i].why;
-    sc.textContent="Scene "+(i+1)+" of "+Q.length+"　·　correct so far: "+score;
+    sc.textContent="Scene "+(i+1)+" of "+Q.length+" · correct so far: "+score;
     next.style.display=(i<Q.length-1)?"inline-block":"none";
     if(i===Q.length-1){
       out.innerHTML+="<br><br><b>Done: "+score+" of "+Q.length+".</b> If you missed Consulted or Approver, that is the standard miss, and it is the one that kills proposals late.";
@@ -361,7 +361,7 @@ $$\text{Input} \rightarrow \text{Recommend} \rightarrow \text{Agree} \rightarrow
 <li>This unit came out of <a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a>, which is where you first meet the roles you will play in your team.</li>
 <li>Where it comes back: <a href="M_Stakeholder_Management_and_Actor_Networks.html">Stakeholder Management and Actor Networks</a> in W14 adds the power/interest grid and the non-human stakeholders — datasets, APIs, regulators — that these eight identities do not cover.</li>
 <li>The document each identity signs: <a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a> — which rung of the ladder you write is decided by whose signature you need.</li>
-<li>Concept cards: RACI matrix, RAPID decision framework, 當責與負責, 分工與權責框架全景.</li>
+<li>Concept cards: RACI matrix, RAPID decision framework, and the vault's wider map of division-of-labour frameworks (RASCI, DACI, DRI, separation of duties), which the instructor can point you to.</li>
 </ul>
 </section>
 <section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
@@ -378,7 +378,7 @@ $$\text{Input} \rightarrow \text{Recommend} \rightarrow \text{Agree} \rightarrow
 </section>
 <section class="mod-sec sec-activity"><h3>Individual reflection</h3>
 <p>Write one sentence to keep: "In my team this semester, the identity we are most likely to leave unassigned is <strong><em>_</em>_, and the first sign that we got it wrong will be </strong>____."</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:31</p>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-09 22:34</p>
 </div>
 </body>
 </html>
