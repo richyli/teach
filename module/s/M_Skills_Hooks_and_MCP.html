@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills Hooks and MCP</title>
+<link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">🤖 Pre-class AI workout</a></li><li><a href="#sec-3">Three words, three different questions</a></li><li><a href="#sec-4">A skill is the part of your instruction you were going to retype anyway</a></li><li><a href="#sec-5">The value is in the refinement, not in the writing down</a></li><li><a href="#sec-6">A hook fires on a condition, so it removes the step where you forget</a></li><li><a href="#sec-7">What a hook costs you</a></li><li><a href="#sec-8">MCP is the adapter to material that is not in your folder</a></li><li><a href="#sec-9">Ask the three questions in this order</a></li><li><a href="#sec-10">Whoever writes the skill decides what "good" means</a></li><li><a href="#sec-11">Skill Race</a></li><li><a href="#sec-12">What the cross-run is actually testing</a></li><li><a href="#sec-13">⚠️ Common misconceptions</a></li><li><a href="#sec-14">🔗 Links</a></li><li><a href="#sec-15">In short</a></li><li><a href="#sec-16">💬 Discussion and reflection</a></li><li><a href="#sec-17">Pair review</a></li><li><a href="#sec-18">Individual reflection</a></li><li><a href="#sec-19">✍️ Take-home task</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Skills Hooks and MCP</h1></div><p>This unit covers the three things that turn a one-off instruction into something reusable — skills, hooks, and MCP — and asks you to build one skill under time pressure and hand it to another pair to run.</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Separate</strong> skill, hook and MCP by the question each one answers: what I call, what fires by itself, what it can reach</td>
+<td>Three words that get used in the same sentence and are not alternatives to each other. Picking the wrong one means automating something that should have stayed manual.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Write</strong> one skill that another person can run on material you have never seen</td>
+<td>The moment your instruction becomes something someone else uses, it stops being a prompt and starts being a small product with users.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Identify</strong> the judgement you built into a skill — what it always does, what it refuses to do — and who inherits it</td>
+<td>Why does a colleague's tool produce output that sounds like them and not like you? Because their decisions are baked into it, and you have now adopted their decisions.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Decide</strong> which of your repeated tasks deserves a skill, which deserves a hook, and which deserves neither</td>
+<td>Automating the wrong step is expensive twice: you pay to build it, then you pay to trust it.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below.</p>
+<blockquote>
+<p>I want to find one task I repeat that is worth writing down as a reusable recipe. Interview me — ask me one question at a time and wait for my answer before the next one. Start by asking what I did more than three times last month that took over twenty minutes each time. Then dig into the one I name until you can tell me three things: which steps of that task are identical every time, which steps require a judgement that changes case by case, and which step I would notice immediately if it were done badly. Finish by telling me whether this task is worth turning into a reusable recipe at all, and say no if the answer is no. Do not write the recipe for me and do not give me general productivity advice.</p>
+</blockquote>
+<p>Bring the three things it identified, especially the middle one. The steps that require judgement are the interesting part of this unit, because those are the steps you either write down or silently hand over.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">Three words, three different questions</h3>
+<p>Skills, hooks and MCP get listed together as if you were choosing between them. You are not. Each answers a different question, and a real setup usually needs more than one.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>The question it answers</th>
+<th>The everyday version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Skill</strong></td>
+<td>What do I call on purpose, repeatedly?</td>
+<td>A recipe pinned to the kitchen wall: you still decide to cook it</td>
+</tr>
+<tr>
+<td><strong>Hook</strong></td>
+<td>What should happen without my asking?</td>
+<td>The smoke alarm: nobody presses it, it fires on a condition</td>
+</tr>
+<tr>
+<td><strong>MCP</strong></td>
+<td>What can it reach that is not in this folder?</td>
+<td>An adapter: without it the agent only sees the folder you started it in</td>
+</tr>
+</tbody>
+</table>
+<p>Read the five situations below and place each one. Two of them look like skills and are not.</p>
+<div class="widget" id="shm">
+<style>
+#shm { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#shm h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#shm .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#shm .card { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .7rem;
+       font-size: .92rem; font-style: italic; }
+#shm .q { font-size: .86rem; font-weight: 700; margin: .6rem 0 .2rem; }
+#shm button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#shm button:hover { background: #eef4fd; }
+#shm button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#shm button.wrong { background: #fbeef1; color: #d05070; border-color: #e3b6c2; }
+#shm .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#shm .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#shm .nav { margin-top: .7rem; font-size: .82rem; color: #8a8a8a; }
+#shm .nav button { margin-right: .6rem; }
+</style>
+<h5>Skill, hook, MCP, or none of them?</h5>
+<p class="lede">Five situations from an ordinary working week. Two of them look like skills and are not.
+Ask the questions in order: can it reach the material, am I repeating myself, should it happen without me.</p>
+<div class="card" id="shm-card">Loading…</div>
+<div class="q">What does this situation need?</div>
+<button data-v="skill">Skill</button>
+<button data-v="hook">Hook</button>
+<button data-v="mcp">MCP</button>
+<button data-v="none">None of them</button>
+<div class="out" id="shm-out">Pick one.</div>
+<div class="nav"><button id="shm-next">Next situation &rarr;</button><span id="shm-count"></span></div>
+<script>
+(function(){
+  var CASES=[
+   {t:"Every Monday you paste the same six lines of background about your podcast into a fresh session before asking for episode descriptions.",
+    a:"skill",
+    why:"Skill. Those six lines are the part you were going to retype anyway. The tell is that you already type them from memory, which means the recipe exists — it is just living in your head."},
+   {t:"You want the running notes for your group project to be checked for missing citations every time the file is saved, without anyone remembering to ask.",
+    a:"hook",
+    why:"Hook. The condition is the save, not a time of day, and the whole value is that nobody has to remember. Ask yourself the second question too: will you read the output? A check nobody reads is worse than no check."},
+   {t:"You want it to look at how many people opened last week's newsletter, but those numbers live in your mailing platform, not in any file on your laptop.",
+    a:"mcp",
+    why:"MCP. No amount of better prompting reaches data that is not there. This is also the moment to notice that connecting the platform widens what it can do and what it can get wrong, in one motion."},
+   {t:"Once a term you have to write a reflective essay about your internship. It takes an afternoon and you dread it.",
+    a:"none",
+    why:"None. Once a term is not repetition, so a recipe costs more to build and maintain than it saves. Dreading a task is not the same as repeating it — that is the trap in this one."},
+   {t:"Your teammate has a prompt that turns meeting recordings into action items. It works on hers. You want to use it on yours, which are in a different language.",
+    a:"skill",
+    why:"Skill, and this is the second trap: it looks like a copying problem. Making it work on your material means finding the line that assumes her language and writing it as an input, which is exactly the difference between a prompt and a skill."}
+  ];
+  var i=0, done=false;
+  var card=document.getElementById("shm-card"), out=document.getElementById("shm-out"),
+      count=document.getElementById("shm-count");
+  var btns=[].slice.call(document.querySelectorAll("#shm button[data-v]"));
+  function render(){
+    done=false;
+    card.textContent=CASES[i].t;
+    out.textContent="Pick one."; out.className="out";
+    btns.forEach(function(b){ b.className=""; });
+    count.textContent="Situation "+(i+1)+" of "+CASES.length;
+  }
+  btns.forEach(function(b){
+    b.onclick=function(){
+      if(done) return;
+      var right = b.getAttribute("data-v")===CASES[i].a;
+      b.className = right ? "on" : "wrong";
+      if(!right){
+        btns.forEach(function(x){ if(x.getAttribute("data-v")===CASES[i].a) x.className="on"; });
+      }
+      out.textContent=CASES[i].why;
+      out.className = right ? "out ok" : "out";
+      done=true;
+    };
+  });
+  document.getElementById("shm-next").onclick=function(){ i=(i+1)%CASES.length; render(); };
+  render();
+})();
+</script>
+</div>
+
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">A skill is the part of your instruction you were going to retype anyway</h3>
+<p>Anything you explain to the agent more than twice — the background, the format, the things you always want it to avoid — is a skill waiting to be written down. Instead of re-explaining, you write it once and call it by name.</p>
+<p>A worked example from journalism: read a transcript, pull the three strongest claims, check each against the recording, and produce three social posts in the house style. As a prompt that is a paragraph you retype every week. As a skill it is a name, and the version you refine over the term keeps getting better rather than starting over.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">The value is in the refinement, not in the writing down</h3>
+<p>At Anthropic, the internal skill that writes in one executive's voice took hundreds of iterations of its system prompt before the output actually sounded like him. See <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>. The first version of any skill is a draft that produces generic output, and generic output is what makes people conclude the idea does not work.</p>
+<p>Budget for the second and third version. A skill you wrote once and abandoned is a prompt with extra steps.</p>
+<blockquote>
+<p><strong>A recipe is only worth writing down at the point where you stop rewriting it and start correcting it.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">A hook fires on a condition, so it removes the step where you forget</h3>
+<p>The pattern is "when X happens, do Y", with no one calling it: every time a file is saved, run the check; every time a run finishes, append a line to the log.</p>
+<p>One hackathon team's rule was to ask the model to find problems in what had already been built before building the next feature — a self-audit at every step rather than an inspection at the end (<a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>). A rule like that survives exactly as long as somebody remembers it. Turning it into a hook is what makes it a property of the system instead of a property of your discipline that day.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">What a hook costs you</h3>
+<p>Something now happens that you did not ask for and may not read. Hooks are where automation quietly becomes noise, and a check that fires on every save and is never read is worse than no check, because it looks like coverage.</p>
+<p>Reserve them for two cases: things that are cheap and always right, and things you have already proved you forget.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">MCP is the adapter to material that is not in your folder</h3>
+<p>By default the agent sees your working directory and nothing else. Your actual work is rarely all in one folder — it is in a calendar, a database, a ticket system, an analytics account. MCP is the connector that lets the agent reach those.</p>
+<p>The product consequence matters more than the plumbing. Every connector you add widens what the agent can do and what it can get wrong, in the same motion. Adding a data source is not a technical convenience, it is a decision about what the agent is now allowed to touch.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">Ask the three questions in this order</h3>
+<p>Reach first, because a skill that cannot get to the material is theatre. Repetition second, because a recipe for something you do once is overhead. Automatic last, because it is the only one of the three that takes the decision out of your hands.</p>
+<ol>
+<li>Can it reach the material? If not, that is an MCP question, and no amount of better prompting fixes it</li>
+<li>Am I doing this often enough to stop retyping it? If yes, write the skill</li>
+<li>Do I want it to happen without my asking? Only then, and only if I would read the result, add the hook</li>
+</ol>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">Whoever writes the skill decides what "good" means</h3>
+<p>A skill contains more than steps. It contains what always happens, what never happens, and what counts as finished — and those are judgements, made by whoever wrote it and inherited by everyone who runs it.</p>
+<p>Take the example above: someone decided three claims, not five; decided every claim needs a quote; decided the house style. A colleague who adopts that skill has adopted those decisions without ever discussing them. This is why a team that shares skills converges on a voice, and why an unexamined shared skill spreads one person's blind spot across everybody's output.</p>
+<div class="callout callout-student"><span class="co-title">For students · Where this goes later</span><p>The habit you are building here — reading a tool for the judgements baked into it — is the same move you will make in W3 on affordances and again at the end of term when you write something that evaluates other people's work. Keep the skill you write today; you will be asked what you inscribed in it.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">Skill Race</h3>
+<p><strong>The situation.</strong> Everyone works from the same press release: the announcement of the Claude Opus 4.8 Build Day hackathon results, the same document behind <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>. Three audiences need it and none of them will read the original: a 15-year-old deciding whether media studies is for them, a media executive deciding in ninety seconds whether to sponsor next year's event, and a 70-year-old alumnus reading the department newsletter.</p>
+<p>Work in pairs. You have twenty minutes, and the prize is not the three texts.</p>
+<ol>
+<li>Agree, in writing, what makes a version succeed for each of the three readers. One line each, and make them testable — "shorter" is not testable, "no term that a 15-year-old would have to look up" is</li>
+<li>Write <strong>one skill</strong> that takes any press release plus a target reader and produces the rewritten version. Not three prompts — one skill that takes the reader as an input</li>
+<li>Run it three times and keep all three outputs</li>
+<li>Hand your skill to another pair. They will run it on a press release you have never seen</li>
+<li>Write down the two judgements you built in that you would defend, and one you are not sure about</li>
+</ol>
+<p><strong>情境</strong>：同學們用同一份新聞稿——Claude Opus 4.8 Build Day 黑客松的得獎公告，也就是 <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a> 背後那一份。三種讀者都需要這份資訊，而且都不會讀原文：一個正在考慮要不要念傳播的十五歲學生、一個要在九十秒內決定明年贊不贊助的媒體高層、一個在系友通訊上讀到這則消息的七十歲系友。</p>
+<p>兩人一組，二十分鐘。獎品不是那三篇文字。</p>
+<ol>
+<li>先用文字寫下三種讀者各自「怎樣算成功」，一句話一個，而且要<strong>可以驗</strong>——「短一點」不可驗，「不出現十五歲要查字典的詞」可以驗</li>
+<li>寫<strong>一個 skill</strong>，輸入任何一份新聞稿加一個目標讀者，輸出改寫版。不是三段提示，是一個把讀者當參數的 skill</li>
+<li>跑三次，三份輸出都留著</li>
+<li>把你的 skill 交給另一組，他們會拿一份你沒看過的新聞稿來跑</li>
+<li>寫下你刻意寫進去、而且守得住的兩個判斷，以及一個你自己也不確定的</li>
+</ol>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-12">What the cross-run is actually testing</h3>
+<p>A skill that only works when its author is standing next to it has not left the prompt stage. When the other pair runs yours, watch which question they have to ask you — that question is the part you left in your head instead of in the skill.</p>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-13">⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Skill, hook and MCP are three options to choose between"</td>
+<td>They answer different questions and are routinely used together</td>
+<td>Ask reach, then repetition, then automatic</td>
+</tr>
+<tr>
+<td>"A skill is just a saved prompt"</td>
+<td>A saved prompt keeps your words. A skill keeps your judgement, and other people inherit it</td>
+<td>Write down what it must always do and never do</td>
+</tr>
+<tr>
+<td>"Automating more is better"</td>
+<td>A hook that fires constantly and is never read looks like coverage and provides none</td>
+<td>Automate what is cheap and always right, or what you have proved you forget</td>
+</tr>
+<tr>
+<td>"The first version did not work, so the idea does not work"</td>
+<td>Internal skills at Anthropic took hundreds of iterations to stop sounding generic</td>
+<td>Judge a skill on version three</td>
+</tr>
+<tr>
+<td>"Connecting more data sources makes it smarter"</td>
+<td>Every connector widens both what it can do and what it can get wrong</td>
+<td>Treat each connector as a decision about what it is now allowed to touch</td>
+</tr>
+<tr>
+<td>"My skill works, so it is reusable"</td>
+<td>Reusable means someone else runs it on material you have not seen</td>
+<td>Hand it over and watch what they have to ask you</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-links"><h3 id="sec-14">🔗 Links</h3>
+<ul>
+<li>Every term used here has its own card: <a href="_terms_index.html">Glossary</a> — one line each, in English and Chinese.</li>
+<li>Prerequisite: <a href="M_Claude_Code_Onboarding.html">Claude Code Onboarding</a> — without a working install and one instruction that ran, there is nothing here to make reusable.</li>
+<li>Next: <a href="M_Prompt_Structure_and_Sub-agents.html">Prompt Structure and Sub-agents</a> — what to do when one agent with one context is not enough.</li>
+<li>Scaled up: <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> (W10) — the same discipline, applied to something that ships.</li>
+<li>Ends up here: <a href="M_Pitch_and_Judge_Skill_Design.html">Pitch and Judge Skill Design</a> (W8 / W16) — the skill that judges other teams is this unit with the stakes raised.</li>
+<li>Cases: <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>, <a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>, <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>.</li>
+<li>Concept cards: prompt engineering, adaptive autonomy, cognitive offloading.</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-15">In short</h3>
+<ul>
+<li>The three are not alternatives: MCP decides what it can reach, a skill is what you call on purpose, a hook is what fires without you.</li>
+<li>Ask them in that order, because the last one is the only one that removes a decision from you.</li>
+<li>A skill carries judgement, not just steps, and everyone who runs it inherits those judgements without having agreed to them.</li>
+<li>The test of a skill is not that it works for you. It is that a stranger can run it on material you have never seen.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-16">💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-17">Pair review</h3>
+<p><strong>The situation.</strong> Swap back after the cross-run. You are looking at your own skill, run by someone else, on a press release you did not choose. Some of it came out fine and one part came out strange.</p>
+<ol>
+<li>Find the part that came out strange, and decide together whether the cause is the skill, the input, or the success criteria you wrote in step 1</li>
+<li>Name one judgement the other pair built in that you would not have made, and say what their version optimises for</li>
+<li>Agree on one line you would add to each other's skill</li>
+</ol>
+<p>Finish by each saying which of the two skills you would actually use next month, and why.</p>
+<p><strong>情境</strong>：交叉試跑之後換回來。你正在看自己的 skill，由別人操作，跑在一份你沒選的新聞稿上。大部分還好，有一段跑得很怪。</p>
+<ol>
+<li>找出那一段，一起判斷原因是 skill、是輸入、還是第 1 步寫的成功判準</li>
+<li>說出對方寫進去、而你不會這樣做的一個判斷，並說出他們那個版本在追求什麼</li>
+<li>各為對方的 skill 補上一行</li>
+</ol>
+<p>最後各自說出，下個月你真的會用哪一個，為什麼。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-18">Individual reflection</h3>
+<p>Write one sentence to keep: "The judgement I built into my skill without noticing was <strong><em>_</em>_, and the person it would fail is </strong>____."</p>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-19">✍️ Take-home task</h3>
+<p>Take the questions the other pair had to ask you and write them into your skill, then run it once on something from your own coursework. Bring the before-and-after to your AI Skill Sharing slot.</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-11 00:01</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Structure and Sub-agents</title>
+<link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">🤖 Pre-class AI workout</a></li><li><a href="#sec-3">The same instruction lands differently because the context differs</a></li><li><a href="#sec-4">Context is a budget, not a bucket</a></li><li><a href="#sec-5">A brief is a three-part instruction plus the two things people leave out</a></li><li><a href="#sec-6">Unspecified is not neutral</a></li><li><a href="#sec-7">A sub-agent is a second worker with its own clean context</a></li><li><a href="#sec-8">Isolation is the whole point of a verifier</a></li><li><a href="#sec-9">More agents is not more capability</a></li><li><a href="#sec-10">⚠️ Common misconceptions</a></li><li><a href="#sec-11">🔗 Links</a></li><li><a href="#sec-12">In short</a></li><li><a href="#sec-13">💬 Discussion and reflection</a></li><li><a href="#sec-14">Pair review</a></li><li><a href="#sec-15">Individual reflection</a></li><li><a href="#sec-16">✍️ Take-home task</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Prompt Structure and Sub-agents</h1></div><p>This unit covers why the same instruction produces different results for different people, how a working brief differs from a prompt, and what a second agent with its own clean context is for.</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What you will be able to do</th>
+<th>The real problem it lets you answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Explain</strong> why an identical instruction produces different output for two people, in terms of context rather than luck</td>
+<td>"It worked for her." Same tool, same sentence, different result — and the variable is almost never the model.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Turn</strong> a three-part instruction into a working brief by adding constraints and a statement of what done looks like</td>
+<td>Your instruction was clear and the output was still wrong. Clear is not the same as complete: you never said when to stop.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Decide</strong> when a task needs a second agent with its own context, and when a second agent only fragments the work</td>
+<td>Everyone is impressed by ten agents running at once. Which of your tasks actually gets better, and which just gets harder to check?</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Judge</strong> whether a verification step is real or ceremonial, using whether the verifier could see the reasoning it is checking</td>
+<td>An agent that reviews its own work in its own context is grading its own exam and will pass.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below.</p>
+<blockquote>
+<p>Here is an instruction I gave an AI assistant last week: "Summarise this report for my team." It produced something I could not use. Do not rewrite it for me yet. Instead, list every decision the assistant had to make that my instruction did not decide for it — how long, for whom, what to leave out, what counts as important, what tone, what to do with things it was unsure about. Then tell me which one of those decisions, if I had made it explicitly, would have changed the output the most. Answer in a list, no preamble, and do not congratulate me on asking a good question.</p>
+</blockquote>
+<p>Then ask it this one question:</p>
+<blockquote>
+<p>Which of those decisions would you still get wrong even if I specified it, and why?</p>
+</blockquote>
+<p>Bring the single decision it named as most consequential. Most of the room will bring the same one, and that tells you which part of an instruction people habitually leave out.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">The same instruction lands differently because the context differs</h3>
+<p>Two people type the same sentence and get different output. The sentence is identical, so the difference is everything around it: which files were open, what was said earlier in that session, which folder it was started in, what it had already been told to avoid.</p>
+<p>This is the practical meaning of "context". Not a setting — everything the model can see at the moment you press enter. The instruction is the smallest part of it.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">Context is a budget, not a bucket</h3>
+<p>Everything competing for attention in one session dilutes everything else. A session where you have been chatting for an hour about three different tasks is a worse place to give a precise instruction than a fresh one, because your careful sentence is now sharing space with fifty exchanges about something else.</p>
+<p>The practical rule is unglamorous: one task, one session. Start a new one when the subject changes, rather than accumulating a session that "knows everything" — that session knows everything equally, which is the problem.</p>
+<blockquote>
+<p><strong>Attention is what you are actually rationing. Anything in the context that is not helping this task is competing with it.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">A brief is a three-part instruction plus the two things people leave out</h3>
+<p>Context, task and output format get you a usable result. Two more turn it into something you can hand over and check.</p>
+<p><strong>Constraints</strong> — what it must not do. Do not invent numbers that are not in the source. Do not change the quotes. Do not touch any file outside this folder. Constraints are where you write down the failures you have already seen.</p>
+<p><strong>What done looks like</strong> — the test the output has to pass before you would accept it. Every claim traceable to a line in the transcript. Under 200 words. A named alternative for every recommendation.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">Unspecified is not neutral</h3>
+<p>Whatever you leave out gets filled in with the most ordinary plausible default. Nobody chose that default and nobody is accountable for it, but it is now in your document.</p>
+<p>Tekton's advice after winning the Opus 4.8 Build Day hackathon was to map the entire project before building any of it — they wrote a fifty-ticket specification before letting the model start (<a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>). Another winning team spent two full days on design and specification with no code written, and reported that the slow start made everything afterwards faster (<a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>).</p>
+<p>The vocabulary for "what done looks like" is <a href="Term_-_Acceptance_Criteria.html">acceptance criteria</a>, and W11 spends a whole session on writing them. You are meeting the idea now because it is already deciding the quality of your output this week.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">A sub-agent is a second worker with its own clean context</h3>
+<p>Instead of one agent carrying everything, you hand a defined job to a second one that starts fresh, does that job, and reports back. The main session stays clear, and the second one is not distracted by history that has nothing to do with its task.</p>
+<p>Three shapes cover most real uses. <strong>Verification</strong>: one agent produces, a second one checks, and the checker never sees the reasoning that produced the work. <strong>Breadth</strong>: several agents work different parts at once, which is how one hackathon team ran five or six in parallel to debug a circuit-board tool. <strong>Separation</strong>: distinct areas of a build get their own sessions, as with the team that ran four — voice, content, the 3D layer, and the core application (<a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>).</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">Isolation is the whole point of a verifier</h3>
+<p>Tekton's verification sub-agents scored the reconstruction in isolated contexts, and a self-correction loop kept going until twenty tests passed (<a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>). The isolation is not a technical detail. An agent asked to check work it can see itself producing has every reason the original had to believe it was right, and it will tell you so.</p>
+<p>Ask one question of any verification step, human or machine: could the checker see the reasoning? If yes, you have a second opinion from the same opinion.</p>
+<div class="callout callout-student"><span class="co-title">For students · The same test applies to your own drafts</span><p>This is why you cannot proofread your own writing an hour after finishing it, and why the W8 pitch is judged by people who did not watch you build it. Isolation is not distrust, it is the only condition under which a check produces new information.</p></div>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">More agents is not more capability</h3>
+<p>Each additional agent adds something you have to read, reconcile, and eventually be responsible for. Sub-agents earn their place when the sub-task is genuinely separable and its output can be judged on its own. They cost you when the task needs shared memory, when the pieces have to agree with each other, or when nobody is going to read the extra output anyway.</p>
+<p>Decide the five cases below before you look at the answers. Two of them are traps.</p>
+<div class="widget" id="sao">
+<style>
+#sao { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#sao h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#sao .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#sao .card { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .7rem;
+       font-size: .92rem; font-style: italic; }
+#sao .q { font-size: .86rem; font-weight: 700; margin: .6rem 0 .2rem; }
+#sao button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#sao button:hover { background: #eef4fd; }
+#sao button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#sao button.wrong { background: #fbeef1; color: #d05070; border-color: #e3b6c2; }
+#sao .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#sao .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#sao .nav { margin-top: .7rem; font-size: .82rem; color: #8a8a8a; }
+#sao .nav button { margin-right: .6rem; }
+</style>
+<h5>Same session, second agent, or a person?</h5>
+<p class="lede">Five tasks. For each one, decide whether it stays in the session you are already in,
+goes to an agent with its own clean context, or is not an AI task at all. Two are traps.</p>
+<div class="card" id="sao-card">Loading…</div>
+<div class="q">Where does this go?</div>
+<button data-v="same">Same session</button>
+<button data-v="sub">Sub-agent</button>
+<button data-v="human">A person</button>
+<div class="out" id="sao-out">Pick one.</div>
+<div class="nav"><button id="sao-next">Next task &rarr;</button><span id="sao-count"></span></div>
+<script>
+(function(){
+  var CASES=[
+   {t:"You have drafted a market brief and want to know whether every number in it is actually supported by the sources in the folder.",
+    a:"sub",
+    why:"Sub-agent. The checker must not see the reasoning that produced the numbers, or it will find the same reasons to believe them. Give it the draft and the sources, and nothing else."},
+   {t:"You are three exchanges into refining the tone of an executive summary and want one more pass on the second paragraph.",
+    a:"same",
+    why:"Same session. The context is the work here — the three exchanges are what makes the fourth one land. Starting fresh means re-explaining everything you have already fixed."},
+   {t:"You want short competitor profiles for eight companies, in the same format, and none of them depends on the others.",
+    a:"sub",
+    why:"Sub-agent, and this is the breadth case: eight separable jobs, one format, no shared memory needed. Ask the second question anyway — you now have eight outputs, and somebody has to read all eight."},
+   {t:"Your team cannot agree whether to cut the discussion feature from the first release, and you want a decision by Friday.",
+    a:"human",
+    why:"A person, and this is the first trap. You can ask for arguments on both sides, but the decision needs someone who will carry the consequence. One hackathon team decided not to launch comments because nobody could moderate them — that is an accountability judgement, not an analysis."},
+   {t:"You want to know whether the plan the agent just proposed is a good plan, so you ask it, in the same window, whether it sees any problems with its plan.",
+    a:"sub",
+    why:"Sub-agent, and this is the second trap: what you just did is not verification. It can see the reasoning it is checking, so it will agree with itself. Same question, clean context, and the answers stop matching."}
+  ];
+  var i=0, done=false;
+  var card=document.getElementById("sao-card"), out=document.getElementById("sao-out"),
+      count=document.getElementById("sao-count");
+  var btns=[].slice.call(document.querySelectorAll("#sao button[data-v]"));
+  function render(){
+    done=false;
+    card.textContent=CASES[i].t;
+    out.textContent="Pick one."; out.className="out";
+    btns.forEach(function(b){ b.className=""; });
+    count.textContent="Task "+(i+1)+" of "+CASES.length;
+  }
+  btns.forEach(function(b){
+    b.onclick=function(){
+      if(done) return;
+      var right = b.getAttribute("data-v")===CASES[i].a;
+      b.className = right ? "on" : "wrong";
+      if(!right){
+        btns.forEach(function(x){ if(x.getAttribute("data-v")===CASES[i].a) x.className="on"; });
+      }
+      out.textContent=CASES[i].why;
+      out.className = right ? "out ok" : "out";
+      done=true;
+    };
+  });
+  document.getElementById("sao-next").onclick=function(){ i=(i+1)%CASES.length; render(); };
+  render();
+})();
+</script>
+</div>
+
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-10">⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"It worked for him because he has the paid version"</td>
+<td>The dominant variable is context — which files, which session, what was said before</td>
+<td>Compare the two sessions, not the two subscriptions</td>
+</tr>
+<tr>
+<td>"A long session that knows everything is better"</td>
+<td>Everything in the context competes for attention with your current task</td>
+<td>One task, one session</td>
+</tr>
+<tr>
+<td>"My instruction was clear, so it was complete"</td>
+<td>Clear says what to do. Complete also says what not to do and when to stop</td>
+<td>Add constraints and what done looks like</td>
+</tr>
+<tr>
+<td>"Asking it to double-check its own answer is verification"</td>
+<td>Same context, same reasoning, same conclusion</td>
+<td>Give the check to something that cannot see the reasoning</td>
+</tr>
+<tr>
+<td>"Running five agents is more powerful"</td>
+<td>Five outputs is five things to reconcile, and someone still has to read them</td>
+<td>Split only what can be judged separately</td>
+</tr>
+<tr>
+<td>"Specifying everything up front is slow"</td>
+<td>Two of the hackathon winners started with days of specification and said it made everything faster</td>
+<td>Spend the time before the first run, not after the third</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-links"><h3 id="sec-11">🔗 Links</h3>
+<ul>
+<li>Every term used here has its own card: <a href="_terms_index.html">Glossary</a> — one line each, in English and Chinese.</li>
+<li>Prerequisites: <a href="M_Claude_Code_Onboarding.html">Claude Code Onboarding</a>, <a href="M_Skills_Hooks_and_MCP.html">Skills Hooks and MCP</a> — this unit turns two sessions of hands-on into rules you can reuse.</li>
+<li>Next: <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> (W10) — where under-specification stops being annoying and starts being expensive.</li>
+<li>Where it returns: <a href="M_PRD_Writing_and_Stress_Test.html">PRD Writing and Stress Test</a> (W11) — acceptance criteria in full, and what happens to a document that leaves gaps.</li>
+<li>Terms: <a href="Term_-_Acceptance_Criteria.html">Term - Acceptance Criteria</a>, <a href="Term_-_PRD.html">Term - PRD</a>.</li>
+<li>Cases: <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>, <a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>.</li>
+<li>Concept cards: prompt engineering, adaptive autonomy, cognitive offloading.</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-12">In short</h3>
+<ul>
+<li>The variable behind "it worked for her" is context, and context is a budget you spend rather than a bucket you fill.</li>
+<li>A brief adds two things to an instruction: what it must not do, and what done looks like. Both are written from failures you have already seen.</li>
+<li>A sub-agent is worth spawning when the sub-task can be judged on its own, and a verifier is worth having only if it cannot see the reasoning it is checking.</li>
+<li>Anything you leave unspecified still gets decided. Just not by you.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-13">💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-14">Pair review</h3>
+<p><strong>The situation.</strong> Your group report is due on Monday. One member ran the whole draft through an AI in a single session that has been open since Tuesday and also contains the group's argument about who does the slides, a half-finished budget, and two abandoned outlines. The draft that came back is fluent, confidently states a statistic nobody can find in the sources, and has quietly dropped the one section your lecturer asked for.</p>
+<ol>
+<li>Name which of the two rules explains each of the three problems — the session that knows everything, or the instruction that never said what done looks like</li>
+<li>Write the two lines you would add to the instruction: one constraint, one statement of what done looks like</li>
+<li>Decide who or what should check the rewritten draft, and say why that checker can see something the author cannot</li>
+</ol>
+<p><strong>情境</strong>：小組報告星期一要交。有位組員把整份草稿丟進一個從星期二就開著的 session，那個 session 裡還有你們吵誰做投影片、一份沒填完的預算，和兩份放棄掉的大綱。回來的草稿很順，很有自信地寫了一個沒人找得到出處的數字，還悄悄漏掉老師指定要有的那一節。</p>
+<ol>
+<li>三個問題各由哪一條規則解釋——是那個什麼都知道的 session，還是那條沒說「怎樣算完成」的指令</li>
+<li>寫出你要補上的兩行：一行限制、一行完成判準</li>
+<li>決定改好的草稿該由誰或由什麼來檢查，並說出那個檢查者能看到作者看不到的什麼</li>
+</ol>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-15">Individual reflection</h3>
+<p>Write one sentence to keep: "The decision I habitually leave to the AI without noticing is <strong><em>_</em>_, and next time I will state it as </strong>____."</p>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-16">✍️ Take-home task</h3>
+<p>Take the instruction you wrote in the first session of this week and add the two missing pieces — one constraint and one statement of what done looks like. Run it again on the same material and keep both outputs. One paragraph on what changed.</p></section>
+<p class="sitefoot">Student view · updated 2026-09-11 00:01</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>

@@ -5,11 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude Code Onboarding</title>
 <link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">Hands-on</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li><li><a href="#sec-7">🔗 Links</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code Onboarding</h1></div><p>This unit covers what makes an agent different from a chatbot, getting Claude Code installed and running one structured instruction on real work, and knowing when to let it run and when to take over.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">🤖 Pre-class AI workout</a></li><li><a href="#sec-3">A chatbot answers, a workflow repeats, an agent decides</a></li><li><a href="#sec-4">An agent plans, acts, and checks its own work</a></li><li><a href="#sec-5">Getting it running: four steps, and the place each one breaks</a></li><li><a href="#sec-6">It only sees the folder you started it in</a></li><li><a href="#sec-7">One instruction has three parts: context, task, and output format</a></li><li><a href="#sec-8">The vague version fails in a predictable direction</a></li><li><a href="#sec-9">It announces a plan before it acts, and that is your first checkpoint</a></li><li><a href="#sec-10">The permission prompt is the brake, and holding down yes removes it</a></li><li><a href="#sec-11">The person who got the most out of this at Anthropic could not code</a></li><li><a href="#sec-12">What the research says about the division of labour</a></li><li><a href="#sec-13">Hands-on: run one real piece of work through it</a></li><li><a href="#sec-14">⚠️ Common misconceptions</a></li><li><a href="#sec-15">🔗 Links</a></li><li><a href="#sec-16">In short</a></li><li><a href="#sec-17">💬 Discussion and reflection</a></li><li><a href="#sec-18">Pair review</a></li><li><a href="#sec-19">Individual reflection</a></li><li><a href="#sec-20">✍️ Take-home task</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code Onboarding</h1></div><p>This unit covers what makes Claude Code an agent rather than a smarter chat box, how to get it running on your own machine, and how to write one instruction it can actually execute on real work.</p>
 <section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
-<p>The point is not to learn to code. It is to get an agent that actually does things running on your own machine, on work you actually have.</p>
 <table>
 <thead>
 <tr>
@@ -21,53 +27,422 @@
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Tell apart</strong> agent, chatbot, and workflow, and say why Claude Code is an agent</td>
-<td>Why is Claude Code not just "a smarter chat box"? Because it reads your files, writes files, runs commands, and makes judgement calls while doing it.</td>
+<td><strong>Tell apart</strong> chatbot, workflow and agent, and say which abilities the word "agent" is actually claiming</td>
+<td>Why is Claude Code not just a smarter chat box? Because it reads your files, writes files, runs commands, and changes its plan halfway through when the first attempt fails.</td>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>Install it and give one well-structured instruction</strong> — context, task, output format — on a piece of real work</td>
-<td>Why does the same instruction produce something bad for me and something good for someone else? <strong>The quality of the output depends on how you ask. You do the instructing and the checking; it does the executing.</strong></td>
+<td><strong>Install it</strong> and give one instruction built from three parts — context, task, output format — on a piece of your own real work</td>
+<td>"The same tool produced something useful for her and something useless for me." The gap is almost never the model. It is which of the three parts you left out.</td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Judge</strong>, within a single task, which step to let it run and which step to brake on and take over yourself</td>
-<td><strong>Can someone who cannot code actually use this?</strong> Break down one real task and you find the deciding factor is not technical skill, it is knowing when to let go and when to hold the line.</td>
+<td><strong>Locate</strong> the two checkpoints inside a single run — the plan it announces before acting, and the permission prompt — and say what each one is protecting you from</td>
+<td>Everyone says "keep a human in the loop." Where exactly is the loop? If you cannot point at it on your own screen, you do not have one.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Judge</strong>, for one task you actually do every week, whether to hand it over, split it, or keep it</td>
+<td>Can someone who cannot code use this seriously? The deciding factor turns out not to be technical skill but knowing which half of a task is yours.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 Pre-class AI workout</h3>
+<p>Use an AI as your study partner before class. Paste the prompt below into any ordinary chat window — ChatGPT, Gemini, or Claude in the browser. The point is to make the chat window tell you what it cannot do.</p>
+<blockquote>
+<p>I am about to install Claude Code, which is an agent that runs in a terminal on my own computer. Before I do, I want to understand what you, in this chat window, cannot do. Answer these four questions directly, with no preamble. (1) Can you open a file that is sitting on my desktop right now, and if not, what exactly stops you? (2) If I paste the contents of that file into this chat and ask you to fix it, does the file on my desktop change? (3) When a tool is described as an agent rather than a chatbot, which specific abilities are being claimed? (4) Name one task in a university student's week where that difference would change how long the task takes. Do not tell me about your training data or your knowledge cutoff, and do not give me a general list of AI capabilities.</p>
+</blockquote>
+<p>Then ask it this one question:</p>
+<blockquote>
+<p>Now argue the other side. Name two things this chat window does better than an agent that can touch my files.</p>
+</blockquote>
+<p>Bring the answer to question 4 with you. Compare it with the person sitting next to you: if your two tasks turn out to be the same kind of task, you have found what most of the room actually wants this tool for.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">A chatbot answers, a workflow repeats, an agent decides</h3>
+<p>The word "agent" is used loosely enough to be worthless in marketing copy, but it makes a specific claim. Two abilities separate the three, and both of them are visible on your screen within the first five minutes of using Claude Code.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Touches your files?</th>
+<th>Changes its plan when something fails?</th>
+<th>What it looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chatbot</td>
+<td>No — you paste in, you copy out</td>
+<td>No — one question, one answer</td>
+<td>A browser tab</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Yes, in a fixed order</td>
+<td>No — the same steps every time, including the wrong ones</td>
+<td>A scheduled script, a Zapier automation</td>
+</tr>
+<tr>
+<td><strong>Agent</strong></td>
+<td><strong>Yes, and it decides which files</strong></td>
+<td><strong>Yes — it reads the result and tries again</strong></td>
+<td><strong>Claude Code in your terminal</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The second column is the one people underestimate. A workflow that fails produces the same failure a thousand times. An agent that fails reads the error message and takes a different route, which is useful when you are right and expensive when you are wrong — because it will also route around your intention.</p>
+<p>Read each of the four descriptions below and decide which of the three it is before you look at the answer. Two of them are deliberately borderline.</p>
+<div class="widget" id="aoc">
+<style>
+#aoc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#aoc h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#aoc .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#aoc .card { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .7rem;
+       font-size: .92rem; font-style: italic; }
+#aoc .q { font-size: .86rem; font-weight: 700; margin: .6rem 0 .2rem; }
+#aoc button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#aoc button:hover { background: #eef4fd; }
+#aoc button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#aoc button.wrong { background: #fbeef1; color: #d05070; border-color: #e3b6c2; }
+#aoc .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#aoc .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#aoc .nav { margin-top: .7rem; font-size: .82rem; color: #8a8a8a; }
+#aoc .nav button { margin-right: .6rem; }
+</style>
+<h5>Chatbot, workflow, or agent?</h5>
+<p class="lede">Four tools. Two of them are deliberately borderline. Decide from what the tool is
+described as doing, not from what it is called.</p>
+<div class="card" id="aoc-card">Loading…</div>
+<div class="q">Which one is it?</div>
+<button data-v="chatbot">Chatbot</button>
+<button data-v="workflow">Workflow</button>
+<button data-v="agent">Agent</button>
+<div class="out" id="aoc-out">Pick one.</div>
+<div class="nav"><button id="aoc-next">Next case &rarr;</button><span id="aoc-count"></span></div>
+<script>
+(function(){
+  var CASES=[
+   {t:"A browser tab where you paste in your essay, ask for feedback, and copy the reply back into your document yourself.",
+    a:"chatbot",
+    why:"Chatbot. It never touches the file. Every transfer in and out is done by you, which is also why nothing on your disk can be damaged by it."},
+   {t:"A script that runs every night at two, downloads yesterday's sales export, reformats three columns, and emails the result to the team.",
+    a:"workflow",
+    why:"Workflow. It writes files, so the first column of the table is not what separates it. It does the same steps in the same order forever, including on the night the export arrives empty."},
+   {t:"A tool in your terminal that reads the folder you started it in, proposes a plan, edits four files, runs a test, sees the test fail, and edits a fifth file it had not planned to touch.",
+    a:"agent",
+    why:"Agent. The tell is the last clause: it read a result and changed its own plan. That is the ability you are paying for, and the reason you need to read what it proposes."},
+   {t:"An assistant in a chat window that can search the web, read the pages it finds, and decide which ones to open next before answering you.",
+    a:"agent",
+    why:"Agent, and this is the borderline one. It looks like a chat window and it cannot touch your files, but it plans, acts, reads the result, and revises. Being an agent is about the loop, not about the terminal."}
+  ];
+  var i=0, done=false;
+  var card=document.getElementById("aoc-card"), out=document.getElementById("aoc-out"),
+      count=document.getElementById("aoc-count");
+  var btns=[].slice.call(document.querySelectorAll("#aoc button[data-v]"));
+  function render(){
+    done=false;
+    card.textContent=CASES[i].t;
+    out.textContent="Pick one."; out.className="out";
+    btns.forEach(function(b){ b.className=""; });
+    count.textContent="Case "+(i+1)+" of "+CASES.length;
+  }
+  btns.forEach(function(b){
+    b.onclick=function(){
+      if(done) return;
+      var right = b.getAttribute("data-v")===CASES[i].a;
+      b.className = right ? "on" : "wrong";
+      if(!right){
+        btns.forEach(function(x){ if(x.getAttribute("data-v")===CASES[i].a) x.className="on"; });
+      }
+      out.textContent=CASES[i].why;
+      out.className = right ? "out ok" : "out";
+      done=true;
+    };
+  });
+  document.getElementById("aoc-next").onclick=function(){ i=(i+1)%CASES.length; render(); };
+  render();
+})();
+</script>
+</div>
+
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">An agent plans, acts, and checks its own work</h3>
+<p>Tekton, the team that won the Claude Opus 4.8 Build Day hackathon, reconstructed historical buildings in 3D and had the model verify its own reconstruction: independent verification sub-agents scored the work in isolated contexts, and a self-correction loop kept checking component placement until twenty tests passed, across 339 incremental build stages. See <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>.</p>
+<p>Nobody sat there approving 339 stages by hand. The verification was designed into the loop before the building started, which is the whole difference between running an agent and watching one.</p>
+<blockquote>
+<p><strong>Plan, act, check: a chatbot does the first two badly and the third not at all. What you are buying with an agent is the third one, and only if you specify what "checked" means.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">Getting it running: four steps, and the place each one breaks</h3>
+<p>Every step below breaks for somebody, and every break has a recognisable message. Knowing the message in advance is the difference between a two-minute fix and giving up.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What you do</th>
+<th>Where it breaks, and what you will see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Check you have a runtime (Node.js)</td>
+<td><code>command not found</code> — the computer does not recognise the word yet, which means it is not installed or not on your PATH</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Install the Claude Code CLI</td>
+<td>Permission errors on macOS, administrator prompts on Windows, or a corporate or campus network blocking the download</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sign in and authorise</td>
+<td>The browser tab opens and you miss it, or you paste the key into the wrong window. A key is a door key: never paste one into a group chat</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>cd</code> into the folder you want to work in, then start it</td>
+<td>Nothing breaks visibly here, which is exactly why this is the step that ruins the next ten minutes</td>
+</tr>
+</tbody>
+</table>
+<p>If you get stuck, say so out loud rather than quietly falling behind. Everybody in the room hits at least one of these four, and the fix is usually one line.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">It only sees the folder you started it in</h3>
+<p>Claude Code works inside a working directory. Whichever folder you were standing in when you started it is the folder it can read, and files one level up are invisible to it unless you say so.</p>
+<p>This produces the single most common beginner failure: you ask it about a document, it tells you it cannot find any such file, and you conclude the tool is broken. It is not broken. You are standing somewhere else.</p>
+<div class="callout callout-student"><span class="co-title">For students · A quick way to check where you are standing</span><p>Ask it, as your very first instruction: "List what you can see in this folder and tell me which folder you are in." If the answer does not contain the file you brought, quit, <code>cd</code> into the right place, and start again. Ten seconds now, ten minutes saved later.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">One instruction has three parts: context, task, and output format</h3>
+<p>Treat the instruction as a handover to a capable new colleague who does not know your work. Three things have to be in it, and beginners leave out the same two.</p>
+<p><strong>Context</strong> — what this material is and who it is for. <em>"This is a transcript of an interview I did with a bookshop owner for a class assignment."</em></p>
+<p><strong>Task</strong> — the verb, and the scope. <em>"Pull out the three claims she makes about why foot traffic dropped, and give one line of her own words as evidence for each."</em></p>
+<p><strong>Output format</strong> — the shape you want back. <em>"A bulleted list, no more than two lines per point, in the same language as the transcript."</em></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">The vague version fails in a predictable direction</h3>
+<p>"Help me tidy this up" is not a small version of the instruction above. It is an instruction with two of the three parts missing, and the model fills the gaps with the most statistically ordinary interpretation available: a summary, in its own voice, at whatever length it feels like. You did not ask for that, but you also did not ask for anything else.</p>
+<p>This is the pattern the whole course keeps returning to. Anything you leave unspecified gets filled in with a plausible default, and plausible defaults are where product decisions quietly get made for you — the same failure the PRD Stress Test in W11 is built around.</p>
+<p>Read the four weak instructions below and decide which part is missing from each. Getting this wrong in class costs nothing; getting it wrong on your assignment costs an afternoon.</p>
+<div class="widget" id="p3p">
+<style>
+#p3p { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+       background: #fbfbfc; margin: 1.6rem 0; }
+#p3p h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#p3p .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#p3p .card { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+       border-radius: 0 8px 8px 0; padding: .7rem .95rem; margin: .8rem 0 .7rem;
+       font-size: .92rem; font-style: italic; }
+#p3p .q { font-size: .86rem; font-weight: 700; margin: .6rem 0 .2rem; }
+#p3p button { font: inherit; font-size: .82rem; padding: .3rem .8rem; margin: .18rem .3rem .18rem 0;
+       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#p3p button:hover { background: #eef4fd; }
+#p3p button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#p3p button.miss { background: #fbeef1; color: #d05070; border-color: #e3b6c2; }
+#p3p .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+       background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.7; }
+#p3p .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#p3p .fix { display:block; margin-top:.5rem; color:#22303f; font-style: italic; }
+#p3p .nav { margin-top: .7rem; font-size: .82rem; color: #8a8a8a; }
+#p3p .nav button { margin-right: .6rem; }
+</style>
+<h5>Which part is missing?</h5>
+<p class="lede">Four instructions that will produce something disappointing. Each is missing one or more
+of the three parts. Select every part you think is missing, then check.</p>
+<div class="card" id="p3p-card">Loading…</div>
+<div class="q">Missing:</div>
+<button data-v="context">Context</button>
+<button data-v="task">Task</button>
+<button data-v="format">Output format</button>
+<button id="p3p-check" style="border-color:#24528f;font-weight:700">Check</button>
+<div class="out" id="p3p-out">Select what is missing, then press Check.</div>
+<div class="nav"><button id="p3p-next">Next instruction &rarr;</button><span id="p3p-count"></span></div>
+<script>
+(function(){
+  var CASES=[
+   {t:"“Help me tidy this up.”",
+    miss:["context","task","format"],
+    why:"All three. It has a pronoun and a verb with no meaning attached. The model will decide what the material is, what tidying means, and how long the answer should be, and you will disagree with at least two of those.",
+    fix:"This is a transcript of a class interview. Pull out the three claims she makes about foot traffic, one supporting quote each, bulleted, two lines maximum per point."},
+   {t:"“This is the transcript of my interview with a bookshop owner for my market research assignment. Summarise it.”",
+    miss:["task","format"],
+    why:"Context is there and it is good. But summarise is not a task, it is a category of tasks — and with no shape specified you will get whatever length it feels like. Note that adding more background here would not help at all.",
+    fix:"… Pull out every reason she gives for the drop in customers, keep her own wording, and list them shortest first."},
+   {t:"“Rewrite each of the six paragraphs so it is under 40 words, keeping the quotes exactly as they are.”",
+    miss:["context"],
+    why:"Task and format are unusually precise. What is missing is what this document is and who reads it — so it will compress a press release and a coroner's report with the same instincts.",
+    fix:"This is a press release going to student media, written for readers who have never heard of the department. …"},
+   {t:"“You are a world-class expert content strategist with 20 years of experience. This is my article. Make it more engaging and impactful for my audience.”",
+    miss:["task","format"],
+    why:"The borderline one. It feels specified because it is long, but the length is all role-play and adjectives. Engaging is not a task and impactful is not a format. Who the audience is would help, and is also not stated.",
+    fix:"… The readers are first-year students who will skim on a phone. Cut it to 300 words, put the finding in the first sentence, and keep every number."}
+  ];
+  var i=0, sel={}, done=false;
+  var card=document.getElementById("p3p-card"), out=document.getElementById("p3p-out"),
+      count=document.getElementById("p3p-count");
+  var btns=[].slice.call(document.querySelectorAll("#p3p button[data-v]"));
+  function render(){
+    sel={}; done=false;
+    card.textContent=CASES[i].t;
+    out.textContent="Select what is missing, then press Check."; out.className="out";
+    btns.forEach(function(b){ b.className=""; });
+    count.textContent="Instruction "+(i+1)+" of "+CASES.length;
+  }
+  btns.forEach(function(b){
+    b.onclick=function(){
+      if(done) return;
+      var v=b.getAttribute("data-v");
+      sel[v]=!sel[v];
+      b.className = sel[v] ? "on" : "";
+    };
+  });
+  document.getElementById("p3p-check").onclick=function(){
+    if(done) return;
+    var need=CASES[i].miss, right=true;
+    btns.forEach(function(b){
+      var v=b.getAttribute("data-v"), isNeed=need.indexOf(v)>-1;
+      if(isNeed && !sel[v]) { b.className="miss"; right=false; }
+      else if(isNeed) { b.className="on"; }
+      else if(sel[v]) { b.className="miss"; right=false; }
+      else { b.className=""; }
+    });
+    out.innerHTML = CASES[i].why + "<span class='fix'>Repaired: " + CASES[i].fix + "</span>";
+    out.className = right ? "out ok" : "out";
+    done=true;
+  };
+  document.getElementById("p3p-next").onclick=function(){ i=(i+1)%CASES.length; render(); };
+  render();
+})();
+</script>
+</div>
+
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">It announces a plan before it acts, and that is your first checkpoint</h3>
+<p>Before touching anything, Claude Code tells you what it intends to do. Most people skip this text because it looks like preamble. It is not preamble, it is the cheapest review you will ever get: the moment when the difference between what you meant and what it understood is still free to fix.</p>
+<p>Read it and ask one question — is this what I meant? If the plan is wrong, stopping now costs one sentence. Stopping after it has rewritten eleven files costs your afternoon.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">The permission prompt is the brake, and holding down yes removes it</h3>
+<p>The second checkpoint is the approval it asks for before reading or writing files and running commands. This is the human in the loop that everybody claims to have. It only exists while you are actually reading it.</p>
+<p>Research on human–machine teams calls the useful version of this <strong>adaptive autonomy</strong>: being able to slide along the scale of how much you let the system do, depending on the step, beats sitting at either extreme permanently. See adaptive autonomy. A first draft, let it run. Anything that overwrites your own work, brake and look.</p>
+<div class="callout callout-student"><span class="co-title">For students · Where the two checkpoints sit</span><p>The plan comes before anything happens and protects you from the wrong task. The permission prompt comes before each action and protects you from the wrong file. They fail differently, which is why you need both — a correct plan can still delete something you wanted.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">The person who got the most out of this at Anthropic could not code</h3>
+<p>Jared Sires worked in sales at Anthropic and had never written a program. Using Claude Code, he turned his own workflow into a product, saved himself two to three hours a day, and ended up moving into a GTM engineering role built around exactly that. See <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>.</p>
+<p>His starting move is the one you are about to make: open the tool, find one task that slows you down, and ask it how it would solve that. Not "learn the tool, then find a use." The other order does not work.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-12">What the research says about the division of labour</h3>
+<p>Generative AI systems put the human at both ends: someone has to give the instruction at the front, and someone has to check and adjust at the back (Davenport Mittal 2022 How Generative AI Is Changing Creative Work). Studies of prompting practice find that good output comes from iteration rather than one perfect request — image-generation users averaged 7.8 rounds before they were satisfied (prompt engineering).</p>
+<p>Read that as permission. If your first result is bad, that is the normal number of attempts remaining, not evidence that you cannot do this.</p>
+<hr />
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-13">Hands-on: run one real piece of work through it</h3>
+<p><strong>The situation.</strong> Everyone needs one file to work on for the next ten minutes. If you brought your own, use it: an interview transcript, a report you are drafting, a long email thread, a set of lecture notes. If you did not bring anything, use the shared class file — the full announcement text behind <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>, which is long, written for people already inside the industry, and needs turning into something a first-year student would read.</p>
+<ol>
+<li>Put the file into the folder you started Claude Code in, then ask it what it can see</li>
+<li>Write one instruction with all three parts: context, task, output format</li>
+<li>Read the plan it announces, and stop it if the plan is not what you meant</li>
+<li>Approve or refuse each action deliberately, rather than pressing yes on autopilot</li>
+<li>When the result arrives, mark one thing it did well and one thing you had to fix yourself</li>
+</ol>
+<p>Keep both marks. They are what you bring to the pair review, and the second one is more useful than the first.</p>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-14">⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"It is ChatGPT with a terminal"</td>
+<td>A chat window cannot open your file, change it, or run anything. The environment is the product, not the wrapper</td>
+<td>Watch what it touches on your disk during the first run</td>
+</tr>
+<tr>
+<td>"It cannot find my file, so it is broken"</td>
+<td>It only sees the folder it was started in</td>
+<td>Ask it which folder it is in, then <code>cd</code> and restart</td>
+</tr>
+<tr>
+<td>"A longer prompt is a better prompt"</td>
+<td>Length is not the variable. A three-line instruction with context, task and format beats a paragraph of adjectives</td>
+<td>Check which of the three parts is missing before adding words</td>
+</tr>
+<tr>
+<td>"Approving everything is faster"</td>
+<td>It is, until the run that overwrites something you needed. The prompt is the only brake in the system</td>
+<td>Read the plan once, then approve deliberately</td>
+</tr>
+<tr>
+<td>"If the first answer is bad, the tool cannot do it"</td>
+<td>Practitioners iterate several times as a matter of course</td>
+<td>Change one part of the instruction and run it again</td>
+</tr>
+<tr>
+<td>"I cannot code, so this is not for me"</td>
+<td>The Anthropic case is a salesperson with no programming background saving two to three hours a day</td>
+<td>Bring your own slow task, not a programming problem</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-activity"><h3 id="sec-2">Hands-on</h3>
-<ol>
-<li>Install Claude Code and get it running</li>
-<li>Give it one instruction in three parts — context, task, output format — on a real piece of your own work</li>
-<li>Mark one thing it did well and one thing you had to step in and fix</li>
-</ol>
-</section>
-<section class="mod-sec sec-homework"><h3 id="sec-3">✍️ Take-home task</h3>
-<p>Take one piece of real work through Claude Code. Record one thing it got right and one thing it got wrong, and write a sentence on how you would change the prompt next time.</p>
-</section>
-<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
-</section>
-<section class="mod-sec sec-activity"><h3 id="sec-5">Pair review</h3>
-<p>Look at each other's output.</p>
-<ol>
-<li>Point at one place the AI genuinely helped</li>
-<li>Point at one place that needed you to intervene</li>
-<li>Say which of the three parts of the instruction — context, task, format — was weakest</li>
-</ol>
-</section>
-<section class="mod-sec sec-activity"><h3 id="sec-6">Individual reflection</h3>
-<p>Write one sentence to keep: "If this were my weekly work, would I use it regularly? What stops me — the interface, trust, or not knowing what it can do?"</p>
-</section>
-<section class="mod-sec sec-links"><h3 id="sec-7">🔗 Links</h3>
+<section class="mod-sec sec-links"><h3 id="sec-15">🔗 Links</h3>
 <ul>
-<li>Scaled up: <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> — the same "specify, verify, iterate" discipline, from handling a document to shipping a usable tool.</li>
-<li>The weekly sharing slot: <a href="M_AI_Skill_Sharing.html">AI Skill Sharing</a> — bring what you built here to be demoed, critiqued, and archived.</li>
-<li>On when to let go: adaptive autonomy, cognitive offloading — the brake is the human check, and judgement is the thing to keep for yourself.</li>
-<li>On why context matters so much: leaving a gap in the instruction is leaving uncertainty the model will fill for you. W10 comes back to this.</li>
-</ul></section>
-<p class="sitefoot">Student view · updated 2026-09-10 23:43</p></div></div></div><script>
+<li>Every term used here has its own card: <a href="_terms_index.html">Glossary</a> — one line each, in English and Chinese.</li>
+<li>Next: <a href="M_Skills_Hooks_and_MCP.html">Skills Hooks and MCP</a> — once it runs, the three things that turn one-off instructions into something reusable.</li>
+<li>Next: <a href="M_Prompt_Structure_and_Sub-agents.html">Prompt Structure and Sub-agents</a> — why the same instruction lands differently, and what a second agent with its own context is for.</li>
+<li>Scaled up: <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> (W10) — the same specify, verify, iterate discipline, from handling a document to shipping a usable tool.</li>
+<li>The weekly sharing slot: <a href="M_AI_Skill_Sharing.html">AI Skill Sharing</a> — bring what you built here to be demoed and critiqued.</li>
+<li>Cases: <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>, <a href="Case_-_Claude_Build_Day_Hackathon.html">Claude Build Day Hackathon</a>.</li>
+<li>Concept cards: adaptive autonomy, cognitive offloading, prompt engineering, Davenport Mittal 2022 How Generative AI Is Changing Creative Work.</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-16">In short</h3>
+<ul>
+<li>An agent is claiming two abilities a chat window does not have: it touches your files, and it changes its plan when something fails.</li>
+<li>Almost every bad first result traces back to one of two things — you were standing in the wrong folder, or your instruction was missing context or output format.</li>
+<li>You have exactly two checkpoints, the announced plan and the permission prompt, and both stop working the moment you stop reading them.</li>
+<li>The question to leave with is not whether you can operate the tool. It is which half of your weekly work you are willing to hand over.</li>
+</ul>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-17">💬 Discussion and reflection</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-18">Pair review</h3>
+<p><strong>The situation.</strong> You and your partner are both on the same student association event team. The publicity lead has dumped a folder on you: a 40-minute recording of last year's post-event review meeting, a messy spreadsheet of last year's ticket sales, and a half-written sponsorship letter. Everything is due on Friday. You have each just run one of these through Claude Code.</p>
+<ol>
+<li>Show each other your instruction, and label its three parts out loud — context, task, output format</li>
+<li>Point at one place the tool genuinely helped, and one place you had to step in</li>
+<li>Decide together which of the three remaining items in that folder you would still not hand over, and say what makes it different</li>
+</ol>
+<p>Finish by rewriting your partner's weakest part for them, in one line.</p>
+<p><strong>情境</strong>：你和夥伴在同一個系學會的活動組。公關組丟了一個資料夾給你們：去年檢討會 40 分鐘的錄音、去年售票的亂七八糟試算表，還有一封寫到一半的贊助信。星期五要交。你們剛剛各自用 Claude Code 跑過其中一份。</p>
+<ol>
+<li>互相看對方下的指令，把三段各是什麼講出來——背景、任務、輸出格式</li>
+<li>各指出一處它真的幫上忙，以及一處你必須自己出手修</li>
+<li>一起決定資料夾裡剩下的三件事，哪一件你們仍然不會交給它，並說出它跟別的差在哪</li>
+</ol>
+<p>最後幫對方把最弱的那一段重寫成一句話。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-19">Individual reflection</h3>
+<p>Write one sentence to keep: "If this were my weekly work, the part I would hand over is <strong><em>_</em>_, and the thing stopping me from handing over more is </strong>____ — the interface, the trust, or not knowing what it can do."</p>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-20">✍️ Take-home task</h3>
+<p>Run one real piece of work through Claude Code before next week. Record one thing it got right, one thing it got wrong, and one line on how you would change the instruction next time. Bring the wrong one — that is the material for Skill Race.</p></section>
+<p class="sitefoot">Student view · updated 2026-09-11 00:01</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

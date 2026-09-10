@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Skill Sharing</title>
 <link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">What this slot asks of you</a></li><li><a href="#sec-3">How the slot runs</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI Skill Sharing</h1></div><p>This unit covers how to present one small thing you built in three minutes, how to judge whether someone else's tool transfers to your own situation, and why a share with no pitfall in it is an advertisement.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">🤖 Pre-class AI workout</a></li><li><a href="#sec-3">What a share has to contain</a></li><li><a href="#sec-4">Three requirements, and the third is the one people skip</a></li><li><a href="#sec-5">Listening is a job with its own three questions</a></li><li><a href="#sec-6">Copying the prompt is not the same as learning it</a></li><li><a href="#sec-7">⚠️ Common misconceptions</a></li><li><a href="#sec-8">🔗 Links</a></li><li><a href="#sec-9">In short</a></li><li><a href="#sec-10">💬 Discussion and reflection</a></li><li><a href="#sec-11">Pair critique</a></li><li><a href="#sec-12">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI Skill Sharing</h1></div><p>This unit covers how to present one small thing you built so that somebody else can reproduce it, how to take apart a tool someone shows you, and why a share with no pitfall in it is an advertisement.</p>
 <section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
-<p>This is a sharing and peer-critique unit. The goal is to turn one person's demo into something everyone can take away.</p>
 <table>
 <thead>
 <tr>
@@ -21,44 +27,142 @@
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Explain</strong> one small thing you built in three parts: what problem it solves, how it works with a demo, and one pitfall</td>
-<td>Why is "I built a complete system" worth nothing, while "this used to annoy me and now a small trick saves me half an hour" is worth a lot?</td>
+<td><strong>Structure</strong> a short demonstration as problem, method, pitfall, with something running on screen</td>
+<td>Why is "I built a complete system" worth nothing in the room, while "this used to eat my Sunday and now it takes ten minutes" gets written down?</td>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>Take apart</strong> someone else's tool with three quick questions — would I use it, where could it save more effort, is there a better tool</td>
-<td><strong>What would I have to change to use this in my own work?</strong> Connecting it back to your own situation is what makes it more than a compliment.</td>
+<td><strong>Interrogate</strong> someone else's tool with three questions: would I use it, where could it save more, is there a better way</td>
+<td>What would I have to change to use this in my own work? Answering that is what separates a critique from a compliment.</td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Judge</strong> whether you could reproduce a shared tool successfully, and report back</td>
-<td><strong>A share with no pitfall is an advertisement; a share with a pitfall is teaching material.</strong> You can take the prompt, but do you know which line to change in a different situation? If not, you copied without learning.</td>
+<td><strong>Locate</strong> the line in a shared tool that would have to change in a different situation</td>
+<td>You can copy the prompt. If you cannot say which line is load-bearing, you copied without learning anything.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Report back</strong> on whether you could reproduce someone's tool, and say what the gap was</td>
+<td>Half the things people share cannot be reproduced by the person who heard about them. Finding out which half is the point of doing this weekly.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 Pre-class AI workout</h3>
+<p>Use an AI to prepare your share, not to write it. Paste the prompt below before your slot.</p>
+<blockquote>
+<p>I am about to demonstrate a small AI tool or workflow I built, to a class of people who all use the same tools I do. Interview me before I present. Ask one question at a time and wait for my answer. First ask what problem this solved and how much time it actually saved, and push back if my answer is vague. Then ask what went wrong the first time I tried it. Then ask which single line or step would have to change if someone else used it for a different subject. Finally, tell me honestly whether this is worth three minutes of other people's attention, and if it is not, say so and tell me what would make it worth it. Do not compliment the idea and do not write my script.</p>
+</blockquote>
+<p>The third question is the one that matters. If you cannot name the line that would have to change, you have a result but not a tool, and the room cannot use it.</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">What a share has to contain</h3>
+<p>Three parts, and something has to be running on screen. Slides describing a tool are not a demonstration of a tool.</p>
+<p><strong>The problem</strong> — a real thing from your own week, with a rough sense of what it used to cost you. Not a problem you invented to justify the tool.</p>
+<p><strong>The method</strong> — what you actually did, at the level of detail somebody could repeat. The prompt, the skill, the sequence, the connector.</p>
+<p><strong>The pitfall</strong> — where it went wrong, what it got confidently wrong, or what you had to fix by hand.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">Three requirements, and the third is the one people skip</h3>
+<p>It has to be something you <strong>actually used on real work</strong>, not something you saw recommended on social media. You must <strong>name a pitfall</strong> — a share with no pitfall is an advertisement. And afterwards you <strong>paste the prompt or the steps into the shared class toolbox</strong>, so it can be taken.</p>
+<p>The pitfall is what makes it teaching material. A tool with no reported failure tells the room nothing about where its edges are, so nobody can judge whether it survives contact with their situation.</p>
+<blockquote>
+<p><strong>A share with no pitfall is an advertisement. A share with a pitfall is a map of where the ground gives way.</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">Listening is a job with its own three questions</h3>
+<p>If you are not presenting, you are not off duty. Ask, in this order: <strong>would I use this?</strong> Then <strong>where could it save more effort than it currently does?</strong> Then <strong>is there a better tool or a better way to do the same thing?</strong></p>
+<p>The first question filters, the second improves the tool for the presenter, and the third is the one that occasionally reveals that everyone in the room has been doing something the hard way.</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">Copying the prompt is not the same as learning it</h3>
+<p>You can take someone's prompt and it will work on their kind of material. The transferable thing is knowing which line is load-bearing — which sentence is doing the work, and what you would replace it with for a different subject, audience, or format.</p>
+<p>Make a habit of asking the presenter for that one line. It is the fastest question in the room and it is the only one whose answer you can use next week.</p>
+<div class="callout callout-student"><span class="co-title">For students · What accumulates</span><p>By the end of term two things exist: a personal toolbox of things you actually use, and a class toolbox of things that were demonstrated working. The second one is only worth anything if people paste in the steps rather than the description.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-7">⚠️ Common misconceptions</h3>
+<table>
+<thead>
+<tr>
+<th>What students assume</th>
+<th>Why it is wrong</th>
+<th>What to do instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Bigger is more impressive"</td>
+<td>A complete system nobody can reproduce teaches nothing. A ten-minute saving with a repeatable method spreads</td>
+<td>Share the small thing you actually use</td>
+</tr>
+<tr>
+<td>"I should not mention what went wrong"</td>
+<td>The pitfall is the part that is useful to everyone else</td>
+<td>Lead the last third with the failure</td>
+</tr>
+<tr>
+<td>"A slide explaining the tool is a demo"</td>
+<td>The room cannot judge what it has not seen run</td>
+<td>Have it running, even for thirty seconds</td>
+</tr>
+<tr>
+<td>"If I take the prompt I have learned it"</td>
+<td>You have the version tuned to their material</td>
+<td>Ask which line would change for your situation</td>
+</tr>
+<tr>
+<td>"Listeners just listen"</td>
+<td>The three questions are what turn one person's work into everyone's</td>
+<td>Come with the questions ready</td>
+</tr>
+<tr>
+<td>"It has to be original"</td>
+<td>Curating and adapting something well is a legitimate contribution, provided you say what you changed</td>
+<td>Say what you changed and why</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">What this slot asks of you</h3>
-<p>Two or three people each week, three minutes each: <strong>what AI tool you used this week, what real problem it solved, and which pitfall you hit.</strong></p>
-<p>Three requirements:</p>
+<section class="mod-sec sec-links"><h3 id="sec-8">🔗 Links</h3>
 <ul>
-<li>It has to be something you <strong>actually used on real work</strong>, not something you saw recommended</li>
-<li>You must name a pitfall. A share with no pitfall is an advertisement</li>
-<li>Paste the prompt or the steps into the shared document afterwards, so people can take it</li>
+<li>Every term used here has its own card: <a href="_terms_index.html">Glossary</a> — one line each, in English and Chinese.</li>
+<li>Where the material comes from: <a href="M_Claude_Code_Onboarding.html">Claude Code Onboarding</a>, <a href="M_Skills_Hooks_and_MCP.html">Skills Hooks and MCP</a>, <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> — the things built in those sessions are what gets demonstrated here.</li>
+<li>Where it ends up: <a href="M_Pitch_and_Judge_Skill_Design.html">Pitch and Judge Skill Design</a> (W8 / W16) — stating what "good" means, with the stakes raised.</li>
+<li>Cases worth stealing a format from: <a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>, <a href="Case_-_Opus_4.7_Claude_Code_Hackathon.html">Opus 4.7 Claude Code Hackathon</a>.</li>
+<li>Concept cards: prompt engineering, cognitive offloading.</li>
 </ul>
-<p>Listeners have a job too: decide whether the tool still holds up <strong>in your situation</strong>. Taking the prompt is not the same as learning it. Knowing which line to change when the situation changes is.</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">How the slot runs</h3>
-<p><strong>The share</strong> — problem → how you did it → one pitfall you hit, with a 30-second live demo.
-<strong>Quick critique</strong> — the room responds with the same three questions: would I use it, where could it save more effort, is there a better tool.
-<strong>Archiving</strong> — the presenter drops the artefact into the shared class toolbox with a one-line description of what it is for.</p>
-<p>By the end of term this accumulates into a personal and a class-wide AI toolbox.</p>
+<section class="mod-sec sec-summary"><h3 id="sec-9">In short</h3>
+<ul>
+<li>Three parts and something running: the problem, the method in reproducible detail, and the pitfall.</li>
+<li>The pitfall is not a confession, it is the only part that tells the room where the tool stops working.</li>
+<li>As a listener you have three questions, and the useful one is which line would have to change for you.</li>
+<li>The slot is worth having only if people report back on what they could and could not reproduce.</li>
+</ul>
 </section>
-<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-10">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3 id="sec-5">Individual reflection</h3>
-<p>Presenters, write one line this week: "What change did someone suggest that I had not thought of?"</p>
-<p>Listeners, pick one tool someone shared and actually try it. Report back next time on whether you could reproduce it.</p></section>
-<p class="sitefoot">Student view · updated 2026-09-10 23:43</p></div></div></div><script>
+<section class="mod-sec sec-content"><h3 id="sec-11">Pair critique</h3>
+<p><strong>The situation.</strong> A classmate has just demonstrated a skill that takes a long article and produces a set of study notes. It works well on the article they used, which came from their own coursework in a subject you do not study. They are about to paste it into the class toolbox.</p>
+<ol>
+<li>Ask the three listener questions in order — would you use it, where could it save more, is there a better way</li>
+<li>Together, find the one line that assumes something about their subject that is not true of yours</li>
+<li>Rewrite that line for your material, and agree what would have to be tested to know whether it still works</li>
+</ol>
+<p>Finish by deciding which of you will actually run it this week and report back.</p>
+<p><strong>情境</strong>：同學剛示範完一個 skill：丟一篇長文章進去，產出一份筆記。用他自己的課的文章跑得很好，而那門課你沒修。他正要把這個 skill 貼進班級工具箱。</p>
+<ol>
+<li>依序問聽眾的三個問題——你會不會用、哪裡還能更省事、有沒有更好的做法</li>
+<li>一起找出那一行——它假設了他那門課成立、但你這邊不成立的東西</li>
+<li>把那一行改寫成你的版本，並約定要測什麼才知道還能不能用</li>
+</ol>
+<p>最後決定你們哪一個人這週真的會去跑一次，並回報結果。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-12">Individual reflection</h3>
+<p>Presenters, write one line: "The change someone suggested that I had not thought of was ______."</p>
+<p>Listeners, pick one tool that was shared and actually run it this week. Next time, report whether you could reproduce it, and if not, where it broke.</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-11 00:01</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
