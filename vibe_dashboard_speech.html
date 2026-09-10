@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="用 vibe coding 教做互動儀表板：十條規則，每一條都配一個看得到的實際例子——一個大家都用過的介面，一件學生作品。">
+<title>儀表板的十條規則，每條一個實例</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper:      #f4f2ed;
+    --surface:    #ffffff;
+    --surface-2:  #ebe7df;
+    --ink:        #1a1a18;
+    --ink-soft:   #40403c;
+    --muted:      #6f6d66;
+    --rule:       #cfcabf;
+    --rule-soft:  #e2ded5;
+    --accent:     #14343f;
+    --accent-ink: #ffffff;
+
+    /* 這兩個顏色全站只做一件事：標正例與反例。 */
+    --ok:         #1c6b4a;
+    --ok-bg:      #e6f0ea;
+    --no:         #a32b1e;
+    --no-bg:      #f7e8e5;
+
+    --f-display: "Noto Serif TC", "Songti TC", Georgia, serif;
+    --f-body:    "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --f-mono:    "IBM Plex Mono", Consolas, ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #14151a;
+      --surface:    #1b1d23;
+      --surface-2:  #232630;
+      --ink:        #ece9e2;
+      --ink-soft:   #c6c2b8;
+      --muted:      #918d84;
+      --rule:       #35383f;
+      --rule-soft:  #282b32;
+      --accent:     #7fc0cf;
+      --accent-ink: #10151a;
+      --ok:         #63c69a;
+      --ok-bg:      #172a23;
+      --no:         #f0897a;
+      --no-bg:      #2d1c1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #14151a;
+    --surface:    #1b1d23;
+    --surface-2:  #232630;
+    --ink:        #ece9e2;
+    --ink-soft:   #c6c2b8;
+    --muted:      #918d84;
+    --rule:       #35383f;
+    --rule-soft:  #282b32;
+    --accent:     #7fc0cf;
+    --accent-ink: #10151a;
+    --ok:         #63c69a;
+    --ok-bg:      #172a23;
+    --no:         #f0897a;
+    --no-bg:      #2d1c1a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 15.5px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 40px 22px 90px; }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- hero ---------- */
+  .hero { border-bottom: 4px solid var(--ink); padding-bottom: 26px; }
+  .hero h1 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(31px, 5.4vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -.02em;
+    margin: 10px 0 0;
+    text-wrap: balance;
+  }
+  .hero .lede {
+    max-width: 62ch;
+    margin: 14px 0 0;
+    color: var(--ink-soft);
+    font-size: 16.5px;
+  }
+  .facts {
+    display: flex; flex-wrap: wrap; gap: 6px 26px;
+    margin-top: 22px; padding-top: 15px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--f-mono); font-size: 12.5px;
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .facts b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- rail ---------- */
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(118px, 1fr);
+    gap: 2px;
+    margin-top: 22px;
+    overflow-x: auto;
+  }
+  .rail a {
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
+    border-top: 3px solid var(--accent);
+    padding: 9px 12px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .rail a:hover { background: var(--surface-2); }
+  .rail .n { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--muted); }
+  .rail .t { font-size: 13px; font-weight: 500; margin-top: 1px; }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 60px; padding-top: 28px; border-top: 3px solid var(--ink); }
+  .sec-head { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; }
+  .sec-head h2 {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(22px, 3.3vw, 31px); margin: 0; letter-spacing: -.01em;
+  }
+  .sec-num {
+    font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .1em;
+    color: var(--accent-ink); background: var(--accent);
+    padding: 3px 9px; align-self: center;
+  }
+  .sec-note { margin: 13px 0 0; color: var(--ink-soft); max-width: 70ch; }
+
+  /* ---------- tldr ---------- */
+  .tldr { margin-top: 22px; display: grid; gap: 0; }
+  .tldr .t-row {
+    display: grid; grid-template-columns: 30px 1fr; gap: 15px;
+    padding: 16px 0; border-top: 1px solid var(--rule-soft);
+  }
+  .tldr .t-row:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .tldr .t-n {
+    font-family: var(--f-mono); font-size: 12px;
+    width: 26px; height: 26px; line-height: 26px; text-align: center;
+    background: var(--accent); color: var(--accent-ink); margin-top: 3px;
+  }
+  .tldr h3 {
+    font-family: var(--f-display); font-size: 19px; font-weight: 700;
+    margin: 0 0 5px; line-height: 1.4;
+  }
+  .tldr p { margin: 0; color: var(--ink-soft); max-width: 72ch; }
+
+  /* ---------- how to read ---------- */
+  .howto {
+    margin-top: 20px; background: var(--surface);
+    border: 1px solid var(--rule-soft); border-left: 3px solid var(--accent);
+    padding: 18px 20px;
+  }
+  .howto ul { margin: 10px 0 0; padding-left: 20px; }
+  .howto li { margin-bottom: 6px; }
+  .howto li:last-child { margin-bottom: 0; }
+  .howto b { font-weight: 700; }
+
+  /* ---------- rule card ---------- */
+  .rule {
+    margin-top: 26px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 4px solid var(--ink);
+  }
+  .rule-top {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    padding: 17px 22px 0;
+  }
+  .rn {
+    font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em;
+    color: var(--muted); border: 1px solid var(--rule); padding: 2px 8px;
+  }
+  .rule-top h3 {
+    font-family: var(--f-display); font-size: clamp(19px, 2.6vw, 25px);
+    font-weight: 700; margin: 0; line-height: 1.35; letter-spacing: -.01em;
+  }
+  .claim {
+    margin: 11px 22px 0; padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule-soft);
+    color: var(--ink-soft); max-width: 74ch;
+  }
+
+  .ex-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 1px; background: var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .ex { background: var(--surface); padding: 16px 22px 18px; }
+  .ex-head { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 8px; }
+  .chip {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em;
+    padding: 2px 8px; font-weight: 600;
+  }
+  .chip.good { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok); }
+  .chip.bad  { background: var(--no-bg); color: var(--no); border: 1px solid var(--no); }
+  .src {
+    font-family: var(--f-mono); font-size: 11.5px; color: var(--muted);
+    letter-spacing: .02em;
+  }
+  .kind {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em;
+    color: var(--muted); border: 1px dashed var(--rule); padding: 1px 6px;
+  }
+  .ex p { margin: 0 0 9px; max-width: 62ch; }
+  .ex p:last-child { margin-bottom: 0; }
+  .ex q { quotes: "「" "」"; font-family: var(--f-mono); font-size: 13.5px; }
+
+  /* colour swatch evidence */
+  .sw { display: flex; flex-wrap: wrap; gap: 3px; margin: 10px 0 8px; }
+  .sw i {
+    width: 30px; height: 30px; display: block;
+    border: 1px solid rgba(128,128,128,.35);
+  }
+  .sw-cap {
+    font-family: var(--f-mono); font-size: 11px; color: var(--muted);
+    margin: 0 0 2px; letter-spacing: .02em;
+  }
+  .sw-label { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .sw-label span {
+    font-family: var(--f-mono); font-size: 10.5px; color: var(--muted);
+    border: 1px solid var(--rule-soft); padding: 1px 5px;
+  }
+
+  /* counted bars */
+  .cnt { margin-top: 10px; display: grid; gap: 4px; }
+  .cnt-row {
+    display: grid; grid-template-columns: 92px 1fr 34px;
+    align-items: center; gap: 9px;
+    font-family: var(--f-mono); font-size: 11.5px; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .cnt-row b { text-align: right; color: var(--ink); font-weight: 500; }
+  .bar { height: 9px; background: var(--surface-2); display: block; }
+  .bar > span { display: block; height: 100%; background: var(--accent); }
+  .bar > span.q { background: var(--no); opacity: .55; }
+
+  .meta-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px; background: var(--rule-soft);
+  }
+  .meta-grid > div { background: var(--surface-2); padding: 15px 22px 17px; }
+  .lbl {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 5px;
+  }
+  .meta-grid p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 60ch; }
+
+  .fix { background: var(--surface-2); padding: 15px 22px 18px; border-top: 1px solid var(--rule-soft); }
+  .fix code {
+    display: block; font-family: var(--f-mono); font-size: 13px; line-height: 1.7;
+    background: var(--surface); border: 1px solid var(--rule);
+    padding: 11px 13px; color: var(--ink); white-space: pre-wrap;
+  }
+
+  /* ---------- works table ---------- */
+  .tbl-wrap { overflow-x: auto; margin-top: 20px; }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  th {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 2px solid var(--ink); white-space: nowrap;
+  }
+  td.num { font-family: var(--f-mono); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .u { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); word-break: break-all; }
+  tbody tr:hover { background: var(--surface); }
+
+  /* ---------- limits ---------- */
+  .limits { margin-top: 20px; }
+  .limits .lim {
+    background: var(--surface); border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--no); padding: 15px 20px; margin-bottom: 12px;
+  }
+  .limits .lim:last-child { margin-bottom: 0; }
+  .limits h4 { font-family: var(--f-display); font-size: 16.5px; font-weight: 600; margin: 0 0 5px; }
+  .limits p { margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 74ch; }
+
+  .callout {
+    margin-top: 26px; background: var(--surface-2);
+    border-left: 3px solid var(--accent); padding: 16px 20px;
+  }
+  .callout p { margin: 0; font-family: var(--f-display); font-size: 17px; line-height: 1.7; }
+
+  /* ---------- appendix ---------- */
+  .appendix { margin-top: 60px; padding-top: 24px; border-top: 3px solid var(--ink); }
+  .link-row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 18px;
+    padding: 14px 0; border-bottom: 1px solid var(--rule-soft);
+  }
+  .link-row .u { font-family: var(--f-mono); font-size: 12px; word-break: break-all; }
+  footer { margin-top: 34px; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); line-height: 1.8; }
+
+  @media (max-width: 760px) {
+    .link-row { grid-template-columns: 1fr; gap: 6px; }
+    .tldr .t-row { grid-template-columns: 22px 1fr; gap: 11px; }
+    .rule-top, .claim, .ex, .fix { padding-left: 16px; padding-right: 16px; }
+    .claim { margin-left: 16px; margin-right: 16px; }
+    .meta-grid > div { padding-left: 16px; padding-right: 16px; }
+    .cnt-row { grid-template-columns: 74px 1fr 30px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">資訊視覺化 · 國立政治大學新聞學系 李怡志</div>
+    <h1>儀表板的十條規則，每條一個實例</h1>
+    <p class="lede">一班沒寫過程式的學生，用對話式 AI 交出五個打得開的互動儀表板。這頁把課堂上真正用到的十條規則列出來，每一條都配兩個看得到的例子：一個你每天都在用的介面，一件學生作品的實際數字。沒有例子的規則不列。</p>
+    <div class="facts">
+      <span>規則　<b>10 條</b></span>
+      <span>實例　<b>22 個</b></span>
+      <span>學生作品　<b>5 件</b></span>
+      <span>作品資料　<b>2026-09-09 逐頁點算</b></span>
+      <span>工具　<b>對話式 AI ＋ GitHub Pages</b></span>
+    </div>
+  </header>
+
+  <div class="rail">
+    <a href="#tldr"><div class="n">00</div><div class="t">快速結論</div></a>
+    <a href="#howto"><div class="n">01</div><div class="t">怎麼讀這頁</div></a>
+    <a href="#know"><div class="n">02</div><div class="t">三個基本知識</div></a>
+    <a href="#princ"><div class="n">03</div><div class="t">兩條設計原則</div></a>
+    <a href="#ai"><div class="n">04</div><div class="t">AI 的五個錯</div></a>
+    <a href="#works"><div class="n">05</div><div class="t">五件作品</div></a>
+    <a href="#limits"><div class="n">06</div><div class="t">證據的極限</div></a>
+  </div>
+
+  <!-- 00 -->
+  <section id="tldr">
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>快速結論</h2>
+    </div>
+    <p class="sec-note">整場講的就是這三句，其餘都是例子。</p>
+
+    <div class="tldr">
+      <div class="t-row">
+        <div class="t-n">1</div>
+        <div>
+          <h3>AI 做得出儀表板</h3>
+          <p>這班沒有人寫過網頁，最後交出五個打得開、能互動的網址。261 位候選人、27 個欄位的資料庫，用對話就生得出來——「做得出來」已經不再是門檻。</p>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-n">2</div>
+        <div>
+          <h3>理論指揮得動 AI</h3>
+          <p>不指定，AI 就用看似合理的預設值把空白填掉：整班同一種審美、一個空的搜尋框、一張卡片塞七個數字。理論的用處在這裡——把「訊號的特徵必須專屬」「一個區塊最多四個組塊」「先給具名案例再放人探索」翻成可以直接貼進對話框的指令。</p>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-n">3</div>
+        <div>
+          <h3>理論與經驗檢查得了產出</h3>
+          <p>驗收不靠感覺：作者圈出最重要的那一格，旁邊的人說出第一眼看到哪一格，兩個圈對不上就是設計失敗；清單→詳情→返回的動線通不通，一試就知道；互動控制項可以直接數，五件作品從 6 個到 23 個差了近四倍。做得出來變便宜之後，稀缺的就是這種判斷。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 -->
+  <section id="howto">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>怎麼讀這一頁</h2>
+    </div>
+    <p class="sec-note">每條規則長得一樣：一句規則、兩個例子、一段理論、一個驗收動作。兩個例子刻意一個來自課外、一個來自課內——課外的例子確認這條規則不是我發明的，課內的例子確認它在沒寫過程式的人身上也量得到。</p>
+
+    <div class="howto">
+      <ul>
+        <li><b class="src">日常介面</b>：你用過的東西。用來說明這條規則在真實世界長什麼樣子。</li>
+        <li><b class="src">學生作品</b>：五件作品的實際色碼、控制項數量、介面上的原字。可以自己打開對照。</li>
+        <li><b>理論</b>：對應到 <a href="https://richyli.github.io/visual/" target="_blank" rel="noopener">Dashboard 診斷框架</a> 的第幾層，以及原始文獻。</li>
+        <li><b>怎麼驗收</b>：一個學生自己做得到、也看得出結果的動作。</li>
+      </ul>
+      <p style="margin:12px 0 0"><span class="chip good">正例</span> 與 <span class="chip bad">反例</span> 是這一頁唯二用顏色的地方——這頁自己也照第 1 條規則做。</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="know">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>三個基本知識</h2>
+    </div>
+    <p class="sec-note">先建立這三個，作品上立刻驗證得出來。前兩個是知覺層次的事實，不是排版偏好；第三個決定前兩個要往哪個方向做。</p>
+
+    <!-- R1 -->
+    <article class="rule" id="r1">
+      <div class="rule-top">
+        <span class="rn">規則 01</span>
+        <h3>一個顏色只能有一個意思</h3>
+      </div>
+      <p class="claim">儀表板不是把資料畫出來，是決定哪一格值得先看。能讓人「不用找就看到」的視覺特徵只有幾種——顏色、動態、大小——用在裝飾上就沒得用在訊號上。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">日常介面</span><span class="src">台電 今日電力資訊</span></div>
+          <p>備轉容量率做成五個燈號：綠（供電充裕）、黃（供電吃緊）、橘（供電警戒）、紅（限電警戒）、黑（限電）。那五個顏色在整個頁面上不做第二件事，所以你不必讀數字，掃一眼就知道今天缺不缺電。</p>
+          <div class="sw" aria-hidden="true">
+            <i style="background:#22a45d"></i><i style="background:#f2c218"></i><i style="background:#f08a24"></i><i style="background:#d0342c"></i><i style="background:#1a1a1a"></i>
+          </div>
+          <div class="sw-label"><span>綠 充裕</span><span>黃 吃緊</span><span>橘 警戒</span><span>紅 限電警戒</span><span>黑 限電</span></div>
+          <p style="margin-top:10px">環境部空氣品質指標是同一個做法：六個級距各有專屬顏色，那六色不拿去做標題、按鈕或背景。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">政治獻金大公開</span></div>
+          <p>索引做得最完整的一件，卻在同一頁用掉 27 個色值。光紅橘系就有八個，紅色同時出現在標題裝飾、政黨標籤和數字強調上。</p>
+          <p class="sw-cap">實際抓到的 27 色（節錄 16）</p>
+          <div class="sw" aria-hidden="true">
+            <i style="background:#c0392b"></i><i style="background:#e53935"></i><i style="background:#f44336"></i><i style="background:#ff1744"></i><i style="background:#ff5722"></i><i style="background:#ff6b35"></i><i style="background:#ff9800"></i><i style="background:#ffab00"></i><i style="background:#d4af37"></i><i style="background:#c8a200"></i><i style="background:#8bc34a"></i><i style="background:#1b9931"></i><i style="background:#00897b"></i><i style="background:#00bcd4"></i><i style="background:#1565c0"></i><i style="background:#9c27b0"></i>
+          </div>
+          <div class="sw-label"><span>#C0392B</span><span>#E53935</span><span>#F44336</span><span>#FF1744</span><span>四個紅，沒有一個是警訊</span></div>
+          <p style="margin-top:10px">對照組是同一份作業的另一件：<span class="src">THE CAPITAL 2016</span> 全站只有六個色值（#000000、#555、#666、#999、#EEE、#FFFFFF），訊號改用框線粗細承擔——CSS 裡真的只定義了 <q>2px solid</q> 與 <q>1px solid</q> 兩種邊框。</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>診斷框架 Layer 1。Iconic Memory 在約 250ms 內抓完整快照（Sperling, 1960）；顏色與動態屬於 pre-attentive 特徵，不需注意力就被偵測（Treisman &amp; Gelade, 1980）。關鍵那句是「信號的特徵必須專屬」：多個元素共用同一特徵，辨識力 d′ 就掉下來。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>請學生在自己的作品上圈出「最重要的那一個數字」，再請旁邊的人說出他第一眼看到的是哪一個。兩個圈不一樣，就是設計失敗，不是對方不專心。</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- R2 -->
+    <article class="rule" id="r2">
+      <div class="rule-top">
+        <span class="rn">規則 02</span>
+        <h3>概覽、篩選、細節，三層不能壓成一層</h3>
+      </div>
+      <p class="claim">先給全景，再讓人縮小範圍，最後才給單筆細節——而且每一層都要有回頭路。壓成一層的結果不是「比較快」，是使用者進得去出不來。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">日常介面</span><span class="src">Google 地圖</span></div>
+          <p>整張地圖是概覽；縮放、圖層、「餐廳／加油站」快捷是篩選；點一家店跳出詳情卡是細節。三層都在，而且詳情卡上永遠有一個關閉鍵把你送回上一層——你從來不會在 Google 地圖裡迷路到必須重新輸入一次。</p>
+          <p>台鐵、高鐵訂票也是同一個骨架：日期與起訖（概覽）→ 車次清單（篩選）→ 單一車次的座位與票價（細節）。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">學生作品</span><span class="src">The Weight of Politics 政治的重量</span></div>
+          <p>兩層動線最乾淨的一件。首頁「權力的軌跡，數字的重量」＋<q>Editor's Picks 觀察指標</q>是概覽；縣市／政黨／排序三段是篩選；詳情頁給<q>收支總覽</q>與<q>獻金來源佔比分析</q>。關鍵在最後一個按鈕：<q>← 返回結果清單</q>。</p>
+          <p><span class="chip bad">反例</span> 同一份作業的<span class="src">大金庫</span>只有一顆<q>返回大廳</q>。從第七頁點進某位候選人，出來時回到的是首頁，不是你剛才那一頁——中間那一層沒有被保存下來。</p>
+          <p class="sw-cap">五件作品裡，詳情頁提供「返回清單」的：</p>
+          <div class="cnt">
+            <div class="cnt-row"><span>政治獻金大公開</span><span class="bar"><span style="width:100%"></span></span><b>有</b></div>
+            <div class="cnt-row"><span>政治的重量</span><span class="bar"><span style="width:100%"></span></span><b>有</b></div>
+            <div class="cnt-row"><span>大金庫</span><span class="bar"><span class="q" style="width:34%"></span></span><b>回首頁</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>Shneiderman 的視覺資訊尋求箴言（1996）：Overview first, zoom and filter, then details-on-demand。配上診斷框架 Layer 4：工作記憶只有 4±1 組塊（Cowan, 2001），三層合一等於要求使用者同時保持全部脈絡。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>把「清單頁 → 個人頁 → 返回原本那一頁」訂成硬性條件，而且要指定「返回原本那一頁」不是「返回首頁」。做不到的作品，使用者一點進去就出不來。</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- R3 -->
+    <article class="rule" id="r3">
+      <div class="rule-top">
+        <span class="rn">規則 03</span>
+        <h3>先決定給誰看，索引方式才決定得了</h3>
+      </div>
+      <p class="claim">使用者只會花幾秒判斷「這裡有沒有我要的東西」。你必須在那幾秒內散發出正確的氣味——而氣味長什麼樣子，取決於你認為來的是誰。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">日常介面</span><span class="src">串流與訂房服務的首頁</span></div>
+          <p>Netflix 打開不是一個搜尋框，是一部具名的片加一句話；Airbnb 的搜尋框裡預先寫著目的地範例，底下還列出「熱門」。它們都假設來的人「還不知道自己要什麼」，所以第一步替你走掉。</p>
+          <p>相反地，多數政府查詢系統假設來的人已經知道要查什麼，於是首頁只有一個輸入框——那對已經知道的人很有效率，對其他人報酬率是零。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">學生作品</span><span class="src">2016 金權政治獻金資料庫</span></div>
+          <p>搜尋框的提示字直接寫成 <q>例如：柯建銘、民主進步黨、經濟、新北市</q>。四個字串一次告訴你這個框吃四種東西——人名、政黨、委員會、選區。這是一行字就完成的受眾設定。</p>
+          <p><span class="chip bad">反例</span> <span class="src">THE CAPITAL 2016</span> 的提示字是 <q>Enter Location / 輸入縣市地區</q>——它告訴你這格要填地點，但沒有告訴你可以填哪些地點，也沒有告訴你填了會拿到什麼。初始畫面上最大的狀態文字則是 <q>Found 0 Candidates</q>：使用者第一眼看到的數字是零。</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>診斷框架 Layer 8，Information Foraging（Pirolli &amp; Card, 1999）。資訊氣味與邊際值定理解釋了最常見的失敗：首頁報酬率太低，使用者十秒就離開，而他離開時並不知道裡面其實有他要的東西。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>要求說明文件第一段就寫「這個故事給誰看、預期他做什麼」。寫不出來的，最後通常就會交出一個空的搜尋框——這兩件事在五件作品上是對應得起來的。</p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 03 -->
+  <section id="princ">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>兩條設計原則</h2>
+    </div>
+    <p class="sec-note">這兩條不是知覺事實，是取捨。它們的共同點是可以直接用數的，所以最省事。</p>
+
+    <!-- R4 -->
+    <article class="rule" id="r4">
+      <div class="rule-top">
+        <span class="rn">規則 04</span>
+        <h3>同一份資料要留四條進入路徑</h3>
+      </div>
+      <p class="claim">查特定的人（Lookup）、依分類瀏覽（Browse）、開放探索（Explore）、回頭找看過的（Locate）。只給一個搜尋框，等於只服務已經知道自己要查誰的那種人。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">日常介面</span><span class="src">網路書店與音樂串流</span></div>
+          <p>博客來：書名直接查（Lookup）、文學小說／商業理財分類逛（Browse）、暢銷榜與新書（Explore）、瀏覽紀錄與收藏（Locate）。Spotify 完全一樣：搜尋、曲風、每日推薦、最近播放。</p>
+          <p>四條路服務的是四種不同狀態的同一個人。少一條，你就把那個狀態的人擋在門外——包括三分鐘後又想回來看同一筆的自己。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">五件作品的控制項總數</span></div>
+          <p>下拉選單＋按鈕＋輸入框，逐頁點算。同一份資料、同一份作業說明，差了將近四倍。</p>
+          <div class="cnt">
+            <div class="cnt-row"><span>政治獻金大公開</span><span class="bar"><span style="width:100%"></span></span><b>23</b></div>
+            <div class="cnt-row"><span>政治的重量</span><span class="bar"><span style="width:57%"></span></span><b>13</b></div>
+            <div class="cnt-row"><span>金權資料庫</span><span class="bar"><span style="width:39%"></span></span><b>9</b></div>
+            <div class="cnt-row"><span>大金庫</span><span class="bar"><span style="width:39%"></span></span><b>9</b></div>
+            <div class="cnt-row"><span>THE CAPITAL</span><span class="bar"><span class="q" style="width:26%"></span></span><b>6</b></div>
+          </div>
+          <p style="margin-top:11px">數字少不必然是壞事，但要看少在哪裡。<span class="src">THE CAPITAL 2016</span> 一個 <q>&lt;select&gt;</q> 都沒有，全台縣市只給台北、新北、高雄三顆快捷；<span class="src">大金庫</span> 唯一的下拉只有兩個選項（總收入由高到低／由低到高）。對照之下，<span class="src">金權資料庫</span> 光地區選單就有 21 個選項，排序七種。</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>資訊架構把查找行為分成已知項查詢與探索式瀏覽兩大類，兩類需要的入口形狀完全不同。診斷框架 Layer 8 與 Layer 10 分別對應「找得到」與「走得到」。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>打開網頁原始碼數 <q>&lt;select&gt;</q>、<q>&lt;button&gt;</q>、<q>&lt;input&gt;</q>，三分鐘就有數字。這是全部十條規則裡最省事的檢查點，適合當互評的第一關。</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- R5 -->
+    <article class="rule" id="r5">
+      <div class="rule-top">
+        <span class="rn">規則 05</span>
+        <h3>首頁一定要有具名的示範案例</h3>
+      </div>
+      <p class="claim">先用作者選好的幾筆把詮釋框架建立起來，再放使用者自己去查。沒有起點的資料庫，沒有人會用。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">日常介面</span><span class="src">圖書館的「本月選書」</span></div>
+          <p>館藏系統有幾十萬筆，但入口牆上永遠是十本具名的書加一句推薦理由。博物館的常設導覽、報紙的頭版、書店的平台，全是同一個機制：用少數具名的東西，教你怎麼看剩下的全部。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">學生作品</span><span class="src">2016 金權政治獻金資料庫</span></div>
+          <p>「編輯精選案例」三則，每則具名且附上為什麼值得看：柯建銘（總收入逾 5,164 萬元）、王定宇（捐贈企業數達 163，可看支持網絡密度）、黃國昌（個人捐贈逾 2,516 萬元，募款結構不同）。旁邊還有六個一鍵範例查詢。</p>
+          <p>作業要求裡沒有這一條，但五件作品有三件自己長出了「編輯精選」——他們自己測試時就發現，空的資料庫連自己都不想點。</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>Martini Glass 結構（Segel &amp; Heer, 2010）的杯腳：先作者引導、再開放探索。診斷框架 Layer 10 的敘事視覺化段落。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>數首頁上「具名而且點得下去」的案例有幾個。零個就退回。要注意具名不等於好——精選了誰、為什麼是這三個人，本身就是編輯判斷，該一起講評。</p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 04 -->
+  <section id="ai">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>AI 會犯的五個錯</h2>
+    </div>
+    <p class="sec-note">這五個不是學生的錯，是 vibe coding 的系統性偏誤——不指定，AI 就用「看似合理」的預設值把空白填掉。每一個都附一個實際看得到的例子，以及可以直接照著貼的修正指令。</p>
+
+    <!-- E1 -->
+    <article class="rule" id="e1">
+      <div class="rule-top">
+        <span class="rn">錯誤 01</span>
+        <h3>不指定風格，整班就長得一樣</h3>
+      </div>
+      <p class="claim">風格是最不需要 AI 代勞、卻最常被交給 AI 的部分。不給方向時它會收斂到同一種審美，而且那種審美通常還不難看，所以沒有人會發現有問題。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">日常介面</span><span class="src">你已經認得出來的那種頁面</span></div>
+          <p>紫藍漸層、圓角卡片、玻璃霧面、Inter 字體、每個區塊配一顆線條圖示。這套組合現在一眼就能認出是誰做的——它不醜，但它不是任何人的判斷結果。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">五件裡有三件是金色配深底</span></div>
+          <p>沒有人互相看過作品，也沒有人被指定顏色。結果：<span class="src">政治的重量</span>的主色寫成 <q>--clr-gold: #D4AF37</q>，<span class="src">政治獻金大公開</span>的調色盤裡出現同一個 <q>#D4AF37</q>，<span class="src">金權資料庫</span>則是 <q>--gold: #D8AA38</q> 配 <q>--ink: #180807</q>。</p>
+          <p class="sw-cap">三件作品各自定義的主色</p>
+          <div class="sw" aria-hidden="true">
+            <i style="background:#d4af37"></i><i style="background:#d4af37"></i><i style="background:#d8aa38"></i><i style="background:#180807"></i><i style="background:#070912"></i><i style="background:#2a080c"></i>
+          </div>
+          <div class="sw-label"><span>#D4AF37</span><span>#D4AF37</span><span>#D8AA38</span><span>三個深底</span></div>
+          <p style="margin-top:10px"><span class="chip good">正例</span> 跳出來的兩件，都是學生自己先定了概念才開工：<span class="src">大金庫</span>用挖寶隱喻（土黃棕、按鈕寫<q>挖寶去！</q>、返回鍵寫<q>返回大廳</q>），<span class="src">THE CAPITAL 2016</span>用機密檔案（只留黑白四階灰，頁尾寫<q>STRICTLY CONFIDENTIAL</q>）。</p>
+        </div>
+      </div>
+
+      <div class="fix">
+        <span class="lbl">修正指令</span>
+        <code>先不要寫程式。給我三種視覺方向：字體組合、五個色碼、參考對象各一句。我選定後你才開始做。</code>
+      </div>
+    </article>
+
+    <!-- E2 -->
+    <article class="rule" id="e2">
+      <div class="rule-top">
+        <span class="rn">錯誤 02</span>
+        <h3>交出一個功能正確但空的介面</h3>
+      </div>
+      <p class="claim">對 AI 來說，「查詢功能可以運作」就算完成。它不會意識到使用者打開後根本不知道要查誰。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">日常介面</span><span class="src">大多數的公開資料查詢頁</span></div>
+          <p>一個輸入框、一顆查詢鈕，下面一片空白，可能還寫著「請輸入關鍵字」。資料其實很好，但第一屏的報酬率是零，於是絕大多數人只到這裡為止。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">THE CAPITAL 2016</span></div>
+          <p>初始畫面上最大的一行狀態文字是 <q>Found 0 Candidates</q>。資料庫裡有 261 位候選人，但使用者第一眼看到的數字是 0。</p>
+          <p><span class="chip good">正例</span> 同一份作業的<span class="src">金權資料庫</span>把這格填成六個一鍵範例：<q>柯建銘</q>、<q>民主進步黨</q>、<q>中國國民黨</q>、<q>經濟委員會</q>、<q>新北市</q>、<q>當選者大額收入排行</q>。同樣一個搜尋框，一個是零，一個是六條路。</p>
+        </div>
+      </div>
+
+      <div class="fix">
+        <span class="lbl">修正指令</span>
+        <code>首頁必須有三個具名案例，各一句話說明為什麼值得看，點擊直接進入該筆詳情頁。空狀態不可以顯示「0 筆」，要顯示預設的推薦清單。</code>
+      </div>
+    </article>
+
+    <!-- E3 -->
+    <article class="rule" id="e3">
+      <div class="rule-top">
+        <span class="rn">錯誤 03</span>
+        <h3>只做一個搜尋框</h3>
+      </div>
+      <p class="claim">搜尋框是 AI 的預設答案，因為它最好寫、最不會錯。但它只服務一種使用者，而那種人往往是少數。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">日常介面</span><span class="src">只有搜尋列的購物網站</span></div>
+          <p>如果一個電商只給你搜尋框，你必須先知道商品名稱才買得到東西——那等於把所有「我想看看有什麼」的人排除掉。所以真實的電商一定同時有分類、排行、推薦、瀏覽紀錄。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">下拉選單數量</span></div>
+          <div class="cnt">
+            <div class="cnt-row"><span>金權資料庫</span><span class="bar"><span style="width:100%"></span></span><b>6</b></div>
+            <div class="cnt-row"><span>政治的重量</span><span class="bar"><span style="width:83%"></span></span><b>5</b></div>
+            <div class="cnt-row"><span>大金庫</span><span class="bar"><span class="q" style="width:17%"></span></span><b>1</b></div>
+            <div class="cnt-row"><span>THE CAPITAL</span><span class="bar"><span class="q" style="width:3%"></span></span><b>0</b></div>
+          </div>
+          <p style="margin-top:11px"><span class="src">大金庫</span>那唯一的一個下拉，選項只有<q>總收入：由高到低</q>與<q>總收入：由低到高</q>。它有分頁、有標籤，但沒有任何依政黨或地區瀏覽的路。</p>
+        </div>
+      </div>
+
+      <div class="fix">
+        <span class="lbl">修正指令</span>
+        <code>除了搜尋框，再加：依政黨／地區瀏覽、全域排行、以及一個可排序的完整清單。四個入口都要能到同一筆詳情。</code>
+      </div>
+    </article>
+
+    <!-- E4 -->
+    <article class="rule" id="e4">
+      <div class="rule-top">
+        <span class="rn">錯誤 04</span>
+        <h3>用摘要取代欄位</h3>
+      </div>
+      <p class="claim">AI 很擅長生出一句流暢的摘要，所以它會拿摘要填滿詳情頁。使用者點進去發現沒東西，就再也不點第二次。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">日常介面</span><span class="src">內容農場式的聚合頁</span></div>
+          <p>清單看起來很豐富，點進去只有兩段話和一張圖，你要找的數字、日期、出處全都不在。第一次是失望，第二次就不點了——這是資訊覓食理論裡最典型的氣味造假。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">學生作品</span><span class="src">政治的重量 / 政治獻金大公開</span></div>
+          <p><span class="src">政治的重量</span>的詳情頁給的是欄位不是句子：<q>收支總覽</q>（總收入、總支出）加 <q>獻金來源佔比分析</q>，再標上推薦政黨、選區、是否當選。<span class="src">政治獻金大公開</span>則提供五個排序維度（獻金總額、企業捐贈、個人捐贈、捐贈企業數、得票數），每一個都對應資料庫裡真實存在的欄位，不是算出來的形容詞。</p>
+          <p>值得一提的是<span class="src">金權資料庫</span>在自己的頁尾誠實標了一行：<q>此為前端專題網站範本，適合再接資料清理、視覺化與候選人詳情頁</q>——作者知道自己的詳情頁還沒接完，並且說了出來。這比假裝完成好。</p>
+        </div>
+      </div>
+
+      <div class="fix">
+        <span class="lbl">修正指令</span>
+        <code>詳情頁至少呈現收入、支出、來源比例、選區、當選與否，並標明資料來源與年度。不要用摘要取代欄位。缺的欄位直接標「無資料」，不要用文字補。</code>
+      </div>
+    </article>
+
+    <!-- E5 -->
+    <article class="rule" id="e5">
+      <div class="rule-top">
+        <span class="rn">錯誤 05</span>
+        <h3>一個區塊塞超過四件事</h3>
+      </div>
+      <p class="claim">AI 對「版面密度」沒有判斷力，你給它什麼它就全部攤平。它也不會發現你把兩個不同維度的東西擺成了同一排。</p>
+
+      <div class="ex-grid">
+        <div class="ex">
+          <div class="ex-head"><span class="chip good">正例</span><span class="kind">學生作品</span><span class="src">政治獻金大公開 / 金權資料庫</span></div>
+          <p><span class="src">政治獻金大公開</span>的首頁 KPI 剛好四個：候選人、獻金總額、當選席次、企業捐贈。<span class="src">金權資料庫</span>的三張卡各只有三個組塊——標籤、數字、一行說明：<q>資料筆數 261</q>、<q>核心欄位 27</q>、<q>查詢方式 2</q>。兩件都在 4±1 之內。</p>
+        </div>
+
+        <div class="ex">
+          <div class="ex-head"><span class="chip bad">反例</span><span class="kind">學生作品</span><span class="src">政治獻金大公開的政黨快捷列</span></div>
+          <p>同一頁往下，六顆快捷按鈕並排：<q>🌿 民進黨</q>、<q>🔵 國民黨</q>、<q>⚡ 時代力量</q>、<q>🟠 親民黨</q>、<q>⚪ 無黨籍</q>、<q>✓ 當選者</q>。</p>
+          <p>前五顆是「政黨」，第六顆是「當選狀態」——兩個不同的維度被排成同一列，視覺上就是同一組。而且符號系統也不一致：🌿是意象、🔵🟠⚪是顏色、⚡是意象、✓是狀態。放在一起看得懂，是因為你本來就懂政黨，不是因為設計說清楚了。</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="lbl">理論</span>
+          <p>診斷框架 Layer 4 與 Layer 6。工作記憶 4±1 組塊（Cowan, 2001）；Gestalt 的均質連結性（Palmer &amp; Rock, 1994）說同一個容器內的元素在最早期就被當成同一組——所以把兩個維度放進同一排，不是排版問題，是知覺上真的會被讀成一組。</p>
+        </div>
+        <div>
+          <span class="lbl">怎麼驗收</span>
+          <p>指著任何一排並列的元素問：「這一排是同一種東西嗎？」答不出來或需要解釋的，就要拆。</p>
+        </div>
+      </div>
+
+      <div class="fix">
+        <span class="lbl">修正指令</span>
+        <code>每個區塊最多四個資訊組塊，超過就拆成兩塊。同一排的元素必須屬於同一個分類維度，不同維度要分列並加標題。先給我版面骨架的線框，我確認後再填資料。</code>
+      </div>
+    </article>
+  </section>
+
+  <!-- 05 -->
+  <section id="works">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>五件作品</h2>
+    </div>
+    <p class="sec-note">同一份資料、同一份作業說明，做出五種不同的東西——這件事本身就是最好的示範。上面所有數字都出自這五個網址，可以自己打開對照。</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>作品</th>
+            <th>這件作品示範了什麼</th>
+            <th>選單</th>
+            <th>按鈕</th>
+            <th>輸入</th>
+            <th>色值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a href="https://ceuwan1113-sys.github.io/99999998/" target="_blank" rel="noopener">政治獻金大公開</a>
+              <div class="u">ceuwan1113-sys.github.io/99999998/</div>
+            </td>
+            <td>索引最完整：五種篩選、五種排序、政黨快捷、四個 KPI、完整的清單→詳情→返回動線。獻金來源的甜甜圈圖是用 canvas 逐段手繪，沒有用圖表函式庫。代價是色彩秩序。</td>
+            <td class="num">10</td><td class="num">11</td><td class="num">2</td><td class="num">27</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://wharf12100.github.io/Political-Donation-/" target="_blank" rel="noopener">2016 金權政治獻金資料庫</a>
+              <div class="u">wharf12100.github.io/Political-Donation-/</div>
+            </td>
+            <td>敘事結構最完整，杯腳做得最好：先用「政治獻金不是八卦，是民主的帳本」建立詮釋框架，再給簡易／進階兩個入口、六個範例查詢、三位具名精選。使用者是帶著正確的先驗進去查的。</td>
+            <td class="num">6</td><td class="num">2</td><td class="num">1</td><td class="num">36</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://stanleywang940110-byte.github.io/politic/" target="_blank" rel="noopener">The Weight of Politics 政治的重量</a>
+              <div class="u">stanleywang940110-byte.github.io/politic/</div>
+            </td>
+            <td>兩層動線最乾淨：Editor's Picks → 三段篩選清單 → 收支總覽與來源佔比，並留了「← 返回結果清單」。資訊分層的三個層次在這件上一次看得完。</td>
+            <td class="num">5</td><td class="num">6</td><td class="num">2</td><td class="num">9</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://fangk-ship-it.github.io/fkq_pp/" target="_blank" rel="noopener">大金庫：政治獻金查詢</a>
+              <div class="u">fangk-ship-it.github.io/fkq_pp/</div>
+            </td>
+            <td>技術野心最大，也最直接付出代價：唯一使用完整前端框架的一件（React、Tailwind、PapaParse、lucide），共載入六個外部函式庫，且靠瀏覽器即時編譯。存成靜態檔完全看不到內容——互動作品的保存與評分因此必須連操作步驟一起截圖。</td>
+            <td class="num">1</td><td class="num">6</td><td class="num">2</td><td class="num">16</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://water0821.github.io/DATA2/" target="_blank" rel="noopener">THE CAPITAL 2016 — Decoding Power</a>
+              <div class="u">water0821.github.io/DATA2/</div>
+            </td>
+            <td>對照組：風格最完整、索引最少。全站只有六個色值，機密檔案的調性從標題貫穿到頁尾；地圖是用 D3 的 geoMercator 真的投影出來的，不是貼圖。但零個下拉選單，介面標題與狀態文字全是英文（<q>SELECT A REGION</q>、<q>Found 0 Candidates</q>、<q>STRICTLY CONFIDENTIAL</q>）——想查特定候選人的人反而最難進去。</td>
+            <td class="num">0</td><td class="num">5</td><td class="num">1</td><td class="num">6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>風格與索引在時間有限時會互相排擠，而多數人會先把時間花在風格上。這是這份作業最值得討論的一個取捨，不是缺點清單。</p>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="limits">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>這頁的證據到哪裡為止</h2>
+    </div>
+    <p class="sec-note">上面每條規則都配了例子，但例子不等於證據。以下是這一頁自己也過不了的檢查。</p>
+
+    <div class="limits">
+      <div class="lim">
+        <h4>沒有對照組</h4>
+        <p>五件作品全都拿到了同一份診斷框架。所以「有理論的作品比較好」這件事，這份作業證明不了——沒有任何一組是在沒有框架的情況下做的。要驗證，下一屆得留一組不給框架。</p>
+      </div>
+      <div class="lim">
+        <h4>金色收斂有另一個解釋</h4>
+        <p>三件作品用金色配深底，我把它當成「AI 審美收斂」的證據。但題材本身就叫政治獻金，金色是最直覺的聯想——同樣的收斂，換成不用 AI 的班級也可能出現。這個例子只能說明「不指定就會收斂」，不能單獨歸因於 AI。</p>
+      </div>
+      <div class="lim">
+        <h4>n = 5，一個學期，一份題目</h4>
+        <p>控制項 6 到 23 的四倍差距是實數，但五件作品排不出任何統計意義。它能支持的說法只有「差距大到肉眼可見，而且可以用數的」，不能支持「幾個控制項才算夠」。</p>
+      </div>
+      <div class="lim">
+        <h4>日常介面的例子是我挑的</h4>
+        <p>台電燈號、Google 地圖、圖書館選書都符合規則，因為我是先有規則再去找例子。真正的檢驗是反過來：找一個明明成功、卻違反這些規則的介面，然後解釋為什麼。這件事這頁沒有做。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>AI 讓「做得出來」變得很便宜，稀缺的因此變成判斷力——判斷哪一格值得先看、判斷誰會來看、判斷這個版面是不是真的比較好。這件事沒有辦法外包，也正是這門課現在該教的東西。</p>
+    </div>
+  </section>
+
+  <div class="appendix">
+    <div class="eyebrow">延伸資料</div>
+
+    <div class="link-row">
+      <span class="eyebrow">診斷框架</span>
+      <div>
+        <div>Dashboard 診斷框架 v1 — 十層、每則含好例／壞例／理論依據，從 Iconic Memory 到 Fitts's Law 與敘事視覺化。這一頁的「理論」欄位全部指向它。</div>
+        <a class="u" href="https://richyli.github.io/visual/" target="_blank" rel="noopener">richyli.github.io/visual/</a>
+      </div>
+    </div>
+    <div class="link-row">
+      <span class="eyebrow">原則對照</span>
+      <div>
+        <div>儀表板九組對照 — 九條理論各配一組並排示範，同樣的內容一邊照理論做、一邊不照。</div>
+        <a class="u" href="https://richyli.github.io/obs/dashboard_nine_pairs.html" target="_blank" rel="noopener">richyli.github.io/obs/dashboard_nine_pairs.html</a>
+      </div>
+    </div>
+    <div class="link-row">
+      <span class="eyebrow">自己的示範</span>
+      <div>
+        <div>台北市人口遷徙儀表板 — 兩段對話做完：先清資料（民國轉西元、區域別拆欄），再做 Sankey 與縣市地圖。</div>
+        <a class="u" href="https://richyli.github.io/sj/population-flow-v3.html" target="_blank" rel="noopener">richyli.github.io/sj/population-flow-v3.html</a>
+      </div>
+    </div>
+    <div class="link-row">
+      <span class="eyebrow">作業規格</span>
+      <div>
+        <div>題目自訂、至少四種資訊、至少一個互動，並附說明文件六節：Goal Setting／Analysis／Visualization／Design／Interactivity／Storytelling。</div>
+      </div>
+    </div>
+
+    <footer>
+      資訊視覺化 · 國立政治大學新聞學系 李怡志<br>
+      控制項數量與色值為 2026-09-09 至 09-10 抓取各作品頁面實際點算：選單＝&lt;select&gt;、按鈕＝&lt;button&gt;、輸入＝&lt;input&gt;，色值＝HTML 與外部 CSS 中相異的十六進位色碼（不含 rgba）。台電燈號與空氣品質指標為顏色配置示意，非官方色碼。
+    </footer>
+  </div>
+
+</div>
+</body>
+</html>
