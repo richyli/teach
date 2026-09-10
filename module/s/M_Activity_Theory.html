@@ -167,9 +167,9 @@ MathJax = {
 </style>
 <h5>Which element did nobody update?</h5>
 <p class="lede">Four cases where an AI agent arrived and something went wrong. In each one the
-<b>tool</b> changed on day one. Click the element that nobody changed with it — that is where the
+<b>tool</b> changed on day one. Click the element that nobody changed with it (Outcome is not one of the six — it is what the activity finally produces) — that is where the
 contradiction sits, and in Engeström's account the contradiction is the engine, not the fault.</p>
-<svg viewBox="0 0 560 300" role="img" aria-label="Activity system triangle">
+<svg viewBox="0 0 700 300" role="img" aria-label="Activity system triangle with outcome">
   <line x1="280" y1="60" x2="280" y2="150" stroke="#c9d9ef" stroke-width="2"/>
   <line x1="120" y1="150" x2="440" y2="150" stroke="#c9d9ef" stroke-width="2"/>
   <line x1="120" y1="150" x2="280" y2="60" stroke="#c9d9ef" stroke-width="2"/>
@@ -181,6 +181,16 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
   <g class="node" data-v="tool"><rect x="215" y="35" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="280" y="57" text-anchor="middle" font-size="13" fill="#22303f">Tool</text></g>
   <g class="node" data-v="subject"><rect x="55" y="133" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="120" y="155" text-anchor="middle" font-size="13" fill="#22303f">Subject</text></g>
   <g class="node" data-v="object"><rect x="375" y="133" width="130" height="34" rx="6" fill="#eaf1fc" stroke="#c9d9ef"/><text x="440" y="155" text-anchor="middle" font-size="13" fill="#22303f">Object</text></g>
+  <defs><marker id="asd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+      markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#9bb0c4"/></marker></defs>
+  <line x1="505" y1="150" x2="560" y2="150" stroke="#9bb0c4" stroke-width="2"
+        stroke-dasharray="6 4" marker-end="url(#asd-arrow)"/>
+  <g><rect x="565" y="133" width="120" height="34" rx="6" fill="#fbfbfc" stroke="#d8d8d8"
+      stroke-dasharray="4 3"/><text x="625" y="155" text-anchor="middle" font-size="13"
+      fill="#666">Outcome</text></g>
+  <text x="625" y="182" text-anchor="middle" font-size="11" fill="#8a8a8a">what it finally produces</text>
+  <text x="625" y="196" text-anchor="middle" font-size="11" fill="#8a8a8a">產出，不等於 object</text>
   <g class="node" data-v="rules"><rect x="55" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="120" y="245" text-anchor="middle" font-size="13" fill="#22303f">Rules</text></g>
   <g class="node" data-v="community"><rect x="215" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="280" y="245" text-anchor="middle" font-size="13" fill="#22303f">Community</text></g>
   <g class="node" data-v="dol"><rect x="375" y="223" width="130" height="34" rx="6" fill="#eef7f1" stroke="#c9d9ef"/><text x="440" y="245" text-anchor="middle" font-size="12" fill="#22303f">Division of labor</text></g>
@@ -248,6 +258,233 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
 </div>
 
 <div class="callout callout-student"><span class="co-title">學生閱讀｜Why "just train people" is usually the wrong prescription</span><p>Training changes the subject. If the contradiction is between the tool and the division of labor, changing the subject cannot resolve it — you will produce better-trained people queuing at the same bottleneck. Locate the contradiction first; the fix follows from where it is.</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3>How contradictions appear: four levels</h3>
+<p>Engeström (1987) separates four kinds. They are not four degrees of severity — they are four different <strong>places</strong> a clash can sit, and each one needs a different move.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Where the clash sits</th>
+<th>The move that resolves it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary</td>
+<td>Inside one element</td>
+<td>Decide which value that element serves; you cannot have both</td>
+</tr>
+<tr>
+<td>Secondary</td>
+<td>Between two elements</td>
+<td>Move the element that did not move</td>
+</tr>
+<tr>
+<td>Tertiary</td>
+<td>Between the old activity and a new model dropped on top of it</td>
+<td>Rebuild the week, not the announcement</td>
+</tr>
+<tr>
+<td>Quaternary</td>
+<td>Between your activity and a neighbouring one</td>
+<td>Negotiate a shared object, or accept two products</td>
+</tr>
+</tbody>
+</table>
+<p>Everything below is one worked example of each, from product teams and newsrooms.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Primary｜the CMS is a craft tool and a scoreboard at the same time</h3>
+<p>The newsroom CMS is introduced as the thing that makes good journalism faster. The same system also generates the pageview report that ranks reporters at the monthly meeting.</p>
+<p>Nobody assigned it two jobs; it accumulated them. The argument about "the CMS" never ends because two people defending different values are using the same word.</p>
+<p><svg viewBox="0 0 880 104" role="img" aria-label="Primary contradiction inside the tool" style="width:100%;height:auto;max-width:880px;margin:.9rem 0 .3rem"><g><rect x="0" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="54" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Subject</text><text x="54" y="68" text-anchor="middle" font-size="12" fill="#33475b">主體</text></g><g><rect x="120" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="174" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Tool</text><text x="174" y="68" text-anchor="middle" font-size="12" fill="#a3324f">工具</text></g><g><rect x="240" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="294" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Object</text><text x="294" y="68" text-anchor="middle" font-size="12" fill="#33475b">對象</text></g><g><rect x="360" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="414" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Rules</text><text x="414" y="68" text-anchor="middle" font-size="12" fill="#33475b">規則</text></g><g><rect x="480" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="534" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Community</text><text x="534" y="68" text-anchor="middle" font-size="12" fill="#33475b">社群</text></g><g><rect x="600" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="654" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Div. of labor</text><text x="654" y="68" text-anchor="middle" font-size="12" fill="#33475b">分工</text></g><line x1="726" y1="53" x2="756" y2="53" stroke="#9bb0c4" stroke-width="2" stroke-dasharray="5 4"/><g><rect x="760" y="26" width="108" height="54" rx="8" fill="#fbfbfc" stroke="#d8d8d8" stroke-dasharray="4 3"/><text x="814" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#8a8a8a">Outcome</text><text x="814" y="68" text-anchor="middle" font-size="12" fill="#8a8a8a">產出</text></g><text x="0" y="98" font-size="12" fill="#666">Primary｜同一個元素內部：CMS 同時是工藝工具與計分板</text></svg></p>
+<p><strong>What breaks first</strong>: any change to the tool gets read as a change to the ranking. A feature that helps the craft but makes the numbers less flattering will be resisted by people who cannot say why.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Secondary｜the summariser arrived, the sign-off rule did not</h3>
+<p>An AI summariser is switched on for every article and drafting time drops by half. The rule that a section editor signs off every published line does not change, because nobody owns that rule.</p>
+<p>Output now arrives twice as fast at a desk with the same number of hours in it. The queue is the contradiction made visible.</p>
+<p><svg viewBox="0 0 880 104" role="img" aria-label="Secondary contradiction between tool and rules" style="width:100%;height:auto;max-width:880px;margin:.9rem 0 .3rem"><path d="M 174 20 Q 294 0 414 20" fill="none" stroke="#d05070" stroke-width="2" stroke-dasharray="5 4"/><text x="294" y="12" text-anchor="middle" font-size="13" fill="#d05070">⚡ clash</text><g><rect x="0" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="54" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Subject</text><text x="54" y="68" text-anchor="middle" font-size="12" fill="#33475b">主體</text></g><g><rect x="120" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="174" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Tool</text><text x="174" y="68" text-anchor="middle" font-size="12" fill="#a3324f">工具</text></g><g><rect x="240" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="294" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Object</text><text x="294" y="68" text-anchor="middle" font-size="12" fill="#33475b">對象</text></g><g><rect x="360" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="414" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Rules</text><text x="414" y="68" text-anchor="middle" font-size="12" fill="#a3324f">規則</text></g><g><rect x="480" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="534" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Community</text><text x="534" y="68" text-anchor="middle" font-size="12" fill="#33475b">社群</text></g><g><rect x="600" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="654" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Div. of labor</text><text x="654" y="68" text-anchor="middle" font-size="12" fill="#33475b">分工</text></g><line x1="726" y1="53" x2="756" y2="53" stroke="#9bb0c4" stroke-width="2" stroke-dasharray="5 4"/><g><rect x="760" y="26" width="108" height="54" rx="8" fill="#fbfbfc" stroke="#d8d8d8" stroke-dasharray="4 3"/><text x="814" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#8a8a8a">Outcome</text><text x="814" y="68" text-anchor="middle" font-size="12" fill="#8a8a8a">產出</text></g><text x="0" y="98" font-size="12" fill="#666">Secondary｜工具換了、規則沒換：稿子變快，簽發沒變</text></svg></p>
+<p><strong>What breaks first</strong>: the bottleneck moves to the editor and everyone concludes the AI "did not really help". The tool did what it promised; the <a href="Term_-_PRD.html">PRD</a> never touched the permission that governs publishing.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Tertiary｜digital first, on a week still shaped by the print deadline</h3>
+<p>Management announces a digital-first newsroom: publish continuously, follow the audience. The daily meeting still happens when the page used to close, and the week still peaks where the print run used to.</p>
+<p>The new model is real and so is the old rhythm underneath it. Staff are being asked to hold two objects at once.</p>
+<p><svg viewBox="0 0 880 104" role="img" aria-label="Tertiary contradiction between old and new object" style="width:100%;height:auto;max-width:880px;margin:.9rem 0 .3rem"><path d="M 294 20 Q 354 0 414 20" fill="none" stroke="#d05070" stroke-width="2" stroke-dasharray="5 4"/><text x="354" y="12" text-anchor="middle" font-size="13" fill="#d05070">⚡ clash</text><g><rect x="0" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="54" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Subject</text><text x="54" y="68" text-anchor="middle" font-size="12" fill="#33475b">主體</text></g><g><rect x="120" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="174" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Tool</text><text x="174" y="68" text-anchor="middle" font-size="12" fill="#33475b">工具</text></g><g><rect x="240" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="294" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Object</text><text x="294" y="68" text-anchor="middle" font-size="12" fill="#a3324f">對象</text></g><g><rect x="360" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="414" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Rules</text><text x="414" y="68" text-anchor="middle" font-size="12" fill="#a3324f">規則</text></g><g><rect x="480" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="534" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Community</text><text x="534" y="68" text-anchor="middle" font-size="12" fill="#33475b">社群</text></g><g><rect x="600" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="654" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Div. of labor</text><text x="654" y="68" text-anchor="middle" font-size="12" fill="#33475b">分工</text></g><line x1="726" y1="53" x2="756" y2="53" stroke="#9bb0c4" stroke-width="2" stroke-dasharray="5 4"/><g><rect x="760" y="26" width="108" height="54" rx="8" fill="#fbfbfc" stroke="#d8d8d8" stroke-dasharray="4 3"/><text x="814" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#8a8a8a">Outcome</text><text x="814" y="68" text-anchor="middle" font-size="12" fill="#8a8a8a">產出</text></g><text x="0" y="98" font-size="12" fill="#666">Tertiary｜新模式蓋在舊節奏上：數位優先 vs 出報死線</text></svg></p>
+<p><strong>What breaks first</strong>: people do the new thing in the gaps left by the old thing, so digital work looks like extra work rather than the work. This is the one that gets misdiagnosed as resistance to change.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Quaternary｜the platform team and the investigations desk want different things from one CMS</h3>
+<p>The product team's object is a platform any desk can use. The investigations desk's object is one long story that needs a layout nobody else will ever need. Both are behaving reasonably; the roadmap meeting still ends badly.</p>
+<p>Two neighbouring activity systems meet over a shared artefact. Neither one is wrong internally, which is why arguing inside either system cannot settle it.</p>
+<p><svg viewBox="0 0 880 104" role="img" aria-label="Quaternary contradiction between two systems" style="width:100%;height:auto;max-width:880px;margin:.9rem 0 .3rem"><path d="M 294 20 Q 414 0 534 20" fill="none" stroke="#d05070" stroke-width="2" stroke-dasharray="5 4"/><text x="414" y="12" text-anchor="middle" font-size="13" fill="#d05070">⚡ clash</text><g><rect x="0" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="54" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Subject</text><text x="54" y="68" text-anchor="middle" font-size="12" fill="#33475b">主體</text></g><g><rect x="120" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="174" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Tool</text><text x="174" y="68" text-anchor="middle" font-size="12" fill="#33475b">工具</text></g><g><rect x="240" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="294" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Object</text><text x="294" y="68" text-anchor="middle" font-size="12" fill="#a3324f">對象</text></g><g><rect x="360" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="414" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Rules</text><text x="414" y="68" text-anchor="middle" font-size="12" fill="#33475b">規則</text></g><g><rect x="480" y="26" width="108" height="54" rx="8" fill="#fdecef" stroke="#d05070" stroke-width="2"/><text x="534" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#a3324f">Community</text><text x="534" y="68" text-anchor="middle" font-size="12" fill="#a3324f">社群</text></g><g><rect x="600" y="26" width="108" height="54" rx="8" fill="#f4f6f9" stroke="#ccd6e2" stroke-width="1"/><text x="654" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#33475b">Div. of labor</text><text x="654" y="68" text-anchor="middle" font-size="12" fill="#33475b">分工</text></g><line x1="726" y1="53" x2="756" y2="53" stroke="#9bb0c4" stroke-width="2" stroke-dasharray="5 4"/><g><rect x="760" y="26" width="108" height="54" rx="8" fill="#fbfbfc" stroke="#d8d8d8" stroke-dasharray="4 3"/><text x="814" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#8a8a8a">Outcome</text><text x="814" y="68" text-anchor="middle" font-size="12" fill="#8a8a8a">產出</text></g><text x="0" y="98" font-size="12" fill="#666">Quaternary｜兩個相鄰系統的 object 不同：平台團隊 vs 調查報導組</text></svg></p>
+<p><strong>What breaks first</strong>: the special layout gets built as a one-off and then nobody maintains it — the product team never took it into their object, so it has no owner after launch.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Complaints are how contradictions reach you</h3>
+<p>You will rarely be told "we have a secondary contradiction". You will be told something is annoying. The table maps the sentence you actually hear onto the place the clash sits.</p>
+<table>
+<thead>
+<tr>
+<th>What you hear</th>
+<th>Where the clash usually is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"The tool is fine, people just do not use it"</td>
+<td>Secondary — the rule or the division of labor never moved</td>
+</tr>
+<tr>
+<td>"We keep having the same argument every quarter"</td>
+<td>Primary — one element serves two values, so nothing settles it</td>
+</tr>
+<tr>
+<td>"The new strategy is just more work on top"</td>
+<td>Tertiary — the old activity is still running underneath</td>
+</tr>
+<tr>
+<td>"Those guys are impossible to work with"</td>
+<td>Quaternary — a neighbouring system with a different object</td>
+</tr>
+<tr>
+<td>"We need more training"</td>
+<td>Usually none of the above; it is the prescription people reach for when they have not located the clash</td>
+</tr>
+</tbody>
+</table>
+<p>Use the quiz below before you trust your own first answer on any of these.</p>
+<p>Work through the six situations. Each one is a real shape you will meet in a newsroom or a product team; pick the level, then read why.</p>
+<div class="widget" id="cq">
+<style>
+#cq { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#cq h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#cq .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.6; }
+#cq .case { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+      border-radius: 0 8px 8px 0; padding: .75rem 1rem; margin: .8rem 0 .6rem;
+      font-size: .93rem; line-height: 1.75; }
+#cq .case b { color: #24528f; }
+#cq button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px;
+      cursor: pointer; }
+#cq button:hover { background: #eef4fd; }
+#cq button:disabled { opacity: .55; cursor: default; }
+#cq .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.8; }
+#cq .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#cq .out.no { background: #fff3f5; border-color: #e6b8c4; }
+#cq .score { font-size: .82rem; color: #666; margin-top: .7rem; }
+#cq .nav { margin-top: .6rem; }
+</style>
+
+<h5>Which contradiction is this?｜這是哪一種矛盾？</h5>
+<p class="lede">Six situations from product teams and newsrooms. For each one, pick the level.
+Engeström's four levels: <b>primary</b> inside one element · <b>secondary</b> between two elements ·
+<b>tertiary</b> old way vs the new model imposed on it · <b>quaternary</b> your activity vs the one next door.<br>
+六個來自產品團隊與編輯台的情境，各選一個層級。</p>
+
+<div class="case" id="cq-case">Loading…</div>
+<div id="cq-btns">
+  <button data-k="primary">Primary｜單一元素內部</button>
+  <button data-k="secondary">Secondary｜兩個元素之間</button>
+  <button data-k="tertiary">Tertiary｜舊做法 vs 新模式</button>
+  <button data-k="quaternary">Quaternary｜與隔壁活動系統</button>
+</div>
+<div class="out" id="cq-out" hidden></div>
+<div class="nav"><button id="cq-next" hidden>Next case →</button></div>
+<div class="score" id="cq-score"></div>
+
+<script>
+(function () {
+  var CASES = [
+    { q: "The newsroom CMS is sold internally as a tool that makes good journalism faster. " +
+         "It is also the system that produces the pageview report used to rank reporters. " +
+         "Editors argue about it endlessly and never agree, because they are defending different things about the same tool.<br>" +
+         "<span style='color:#666'>同一套 CMS，一邊被當成把新聞做好的工具，一邊被當成排名記者的計數器。</span>",
+      a: "primary",
+      why: "One element (the tool) carries two incompatible values at once — craft value and measurement value. " +
+           "That is a primary contradiction: it sits inside a single element, so no amount of reassigning work will settle it.<br>" +
+           "單一元素內部同時承載兩種互斥的價值，怎麼分工都不會消失。" },
+
+    { q: "An AI summariser is switched on for every article. Drafting time drops by half. " +
+         "The rule that a section editor signs off every published line is unchanged, so everything now queues at the same desk.<br>" +
+         "<span style='color:#666'>AI 摘要上線，寫稿時間減半，但「每一行都要主編簽發」的規則沒有動。</span>",
+      a: "secondary",
+      why: "Tool changed, rules did not. Two different elements now demand incompatible things — the classic secondary contradiction, " +
+           "and the one you will meet most often in an AI rollout.<br>工具變了、規則沒變，這是最常見的一種。" },
+
+    { q: "Management announces a digital-first newsroom: publish continuously, follow the audience. " +
+         "The week is still shaped around a print deadline, and the daily meeting still happens at the time the page used to close.<br>" +
+         "<span style='color:#666'>宣布數位優先，但一週的節奏還是照著出報的死線在跑。</span>",
+      a: "tertiary",
+      why: "A culturally newer model is dropped on top of the old activity, and the old one keeps running underneath. " +
+           "The clash is between the old object and the new object, not between two elements — that is tertiary.<br>" +
+           "新模式蓋在舊活動上，兩個 object 打架。" },
+
+    { q: "The product team's object is a platform that any desk can use. The investigations desk's object is one long story that needs " +
+         "a page nobody else will ever use. Both teams are reasonable, and every roadmap meeting ends badly.<br>" +
+         "<span style='color:#666'>產品團隊要通用平台，調查報導組要一個只有他們用得到的版型。</span>",
+      a: "quaternary",
+      why: "Two neighbouring activity systems, each with its own object, meeting over a shared artefact. " +
+           "This is quaternary — and it is why the third generation of the theory exists.<br>" +
+           "兩個相鄰的活動系統，各有各的 object。" },
+
+    { q: "A subscription product ships. The company now says the goal is retention. " +
+         "The audience team's dashboard, bonus and weekly review are all still built on pageviews.<br>" +
+         "<span style='color:#666'>訂閱制上線、目標改成留存，但儀表板、獎金與週會全都還在看瀏覽量。</span>",
+      a: "secondary",
+      why: "The object moved to retention; the rules (what gets measured and rewarded) stayed with reach. " +
+           "Two elements, incompatible demands — secondary again. Note that it looks like a metrics problem and is not.<br>" +
+           "object 換了、rules 沒換，看起來像指標問題，其實是元素之間的矛盾。" },
+
+    { q: "A freelance photographer is paid per assignment, and the same photographs are what the paper sells subscriptions with. " +
+         "Every negotiation about rates turns into an argument about what the work is really worth.<br>" +
+         "<span style='color:#666'>攝影師按件計酬，而同一批照片是報紙賣訂閱的東西。</span>",
+      a: "primary",
+      why: "Use value against exchange value inside a single element — Engeström takes this pair from Marx and puts it at the centre of the " +
+           "primary contradiction. The argument recurs because nothing in the system resolves it.<br>" +
+           "使用價值與交換價值在同一個元素裡打架，所以這場爭論每年都會回來。" }
+  ];
+
+  var i = 0, score = 0, answered = false;
+  var caseEl = document.getElementById("cq-case"),
+      outEl = document.getElementById("cq-out"),
+      scoreEl = document.getElementById("cq-score"),
+      nextEl = document.getElementById("cq-next"),
+      btns = Array.prototype.slice.call(document.querySelectorAll("#cq-btns button"));
+
+  function render() {
+    answered = false;
+    caseEl.innerHTML = "<b>" + (i + 1) + " / " + CASES.length + "</b> · " + CASES[i].q;
+    outEl.hidden = true;
+    nextEl.hidden = true;
+    btns.forEach(function (b) { b.disabled = false; });
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (answered) return;
+      answered = true;
+      var ok = b.dataset.k === CASES[i].a;
+      if (ok) score++;
+      outEl.className = "out " + (ok ? "ok" : "no");
+      outEl.innerHTML = (ok ? "✓ " : "✗ ") + "<b>" + CASES[i].a + "</b> — " + CASES[i].why;
+      outEl.hidden = false;
+      btns.forEach(function (x) { x.disabled = true; });
+      scoreEl.textContent = "答對 " + score + " / " + (i + 1);
+      nextEl.hidden = (i === CASES.length - 1);
+      if (i === CASES.length - 1) {
+        scoreEl.textContent = "答對 " + score + " / " + CASES.length +
+          "。錯的那幾題請看你選的層級和正解差在哪——那個差別就是你目前診斷問題的預設。";
+      }
+    });
+  });
+
+  nextEl.addEventListener("click", function () { i++; render(); });
+  render();
+})();
+</script>
+</div>
+
 <hr />
 </section>
 <section class="mod-sec sec-content"><h3>When the work crosses a boundary, one system is not enough</h3>
@@ -441,7 +678,7 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
 </section>
 <section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
 <p>In no more than 200 words, take the product your team is planning this semester and answer three things: which element of the user's activity system your product changes, which element has to change alongside it, and who has the authority to change that second element. Name a person or a role, not a department. Bring it to W7 — it goes straight into the stakeholder section of your MRD.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:35</p>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:49</p>
 </div>
 </body>
 </html>
