@@ -203,6 +203,19 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 .ctag-theory  { background: #f3eefc; border-color: #d6c9ef; color: #5b3f9c; }
 .ctag-product { background: #eaf6ee; border-color: #bfe0cb; color: #26663f; }
 .ctag-pm      { background: #fdf1e6; border-color: #f0d3b4; color: #97551a; }
+
+/* ── 教師版的中文對照（_i18n/<模組>.zh.md）── */
+.zh { margin: 1.1rem 0 .2rem; padding: .9rem 1.1rem .6rem;
+      background: #f7f8fa; border-left: 3px solid #cbd3dd; border-radius: 0 6px 6px 0;
+      font-size: .88rem; line-height: 1.95; color: #33404f; }
+.zh .zh-label { display: block; font-size: .68rem; letter-spacing: .12em;
+                font-weight: 700; color: #8794a5; margin-bottom: .4rem; }
+.zh > p:first-of-type { margin-top: 0; }
+.zh > p:last-child { margin-bottom: .4rem; }
+.zh strong { color: #1d2a38; }
+.zh table { font-size: .84rem; }
+.zh h4, .zh h5 { font-size: .92rem; margin: .9rem 0 .3rem; color: #22303f; }
+.zh .callout { font-size: .86rem; }
 .modtable { width: 100%; border-collapse: collapse; font-size: .92rem; }
 .modtable th, .modtable td { border-bottom: 1px solid #eee; padding: .4rem .5rem; text-align: left; }
 .sitefoot { margin-top: 2rem; color: #999; font-size: .8rem; }
