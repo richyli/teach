@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Term - Acceptance Criteria</title>
+<link rel="stylesheet" href="../../style.33c0673a.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/Term_-_Acceptance_Criteria.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "q5GtlrrWnwU8oigKbR7naA==", IV = "oF+uflx7LuqFHxKr", CT = "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", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+      if (location.hash.length > 1) {
+        var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (t) { t.scrollIntoView(); t.classList.add("jump"); }
+      }
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>
