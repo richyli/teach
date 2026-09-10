@@ -343,6 +343,19 @@ pre { max-width: 100%; overflow-x: auto; }
 .sec-content > h4:first-child { margin-top: 0; }
 .sec-content > *:last-child { margin-bottom: 0; }
 
+/* ── 關鍵詞（F12）：進內容之前先給詞 ── */
+.sec-vocab { background: #f7f4fb; border: 1px solid #ded4ee; border-left: 4px solid #7d5fb2;
+             border-radius: 0 10px 10px 0; padding: .9rem 1.2rem .6rem; }
+.sec-vocab > h3 { margin: 0 0 .6rem; color: #4b3573; font-size: 1.06rem; }
+.sec-vocab table { font-size: .92rem; }
+.sec-vocab > *:last-child { margin-bottom: 0; }
+
+/* ── 小結論（F12）：回扣開場句的收束 ── */
+.sec-summary { background: #f4f8fb; border: 1px solid #cfe0ea; border-left: 4px solid #2f6f8f;
+               border-radius: 0 10px 10px 0; padding: .9rem 1.2rem .7rem; }
+.sec-summary > h3 { margin: 0 0 .5rem; color: #1d5470; font-size: 1.08rem; }
+.sec-summary > *:last-child { margin-bottom: 0; }
+
 /* ── 迷思攔截 ── */
 .sec-myths { background: #fffaf6; border: 1px solid #f0dcc8; border-radius: 10px;
              padding: 1rem 1.2rem .6rem; }
