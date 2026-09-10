@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Skill Sharing</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>AI Skill Sharing</h1></div><p>This unit covers how to present one small thing you built in three minutes, how to judge whether someone else's tool transfers to your own situation, and why a share with no pitfall in it is an advertisement.</p>
-<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">What this slot asks of you</a></li><li><a href="#sec-3">How the slot runs</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI Skill Sharing</h1></div><p>This unit covers how to present one small thing you built in three minutes, how to judge whether someone else's tool transfers to your own situation, and why a share with no pitfall in it is an advertisement.</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
 <p>This is a sharing and peer-critique unit. The goal is to turn one person's demo into something everyone can take away.</p>
 <table>
 <thead>
@@ -38,7 +37,7 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>What this slot asks of you</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">What this slot asks of you</h3>
 <p>Two or three people each week, three minutes each: <strong>what AI tool you used this week, what real problem it solved, and which pitfall you hit.</strong></p>
 <p>Three requirements:</p>
 <ul>
@@ -48,18 +47,36 @@
 </ul>
 <p>Listeners have a job too: decide whether the tool still holds up <strong>in your situation</strong>. Taking the prompt is not the same as learning it. Knowing which line to change when the situation changes is.</p>
 </section>
-<section class="mod-sec sec-content"><h3>How the slot runs</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">How the slot runs</h3>
 <p><strong>The share</strong> — problem → how you did it → one pitfall you hit, with a 30-second live demo.
 <strong>Quick critique</strong> — the room responds with the same three questions: would I use it, where could it save more effort, is there a better tool.
 <strong>Archiving</strong> — the presenter drops the artefact into the shared class toolbox with a one-line description of what it is for.</p>
 <p>By the end of term this accumulates into a personal and a class-wide AI toolbox.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-5">Individual reflection</h3>
 <p>Presenters, write one line this week: "What change did someone suggest that I had not thought of?"</p>
 <p>Listeners, pick one tool someone shared and actually try it. Report back next time on whether you could reproduce it.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

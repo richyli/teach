@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Distributed Cognition</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Distributed Cognition</h1></div><p>A short primer on Distributed Cognition: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Distributed Cognition</h1></div><p>A short primer on Distributed Cognition: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Edwin Hutchins (1995)</strong> — "Cognition is not in the head — it's spread across people, tools, and representations."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>The unit of analysis is the <strong>activity system</strong>, not the individual mind. Cognition happens as representations propagate and transform across people, artefacts, and media.</p>
 </blockquote>
@@ -22,21 +21,21 @@
 <li>Move a tool, lose a memory</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Primary theory</strong> in W16 Final Presentation — a rotating pair opens those sessions with a 15-minute report on it.</li>
 <li><strong>Supporting theory</strong> in W1 Course Intro &amp; PM Role — optional stretch material, and a useful contrasting lens in those weeks.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face a product decision, ask:
 1. Where does this knowledge actually live — in heads, hands, files, screens, or rituals?
 2. Which representations propagate through the system, and how do they transform at each handoff?
 3. What breaks if I remove this artefact — and was that breakage planned?
 4. Is the AI a member of the cognitive system or a black box bolted on the side?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Hutchins 1995, <em>Cognition in the Wild</em></strong> — the founding monograph (the ship-navigation case)</li>
 <li><strong>Hollan, Hutchins &amp; Kirsh 2000, <em>ACM TOCHI</em> 7(2)</strong> — distributed cognition as a foundation for HCI (see Hollan 2000 Distributed)</li>
@@ -44,22 +43,40 @@
 </ul>
 <p>(Hutchins scholar note: Edwin Hutchins)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>System-level design</strong> — design AI features as members of a cognitive system; specify what propagates between human and agent
 2. <strong>Representation map</strong> — for each step, name the representation and its medium; ask where AI transforms it
 3. <strong>W16 Judge Skill as system</strong> — recognise the evaluation harness itself as a distributed cognitive system, with its own breakage modes</p>
 <p>⚠️ Failure mode: treating "AI augmentation" as a property of one user, instead of a redesign of the whole system.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>In your project team, where does institutional memory actually sit? What happens if Claude rotates out?</li>
 <li>If cognition is distributed, what is a "user" in user research?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Distributed Cognition. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

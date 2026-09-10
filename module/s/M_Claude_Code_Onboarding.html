@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude Code Onboarding</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Claude Code Onboarding</h1></div><p>This unit covers what makes an agent different from a chatbot, getting Claude Code installed and running one structured instruction on real work, and knowing when to let it run and when to take over.</p>
-<section class="mod-sec sec-objectives"><h3>🎯 Learning objectives</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">Hands-on</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li><li><a href="#sec-7">🔗 Links</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code Onboarding</h1></div><p>This unit covers what makes an agent different from a chatbot, getting Claude Code installed and running one structured instruction on real work, and knowing when to let it run and when to take over.</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 Learning objectives</h3>
 <p>The point is not to learn to code. It is to get an agent that actually does things running on your own machine, on work you actually have.</p>
 <table>
 <thead>
@@ -38,19 +37,19 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-activity"><h3>Hands-on</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-2">Hands-on</h3>
 <ol>
 <li>Install Claude Code and get it running</li>
 <li>Give it one instruction in three parts — context, task, output format — on a real piece of your own work</li>
 <li>Mark one thing it did well and one thing you had to step in and fix</li>
 </ol>
 </section>
-<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-3">✍️ Take-home task</h3>
 <p>Take one piece of real work through Claude Code. Record one thing it got right and one thing it got wrong, and write a sentence on how you would change the prompt next time.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-5">Pair review</h3>
 <p>Look at each other's output.</p>
 <ol>
 <li>Point at one place the AI genuinely helped</li>
@@ -58,17 +57,35 @@
 <li>Say which of the three parts of the instruction — context, task, format — was weakest</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-6">Individual reflection</h3>
 <p>Write one sentence to keep: "If this were my weekly work, would I use it regularly? What stops me — the interface, trust, or not knowing what it can do?"</p>
 </section>
-<section class="mod-sec sec-links"><h3>🔗 Links</h3>
+<section class="mod-sec sec-links"><h3 id="sec-7">🔗 Links</h3>
 <ul>
 <li>Scaled up: <a href="M_Vibe_Coding_a_Small_Tool.html">Vibe Coding a Small Tool</a> — the same "specify, verify, iterate" discipline, from handling a document to shipping a usable tool.</li>
 <li>The weekly sharing slot: <a href="M_AI_Skill_Sharing.html">AI Skill Sharing</a> — bring what you built here to be demoed, critiqued, and archived.</li>
 <li>On when to let go: adaptive autonomy, cognitive offloading — the brake is the human check, and judgement is the thing to keep for yourself.</li>
 <li>On why context matters so much: leaving a gap in the instruction is leaving uncertainty the model will fill for you. W10 comes back to this.</li>
 </ul></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

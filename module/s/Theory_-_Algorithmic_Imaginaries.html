@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Algorithmic Imaginaries</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Algorithmic Imaginaries</h1></div><p>A short primer on Algorithmic Imaginaries: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Algorithmic Imaginaries</h1></div><p>A short primer on Algorithmic Imaginaries: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Taina Bucher (2017, 2018)</strong> — "What users <em>imagine</em> the algorithm does shapes their behaviour — even when they're wrong."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>Users do not act on what algorithms <em>actually</em> compute. They act on <strong>folk theories</strong> — imaginaries — about how the algorithm works. These imaginaries are <strong>productive</strong>: they have real effects on posting, clicking, and consuming behaviour, regardless of accuracy.</p>
 </blockquote>
@@ -23,21 +22,21 @@
 <li>Accuracy is not the point — <strong>productivity</strong> is</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Supporting theory</strong> in W6 Understanding Audiences &amp; Users — optional stretch material, and a useful contrasting lens in those weeks.</li>
 <li>It is never the week's Primary theory, so no report is assigned to it. It still earns marks when it does real work in a pitch.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face a product decision, ask:
 1. What do my users <em>imagine</em> this algorithm or AI feature does?
 2. Where does the imaginary diverge from the reality — and which gap is dangerous?
 3. Am I designing for the user's actual workflow, or for the workflow they <em>think</em> the algorithm rewards?
 4. What myths are circulating in my user community right now, and where did they come from?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Bucher 2017, "The Algorithmic Imaginary"</strong> <em>Information, Communication &amp; Society</em> 20(1) — see Bucher 2017 Algorithmic Imaginary</li>
 <li><strong>Bucher 2018, <em>If…Then: Algorithmic Power and Politics</em></strong> — book-length treatment</li>
@@ -45,22 +44,40 @@
 </ul>
 <p>(Bucher scholar note: Taina Bucher)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>Surface user imaginaries via interview</strong> — ask "how do you think Claude decides what to say?" before asking about features
 2. <strong>Design affordances that align imaginary with reality</strong> — or at least do not actively deceive; transparency UI is imaginary-management
 3. <strong>Treat creator/power-user folk theories as a leading indicator</strong> — when "everyone says" the algorithm rewards X, X is about to flood your data</p>
 <p>⚠️ Pitfall: building features around what users <em>should</em> imagine the algorithm does, while ignoring what they <em>actually</em> imagine — your beautiful mental model never reaches them.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>Pick an AI-feature your users interact with daily. What do they imagine it does — and how did you find out (or guess)?</li>
 <li>If imaginaries are productive regardless of accuracy, is "explainability" really about explanation, or about installing the <em>right</em> imaginary?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Algorithmic Imaginaries. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>導入提案組裝工作坊</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>導入提案組裝工作坊</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">進行方式</a></li><li><a href="#sec-2">與其他模組的關係</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>導入提案組裝工作坊</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@
 <p>它會列一堆缺口。<strong>上課時只處理其中兩到三個真的缺口</strong>——貪心想補完的人，最後會交出一份沒有重點的東西。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">進行方式</h3>
 </section>
 <section class="mod-sec sec-content"><h4>一、組裝</h4>
 <p>按這個骨架把材料排進去。<strong>每一節後面標註你的材料來自哪一週</strong>，空的就標「缺」：</p>
@@ -168,7 +167,7 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>與其他模組的關係</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">與其他模組的關係</h3>
 <ul>
 <li><strong>材料來源</strong>：<a href="M_%E5%B0%8E%E5%85%A5%E6%B1%BA%E7%AD%96%E8%A1%A8%E5%AF%A6%E4%BD%9C.html">導入決策表實作</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4%E5%AE%88%E5%89%87%E8%8D%89%E6%93%AC%E5%AF%A6%E4%BD%9C.html">編輯室守則草擬實作</a>｜<a href="M_%E8%AE%8A%E9%9D%A9%E9%98%BB%E5%8A%9B%E6%83%85%E5%A2%83%E6%BC%94%E7%B7%B4.html">變革阻力情境演練</a>｜<a href="M_%E7%94%A2%E8%A3%BD%E6%B1%BA%E7%AD%96%E7%9A%84_AI_%E5%B0%8D%E7%85%A7%E5%AF%A6%E4%BD%9C.html">產製決策的 AI 對照實作</a>｜<a href="M_Vibe_Coding_%E5%81%9A%E5%B0%8F%E5%B7%A5%E5%85%B7.html">Vibe Coding 做小工具</a></li>
 <li><strong>理論底盤</strong>：<a href="M_%E6%8E%A1%E8%B3%BC_vs_%E8%87%AA%E5%BB%BA%E6%B1%BA%E7%AD%96.html">採購 vs 自建決策</a>｜<a href="M_%E8%AE%8A%E9%9D%A9%E7%AE%A1%E7%90%86%E8%88%87%E5%B0%8E%E5%85%A5.html">變革管理與導入</a>｜<a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></li>
@@ -186,7 +185,25 @@
 <p><strong>小作業</strong>：完成導入提案初稿（八節骨架＋重寫過的第一頁），期末發表用同一份。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

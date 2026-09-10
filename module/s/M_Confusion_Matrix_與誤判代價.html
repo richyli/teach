@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Confusion Matrix 與誤判代價</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Confusion Matrix 與誤判代價</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">Confusion Matrix 的四格</a></li><li><a href="#sec-2">誤判代價不對稱</a></li><li><a href="#sec-3">主管視角：該問工程師什麼、門檻調哪邊</a></li><li><a href="#sec-4">⚠️ 迷思攔截</a></li><li><a href="#sec-5">與其他模組的關係</a></li><li><a href="#sec-6">延伸個案</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Confusion Matrix 與誤判代價</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了看懂一張表格，是為了不被「準確率 95%」這種數字騙過去。</p>
 <table>
 <thead>
@@ -60,7 +59,7 @@ MathJax = {
 </blockquote>
 <p>把你<strong>答錯（或跟 AI 意見相左）的那一題</strong>帶進課堂。課堂上會用媒體場景重新拆這題，看你和 AI 誰對。</p>
 </section>
-<section class="mod-sec sec-content"><h3>Confusion Matrix 的四格</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">Confusion Matrix 的四格</h3>
 <p>任何「把東西分成兩類」的 AI——這則貼文是不是假訊息？這則留言該不該刪？——上線後只會有四種結局。把它畫成一張 2×2 的表，就是 <strong>confusion matrix（混淆矩陣）</strong>。</p>
 <p>拿一個你天天會碰到的場景：一套<strong>假訊息偵測系統</strong>，掃過 100 則貼文，每一則它判「假」或「真」，而每一則實際上也真的是「假」或「真」。把「系統怎麼判」當欄、「實際是什麼」當列，就得到四格：</p>
 <table>
@@ -515,7 +514,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 想抓得準一點，就得提高標準，於是漏得更多。你只能選一邊，而選哪一邊不是技術問題，
 是「哪一種錯，我們賠得起」的問題。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>誤判代價不對稱</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">誤判代價不對稱</h3>
 </section>
 <section class="mod-sec sec-content"><h4>先做一個選擇題：Google 還是 Yahoo？</h4>
 <p>兩家的垃圾信過濾器，各測兩千封信（一千封垃圾、一千封正常）：</p>
@@ -1278,7 +1277,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 一則漏掉的假訊息會造成多少公信力損失？<strong>兩個數字算出來，門檻就不必用感覺決定。</strong></p>
 <p>（下一個工具就是在做這件事——它把兩種錯的代價權重放進去，直接幫你找總代價最低的門檻。）</p>
 </section>
-<section class="mod-sec sec-content"><h3>主管視角：該問工程師什麼、門檻調哪邊</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管視角：該問工程師什麼、門檻調哪邊</h3>
 </section>
 <section class="mod-sec sec-content"><h4>precision / recall 的拉鋸：門檻（threshold）</h4>
 <p>模型其實不是直接吐「假／真」，而是吐一個<strong>分數</strong>（例如「這則是假訊息的機率 0.73」）。是你（或工程師）設一條<strong>門檻</strong>，超過就判「假」、攔下來。<strong>這條門檻往哪邊移，就決定了你要哪一種錯。</strong></p>
@@ -1345,7 +1344,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-4">⚠️ 迷思攔截</h3>
 <p>聽工程師報告時，這三句話只要出現就要警鈴大作：</p>
 <table>
 <thead>
@@ -1375,7 +1374,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>與其他模組的關係</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">與其他模組的關係</h3>
 <ul>
 <li><strong>偏見從哪來</strong>：模型為什麼系統性地對某類內容判錯（某一格特別高），常是訓練資料的問題 → <a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>。</li>
 <li><strong>怎麼落地成制度</strong>：門檻、人複核把關點、誤判責任歸屬，要寫進編輯室規範與對外揭露 → <a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>。</li>
@@ -1399,12 +1398,30 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 </li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>延伸個案</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">延伸個案</h3>
 <ul>
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：正預測值 12%、漏掉 67%，一個門檻在真實場域的代價</li>
 <li><a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">COMPAS 再犯演算法個案</a>：把四格依族群拆開之後才看得到的落差</li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

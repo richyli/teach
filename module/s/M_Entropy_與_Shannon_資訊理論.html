@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Entropy 與 Shannon 資訊理論</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Entropy 與 Shannon 資訊理論</h1></div><ul>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">資訊就是「消除不確定性」（直覺）</a></li><li><a href="#sec-2">Shannon 的 entropy 公式（量化）</a></li><li><a href="#sec-3">為什麼這跟「資料、壓縮、AI」有關（應用橋接）</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Entropy 與 Shannon 資訊理論</h1></div><ul>
 <li><strong>先修</strong>：無。只需要會「機率是 0 到 1 的數字」。</li>
 </ul>
 <section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
@@ -63,7 +62,7 @@ MathJax = {
 <p>這件事本身就值得記住：一個為了省電話線成本而發展出來的量尺，
 七十幾年後變成解釋 AI 為什麼會胡說八道的工具。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>資訊就是「消除不確定性」（直覺）</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">資訊就是「消除不確定性」（直覺）</h3>
 <p><strong>先玩再說</strong>：世界盃足球賽 32 隊，你心裡選一隊當冠軍，我來猜。<strong>只能問是非題，每問一次算你一次代價。</strong></p>
 <div class="widget" id="wc-guess">
 <style>
@@ -385,7 +384,7 @@ MathJax = {
 <p>量尺的單位是 <strong>bit</strong>：能把可能性砍成一半的消息，就是 1 bit。
 猜 1 到 100 的數字，每次問一個能砍一半的是非題，大約七題就會收斂。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>Shannon 的 entropy 公式（量化）</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Shannon 的 entropy 公式（量化）</h3>
 <p>Shannon（1948）把上面的直覺寫成一條公式。對一個有 $n$ 種可能結果、每種發生機率為 $p_i$ 的隨機事件，它的<strong>熵 entropy</strong>是：</p>
 $$H = -\sum_{i=1}^{n} p_i \log_2 p_i$$
 <p>讀法：把每個結果的「意外程度」$-\log_2 p_i$（機率越小、越意外、值越大），用它自己的機率 $p_i$ 加權平均。<strong>H 就是「平均每次結果帶來的資訊量（bits）」，也就是這個系統的平均不確定性。</strong></p>
@@ -894,7 +893,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>為什麼這跟「資料、壓縮、AI」有關（應用橋接）</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">為什麼這跟「資料、壓縮、AI」有關（應用橋接）</h3>
 <p>Shannon 的 entropy 不只是數學玩具，它定了三件現實世界的底線：</p>
 <ol>
 <li><strong>壓縮的極限</strong>：一段資料平均最少要用 $H$ 個 bits 才能無損表示。entropy 低（很有規律）→ 可以壓很小（zip 很有效）；entropy 高（很隨機）→ 壓不動。<strong>「壓不壓得動」直接反映「有多少真資訊」。</strong></li>
@@ -920,7 +919,25 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p><strong>小作業</strong>：找一個你工作上常做的「判斷／決策」，寫下：(1) 決策前有幾種可能結果、大致機率分布長怎樣；(2) 哪一筆資料最能「砍一半」、最值得先去查。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

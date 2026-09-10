@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Risk Management and Pre-mortem</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Risk Management and Pre-mortem</h1></div><p>This unit covers the risk register, the risks that are specific to AI products, the regulatory picture in Taiwan and the EU, and a pre-mortem you run with an agent as a second pair of eyes.</p>
-<section class="mod-sec sec-content"><h3>Core</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">Core</a></li><li><a href="#sec-2">Hands-on — Pre-mortem with AI</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li><li><a href="#sec-7">Case library</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Risk Management and Pre-mortem</h1></div><p>This unit covers the risk register, the risks that are specific to AI products, the regulatory picture in Taiwan and the EU, and a pre-mortem you run with an agent as a second pair of eyes.</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">Core</h3>
 <ul>
 <li>The risk register.</li>
 <li>AI-specific risks: hallucination, model drift, prompt injection, data leakage.</li>
@@ -18,19 +17,19 @@
 <li>Primary theory: <a href="Theory_-_Sensemaking.html">Sensemaking</a> (Weick on high-reliability organisations). Supporting: <a href="Theory_-_Effectuation.html">Effectuation</a> (affordable loss), <a href="Theory_-_Trust_in_Automation.html">Trust in Automation</a> — HRO thinking, affordable loss, and miscalibrated trust together cover risk in the AI era.</li>
 </ul>
 </section>
-<section class="mod-sec sec-activity"><h3>Hands-on — Pre-mortem with AI</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-2">Hands-on — Pre-mortem with AI</h3>
 <ol>
 <li>Assume the product is dead six months from now, and list ten causes of death</li>
 <li>Have an Agentic AI add five more that you missed</li>
 <li>Rank them by severity × likelihood and design a mitigation for the top three</li>
 </ol>
 </section>
-<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-3">✍️ Take-home task</h3>
 <p>Submit the ranked risk table plus mitigations for the top three risks.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-5">Pair review</h3>
 <p>Swap ranked risk tables with a partner.</p>
 <ol>
 <li>Find one cause of death whose severity × likelihood score you think is wrong, and say how you would change it</li>
@@ -38,14 +37,32 @@
 <li>Name the risk they are most likely to be underrating because it is uncomfortable</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-6">Individual reflection</h3>
 <p>Write one sentence to keep: "After the pre-mortem, the risk that worries me most about my own product is <strong><em>_</em>_, and the step I will take before next week to reduce it is </strong>____."</p>
 </section>
-<section class="mod-sec sec-content"><h3>Case library</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Case library</h3>
 <ul>
 <li><a href="../Product/Case%20-%20Anime%20Revenue%20Structure%20and%20Isekai%20Saturation.md">Case - Anime Revenue Structure and Isekai Saturation</a>: the W15 case. Source-material exhaustion is an endogenous consequence of the commissioning rule, not an external shock. Give the mechanism first, ask for a three-year prediction, then reveal.</li>
 </ul></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session 的定義與四種切法</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,9 +14,8 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Session 的定義與四種切法</h1></div><p>在本單元中，會介紹工作階段（Session）的官方定義、四種會把一個工作階段切斷的情況，以及工作階段時間長度為什麼系統性地被低估。</p>
-<section class="mod-sec sec-objectives"><h3>🎯 學習目標</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</a></li><li><a href="#sec-3">進行方式 ① 工作階段的官方定義</a></li><li><a href="#sec-4">工作階段是使用者在網站上活躍的一段時間</a></li><li><a href="#sec-5">每一個 hit 都把到期時間往後推 30 分鐘</a></li><li><a href="#sec-6">29 分鐘後回來：同一個工作階段</a></li><li><a href="#sec-7">31 分鐘後回來：兩個工作階段</a></li><li><a href="#sec-8">進行方式 ② 另外三種切法</a></li><li><a href="#sec-9">換日：跨過午夜就自動切成兩個</a></li><li><a href="#sec-10">換流量來源：同一個人立刻被切成新的工作階段</a></li><li><a href="#sec-11">App 可以自己決定什麼時候開新的工作階段</a></li><li><a href="#sec-12">四種切法一起看</a></li><li><a href="#sec-13">進行方式 ③ 時間長度為什麼被低估</a></li><li><a href="#sec-14">時間是用 hit 之間的差算出來的</a></li><li><a href="#sec-15">最後一頁的時間永遠是 0</a></li><li><a href="#sec-16">只看一頁就離開，時間長度被記成 0</a></li><li><a href="#sec-17">進階工具可以補這一刀</a></li><li><a href="#sec-18">Session 除以 User、Time 除以 Session 怎麼讀</a></li><li><a href="#sec-19">進行方式 ④ 怎麼讓工作階段變多</a></li><li><a href="#sec-20">推播通知：把人叫回來，也可能只是切斷</a></li><li><a href="#sec-21">產品改善與數位社交資產：讓人自己想回來</a></li><li><a href="#sec-22">製造焦慮也有效，但那是有代價的</a></li><li><a href="#sec-23">判準：工作階段漲了，使用者有沒有跟著漲</a></li><li><a href="#sec-24">⚠️ 迷思攔截</a></li><li><a href="#sec-25">先修與後續</a></li><li><a href="#sec-26">💬 討論／分享／反思</a></li><li><a href="#sec-27">判例演練</a></li><li><a href="#sec-28">配對分享</a></li><li><a href="#sec-29">寫下反思</a></li><li><a href="#sec-30">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Session 的定義與四種切法</h1></div><p>在本單元中，會介紹工作階段（Session）的官方定義、四種會把一個工作階段切斷的情況，以及工作階段時間長度為什麼系統性地被低估。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-ai"><h3>🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
 <p>請利用 AI 當成你的學習助理，請輸入下列提示</p>
 <blockquote>
 <p>請列出 Google Analytics 裡會讓一個工作階段（session）結束、並開始一個新工作階段的所有情況，每一種都給一個具體的時間範例。列完之後，請告訴我哪一種最常被使用者忽略，以及忽略它會讓報表上的哪個數字失真。</p>
@@ -57,27 +56,27 @@ MathJax = {
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這一題 AI 很常答錯</span><p>換日切分是四種切法裡最容易被漏掉的一種，網路上的教學文也很少寫。如果你的 AI 回答「一個工作階段」，它就漏了；如果它回答「兩個」，你可以再追問它切在哪一秒。這是這門課少數可以當場驗證 AI 對不對的題目。</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ① 工作階段的官方定義</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">進行方式 ① 工作階段的官方定義</h3>
 <ul>
 <li>工作階段是<strong>一段時間</strong>，不是一個動作，它由一連串 hit 組成。</li>
 <li>預設規則：<strong>閒置滿 30 分鐘就結束</strong>，之後的行為算新的工作階段。</li>
 <li>這一段結束你要能看著一條時間軸，指出哪一刻切開。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>工作階段是使用者在網站上活躍的一段時間</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">工作階段是使用者在網站上活躍的一段時間</h3>
 <p>Google 官方定義：使用者在您網站或應用程式中活躍的時段。<strong>根據預設，如果使用者閒置超過 30 分鐘，系統會將他之後的所有動作視為新的工作階段</strong>；離開不到 30 分鐘就回來，仍算在原本的工作階段。</p>
 <p>關鍵字是「閒置」——計時的起點不是進站那一刻，而是<strong>最後一次送出 hit 的那一刻</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>每一個 hit 都把到期時間往後推 30 分鐘</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">每一個 hit 都把到期時間往後推 30 分鐘</h3>
 <p><img alt="每一個 hit 都把工作階段的到期時間往後推 30 分鐘" src="../../img/wa_w2_session_expiry.png" /></p>
 <p><em>14:01 的頁面瀏覽讓工作階段到 14:31 才過期；14:02 再看一頁，就推到 14:32；14:03、14:04 的事件再各推一次。只要有動作，這個工作階段就一直活著。</em></p>
 <p>所以「30 分鐘」不是從進站算，是<strong>從你最後一個動作算</strong>。一個人在網站上待了三小時，只要每次間隔都不到 30 分鐘，全部算同一個工作階段。</p>
 </section>
-<section class="mod-sec sec-content"><h3>29 分鐘後回來：同一個工作階段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">29 分鐘後回來：同一個工作階段</h3>
 <p><img alt="離開 29 分鐘後回來，四個頁面瀏覽都在同一個工作階段裡" src="../../img/wa_w2_session_29min.png" /></p>
 <p><em>14:02 之後去吃午餐，14:31 回來繼續操作。因為間隔沒有超過 30 分鐘，加入購物車和結帳都還算在原本那一次造訪裡。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3>31 分鐘後回來：兩個工作階段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">31 分鐘後回來：兩個工作階段</h3>
 <p><img alt="離開 31 分鐘後回來，同樣的四個頁面被切成兩個工作階段" src="../../img/wa_w2_session_31min.png" /></p>
 <p><em>完全一樣的四個頁面、幾乎一樣的時間，只因為間隔多了兩分鐘，報表上就變成兩次造訪，而且各自有一個到達網頁。</em></p>
 <p><strong>兩張圖的差別只有兩分鐘，報表上的差別是一倍。</strong>這是這門課第一個「同一件事、兩個數字」的例子，也是後面所有指標解讀的原型。</p>
@@ -177,28 +176,28 @@ MathJax = {
 
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ② 另外三種切法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-8">進行方式 ② 另外三種切法</h3>
 <ul>
 <li>除了閒置逾時，還有<strong>換日、換流量來源、App 自行呼叫</strong>三種切法。</li>
 <li>換日切分讓工作階段數被高估，而且<strong>高估集中在晚上</strong>。</li>
 <li>這一段結束你要能對四種切法各舉一個例子，其中換日與換來源這兩種一定要記得。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>換日：跨過午夜就自動切成兩個</h3>
+<section class="mod-sec sec-content"><h3 id="sec-9">換日：跨過午夜就自動切成兩個</h3>
 <p>一個工作階段不會跨越日界線。使用者 23:50 進站、00:10 離開，第一個工作階段在 <strong>23:59:59 結束</strong>，第二個在 <strong>00:00:00 開始</strong>。</p>
 <p>結果是<strong>工作階段數被高估，而且高估集中在深夜時段</strong>。做深夜內容、或者在半夜發推播的媒體，這個誤差會特別明顯。</p>
 </section>
-<section class="mod-sec sec-content"><h3>換流量來源：同一個人立刻被切成新的工作階段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-10">換流量來源：同一個人立刻被切成新的工作階段</h3>
 <p><img alt="同一位使用者從自然搜尋進站，再從付費關鍵字進站，被切成兩個工作階段" src="../../img/wa_w2_session_campaign.png" /></p>
 <p><em>即使兩次進站相隔不到 30 分鐘，只要流量來源換了（自然關鍵字 → 付費關鍵字），就是兩個工作階段。</em></p>
 <p>理由是歸因：工具必須知道這一段行為要記到哪一個來源頭上。<strong>一個工作階段只能有一個來源</strong>，來源變了就得開新的。</p>
 <p>這一條是證照考題最愛出的地方——原始投影片上直接標了「會考」。</p>
 </section>
-<section class="mod-sec sec-content"><h3>App 可以自己決定什麼時候開新的工作階段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-11">App 可以自己決定什麼時候開新的工作階段</h3>
 <p>行動 App 的 SDK 提供 <code>setNewSession()</code>，開發者可以在送出某個 hit 的時候直接宣告「這是新的一次」。</p>
 <p>這代表 App 的工作階段數<strong>有一部分是被程式決定的</strong>，跨 App 比較工作階段數要先問對方怎麼設。</p>
 </section>
-<section class="mod-sec sec-content"><h3>四種切法一起看</h3>
+<section class="mod-sec sec-content"><h3 id="sec-12">四種切法一起看</h3>
 <table>
 <thead>
 <tr>
@@ -235,60 +234,60 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ③ 時間長度為什麼被低估</h3>
+<section class="mod-sec sec-content"><h3 id="sec-13">進行方式 ③ 時間長度為什麼被低估</h3>
 <ul>
 <li>工具只看得到 hit 的時間戳記，<strong>最後一頁的停留時間量不到</strong>。</li>
 <li>只看一頁就離開的工作階段，時間長度直接被記成 <strong>0</strong>。</li>
 <li>這一段結束你要能在一張真實報表上指出被低估的那一格。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>時間是用 hit 之間的差算出來的</h3>
+<section class="mod-sec sec-content"><h3 id="sec-14">時間是用 hit 之間的差算出來的</h3>
 <p>工具沒辦法知道使用者什麼時候關掉分頁。它能做的只有拿兩個 hit 的時間戳記相減。</p>
 <p><img alt="沒有互動 hit 時，停留時間怎麼被算出來" src="../../img/wa_w2_duration_no_engagement.png" /></p>
 <p><em>三頁分別在 10:00、10:05、10:10 產生第一個 hit。工作階段時間長度＝10:10−10:00＝10 分鐘。第三頁看了多久，完全沒有被算進去。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3>最後一頁的時間永遠是 0</h3>
+<section class="mod-sec sec-content"><h3 id="sec-15">最後一頁的時間永遠是 0</h3>
 <p><img alt="Avg. Time on Page 與 Avg. Session Duration 的算式" src="../../img/wa_w2_time_on_page.png" /></p>
 <p><em>同一頁被載入三次（10:00:00、10:00:50、10:01:45）然後離開。前兩段各算出 50 秒和 55 秒，第三段沒有下一個 hit，算成 0。所以平均網頁停留時間的分母是「瀏覽頁次 − 離開次數」，而不是瀏覽頁次。</em></p>
 <p>這解釋了兩件事：<strong>平均網頁停留時間的分母要扣掉離開次數</strong>，以及<strong>工作階段時間長度一定比真實停留短</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>只看一頁就離開，時間長度被記成 0</h3>
+<section class="mod-sec sec-content"><h3 id="sec-16">只看一頁就離開，時間長度被記成 0</h3>
 <p><img alt="跳出的工作階段，平均工作階段時間長度是 00:00:00" src="../../img/wa_w2_zero_duration.png" /></p>
 <p><em>下面那一列是只有一次瀏覽的流量：跳出率 100%、單次工作階段頁數 1.00、平均工作階段時間長度 00:00:00。那些人不是零秒離開，是工具算不出來。</em></p>
 <p>內容網站的跳出率經常高達 90%，代表<strong>你的平均停留時間裡有九成的工作階段是用 0 去平均的</strong>。這個數字要當成下限來讀，不是實際值。</p>
 </section>
-<section class="mod-sec sec-content"><h3>進階工具可以補這一刀</h3>
+<section class="mod-sec sec-content"><h3 id="sec-17">進階工具可以補這一刀</h3>
 <p>比較講究的系統會在頁面裡再埋一個訊號（beacon），使用者捲動或停留到一定時間就送一個 hit 出去，最後一頁才有時間可算。GA4 的「參與工作階段」也是往這個方向走。</p>
 <p>知道原理之後，你就知道評估一套分析工具的時候該問什麼：你們的停留時間有沒有補最後一頁？</p>
 </section>
-<section class="mod-sec sec-content"><h3>Session 除以 User、Time 除以 Session 怎麼讀</h3>
+<section class="mod-sec sec-content"><h3 id="sec-18">Session 除以 User、Time 除以 Session 怎麼讀</h3>
 <p>一個使用者在一段時間內可能有多次工作階段。內容網站的 <strong>工作階段／使用者</strong> 越大越好，通常代表回頭客多；也可以只算回訪者的比值，看得更準。</p>
 <p><strong>時間／工作階段</strong>在內容網站通常也是越大越好，但要記得它被低估過一次。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ④ 怎麼讓工作階段變多</h3>
+<section class="mod-sec sec-content"><h3 id="sec-19">進行方式 ④ 怎麼讓工作階段變多</h3>
 <ul>
 <li>把工作階段做大有兩條路：<strong>讓同一個人多來幾次</strong>，或<strong>讓同一次被切成多段</strong>。</li>
 <li>推播通知是最直接的一種，也是最容易把兩條路混在一起的一種。</li>
 <li>這一段結束你要能對一個成長消息判斷它走的是哪一條路。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>推播通知：把人叫回來，也可能只是切斷</h3>
+<section class="mod-sec sec-content"><h3 id="sec-20">推播通知：把人叫回來，也可能只是切斷</h3>
 <p>手機通知會把使用者叫回 App，這是真的多了一次造訪。但如果通知發在使用者正在使用的時候，它做的是<strong>把原本一段連續使用切成兩段</strong>。</p>
 <p>同樣是工作階段數上升，前者是成長，後者是切分。</p>
 </section>
-<section class="mod-sec sec-content"><h3>產品改善與數位社交資產：讓人自己想回來</h3>
+<section class="mod-sec sec-content"><h3 id="sec-21">產品改善與數位社交資產：讓人自己想回來</h3>
 <p>讓使用者在你的產品裡累積東西——收藏、追蹤、草稿、好友——他就有理由回來。這是最耐久的一條路，因為它不依賴你每天發通知。</p>
 </section>
-<section class="mod-sec sec-content"><h3>製造焦慮也有效，但那是有代價的</h3>
+<section class="mod-sec sec-content"><h3 id="sec-22">製造焦慮也有效，但那是有代價的</h3>
 <p>未讀紅點、限時、快過期，這些都會提高回訪。它們在數字上有效，代價寫在使用者身上，而且不會出現在你的報表裡。</p>
 <p><strong>這門課的立場是：先讓你看得懂數字怎麼被做出來，做不做由你決定。</strong></p>
 </section>
-<section class="mod-sec sec-content"><h3>判準：工作階段漲了，使用者有沒有跟著漲</h3>
+<section class="mod-sec sec-content"><h3 id="sec-23">判準：工作階段漲了，使用者有沒有跟著漲</h3>
 <p>跟上一節 PV 的判準是同一句話。<strong>工作階段數上升而使用者數沒動，多半是切分，不是成長。</strong></p>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-24">⚠️ 迷思攔截</h3>
 <table>
 <thead>
 <tr>
@@ -332,7 +331,7 @@ MathJax = {
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-25">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E7%B6%B2%E8%B7%AF%E6%95%B8%E6%93%9A%E7%9A%84%E4%B8%89%E5%B1%A4%E7%B5%90%E6%A7%8B_Hit_Session_User.html">網路數據的三層結構 Hit Session User</a>——工作階段是三層的中間那一層，先有 hit 的概念才看得懂切法。</li>
 <li><strong>後續</strong>：<a href="M_%E5%81%9C%E7%95%99%E3%80%81%E8%B7%B3%E5%87%BA%E8%88%87%E9%9B%A2%E9%96%8B.html">停留、跳出與離開</a>——跳出率與離開率都建立在工作階段的邊界上，這一節先把邊界講清楚。</li>
@@ -340,9 +339,9 @@ MathJax = {
 <li><strong>平行相關</strong>：<a href="M_GA4_%E8%88%87_AI_%E5%95%8F%E7%AD%94%E5%88%86%E6%9E%90.html">GA4 與 AI 問答分析</a>（W3）——GA4 改用「參與工作階段」，屆時回頭對照這一節的四種切法。</li>
 </ul>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 討論／分享／反思</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-26">💬 討論／分享／反思</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>判例演練</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-27">判例演練</h3>
 <p>請兩人一組，判斷下面三個情境各產生幾個工作階段，並說出理由：</p>
 <ol>
 <li>早上 09:00 看首頁，09:20 看一篇文章，10:10 看第二篇文章</li>
@@ -351,7 +350,7 @@ MathJax = {
 </ol>
 <p>答完之後，用上面的判定器對一次答案。</p>
 </section>
-<section class="mod-sec sec-activity"><h3>配對分享</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-28">配對分享</h3>
 <p>請同學兩兩一組，互相解釋這一句：</p>
 <blockquote>
 <p>平均工作階段時間長度是一個下限，不是實際值。</p>
@@ -362,20 +361,38 @@ MathJax = {
 <li>一起想一個可以補回真實時間的做法</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>寫下反思</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-29">寫下反思</h3>
 <p>請寫下這一句並補完：</p>
 <blockquote>
 <p>如果我看到某個網站的工作階段數大幅成長，我會先去看＿＿＿，再決定要不要相信它成長了。</p>
 </blockquote>
 </section>
-<section class="mod-sec sec-homework"><h3>小作業</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-30">小作業</h3>
 <p>找一個你有後台的網站或帳號，把「工作階段／使用者」和「平均工作階段時間長度」兩個數字抄下來，並寫出：</p>
 <ol>
 <li>這個比值代表你的訪客是回頭客多還是一次客多</li>
 <li>你的平均時間長度被低估的兩個原因分別是什麼</li>
 <li>如果要讓工作階段數變多，你會選哪一條路、為什麼不選另一條</li>
 </ol></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

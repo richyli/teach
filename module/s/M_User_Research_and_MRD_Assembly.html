@@ -4,27 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User Research and MRD Assembly</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>User Research and MRD Assembly</h1></div><p>This unit covers journey and jobs maps, AI-assisted research synthesis, and how four weeks of separate findings get assembled into one document you have to defend.</p>
-<section class="mod-sec sec-content"><h3>Core</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">Core</a></li><li><a href="#sec-2">Assembling the MRD</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>User Research and MRD Assembly</h1></div><p>This unit covers journey and jobs maps, AI-assisted research synthesis, and how four weeks of separate findings get assembled into one document you have to defend.</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">Core</h3>
 <ul>
 <li>User-journey map and jobs map; interview versus survey.</li>
 <li>AI-assisted synthesis of user research (Dovetail-style clustering).</li>
 <li>Primary theory: <a href="Theory_-_Boundary_Object_Theory.html">Boundary Object Theory</a> (Star &amp; Griesemer) — the MRD is the team's first cross-functional boundary object. Supporting: <a href="Theory_-_Jobs-to-be-Done.html">Jobs-to-be-Done</a> (who it is for), <a href="Theory_-_Sensemaking.html">Sensemaking</a> (the collective interpretation needed to write it).</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Assembling the MRD</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Assembling the MRD</h3>
 <p>Market sizing from W4, the competitive matrix from W5, the target segment from W6, and this week's persona and journey become a single document. Add the Business Model Canvas and the positioning statement. The MRD is finished as homework and defended in W8.</p>
 </section>
-<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-3">✍️ Take-home task</h3>
 <p>Complete the first full version of the MRD, for the W8 midterm pitch.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-4">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-5">Pair review</h3>
 <p>Swap jobs maps or user-journey maps with a partner.</p>
 <ol>
 <li>Find one job that you think is not what the user is actually trying to get done</li>
@@ -32,9 +31,27 @@
 <li>Mark the section of their map that has the least evidence behind it</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-6">Individual reflection</h3>
 <p>Write one sentence to keep: "The weakest, most imagined part of my MRD is <strong><em>_</em>_, and before the deadline I will back it with </strong>____" — an interview, a competitor check, or market data.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

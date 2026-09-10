@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>網路數據的三層結構 Hit Session User</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,9 +14,8 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>網路數據的三層結構 Hit Session User</h1></div><p>在本單元中，會介紹一筆網路數據是怎麼被送到分析工具裡的、Hit／Session／User 這三層怎麼疊起來，以及為什麼使用者人數一定被高估、瀏覽頁次一定被操作。</p>
-<section class="mod-sec sec-objectives"><h3>🎯 學習目標</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</a></li><li><a href="#sec-3">進行方式 ① 資料怎麼變成一個數字</a></li><li><a href="#sec-4">資料是使用者的瀏覽器主動送出去的</a></li><li><a href="#sec-5">沒有送出 hit 的行為，等於沒有發生</a></li><li><a href="#sec-6">三層是包含關係，不是三個並排的數字</a></li><li><a href="#sec-7">進行方式 ② User 為什麼一定被高估</a></li><li><a href="#sec-8">GA 認的是 _ga 這塊 Cookie，不是你</a></li><li><a href="#sec-9">四種情況會讓同一個人被算成好幾個</a></li><li><a href="#sec-10">User 的誤差是單向的，所以它一定被高估</a></li><li><a href="#sec-11">New User 被高估，Return User 就被低估</a></li><li><a href="#sec-12">User 與 Visitor 不是同一件事</a></li><li><a href="#sec-13">進行方式 ③ Pageview 是最容易被操作的數字</a></li><li><a href="#sec-14">Pageview 就是一個頁面被載入一次</a></li><li><a href="#sec-15">Unique Pageview 問的是「這個工作階段有沒有看過這頁」</a></li><li><a href="#sec-16">PV 綁著廣告收入，所以它最容易走火入魔</a></li><li><a href="#sec-17">把 PV 做大的五種常見做法</a></li><li><a href="#sec-18">判準只有一句：把餅做大，還是把同一塊餅切碎</a></li><li><a href="#sec-19">進行方式 ④ 這些名詞為什麼一直在變</a></li><li><a href="#sec-20">GA3 用網站的眼睛看，GA4 用使用者的眼睛看</a></li><li><a href="#sec-21">換了世界觀，指標名稱就整批換過</a></li><li><a href="#sec-22">最上面那一層永遠不是數字</a></li><li><a href="#sec-23">⚠️ 迷思攔截</a></li><li><a href="#sec-24">先修與後續</a></li><li><a href="#sec-25">💬 討論／分享／反思</a></li><li><a href="#sec-26">配對分享</a></li><li><a href="#sec-27">判例演練</a></li><li><a href="#sec-28">寫下反思</a></li><li><a href="#sec-29">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>網路數據的三層結構 Hit Session User</h1></div><p>在本單元中，會介紹一筆網路數據是怎麼被送到分析工具裡的、Hit／Session／User 這三層怎麼疊起來，以及為什麼使用者人數一定被高估、瀏覽頁次一定被操作。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-ai"><h3>🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
 <p>請利用 AI 當成你的學習助理，請輸入下列提示</p>
 <blockquote>
 <p>我在學網站流量分析。請用一個開餐廳的比喻解釋 Google Analytics 裡的 Hit、Session、User 三個層級分別對應餐廳裡的什麼，並說明為什麼 User 這個數字在技術上一定會被高估。每一點請標註這是 Google 官方定義，還是你自己的推論。</p>
@@ -57,24 +56,24 @@ MathJax = {
 <div class="callout callout-student"><span class="co-title">學生閱讀｜比喻好不好用，看它會不會在同一個地方壞掉</span><p>大部分的 AI 會給你「客人＝User、來店一次＝Session、點一道菜＝Hit」。這個比喻在前兩層很好用，第三層開始鬆掉——因為餐廳認得出同一個客人的臉，瀏覽器不行。它認得的只是一塊叫 <code>_ga</code> 的 Cookie。比喻壞掉的那個地方，就是這一節真正要講的東西。</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ① 資料怎麼變成一個數字</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">進行方式 ① 資料怎麼變成一個數字</h3>
 <ul>
 <li>資料不是「網站自己知道」，是<strong>每一次行為都主動送一包資料出去</strong>，那一包就叫 hit。</li>
 <li>三個層級是包含關係：<strong>一個 User 包住多個 Session，一個 Session 包住多個 Hit</strong>。</li>
 <li>這一段結束你要能在紙上畫出這三層，並在每一層寫出一個實際的例子。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>資料是使用者的瀏覽器主動送出去的</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">資料是使用者的瀏覽器主動送出去的</h3>
 <p>網站裡埋了一段追蹤碼。使用者做了某件事——載入一個頁面、點一個按鈕、完成一筆交易——追蹤碼就被觸發一次，把這次行為打包送到分析工具的伺服器。</p>
 <p>那一包就是 <strong>hit（匹配）</strong>。常見的 hit 有四種：頁面瀏覽（pageview）、事件（event）、電子商務交易（ecommerce）、社群互動（social）。</p>
 <p><img alt="一個 pageview hit 送出去的資料，遠不只是「哪一頁」" src="../../img/wa_w2_pageview_hit.png" /></p>
 <p><em>一個 pageview hit 除了頁面網址，同時帶了來源、地區、瀏覽器、螢幕解析度、語言、以及這個訪客的 ID。你在報表上看到的所有維度，都是從這一包裡拆出來的。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3>沒有送出 hit 的行為，等於沒有發生</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">沒有送出 hit 的行為，等於沒有發生</h3>
 <p>這是整門課最需要先接受的一件事：<strong>分析工具只知道被送出去的東西</strong>。使用者盯著一頁看了十分鐘卻沒有任何動作，中間沒有 hit，工具就不知道那十分鐘存在。</p>
 <p>後面所有「被低估」「被高估」的說法，追到底都是這一句。</p>
 </section>
-<section class="mod-sec sec-content"><h3>三層是包含關係，不是三個並排的數字</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">三層是包含關係，不是三個並排的數字</h3>
 <p><img alt="2 個 User、5 個 Session、12 個 Hit" src="../../img/wa_w2_user_session_hit.png" /></p>
 <p><em>同一塊 <code>_ga</code> Cookie 讓工具把多個 hit 收成一個 session，再把多個 session 收成一個 user。圖上左邊那位使用者今天來了兩次，右邊那位在兩個月裡來了三次。</em></p>
 <p>看這張圖的時候要看的是<strong>框線</strong>，不是數字：hit 被裝進 session 的框，session 再被裝進 user 的框。報表上的三個數字是同一批行為在三個不同高度上被數了三次。</p>
@@ -83,18 +82,18 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ② User 為什麼一定被高估</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">進行方式 ② User 為什麼一定被高估</h3>
 <ul>
 <li>工具認得的不是人，是<strong>一塊 Cookie</strong>，所以換裝置、清 Cookie 都會多算一個人。</li>
 <li>高估的方向是<strong>單向的</strong>：技術上只會把一個人拆成很多個，不會把很多人併成一個。</li>
 <li>這一段結束你要能講出至少三個高估來源，並說出哪一種在校園環境特別嚴重。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>GA 認的是 <code>_ga</code> 這塊 Cookie，不是你</h3>
+<section class="mod-sec sec-content"><h3 id="sec-8">GA 認的是 <code>_ga</code> 這塊 Cookie，不是你</h3>
 <p>Google 官方的定義是：為了判斷哪些流量屬於哪一位使用者，每一個 hit 會帶著一個獨特識別碼送出去。這個識別碼預設是一塊叫 <code>_ga</code> 的第一方 Cookie，裡面存的是 client ID。</p>
 <p>所以「使用者」這個詞在報表上的真正意思是：<strong>一塊我沒見過的 Cookie</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>四種情況會讓同一個人被算成好幾個</h3>
+<section class="mod-sec sec-content"><h3 id="sec-9">四種情況會讓同一個人被算成好幾個</h3>
 <table>
 <thead>
 <tr>
@@ -127,41 +126,41 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>User 的誤差是單向的，所以它一定被高估</h3>
+<section class="mod-sec sec-content"><h3 id="sec-10">User 的誤差是單向的，所以它一定被高估</h3>
 <p>四個來源都是「把一個人拆成很多個」，沒有一個是「把很多人併成一個」。誤差只往一個方向跑，數字就一定偏高。</p>
 <p>這件事的實用價值在於：<strong>你看到別人的 User 數字時，可以放心地打折，而不必猜方向。</strong></p>
 </section>
-<section class="mod-sec sec-content"><h3>New User 被高估，Return User 就被低估</h3>
+<section class="mod-sec sec-content"><h3 id="sec-11">New User 被高估，Return User 就被低估</h3>
 <p>新使用者的判定用的是同一塊 Cookie，所以只要 Cookie 是新的，就算成新使用者。結果是新使用者數被高估、新使用者比例也被高估。</p>
 <p>新的那一邊被多算，回訪的那一邊自然被少算——<strong>回訪使用者一定被低估</strong>。這一組數字要一起看，不能只挑對自己有利的那一個講。</p>
 </section>
-<section class="mod-sec sec-content"><h3>User 與 Visitor 不是同一件事</h3>
+<section class="mod-sec sec-content"><h3 id="sec-12">User 與 Visitor 不是同一件事</h3>
 <p>Google 現在只用 User，不用 Visitor。這兩個詞的差別在能不能被串起來：<strong>能被唯一識別的叫 User，串不起來的叫 Visitor</strong>。同一個人在三台裝置上就是三個 Visitor、一個 User。所以 UV（不重複訪客）這個數字會大於 UU（不重複使用者），看到報告上寫 UV 要先問是哪一種口徑。</p>
 <blockquote>
 <p>User 不是人，是一塊 Cookie。把它當成人來報告的那一刻，你的簡報就開始說謊了。</p>
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ③ Pageview 是最容易被操作的數字</h3>
+<section class="mod-sec sec-content"><h3 id="sec-13">進行方式 ③ Pageview 是最容易被操作的數字</h3>
 <ul>
 <li>PV 直接綁著 CPM 廣告收入，所以它是<strong>最有動機被做出來</strong>的一個數字。</li>
 <li>拆稿、無限捲動、文末推薦，都是在<strong>不增加內容的前提下把 PV 做大</strong>。</li>
 <li>這一段結束你要對一個具體做法下判斷：它把餅做大，還是把同一塊餅切碎。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Pageview 就是一個頁面被載入一次</h3>
+<section class="mod-sec sec-content"><h3 id="sec-14">Pageview 就是一個頁面被載入一次</h3>
 <p>官方定義很短：一個頁面在瀏覽器裡被載入（或重新載入）一次，就是一次 pageview。<strong>Pageviews 這個指標就是把這些次數加總。</strong></p>
 <p>重新整理也算。所以同一頁按五次 F5，就是五次 pageview。</p>
 </section>
-<section class="mod-sec sec-content"><h3>Unique Pageview 問的是「這個工作階段有沒有看過這頁」</h3>
+<section class="mod-sec sec-content"><h3 id="sec-15">Unique Pageview 問的是「這個工作階段有沒有看過這頁」</h3>
 <p>在同一個 Session 裡，同一頁看幾次都只算一次，這叫 unique pageview。</p>
 <p>什麼時候該用它？<strong>當「同一頁被同一個人看很多次」這件事沒有意義的時候</strong>——例如首頁、列表頁，使用者本來就會來回進出。</p>
 </section>
-<section class="mod-sec sec-content"><h3>PV 綁著廣告收入，所以它最容易走火入魔</h3>
+<section class="mod-sec sec-content"><h3 id="sec-16">PV 綁著廣告收入，所以它最容易走火入魔</h3>
 <p>CPM 廣告按「每千次曝光」計價，一個頁面載入一次就是一次版位曝光。<strong>PV 直接等於可以賣的庫存</strong>，這是它長年被當成最重要指標的原因。</p>
 <p>只看這個數字，內容決策必然變形——這正是上一節 Goodhart 定律講的東西，現在你看到它在自己的產業裡具體長什麼樣。</p>
 </section>
-<section class="mod-sec sec-content"><h3>把 PV 做大的五種常見做法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-17">把 PV 做大的五種常見做法</h3>
 <table>
 <thead>
 <tr>
@@ -199,7 +198,7 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>判準只有一句：把餅做大，還是把同一塊餅切碎</h3>
+<section class="mod-sec sec-content"><h3 id="sec-18">判準只有一句：把餅做大，還是把同一塊餅切碎</h3>
 <p>增加外部導流是把餅做大——多了原本不會來的人。拆稿是把同一塊餅切碎——同樣的內容、同樣的讀者，只是多算了幾次。</p>
 <p><strong>兩種做法在報表上看起來一模一樣，都是 PV 上升。</strong>分辨它們的唯一辦法是同時看另一個數字：使用者數有沒有跟著長。</p>
 <blockquote>
@@ -207,28 +206,28 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ④ 這些名詞為什麼一直在變</h3>
+<section class="mod-sec sec-content"><h3 id="sec-19">進行方式 ④ 這些名詞為什麼一直在變</h3>
 <ul>
 <li>這門課的指標名稱<strong>以 Google Analytics 為準</strong>，盡量中英對照，但工具改版時對不起來的地方會直接說。</li>
 <li>GA3 以<strong>網站</strong>為主體（媒體思維），GA4 以<strong>使用者</strong>為主體（電商思維），指標名稱因此整批換過。</li>
 <li>GA3 的概念沒有作廢——<strong>它是所有網站分析工具的共同語言</strong>，換一個工具還是這一套。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>GA3 用網站的眼睛看，GA4 用使用者的眼睛看</h3>
+<section class="mod-sec sec-content"><h3 id="sec-20">GA3 用網站的眼睛看，GA4 用使用者的眼睛看</h3>
 <p>GA3（Universal Analytics）的世界觀是「一個網站裡的流程」：使用者在我的網站裡怎麼走、看了幾頁、從哪裡離開。它看不到這個人離開之後去了哪裡。這是<strong>媒體思維</strong>——我關心的是我的版面。</p>
 <p>GA4 的世界觀是「一個使用者的歷程」：所有行為都是事件（event），可以跨網站、跨 App 串起同一個人。這是<strong>電商思維</strong>——我關心的是這個人最後有沒有買。</p>
 </section>
-<section class="mod-sec sec-content"><h3>換了世界觀，指標名稱就整批換過</h3>
+<section class="mod-sec sec-content"><h3 id="sec-21">換了世界觀，指標名稱就整批換過</h3>
 <p>同一件事在兩代工具裡叫不同名字，這是你之後查資料最容易踩到的坑。這一節教的三層結構在兩代都成立，<strong>變的是名字，不是結構</strong>。</p>
 <p>看到網路上的教學文，先確認它在講哪一代——文章裡出現「跳出率」和「工作階段」通常是 GA3，出現「參與度」和「事件」通常是 GA4。</p>
 </section>
-<section class="mod-sec sec-content"><h3>最上面那一層永遠不是數字</h3>
+<section class="mod-sec sec-content"><h3 id="sec-22">最上面那一層永遠不是數字</h3>
 <p><img alt="最佳化金字塔：從策略、實作、報表、分析到最佳化，最上面才是 Business Impact" src="../../img/wa_w2_optimization_pyramid.png" /></p>
 <p><em>這一節在的位置是金字塔中間偏下的「Reporting」。往上還有分析與最佳化，最上面才是商業影響。</em></p>
 <p>會看指標只是往上爬的第一階。<strong>指標本身不是目的</strong>——這門課最後要問的永遠是「所以要改什麼」。</p>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-23">⚠️ 迷思攔截</h3>
 <table>
 <thead>
 <tr>
@@ -272,7 +271,7 @@ MathJax = {
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-24">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E6%95%B8%E6%93%9A%E7%B4%A0%E9%A4%8A%E6%9A%96%E8%BA%AB_%E5%A5%BD%E5%95%8F%E9%A1%8C_vs_%E5%A3%9E%E5%95%8F%E9%A1%8C.html">數據素養暖身 好問題 vs 壞問題</a>——那一節練的三個檢查（分母、比較對象、時間窗），這一節開始有具體的分母可以拿來練。</li>
 <li><strong>後續</strong>：<a href="M_Session_%E7%9A%84%E5%AE%9A%E7%BE%A9%E8%88%87%E5%9B%9B%E7%A8%AE%E5%88%87%E6%B3%95.html">Session 的定義與四種切法</a>——三層裡中間那一層有四種被切斷的方式，是這門課最常被考的地方。</li>
@@ -280,9 +279,9 @@ MathJax = {
 <li><strong>平行相關</strong>：<a href="M_GA4_%E8%88%87_AI_%E5%95%8F%E7%AD%94%E5%88%86%E6%9E%90.html">GA4 與 AI 問答分析</a>（W3）——把這一節的名詞帶去問 AI 之前，先在這裡確認自己講的是哪一代。</li>
 </ul>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 討論／分享／反思</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-25">💬 討論／分享／反思</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>配對分享</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-26">配對分享</h3>
 <p>請同學兩兩一組，互相講一次三層結構：</p>
 <ol>
 <li>用自己的話說 Hit、Session、User 分別是什麼</li>
@@ -290,7 +289,7 @@ MathJax = {
 <li>對方要挑出你講錯或講不清楚的那一層</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>判例演練</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-27">判例演練</h3>
 <p>請看下面這句媒體自我宣傳，兩人一組回答：</p>
 <blockquote>
 <p>本站上月不重複使用者突破 800 萬，全台每三人就有一人是我們的讀者。</p>
@@ -301,20 +300,38 @@ MathJax = {
 <li>如果你是這家媒體的分析師，你會建議改成怎麼說</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>寫下反思</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-28">寫下反思</h3>
 <p>請寫下這一句並補完：</p>
 <blockquote>
 <p>我原本以為「使用者數」就是有多少人來過，現在我知道它其實是＿＿＿。</p>
 </blockquote>
 </section>
-<section class="mod-sec sec-homework"><h3>小作業</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-29">小作業</h3>
 <p>打開一個你自己有後台的帳號（IG、YouTube、部落格都可以），找出「使用者／觀看次數／不重複觀看」這三種數字中你能取得的兩種，寫下：</p>
 <ol>
 <li>這兩個數字各是多少</li>
 <li>它們的比值是多少</li>
 <li>這個比值告訴你什麼——是同一批人來很多次，還是很多人各來一次</li>
 </ol></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

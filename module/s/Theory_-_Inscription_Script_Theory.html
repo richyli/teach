@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Inscription Script Theory</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Inscription Script Theory</h1></div><p>A short primer on Inscription / Script Theory: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Inscription Script Theory</h1></div><p>A short primer on Inscription / Script Theory: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Madeleine Akrich (1992); with Bruno Latour</strong> — "Designers inscribe an expected user into objects; objects then prescribe behaviour."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>Every artefact carries a <strong>script</strong> — a program of action that anticipates a particular user, environment, and purpose. To use the object is, in part, to play the role it has scripted for you.</p>
 </blockquote>
@@ -23,21 +22,21 @@
 <li>The gap between the <strong>projected user</strong> and the <strong>actual user</strong> is where breakdown, workaround, and appropriation happen</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Supporting theory</strong> in W16 Final Presentation — optional stretch material, and a useful contrasting lens in those weeks.</li>
 <li>It is never the week's Primary theory, so no report is assigned to it. It still earns marks when it does real work in a pitch.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face a product decision, ask:
 1. Who is the <strong>assumed user</strong> inscribed in this artefact — and have I named them out loud?
 2. What does this design <strong>prescribe</strong> that the user must do, know, or own?
 3. Where is the <strong>gap</strong> between my projected user and the people who actually showed up?
 4. Which user appropriations or workarounds are telling me my script is wrong?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Akrich 1992, "The De-scription of Technical Objects"</strong> in Bijker &amp; Law (eds.) <em>Shaping Technology / Building Society</em> — see Akrich 1992 De-Scription</li>
 <li><strong>Akrich &amp; Latour 1992, "A Summary of a Convenient Vocabulary"</strong> — the shared glossary for scripts, antiprograms, delegation</li>
@@ -45,22 +44,40 @@
 </ul>
 <p>(Akrich scholar note: wiki/Akrich, Madeleine)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>Name the inscribed user</strong> — every Claude Skill, system prompt, and PRD assumes one; write that user as the first paragraph of the artefact
 2. <strong>Run a de-scription drill</strong> — pick a popular Claude Skill, infer its assumed user from prompt + tool list, and check it against your own team's user
 3. <strong>Audit appropriation signals</strong> — collect the workarounds, "wrong" prompts, and complaints; treat them as evidence the script is mis-aligned</p>
 <p>⚠️ Pitfall: the AI inherits <em>your</em> inscriptions and amplifies them at scale — your unstated assumptions become the default user for everyone the model touches.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>Pick a Claude Skill you have written (or used). De-scribe it: who is the inscribed user, and how does the assumed user differ from your real users?</li>
 <li>When users "misuse" your AI feature in productive ways, is that a script failure, a script success, or a new script being written <em>by</em> the user?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Inscription Script Theory. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

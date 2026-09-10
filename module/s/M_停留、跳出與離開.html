@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>停留、跳出與離開</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,9 +14,8 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>停留、跳出與離開</h1></div><p>在本單元中，會介紹跳出率與離開率的差別、同一批瀏覽紀錄怎麼同時算出這兩個數字，以及一個頁面的離開率要多少才算正常。</p>
-<section class="mod-sec sec-objectives"><h3>🎯 學習目標</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</a></li><li><a href="#sec-3">進行方式 ① 這一組指標在看的是頁面</a></li><li><a href="#sec-4">頁面層級的五個常用指標</a></li><li><a href="#sec-5">平均網頁停留時間的分母要扣掉離開次數</a></li><li><a href="#sec-6">停留時間很重要，也很好操作</a></li><li><a href="#sec-7">進行方式 ② 跳出與離開差在哪</a></li><li><a href="#sec-8">跳出：只看了一頁，而且那一頁是第一頁</a></li><li><a href="#sec-9">離開：這一次造訪從哪一頁結束</a></li><li><a href="#sec-10">跳出率與離開率會反向：內容網站可能跳出 90%</a></li><li><a href="#sec-11">用五天的紀錄自己算一次</a></li><li><a href="#sec-12">進行方式 ③ 離開率多少才算正常</a></li><li><a href="#sec-13">內容頁：彼此差不多就對了</a></li><li><a href="#sec-14">索引頁：離開率應該壓到很低</a></li><li><a href="#sec-15">流程中間頁：離開率高就是漏水</a></li><li><a href="#sec-16">到達網頁與離開網頁在內容網站經常是同一頁</a></li><li><a href="#sec-17">一個真實的數字：大學報首頁</a></li><li><a href="#sec-18">進行方式 ④ 要不要為了降低離開率而動手</a></li><li><a href="#sec-19">內容鑽研報表告訴你該修哪一區</a></li><li><a href="#sec-20">到達網頁值得集中火力</a></li><li><a href="#sec-21">網站速度是最沒有爭議的一個修法</a></li><li><a href="#sec-22">判準：使用者有沒有拿到他要的東西</a></li><li><a href="#sec-23">⚠️ 迷思攔截</a></li><li><a href="#sec-24">先修與後續</a></li><li><a href="#sec-25">💬 討論／分享／反思</a></li><li><a href="#sec-26">判例演練</a></li><li><a href="#sec-27">配對分享</a></li><li><a href="#sec-28">寫下反思</a></li><li><a href="#sec-29">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>停留、跳出與離開</h1></div><p>在本單元中，會介紹跳出率與離開率的差別、同一批瀏覽紀錄怎麼同時算出這兩個數字，以及一個頁面的離開率要多少才算正常。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-ai"><h3>🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
 <p>請利用 AI 當成你的學習助理，請輸入下列提示</p>
 <blockquote>
 <p>請用一個例子說明 Google Analytics 裡跳出率（Bounce Rate）和離開率（% Exit）的差別，例子裡要有同一個頁面同時出現在兩種情況。說完之後，請告訴我一個頁面的跳出率可以是 0% 但離開率是 33% 嗎，為什麼。</p>
@@ -57,14 +56,14 @@ MathJax = {
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這兩個詞最容易被講反</span><p>跳出率的分母是「以這一頁為第一頁的工作階段」，離開率的分母是「這一頁的所有瀏覽次數」。分母不同，答案就不同——這正是上一節那三個檢查的第一項。你只要每次先問「這個數字是誰除以誰」，就不會弄反。</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ① 這一組指標在看的是頁面</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">進行方式 ① 這一組指標在看的是頁面</h3>
 <ul>
 <li>前面兩節看的是<strong>人</strong>和<strong>一次造訪</strong>，這一節下降到<strong>單一頁面</strong>。</li>
 <li>頁面層級的常用指標有五個：瀏覽頁次、不重複瀏覽頁次、平均網頁停留時間、跳出率、離開率。</li>
 <li>這一段結束你要知道每一個指標的分母是什麼。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>頁面層級的五個常用指標</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">頁面層級的五個常用指標</h3>
 <table>
 <thead>
 <tr>
@@ -103,35 +102,35 @@ MathJax = {
 </table>
 <p><strong>背下來的是分母，不是名字。</strong>名字換一代工具就變，分母不會。</p>
 </section>
-<section class="mod-sec sec-content"><h3>平均網頁停留時間的分母要扣掉離開次數</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">平均網頁停留時間的分母要扣掉離開次數</h3>
 <p>理由在上一節講過：最後一頁沒有下一個 hit，時間量不到。所以那些「以這一頁結束」的瀏覽，會從分母裡拿掉。</p>
 <p>公式是 <code>平均網頁停留時間 = 網頁停留總時間 ÷ (瀏覽頁次 − 離開次數)</code>。詳細的算式圖見 <a href="M_Session_%E7%9A%84%E5%AE%9A%E7%BE%A9%E8%88%87%E5%9B%9B%E7%A8%AE%E5%88%87%E6%B3%95.html">Session 的定義與四種切法</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>停留時間很重要，也很好操作</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">停留時間很重要，也很好操作</h3>
 <p>停留時間在內容網站幾乎等於「內容有沒有被讀」，所以它被當成品質的代理指標。但它同時<strong>很容易被做出來</strong>：把文章拆成五頁、影片自動播放、頁面故意載入慢一點，數字都會變好看。</p>
 <p>看到停留時間上升，要問的第一句話是「頁數有沒有一起變」。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ② 跳出與離開差在哪</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">進行方式 ② 跳出與離開差在哪</h3>
 <ul>
 <li><strong>跳出</strong>問的是「只看一頁就走」，<strong>離開</strong>問的是「從哪一頁走」。</li>
 <li>同一頁的兩個數字可以差很多，因為分母不同。</li>
 <li>這一段結束你要能自己算完 B、C 兩頁的四個數字。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>跳出：只看了一頁，而且那一頁是第一頁</h3>
+<section class="mod-sec sec-content"><h3 id="sec-8">跳出：只看了一頁，而且那一頁是第一頁</h3>
 <p>跳出的工作階段只有一次瀏覽。它同時是到達網頁也是離開網頁，中間沒有第二頁。</p>
 <p>因為沒有第二個 hit，<strong>跳出的工作階段時間長度一律記成 0</strong>——這是上一節那張 00:00:00 報表的來源。</p>
 </section>
-<section class="mod-sec sec-content"><h3>離開：這一次造訪從哪一頁結束</h3>
+<section class="mod-sec sec-content"><h3 id="sec-9">離開：這一次造訪從哪一頁結束</h3>
 <p>任何一頁都可能是離開網頁。使用者看了五頁才走，那第五頁就是離開網頁，前四頁不是。</p>
 <p>所以<strong>每一個工作階段一定有一個離開網頁，但不一定有跳出</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>跳出率與離開率會反向：內容網站可能跳出 90%</h3>
+<section class="mod-sec sec-content"><h3 id="sec-10">跳出率與離開率會反向：內容網站可能跳出 90%</h3>
 <p>跳出率高，通常代表大量來自搜尋或社群的一次性流量——來看一篇就走。內容網站的跳出率高達 90% 並不罕見。</p>
 <p>跳出率也<strong>與工作階段時間長度呈反比</strong>：跳出多，被記成 0 的工作階段就多，平均時間自然被拉低。</p>
 </section>
-<section class="mod-sec sec-content"><h3>用五天的紀錄自己算一次</h3>
+<section class="mod-sec sec-content"><h3 id="sec-11">用五天的紀錄自己算一次</h3>
 <p>某個只有三頁的小網站，五天的瀏覽紀錄如下：</p>
 <table>
 <thead>
@@ -254,52 +253,52 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ③ 離開率多少才算正常</h3>
+<section class="mod-sec sec-content"><h3 id="sec-12">進行方式 ③ 離開率多少才算正常</h3>
 <ul>
 <li>離開率沒有一個「好」的標準值，<strong>只有相對於頁面角色的合理區間</strong>。</li>
 <li>三種頁面各有各的期待：內容頁差不多就好、索引頁越低越好、流程中間頁不該高。</li>
 <li>這一段結束你要能對一張報表指出「哪一頁的離開率不合理」。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>內容頁：彼此差不多就對了</h3>
+<section class="mod-sec sec-content"><h3 id="sec-13">內容頁：彼此差不多就對了</h3>
 <p>同一類的文章頁，離開率應該落在相近的區間。<strong>要看的不是絕對值，是誰特別高。</strong></p>
 <p>某一篇特別高，才值得去看那一篇發生什麼事——標題騙人、內容太短、廣告太多、載入太慢。</p>
 </section>
-<section class="mod-sec sec-content"><h3>索引頁：離開率應該壓到很低</h3>
+<section class="mod-sec sec-content"><h3 id="sec-14">索引頁：離開率應該壓到很低</h3>
 <p>首頁、分類頁、標籤頁的存在目的就是把人送去別的地方。使用者在索引頁離開，代表<strong>他沒有找到想看的東西</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>流程中間頁：離開率高就是漏水</h3>
+<section class="mod-sec sec-content"><h3 id="sec-15">流程中間頁：離開率高就是漏水</h3>
 <p>有明確目的的流程——註冊、結帳、報名——中間每一步的離開率都應該低。某一步特別高，那一步就是漏水的地方，而且通常修得回來。</p>
 </section>
-<section class="mod-sec sec-content"><h3>到達網頁與離開網頁在內容網站經常是同一頁</h3>
+<section class="mod-sec sec-content"><h3 id="sec-16">到達網頁與離開網頁在內容網站經常是同一頁</h3>
 <p>內容網站的使用者從搜尋或社群直接進到某一篇文章，看完就走，那一頁同時是到達網頁與離開網頁。</p>
 <p>電子商務網站不一樣：進站頁通常是商品頁或廣告到達頁，離開頁多半在購物流程上。<strong>兩種網站要看的位置不同，用同一套標準會誤判。</strong></p>
 </section>
-<section class="mod-sec sec-content"><h3>一個真實的數字：大學報首頁</h3>
+<section class="mod-sec sec-content"><h3 id="sec-17">一個真實的數字：大學報首頁</h3>
 <p>政大《大學報》首頁的跳出率 39.8%、離開率 39.1%。</p>
 <p>用上面的標準讀：<strong>這是索引頁，39% 偏高</strong>——四成的人打開首頁沒有點進任何一篇。這不是災難，但它是一個可以修的地方，而且修的方向很明確：首頁上讓人想點的東西不夠。</p>
 <hr />
 </section>
-<section class="mod-sec sec-activity"><h3>進行方式 ④ 要不要為了降低離開率而動手</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-18">進行方式 ④ 要不要為了降低離開率而動手</h3>
 <ul>
 <li>降低離開率的手法都有效，差別在<strong>使用者有沒有得到東西</strong>。</li>
 <li>判準沿用前兩節：這個做法是把餅做大，還是把同一批人多繞幾圈。</li>
 <li>這一段結束你要對一個具體做法下判斷，並寫出不採用的理由。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>內容鑽研報表告訴你該修哪一區</h3>
+<section class="mod-sec sec-content"><h3 id="sec-19">內容鑽研報表告訴你該修哪一區</h3>
 <p>大型網站的頁面太多，一頁一頁看沒有意義。內容鑽研（Content Drill Down）按目錄層級聚合，讓你先看到<strong>哪一個區塊</strong>表現不同，再往下鑽。</p>
 <p>先看區塊、再看頁面，這個順序在幾千頁的網站上是唯一做得完的做法。</p>
 </section>
-<section class="mod-sec sec-content"><h3>到達網頁值得集中火力</h3>
+<section class="mod-sec sec-content"><h3 id="sec-20">到達網頁值得集中火力</h3>
 <p>每一次工作階段的第一頁就是到達網頁，它通常也是搜尋表現最好的那一頁。</p>
 <p><strong>優化資源有限的時候，先修到達網頁</strong>——它同時影響跳出率、後續頁數與轉換，投報率最高。</p>
 </section>
-<section class="mod-sec sec-content"><h3>網站速度是最沒有爭議的一個修法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-21">網站速度是最沒有爭議的一個修法</h3>
 <p>頁面載入太慢，使用者直接跳掉。影響速度的變數包含瀏覽器、國家、頁面大小。</p>
 <p>這是少數<strong>改了之後所有指標一起變好、而且使用者真的得到好處</strong>的做法。要挑一件事做，先做這個。</p>
 </section>
-<section class="mod-sec sec-content"><h3>判準：使用者有沒有拿到他要的東西</h3>
+<section class="mod-sec sec-content"><h3 id="sec-22">判準：使用者有沒有拿到他要的東西</h3>
 <p>在文末塞十篇推薦，離開率會降——但那是因為使用者在找出口的路上被絆住。同樣是離開率下降，改善速度是使用者真的得到好處。</p>
 <p><strong>兩種做法在報表上長得一樣。</strong>這是這門課第三次出現同一個結構了。</p>
 <blockquote>
@@ -307,7 +306,7 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-23">⚠️ 迷思攔截</h3>
 <table>
 <thead>
 <tr>
@@ -351,7 +350,7 @@ MathJax = {
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-24">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_Session_%E7%9A%84%E5%AE%9A%E7%BE%A9%E8%88%87%E5%9B%9B%E7%A8%AE%E5%88%87%E6%B3%95.html">Session 的定義與四種切法</a>——跳出與離開都定義在工作階段的邊界上，先有邊界才有這兩個數字。</li>
 <li><strong>後續</strong>：<a href="M_%E6%B5%81%E9%87%8F%E5%BE%9E%E5%93%AA%E8%A3%A1%E4%BE%86_Source_Medium_%E8%88%87_Channel.html">流量從哪裡來 Source Medium 與 Channel</a>——不同來源進來的人跳出率差很多，下一節講來源怎麼分類。</li>
@@ -359,9 +358,9 @@ MathJax = {
 <li><strong>平行相關</strong>：<a href="M_%E9%9B%BB%E5%95%86%E8%88%87_AARRR_%E6%BC%8F%E6%96%97.html">電商與 AARRR 漏斗</a>（W8）——流程中間頁的離開率就是漏斗的漏水點，那一節會用同一組概念做完整診斷。</li>
 </ul>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 討論／分享／反思</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-25">💬 討論／分享／反思</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>判例演練</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-26">判例演練</h3>
 <p>請同學兩人一組，用五天的紀錄算完 B、C 兩頁，然後回答：</p>
 <ol>
 <li>C 的跳出率是 100%，這一頁該修嗎？先說「該修」的理由，再說「不必修」的理由</li>
@@ -369,7 +368,7 @@ MathJax = {
 <li>如果星期六又來了一個人，只看 A 就離開，A 的兩個數字會怎麼變</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>配對分享</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-27">配對分享</h3>
 <p>請同學兩兩一組，各挑一種頁面（內容頁、索引頁、流程中間頁）：</p>
 <ol>
 <li>說出這種頁面的離開率合理區間，以及理由</li>
@@ -377,20 +376,38 @@ MathJax = {
 <li>一起想一個不必犧牲使用者就能降低離開率的做法</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>寫下反思</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-28">寫下反思</h3>
 <p>請寫下這一句並補完：</p>
 <blockquote>
 <p>為了讓數字好看，我不會做＿＿＿，因為＿＿＿。</p>
 </blockquote>
 </section>
-<section class="mod-sec sec-homework"><h3>小作業</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-29">小作業</h3>
 <p>找一個你自己有後台的網站或帳號（沒有的話用學校的公開報表也可以），挑三個頁面，抄下它們的離開率，並寫出：</p>
 <ol>
 <li>這三頁各屬於哪一種頁面（內容頁／索引頁／流程頁）</li>
 <li>哪一頁的離開率不合理，理由是什麼</li>
 <li>你會怎麼修，以及這個修法有沒有讓使用者拿到東西</li>
 </ol></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

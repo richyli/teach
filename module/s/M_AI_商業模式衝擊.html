@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 商業模式衝擊</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>AI 商業模式衝擊</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">流量崩解：零點擊經濟</a></li><li><a href="#sec-2">兩條路：授權金 vs 訴訟</a></li><li><a href="#sec-3">主管視角：營收防守與進攻</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI 商業模式衝擊</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背幾個訴訟案名，是為了看懂 AI 正在從哪裡掏空你的媒體營收，以及該守哪裡、攻哪裡。</p>
 <table>
 <thead>
@@ -55,7 +54,7 @@
 </blockquote>
 <p>AI 反問的三題裡，把你<strong>答得最心虛的那一題</strong>寫下來帶進課堂——那就是你在討論段的發言素材。</p>
 </section>
-<section class="mod-sec sec-content"><h3>流量崩解：零點擊經濟</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">流量崩解：零點擊經濟</h3>
 <p><strong>舊的搜尋契約是這樣的</strong>：使用者在 Google 打字 → 看到一排藍色連結 → <strong>點進</strong>新聞網站 → 媒體拿到一次導入流量、賣出一次廣告曝光。整套廣告營收，建立在「使用者非得點進來不可」這個前提上。</p>
 <p><strong>AI 摘要 / 對話式搜尋把這個前提拆了</strong>。現在使用者問一句，AI 直接在搜尋結果頁上方、或在對話框裡，<strong>把答案整理好端到面前</strong>——答案是用你的報導餵出來的，但使用者<strong>不必點進你的網站就拿到了</strong>。這就是「零點擊（zero-click）」：需求被滿足，流量卻沒流到你這裡。</p>
 <p>文字版機制圖解，把斷點標出來：</p>
@@ -82,7 +81,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>兩條路：授權金 vs 訴訟</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">兩條路：授權金 vs 訴訟</h3>
 <p>同一個侵權事實——AI 公司未經授權拿新聞內容去訓練、去生成摘要——媒體界卻走出<strong>兩條相反的路</strong>，而且常常<strong>同一家公司兩手並用</strong>。</p>
 <p><strong>第一條路：談授權金（License）。</strong> NYT、AP、Axel Springer 等與 OpenAI／Google 簽約，把內容授權給 AI 公司換取權利金與合作條件。等於承認「擋不住，那就把它變成一條新收入」。</p>
 <p><strong>第二條路：提告（Litigate）。</strong> NYT v. OpenAI 主張 OpenAI 未經授權拿其報導訓練模型、生成可替代原文的輸出，要求賠償與禁制。等於用法律把「未授權使用」標成違法，<strong>墊高 AI 公司的成本，也墊高自己日後談判的價碼</strong>。</p>
@@ -139,7 +138,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>主管視角：營收防守與進攻</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管視角：營收防守與進攻</h3>
 <p>別把「AI 衝擊」當成一團模糊的威脅。<strong>把營收攤成四塊，逐塊問 AI 在這裡是威脅還是機會</strong>，威脅就防守、機會就進攻。</p>
 <table>
 <thead>
@@ -240,7 +239,25 @@
 - <strong>一起收斂一題</strong>：投票表決──如果只能押一條路，你選「告 OpenAI 拿賠償」還是「簽授權金合作」？各陣營講一句理由，老師標出立場分布。
 - <strong>寫下個人反思</strong>：寫一句──回到我關心的媒體／產業，AI 對它的商業模式，「最先崩的是哪一塊收入、我打算用哪個再定位動作去補」。</p>
 </blockquote></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 偏誤探針實作</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>AI 偏誤探針實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">為什麼直接問沒用：四個機制</a></li><li><a href="#sec-2">現場開跑：六個維度、兩類偏誤</a></li><li><a href="#sec-3">判讀的三條界線</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI 偏誤探針實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背「AI 有偏見」這句結論——那句話學生早就會說了——而是為了<strong>自己動手把偏誤逼出來、量出來、並判斷它到底算不算偏誤</strong>。</p>
 <table>
 <thead>
@@ -61,7 +60,7 @@
 <p><strong>把兩份回答並排帶來課堂。</strong> 第一份是它宣稱的自己，第二份是它實際的自己——這個落差就是 15′a 的開場，也是整堂課的地基。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>為什麼直接問沒用：四個機制</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">為什麼直接問沒用：四個機制</h3>
 <p>開場先讓兩三位同學念出課前作業的第一份回答。它們會長得很像：「我可能會受訓練資料影響，我會盡量注意多元性……」誠懇、得體、毫無資訊。</p>
 <p><strong>問題出在你問的是它的說法，不是它的行為。</strong> 模型被問到「你有沒有偏見」時進入的是審查模式，它很清楚社會期待的答案長什麼樣。要看到行為，就要讓它在<strong>不知道自己被測</strong>的情況下做事。這就是探針題的全部技術。</p>
 </section>
@@ -107,7 +106,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>現場開跑：六個維度、兩類偏誤</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">現場開跑：六個維度、兩類偏誤</h3>
 <p>發下 <a href="../_exercises/E%20AI%20偏誤探針題庫.md">E AI 偏誤探針題庫</a>，兩人一組，<strong>每組分到不同維度</strong>（性別／種族國籍／體態／膚色／年齡／職業階級），現場跑，同時填記錄表。</p>
 </section>
 <section class="mod-sec sec-content"><h4>先講清楚兩類偏誤要的證據不一樣</h4>
@@ -164,7 +163,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>判讀的三條界線</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">判讀的三條界線</h3>
 <p>跑出數據只是一半。這一段處理更難的問題：<strong>你手上這個偏斜，到底算不算偏誤？</strong></p>
 </section>
 <section class="mod-sec sec-content"><h4>界線一：基準率 vs 固化（本堂課的核心爭議，不給標準答案）</h4>
@@ -253,7 +252,25 @@
 <p><strong>小作業</strong>：針對你自己的領域（新聞路線／產業／課堂）設計<strong>一題原創探針</strong>，說明它用了四機制中的哪幾個、預期會抓到哪一類偏誤、真實基準去哪裡找，並附至少 8 次的實測記錄與判讀。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

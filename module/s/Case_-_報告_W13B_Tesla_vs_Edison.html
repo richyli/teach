@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>W13-B 報告案例｜電流戰爭</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,12 +14,11 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>W13-B 報告案例｜電流戰爭</h1></div><p>你要報告的是：報告技術選擇如何被商業與輿論左右，不是選邊站。</p>
-<section class="mod-sec sec-content"><h3>背景</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">背景</a></li><li><a href="#sec-2">容易報錯的地方</a></li><li><a href="#sec-3">你要自己找的那一段</a></li><li><a href="#sec-4">如果當初就有 AI</a></li><li><a href="#sec-5">從哪裡開始查</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>W13-B 報告案例｜電流戰爭</h1></div><p>你要報告的是：報告技術選擇如何被商業與輿論左右，不是選邊站。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">背景</h3>
 <p>1880 年代末到 1890 年代，直流電（Edison 陣營）與交流電（Westinghouse 與 Tesla 陣營）競爭電力系統的標準。直流電先起步、設備已布建，但長距離輸電損耗大；交流電可以升壓長途輸送，成本結構更好。這場競爭不只在技術層面進行，也包含公開示範、安全宣傳與輿論戰。最終交流電成為輸配電的主流。</p>
 </section>
-<section class="mod-sec sec-content"><h3>容易報錯的地方</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">容易報錯的地方</h3>
 <ul>
 <li>網路上流傳的「Edison 是壞人、Tesla 是被埋沒的天才」敘事高度簡化，許多細節被誇大或錯置，報告前務必查證。</li>
 <li>重點是：技術標準之爭往往不是由技術優劣單獨決定的。這比誰是英雄有價值。</li>
@@ -27,11 +26,11 @@ MathJax = {
 </ul>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這個案例要特別小心</span><p>這是本清單裡網路錯誤資訊最多的案例，請特別注意來源品質。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>你要自己找的那一段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">你要自己找的那一段</h3>
 <p>背景給你的是「當時的做法」與「後來發生什麼」。<strong>第二段的隱形假設，這一頁刻意不寫</strong>——那是報告要交出來的東西，也是評分主要看的地方。</p>
 <p>往哪裡找：問「他們這樣做，是因為預設了什麼？」那個預設，當時的人如果被問到會覺得「這還用說嗎」。</p>
 </section>
-<section class="mod-sec sec-content"><h3>如果當初就有 AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">如果當初就有 AI</h3>
 <p>每個案例都要問這三題，報告與課堂討論都用得上：</p>
 <ol>
 <li>從這個故事，你想到自己手上的哪一件事？</li>
@@ -45,14 +44,32 @@ MathJax = {
 </ul>
 <p>報告時請回答：今天 AI 標準之爭裡，有多少是技術、多少是別的？</p>
 </section>
-<section class="mod-sec sec-content"><h3>從哪裡開始查</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">從哪裡開始查</h3>
 <ul>
 <li>電力史的學術回顧（搜尋 War of the Currents historiography）</li>
 <li>IEEE 的歷史檔案</li>
 </ul>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜查資料的兩個提醒</span><p>一、這些案例多半有一個流傳很廣的「乾淨版本」，細節在不同來源裡常常不一致。查到兩個說法不同時，把分歧本身講出來，那比挑一個講得順的版本有價值。
 二、AI 給你的通常就是那個乾淨版本。它幫得上你找方向，但第二段要靠你自己想。</p></div></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

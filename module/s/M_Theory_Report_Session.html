@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Theory Report Session</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Theory Report Session</h1></div><p>This unit covers how the weekly theory report runs, what the reporting pair owes the room, and how everyone else earns marks while someone else is presenting.</p>
-<section class="mod-sec sec-content"><h3>A rotating pair opens every session from W3 to W15</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">A rotating pair opens every session from W3 to W15</a></li><li><a href="#sec-2">The session runs in six stages so that listening is graded too</a></li><li><a href="#sec-3">How the time is spent</a></li><li><a href="#sec-4">Grading</a></li><li><a href="#sec-5">💬 Discussion and reflection</a></li><li><a href="#sec-6">Pair review</a></li><li><a href="#sec-7">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Theory Report Session</h1></div><p>This unit covers how the weekly theory report runs, what the reporting pair owes the room, and how everyone else earns marks while someone else is presenting.</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">A rotating pair opens every session from W3 to W15</h3>
 <p>The pair or trio on duty gives a 15-minute student-led report on that week's Primary Theory: the original source, the core mechanism, one classic empirical study, one criticism, and two discussion prompts that tie the theory to that week's product topic.</p>
 <p>The full week-by-week list, the supporting theories, and a primer page for every theory are in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>The session runs in six stages so that listening is graded too</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">The session runs in six stages so that listening is graded too</h3>
 <p>Pre-class question submission → the 15-minute talk → an AI translator round → a red-team challenge → a theory-in-use map → a one-line synthesis. If you are not presenting, stages 3 to 6 are where your participation mark comes from.</p>
 </section>
-<section class="mod-sec sec-content"><h3>How the time is spent</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">How the time is spent</h3>
 <table>
 <thead>
 <tr>
@@ -44,12 +43,12 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>Grading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Grading</h3>
 <p>The report feeds the "Using Theory in Product Sharing" rubric — two reports at 10% each, 20% of the course grade. Dimensions and what a 4 looks like are in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a> and in the syllabus.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-5">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-6">Pair review</h3>
 <p>Find a partner as soon as the report ends.</p>
 <ol>
 <li>Restate the theory's mechanism to each other in one sentence</li>
@@ -57,9 +56,27 @@
 <li>Check the reporting pair's two discussion prompts — do they actually connect to this week's product topic?</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-7">Individual reflection</h3>
 <p>Write one sentence to keep: "The one mechanism from this week's theory most likely to change how I look at my own product is <strong><em>_</em>_, because </strong>____."</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>創意週記與評量導引</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>創意週記與評量導引</h1></div><p>在本單元中，會介紹用評分標準檢查自己的創意週記、也用它評別人的作品。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">週記怎麼寫、怎麼被評</a></li><li><a href="#sec-2">Peer Review 品質：評的是你的評語，不是你的作品</a></li><li><a href="#sec-3">整學期評量節奏</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>創意週記與評量導引</h1></div><p>在本單元中，會介紹用評分標準檢查自己的創意週記、也用它評別人的作品。</p>
 <section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
@@ -65,7 +64,7 @@ MathJax = {
 <p>週記題目每週不同，但都扣回「隱形假設／創意類型」（題庫見 2026 課綱 每週週記欄）。13 週取最佳 10 篇，等於你有 3 次自由跳過。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>週記怎麼寫、怎麼被評</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">週記怎麼寫、怎麼被評</h3>
 <ul>
 <li>週記不是心得：rubric 的兩個維度都不含文筆、結構、字數、感人。</li>
 <li>1 分到 3 分的差別是「有沒有用理論做出一次判斷」；3 分到 4 分的差別是「有沒有你自己的質疑」。</li>
@@ -154,7 +153,7 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>Peer Review 品質：評的是你的評語，不是你的作品</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Peer Review 品質：評的是你的評語，不是你的作品</h3>
 <ul>
 <li>這一項佔 15%、全部由教師評，每週抽查 10–15 份同儕回饋文字。</li>
 <li>「寫得很好，加油」扣的是你自己的分；「圖很漂亮」用了明令禁止的美感標準。</li>
@@ -198,7 +197,7 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>整學期評量節奏</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">整學期評量節奏</h3>
 <ul>
 <li>教師實際決定的成績約 45%：理論短文 20%＋Peer Review 品質 15%＋期末的一半 10%。</li>
 <li>其餘 55% 由同儕決定——所以「會不會評」本身就是一項要練、而且單獨計分的能力。</li>
@@ -318,7 +317,25 @@ MathJax = {
 <p>聽完追問對方一句：「這真的是假設，還是其實是事實？」</p>
 <h5>個人反思</h5>
 <p>在週記最後補一行：「這次我是把概念具象化了，還是只是寫得漂亮？」</p></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sociomateriality</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Sociomateriality</h1></div><p>A short primer on Sociomateriality: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Sociomateriality</h1></div><p>A short primer on Sociomateriality: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Wanda J. Orlikowski (2007); Paul M. Leonardi (2013)</strong> — "The social and the material are constitutively entangled."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>There is no purely "social" team and no purely "technical" tool — they only exist through each other in practice.</p>
 </blockquote>
@@ -22,21 +21,21 @@
 <li>The same Claude Skill is a different thing in two different teams</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Supporting theory</strong> in W3 Content Product, W9 Product Design &amp; Wireframe, W13 Synthetic Data &amp; AI Persona — optional stretch material, and a useful contrasting lens in those weeks.</li>
 <li>It is never the week's Primary theory, so no report is assigned to it. It still earns marks when it does real work in a pitch.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face a product decision, ask:
 1. Where am I describing the tool and the team as if they were separable?
 2. What practices produce this tool's agency in <em>this</em> team?
 3. If I move the tool to another team, what materializes differently?
 4. Whose body, screen, or hand is doing the work the slide deck attributes to "the system"?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Orlikowski 2007, <em>Organization Studies</em> 28(9)</strong> — "Sociomaterial Practices" (see Orlikowski 2007 Sociomaterial Practices)</li>
 <li><strong>Leonardi 2013, <em>Information &amp; Organization</em> 23(2)</strong> — sociomateriality without the entanglement metaphysics (see Leonardi 2012 Sociomateriality lens)</li>
@@ -44,22 +43,40 @@
 </ul>
 <p>(Genealogy note: Orlikowski Sociomateriality Theoretical Genealogy)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>Practice trace</strong> — when the same Skill works in Team A and fails in Team B, document the <em>practice</em>, not the prompt
 2. <strong>Material agency log</strong> — record where Claude refused, drifted, or surprised you; treat these as data, not noise
 3. <strong>Reframe "AI literacy"</strong> — measure capability at the team-tool unit, not the individual</p>
 <p>⚠️ Failure mode: using "sociomateriality" as a buzzword while still writing roadmaps that separate "tech work" from "change management."</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>Pick one AI tool you used this semester. What does it do in your team that it doesn't do in another?</li>
 <li>If we can't separate the social from the material, what happens to the PM concept of "requirements"?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Sociomateriality. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

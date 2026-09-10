@@ -4,20 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BRD｜商業需求文件</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>BRD｜商業需求文件</h1></div><p>Business Requirement Document</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">What this term means｜這個詞在說什麼</a></li><li><a href="#sec-2">Common misconceptions｜常見誤解</a></li><li><a href="#sec-3">Related terms｜相關詞</a></li><li><a href="#sec-4">Where it appears｜出現在</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>BRD｜商業需求文件</h1></div><p>Business Requirement Document</p>
 <p>The document that argues why the company should spend money on this at all — written for executives, usually before any product exists.</p>
 <p>說明「公司為什麼該把錢花在這件事上」的文件，寫給高階主管看，通常在產品還不存在時就寫。</p>
-<section class="mod-sec sec-content"><h3>What this term means｜這個詞在說什麼</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">What this term means｜這個詞在說什麼</h3>
 <p>The BRD sits upstream of the other two: first the business case, then the market argument (<a href="Term_-_MRD.html">MRD</a>), then the specification (<a href="Term_-_PRD.html">PRD</a>).</p>
 <p>It talks about revenue, cost, risk and timing, not about interfaces. Small media and content companies in Taiwan often skip the BRD and start at the MRD. That is not wrong, but you should know which layer of the argument you skipped.</p>
 <p>BRD 站在三份文件的最上游：先有商業理由，才有市場論證（MRD），最後才有規格（PRD）。</p>
 <p>它談的是營收、成本、風險與時程，不談介面。台灣的中小型媒體與內容公司常常跳過 BRD 直接寫 MRD，這不算錯，但你要知道自己跳過了哪一層論證。</p>
 </section>
-<section class="mod-sec sec-myths"><h3>Common misconceptions｜常見誤解</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-2">Common misconceptions｜常見誤解</h3>
 <ul>
 <li>
 <p>Treating the BRD as a longer MRD. The readers and the questions differ: a BRD asks whether it is worth it, an MRD asks whether anybody wants it.</p>
@@ -27,12 +26,30 @@
 </li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Related terms｜相關詞</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Related terms｜相關詞</h3>
 <p><a href="Term_-_MRD.html">MRD</a>、<a href="Term_-_PRD.html">PRD</a></p>
 </section>
-<section class="mod-sec sec-content"><h3>Where it appears｜出現在</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Where it appears｜出現在</h3>
 <p><a href="M_Course_Orientation_and_Assessment.html">Course Orientation and Assessment</a>、<a href="M_Requirement_Documents_BRD_to_FSD.html">Requirement Documents BRD to FSD</a></p></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

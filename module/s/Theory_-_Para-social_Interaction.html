@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Para-social Interaction</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Para-social Interaction</h1></div><p>A short primer on Para-social Interaction Theory: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Para-social Interaction</h1></div><p>A short primer on Para-social Interaction Theory: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Donald Horton &amp; R. Richard Wohl (1956)</strong> — "Audiences form one-sided relationships with media personas — and now with AI agents."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>Audiences experience media personas as if they were in a real social relationship — even though the persona cannot reciprocate.</p>
 </blockquote>
@@ -24,21 +23,21 @@
 - <strong>Transportation</strong> — narrative absorption that lowers critical distance</p>
 <p>Originally about TV hosts. Now alarmingly relevant to AI agents.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Primary theory</strong> in W13 Synthetic Data &amp; AI Persona — a rotating pair opens those sessions with a 15-minute report on it.</li>
 <li><strong>Supporting theory</strong> in W6 Understanding Audiences &amp; Users — optional stretch material, and a useful contrasting lens in those weeks.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face an AI-persona decision, ask:
 1. Are we designing for PSI (single session) or PSR (durable bond)?
 2. Where are we manufacturing illusions of reciprocity that the system cannot honour?
 3. What happens at the breakdown moment — when the user notices the asymmetry?
 4. Is our research method itself producing PSI artefacts (e.g., synthetic users that are <em>too</em> agreeable)?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Horton &amp; Wohl 1956</strong>, <em>Psychiatry</em> 19(3), "Mass Communication and Para-social Interaction" — the founding paper</li>
 <li><strong>Rubin &amp; McHugh 1987</strong>, <em>Journal of Broadcasting &amp; Electronic Media</em> 31(3) — PSR development and attachment</li>
@@ -46,22 +45,40 @@
 </ul>
 <p>(See also: Lou 2022 Social Media Influencers Trans-Parasocial for influencer-era extension)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>PSI-aware persona design</strong> — design AI agents <em>assuming</em> users will para-social with them, and engineer healthy asymmetry cues in
 2. <strong>Synthetic personas with disclosure</strong> — use AI personas in research, but always flag the PSI risk and triangulate with real users
 3. <strong>Breakdown rehearsal</strong> — script the moment the illusion breaks (model swap, downtime, refusal) and design recovery flows</p>
 <p>⚠️ Failure mode: synthetic users are <em>too easy</em> to relate to → researchers over-trust their feedback. The W13 lab compares PSI signals between synthetic and real users to expose this gap.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>If a user prefers an AI agent's empathy over a human friend's, is that a feature or a harm? Who decides?</li>
 <li>Horton &amp; Wohl wrote about TV hosts who could not see the audience. AI agents <em>can</em> (sort of) see the user. Does that make PSI obsolete, or far more dangerous?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Para-social Interaction. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

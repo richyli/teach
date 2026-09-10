@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 地景與主管決策框架</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>AI 地景與主管決策框架</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">從 chatbot 到 agent 到深度研究（AI 地景三層）</a></li><li><a href="#sec-2">兩套法規：台灣 AI 基本法 vs EU AI Act</a></li><li><a href="#sec-3">主管的決策框架：固定問四題</a></li><li><a href="#sec-4">🚫 迷思攔截</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI 地景與主管決策框架</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背法條，是為了在董事會問「我們能不能用這個 AI」時，你答得出「落在哪一級、要不要揭露、誰負責」。</p>
 <table>
 <thead>
@@ -48,7 +47,7 @@
 </blockquote>
 <p>拿到答案後<strong>追問一次</strong>：「你引用的分級依據是哪一條？確定嗎？」觀察 AI 會不會改口。把它改口或含糊帶過的地方記下來帶進課堂——這正是這一堂「可追溯性」要教的東西，你已經先體驗過一次了。</p>
 </section>
-<section class="mod-sec sec-content"><h3>從 chatbot 到 agent 到深度研究（AI 地景三層）</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">從 chatbot 到 agent 到深度研究（AI 地景三層）</h3>
 <p>過去三年，外界口中的「AI」其實是三種能力不同的東西，主管最常踩的坑就是把它們混為一談。把它攤成一條演進線，每往右一層，能力更強、<strong>對編輯室的衝擊也更大、要管的風險也更多</strong>。</p>
 <table>
 <thead>
@@ -86,7 +85,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>兩套法規：台灣 AI 基本法 vs EU AI Act</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">兩套法規：台灣 AI 基本法 vs EU AI Act</h3>
 <p>主管不必背條文，但要知道自家應用「被誰管、管多嚴」。台灣與歐盟是兩種完全不同的監管哲學，服務歐盟使用者的媒體機構<strong>等於要同時看兩套</strong>。</p>
 <table>
 <thead>
@@ -135,7 +134,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>主管的決策框架：固定問四題</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管的決策框架：固定問四題</h3>
 <p>面對任何一項 AI 應用，主管不該臨場糾結，而是把它丟進同一張 checklist 走一遍。<strong>這四題就是把上面兩套抽象法規，落成日常編務的操作介面。</strong></p>
 <p><strong>決策四題 checklist</strong></p>
 <ol>
@@ -165,7 +164,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>🚫 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-4">🚫 迷思攔截</h3>
 <table>
 <thead>
 <tr>
@@ -215,7 +214,25 @@
 <li><a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>：深度研究為何「看起來可信卻可能幻覺」——用 entropy 的語言理解高不確定性下的硬猜。</li>
 <li>AI guidelines：機構層級的 AI 使用準則。</li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>科技採用：TAM-UTAUT 與經濟模型的交互</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>科技採用：TAM-UTAUT 與經濟模型的交互</h1></div><ul>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">微觀層：經濟模型是 TAM 的「上位翻譯」</a></li><li><a href="#sec-2">中觀層：經濟模型補上 UTAUT 缺的「他人」</a></li><li><a href="#sec-3">宏觀層：把個人意圖加總成市場軌跡</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>科技採用：TAM-UTAUT 與經濟模型的交互</h1></div><ul>
 <li><strong>核心關鍵句</strong>：TAM/UTAUT 和經濟模型<strong>不是競爭關係，而是不同層次</strong>。前者解釋「個人腦中怎麼形成採用意願」，後者解釋「這些意願在市場上加總後會怎麼演化」。</li>
 <li><strong>先修</strong>：知道 TAM 是 $\text{BI}=f(\text{PU},\text{PEOU})$、UTAUT 多了社會影響等構念即可；建議先上 <a href="M_%E7%A7%91%E6%8A%80%E6%8E%A1%E7%94%A8%E7%9A%84%E7%B6%93%E6%BF%9F%E5%AD%B8%E6%A8%A1%E5%9E%8B.html">科技採用的經濟學模型</a>。</li>
 </ul>
@@ -23,7 +22,7 @@ MathJax = {
 <p><strong>三層交互一句話</strong>：<strong>TAM/UTAUT 告訴你「為什麼一個人想用」，經濟模型告訴你「這些想法在市場裡會長成什麼形狀」。</strong> 一個是因，一個是果的演化。</p>
 </blockquote>
 <hr />
-<section class="mod-sec sec-content"><h3>微觀層：經濟模型是 TAM 的「上位翻譯」</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">微觀層：經濟模型是 TAM 的「上位翻譯」</h3>
 <p>TAM 的核心是 $\text{BI} = f(\text{PU}, \text{PEOU})$——行為意圖由知覺有用性、易用性決定。但 <strong>TAM 從沒說「意圖怎麼變成實際選擇」</strong>。</p>
 </section>
 <section class="mod-sec sec-content"><h4>McFadden 隨機效用正好接在 TAM 下游</h4>
@@ -39,7 +38,7 @@ $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsil
 <p><strong>自我消化</strong>：用一句話說，McFadden 補了 TAM 的哪個缺口？（答：把「意圖」這個態度變數，變成「選擇機率」這個可估、可加總的行為輸出。）</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>中觀層：經濟模型補上 UTAUT 缺的「他人」</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">中觀層：經濟模型補上 UTAUT 缺的「他人」</h3>
 <p>UTAUT 比 TAM 多了 <strong>Social Influence（社會影響）</strong>，但它只是一個橫斷面的態度變數——「我覺得重要的人認為我該用」。它<strong>沒有動態、沒有人數</strong>。這正是擴散與網路模型切入的地方。</p>
 <table>
 <thead>
@@ -78,7 +77,7 @@ $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsil
 <p><strong>自我消化</strong>：UTAUT 說「社會影響 → 採用意圖」。Bass 模型把同一件事改寫成什麼？（答：採用速度正比於已採用人數，社會影響不再是常數而是會隨時間放大的力量。）</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>宏觀層：把個人意圖加總成市場軌跡</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">宏觀層：把個人意圖加總成市場軌跡</h3>
 <p>TAM/UTAUT 預測<strong>一個人</strong>的採用機率；Bass、Romer、GPT 預測<strong>一個市場</strong>的採用曲線。兩者用「加總（aggregation）」連起來：</p>
 <p>個體 logit 機率 $P_i(t)$ → 對人群積分 → 總採用 $N(t)$ → 這就是 Bass 的 S 曲線。<strong>有微觀基礎（micro-foundation）的擴散模型，本質就是「把一堆 TAM 決策加起來」。</strong></p>
 <p>再往上，<strong>GPT 理論</strong>解釋為何 AI 這種通用技術即使個人 PU 很高，總體生產力仍延遲顯現（Solow 悖論）——因為要等互補投資、組織重構到位。這是 TAM 完全觸及不到的時間尺度。</p>
@@ -94,7 +93,25 @@ $$U_{ij} = \beta_1 \text{PU}_{ij} + \beta_2 \text{PEOU}_{ij} + \dots + \varepsil
 <p><strong>小作業</strong>：找一份用 TAM/UTAUT 的論文，指出它「停在哪一層」（多半停在個人意圖），並寫下若要延伸到市場演化，你會接上這一堂哪一個經濟模型、補什麼假設。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

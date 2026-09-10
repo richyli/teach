@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>從 Shannon 到 LLM</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>從 Shannon 到 LLM</h1></div><p>1948 年的詞二階近似，跟 2026 年的 GPT，是同一條線上的東西。
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">那條線：從手工抽字到 Transformer</a></li><li><a href="#sec-2">高熵、低熵，與 temperature 這個旋鈕</a></li><li><a href="#sec-3">交叉熵：模型錯得多離譜，以及它的理論下限</a></li><li><a href="#sec-4">先修與後續</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>從 Shannon 到 LLM</h1></div><p>1948 年的詞二階近似，跟 2026 年的 GPT，是同一條線上的東西。
 這一堂把中間那七十幾年補起來，並且交出三個主管真的用得到的詞：
 <strong>temperature、cross entropy、蒸餾</strong>。接在 <a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">語言的階數近似與馬可夫鏈</a> 之後。</p>
 <section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
@@ -57,7 +56,7 @@ MathJax = {
 那不是它心情不同，是一個叫 temperature 的參數在動。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>那條線：從手工抽字到 Transformer</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">那條線：從手工抽字到 Transformer</h3>
 <table>
 <thead>
 <tr>
@@ -119,7 +118,7 @@ MathJax = {
 <strong>哪些工作只需要「最可能」，哪些工作需要「真的發生過」？</strong></p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>高熵、低熵，與 temperature 這個旋鈕</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">高熵、低熵，與 temperature 這個旋鈕</h3>
 <p>LLM 每一步都在輸出一個機率分布。分布的形狀決定了它的行為：</p>
 <table>
 <thead>
@@ -332,7 +331,7 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 這是你該問工程師的一題：<strong>「我們這個功能的 temperature 設多少？為什麼？」</strong></p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>交叉熵：模型錯得多離譜，以及它的理論下限</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">交叉熵：模型錯得多離譜，以及它的理論下限</h3>
 <p>訓練 LLM 時要最小化的那個數字叫<strong>交叉熵（cross entropy）</strong>：
 <strong>模型給「正確答案」的機率越低，交叉熵越高。</strong></p>
 <ul>
@@ -397,7 +396,7 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-4">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">語言的階數近似與馬可夫鏈</a>——沒有那條線，「LLM 是它的延伸」講不通</li>
 <li><strong>後續</strong>：<a href="M_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96%E8%88%87%E4%B8%8D%E7%A2%BA%E5%AE%9A%E6%80%A7.html">資訊理論與不確定性</a>（把這把尺用進日常決策）、<a href="M_%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E8%88%87_LLM_%E5%81%8F%E8%A6%8B%E4%BE%86%E6%BA%90.html">深度學習與 LLM 偏見來源</a>（偏見從哪來）</li>
@@ -417,7 +416,25 @@ temperature 這個參數做的事，就是<strong>人為地把分布拉平或壓
   各寫一句「我會怎麼跟工程師用這個詞」，收進個人 AI 工具箱。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

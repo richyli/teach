@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>W7-B 報告案例｜枯れた技術の水平思考</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,23 +14,22 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>W7-B 報告案例｜枯れた技術の水平思考</h1></div><p>你要報告的是：報告任天堂刻意選用「過時技術」的策略，不是報告掌機規格比較。</p>
-<section class="mod-sec sec-content"><h3>背景</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">背景</a></li><li><a href="#sec-2">容易報錯的地方</a></li><li><a href="#sec-3">你要自己找的那一段</a></li><li><a href="#sec-4">如果當初就有 AI</a></li><li><a href="#sec-5">從哪裡開始查</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>W7-B 報告案例｜枯れた技術の水平思考</h1></div><p>你要報告的是：報告任天堂刻意選用「過時技術」的策略，不是報告掌機規格比較。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">背景</h3>
 <p>1989 年上市的 Game Boy 用的是單色點陣螢幕與當時已經成熟便宜的零件，規格明顯落後同期的 Game Gear 與 Atari Lynx——那兩台都有彩色螢幕。但 Game Boy 的電池可以撐十幾個小時、機身耐摔、售價低，最後銷量遠超對手。設計者橫井軍平把這個做法稱為「枯れた技術の水平思考」：拿已經成熟、便宜、可靠的技術，放到一個全新的用法裡。</p>
 </section>
-<section class="mod-sec sec-content"><h3>容易報錯的地方</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">容易報錯的地方</h3>
 <ul>
 <li>不要用規格表比較誰比較強，那正好是這個案例要推翻的評價方式。</li>
 <li>重點是他重新定義了「掌上型遊戲機該優化什麼」——續航與價格，而不是畫面。</li>
 <li>彩色版 Game Boy Color 是 1998 年才推出的，不要把兩者混在一起講。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>你要自己找的那一段</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">你要自己找的那一段</h3>
 <p>背景給你的是「當時的做法」與「後來發生什麼」。<strong>第二段的隱形假設，這一頁刻意不寫</strong>——那是報告要交出來的東西，也是評分主要看的地方。</p>
 <p>往哪裡找：問「他們這樣做，是因為預設了什麼？」那個預設，當時的人如果被問到會覺得「這還用說嗎」。</p>
 </section>
-<section class="mod-sec sec-content"><h3>如果當初就有 AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">如果當初就有 AI</h3>
 <p>每個案例都要問這三題，報告與課堂討論都用得上：</p>
 <ol>
 <li>從這個故事，你想到自己手上的哪一件事？</li>
@@ -44,14 +43,32 @@ MathJax = {
 </ul>
 <p>報告時請回答：如果評價標準本身是錯的，最佳化還有意義嗎？</p>
 </section>
-<section class="mod-sec sec-content"><h3>從哪裡開始查</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">從哪裡開始查</h3>
 <ul>
 <li>橫井軍平的訪談與著作（《横井軍平ゲーム館》）</li>
 <li>任天堂官方的產品年表</li>
 </ul>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜查資料的兩個提醒</span><p>一、這些案例多半有一個流傳很廣的「乾淨版本」，細節在不同來源裡常常不一致。查到兩個說法不同時，把分歧本身講出來，那比挑一個講得順的版本有價值。
 二、AI 給你的通常就是那個乾淨版本。它幫得上你找方向，但第二段要靠你自己想。</p></div></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

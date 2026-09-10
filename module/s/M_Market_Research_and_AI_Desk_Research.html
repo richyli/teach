@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Market Research and AI Desk Research</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Market Research and AI Desk Research</h1></div><p>This unit covers three frameworks for reading a market, how to run desk research with an AI agent, and how to read a research report critically enough that it cannot sell you something.</p>
-<section class="mod-sec sec-content"><h3>Core</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">Core</a></li><li><a href="#sec-2">Reading a research report critically means checking three things</a></li><li><a href="#sec-3">Where AI desk research goes wrong</a></li><li><a href="#sec-4">Hands-on — Equivocal Market Brief</a></li><li><a href="#sec-5">✍️ Take-home task</a></li><li><a href="#sec-6">💬 Discussion and reflection</a></li><li><a href="#sec-7">Pair review</a></li><li><a href="#sec-8">Individual reflection</a></li><li><a href="#sec-9">Case library</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Market Research and AI Desk Research</h1></div><p>This unit covers three frameworks for reading a market, how to run desk research with an AI agent, and how to read a research report critically enough that it cannot sell you something.</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">Core</h3>
 <ul>
 <li>PEST, Five Forces, VRIO.</li>
 <li>AI-assisted desk research with Perplexity, Deep Research, and Gemini Deep Research.</li>
@@ -17,17 +16,17 @@
 <li>Primary theory: <a href="Theory_-_Sensemaking.html">Sensemaking</a> (Weick) — market research is collective meaning-making under equivocality. Supporting: <a href="Theory_-_Dynamic_Capabilities.html">Dynamic Capabilities</a> (sensing), <a href="Theory_-_Technology_Acceptance_Model.html">Technology Acceptance Model</a>.</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Reading a research report critically means checking three things</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Reading a research report critically means checking three things</h3>
 <ol>
 <li><strong>Who was sampled</strong> — how large the population is, and how the sample was drawn.</li>
 <li><strong>What the numbers mean</strong> — the definition and the time window. Is "30% growth" year on year or month on month, and how low was the base?</li>
 <li><strong>Who paid for it</strong> — consultancies publish reports that clear a path for their own services.</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where AI desk research goes wrong</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Where AI desk research goes wrong</h3>
 <p>Perplexity and Deep Research will hand you stale figures, marketing copy, and occasionally a hallucinated citation, all delivered with total confidence. Open every source link and verify it line by line, and require the agent to mark which statements are inference with no source behind them.</p>
 </section>
-<section class="mod-sec sec-activity"><h3>Hands-on — Equivocal Market Brief</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-4">Hands-on — Equivocal Market Brief</h3>
 <p>Your team receives a market dossier that is deliberately vague and partly self-contradictory.</p>
 <ol>
 <li>Use an Agentic AI to build a market narrative out of it</li>
@@ -35,12 +34,12 @@
 <li>Next week the ground truth is revealed, and you find out whose narrative held up</li>
 </ol>
 </section>
-<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-5">✍️ Take-home task</h3>
 <p>Submit your market narrative with each claim marked as AI inference or sourced.</p>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-6">💬 Discussion and reflection</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>Pair review</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-7">Pair review</h3>
 <p>Swap Equivocal Market Brief outputs with another team.</p>
 <ol>
 <li>Find the least defensible conclusion in their narrative</li>
@@ -48,14 +47,32 @@
 <li>If it is sourced, ask whether the source is credible, and say why</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>Individual reflection</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-8">Individual reflection</h3>
 <p>Write one sentence to keep: "Next time I use AI for desk research I will add one step to stop myself being convinced by a fake number, namely ______" — going back to original links every time, or listing the conclusion you most want to be true and then hunting for counter-evidence.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Case library</h3>
+<section class="mod-sec sec-content"><h3 id="sec-9">Case library</h3>
 <ul>
 <li><a href="../Product/Case%20-%20Anime%20Revenue%20Structure%20and%20Isekai%20Saturation.md">Case - Anime Revenue Structure and Isekai Saturation</a>: the W4 case. An extreme instance of buyer bargaining power in Five Forces; the failure mode where "the market you sized" and "the market that pays you" come apart; includes an exercise in verifying figures that have no source.</li>
 </ul></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

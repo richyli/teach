@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 倫理論文報告</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>AI 倫理論文報告</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">二、報告人鷹架</a></li><li><a href="#sec-2">三、全班追問題庫</a></li><li><a href="#sec-3">四、連回碩論的引導</a></li><li><a href="#sec-4">五、常見報告毛病與糾正引導</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI 倫理論文報告</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。這是論文報告模組，目標不只是「讀懂一篇倫理論文」，而是能批判它、把它落到台灣脈絡、接回自己的碩論。</p>
 <table>
 <thead>
@@ -43,7 +42,7 @@
 </ul>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>二、報告人鷹架</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">二、報告人鷹架</h3>
 <p>要求報告人不要把 15 分鐘花在複述論文摘要。三件事講清楚就好：<strong>這篇處理哪一種倫理問題 / 用什麼理論或方法切入 / 限制在哪。</strong> 老師可把下面這張檢核表先發給報告人，逼他自己拆解論文。</p>
 <table>
 <thead>
@@ -83,7 +82,7 @@
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>三、全班追問題庫</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">三、全班追問題庫</h3>
 <p>報告完，老師從下面挑 2–3 題丟給全班。重點不在挑論文小毛病，而在把倫理問題<strong>搬進台灣機構脈絡</strong>、逼出「誰受害、誰該扛」。</p>
 <blockquote>
 <ol>
@@ -99,7 +98,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>四、連回碩論的引導</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">四、連回碩論的引導</h3>
 <p>報告的終點不是評論這一篇，而是把它變成學生碩論裡的養分。「AI 中立是迷思」如果停在口號，碩論用不上；老師要帶你把它<strong>收斂成一個可研究的具體論點</strong>。三步：</p>
 <ol>
 <li><strong>從口號找受害者</strong>：別停在「AI 不中立」。問你——在你的碩論場景裡，「不中立」<strong>具體傷到誰</strong>？（例：財經新聞推薦演算法的偏差，傷到的是看不懂、又最需要正確資訊的散戶。）</li>
@@ -111,7 +110,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>五、常見報告毛病與糾正引導</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">五、常見報告毛病與糾正引導</h3>
 <table>
 <thead>
 <tr>
@@ -169,7 +168,25 @@
 <li><strong>機構層解方</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>——「倫理責任該由誰扛」收斂到媒體脈絡時，揭露與治理就是制度層的具體答案。</li>
 <li><strong>資料層根因</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>——演算法偏見追到底，常常是訓練資料本身的偏誤；報告談「同一個偏見在台灣會更嚴重還是更輕」時，這是必備背景。</li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

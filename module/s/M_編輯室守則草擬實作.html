@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>編輯室守則草擬實作</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>編輯室守則草擬實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">進行方式</a></li><li><a href="#sec-2">與其他模組的關係</a></li><li><a href="#sec-3">延伸個案</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>編輯室守則草擬實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@
 <p><strong>注意</strong>：它可能會編造不存在的準則內容或誤植機構。把它列的「三家」記下來，上課時我們只用<strong>結構</strong>，不引用它給的具體條文——這一題本身就是 AI 幻覺的實例。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">進行方式</h3>
 </section>
 <section class="mod-sec sec-content"><h4>一、草擬 v0.1（20′，個人或兩人一組）</h4>
 <p>依這五段寫，<strong>每段都要寫到具體到可以照做</strong>：</p>
@@ -137,7 +136,7 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>與其他模組的關係</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">與其他模組的關係</h3>
 <ul>
 <li><strong>原則在前</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>｜<strong>界線討論</strong>：<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">AI 界線討論</a></li>
 <li><strong>責任歸屬</strong>：<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%88%87%E6%A9%9F%E6%A7%8B%E5%80%AB%E7%90%86%E8%B2%AC%E4%BB%BB.html">AI 取代工作與機構倫理責任</a>｜<strong>個案</strong>：<a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">DOGE 用 AI 砍法規而政府拒絕揭露</a></li>
@@ -156,11 +155,29 @@
 </li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>延伸個案</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">延伸個案</h3>
 <ul>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：FTC 命令的六項要求可以直接當成守則骨架</li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

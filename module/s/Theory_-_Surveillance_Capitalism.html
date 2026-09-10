@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Surveillance Capitalism</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Surveillance Capitalism</h1></div><p>A short primer on Surveillance Capitalism: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">The core idea</a></li><li><a href="#sec-2">Where this theory sits in this course</a></li><li><a href="#sec-3">Lens questions</a></li><li><a href="#sec-4">Recommended reading</a></li><li><a href="#sec-5">Pair with Agentic AI</a></li><li><a href="#sec-6">Discussion</a></li><li><a href="#sec-7">Where to go deeper</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Surveillance Capitalism</h1></div><p>A short primer on Surveillance Capitalism: what it claims, where it sits in this course, and the questions it lets you ask about your own product.</p>
 <blockquote>
 <p><strong>Shoshana Zuboff (2015, 2019)</strong> — "Behavioural surplus → prediction products → markets in human futures."</p>
 </blockquote>
-<section class="mod-sec sec-content"><h3>The core idea</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">The core idea</h3>
 <blockquote>
 <p>Surveillance capitalism is a market logic that <strong>renders</strong> human experience as raw data, extracts a <strong>behavioural surplus</strong> beyond what is needed to serve the user, and sells <strong>prediction products</strong> in markets for future behaviour.</p>
 </blockquote>
@@ -24,21 +23,21 @@
 <li><strong>Big Other</strong> — the ubiquitous sensate computational architecture</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Where this theory sits in this course</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">Where this theory sits in this course</h3>
 <ul>
 <li><strong>Supporting theory</strong> in W3 Content Product — optional stretch material, and a useful contrasting lens in those weeks.</li>
 <li>It is never the week's Primary theory, so no report is assigned to it. It still earns marks when it does real work in a pitch.</li>
 </ul>
 <p>The full week-by-week list is in <a href="Theory_Report_Schedule.html">Theory Report Schedule</a>.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Lens questions</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Lens questions</h3>
 <p>When you face a product decision, ask:
 1. What <strong>behavioural surplus</strong> does this feature extract beyond what the user is paying for?
 2. Are we selling a service to the user, or <strong>predictions about the user</strong> to someone else?
 3. What does the <strong>prediction imperative</strong> push us to collect next — and have we said no anywhere?
 4. Where does our system <strong>modify behaviour</strong> rather than merely serve a request?</p>
 </section>
-<section class="mod-sec sec-content"><h3>Recommended reading</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Recommended reading</h3>
 <ul>
 <li><strong>Zuboff 2015, "Big Other"</strong> <em>Journal of Information Technology</em> 30(1) — see Zuboff 2015 Big Other</li>
 <li><strong>Zuboff 2019, <em>The Age of Surveillance Capitalism</em></strong> — the full theoretical statement</li>
@@ -46,22 +45,40 @@
 </ul>
 <p>(Zuboff scholar note: Zuboff, Shoshana)</p>
 </section>
-<section class="mod-sec sec-content"><h3>Pair with Agentic AI</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">Pair with Agentic AI</h3>
 <p>Three concrete moves for AI-assisted PM work:
 1. <strong>Audit your AI feature's extraction</strong> — list every data field collected, mark which serve the user vs which feed prediction products; the gap is the surplus
 2. <strong>Design for user agency over data</strong> before regulators force you — exportability, deletion, opt-out from training
 3. <strong>Watch the prediction imperative inside your team</strong> — every "we could collect X to improve Y" needs a counter-question: <em>whose</em> improvement?</p>
 <p>⚠️ Pitfall: assuming "we don't sell data" exempts you from the critique. The relevant variable is <strong>what behaviours the system modifies</strong>, not whether the surplus is monetised externally.</p>
 </section>
-<section class="mod-sec sec-content"><h3>Discussion</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">Discussion</h3>
 <ol>
 <li>Pick an AI feature in your stack. Map its extraction surface: service-data vs behavioural surplus. How big is the gap?</li>
 <li>If "Big Other" is already here, what is the most powerful refusal a single PM team can credibly make — and at what cost?</li>
 </ol>
 </section>
-<section class="mod-sec sec-content"><h3>Where to go deeper</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">Where to go deeper</h3>
 <p>The slide version of this primer, with the full diagram set, is Theory Intro - Surveillance Capitalism. Bring the founding reading, not the primer, to your report.</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

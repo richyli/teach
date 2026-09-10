@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>主管 AI 導入清單收斂</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>主管 AI 導入清單收斂</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">進行方式</a></li><li><a href="#sec-2">與其他模組的關係</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>主管 AI 導入清單收斂</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@
 <p>它會產出一份很像那麼一回事的清單。<strong>上課時我們要做的事是把它砍掉一半</strong>——它列的多半是任何一本管理書都會寫的話，這門課真正特有的東西，通常不在它的清單上。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">進行方式</h3>
 </section>
 <section class="mod-sec sec-content"><h4>一、各自挑三條</h4>
 <p>翻自己的筆記與作業，挑出三條<strong>你會寫在牆上的</strong>判斷。格式規定：</p>
@@ -136,7 +135,7 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>與其他模組的關係</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">與其他模組的關係</h3>
 <ul>
 <li><strong>同週前一個 slot</strong>：<a href="M_%E6%9C%9F%E6%9C%AB%E5%B0%8E%E5%85%A5%E6%8F%90%E6%A1%88%E7%99%BC%E8%A1%A8.html">期末導入提案發表</a></li>
 <li><strong>界線與責任</strong>：<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">AI 界線討論</a>｜<a href="M_AI_%E5%8F%96%E4%BB%A3%E5%B7%A5%E4%BD%9C%E8%88%87%E6%A9%9F%E6%A7%8B%E5%80%AB%E7%90%86%E8%B2%AC%E4%BB%BB.html">AI 取代工作與機構倫理責任</a>｜<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a></li>
@@ -154,7 +153,25 @@
 <p><strong>期末作品</strong>：全班共同清單（一頁）＋個人的一句碩論研究問題。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

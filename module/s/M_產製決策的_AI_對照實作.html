@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>產製決策的 AI 對照實作</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>產製決策的 AI 對照實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">進行方式</a></li><li><a href="#sec-2">與其他模組的關係</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>產製決策的 AI 對照實作</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <table>
 <thead>
 <tr>
@@ -46,7 +45,7 @@
 </ul>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">進行方式</h3>
 </section>
 <section class="mod-sec sec-activity"><h4>動手</h4>
 <ol>
@@ -129,7 +128,7 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>與其他模組的關係</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">與其他模組的關係</h3>
 <ul>
 <li><strong>理論在前</strong>：<a href="M_AI_%E7%94%A8%E9%80%B2%E7%B7%A8%E8%BC%AF%E8%88%87%E7%94%A2%E8%A3%BD%E6%B1%BA%E7%AD%96.html">AI 用進編輯與產製決策</a>（生成 vs 判斷、四欄流程卡）</li>
 <li><strong>想把流程自動化</strong>：<a href="M_Claude_Code_%E4%B8%B2%E5%B7%A5%E4%BD%9C%E6%B5%81.html">Claude Code 串工作流</a>｜<strong>做成工具</strong>：<a href="M_Vibe_Coding_%E5%81%9A%E5%B0%8F%E5%B7%A5%E5%85%B7.html">Vibe Coding 做小工具</a></li>
@@ -147,7 +146,25 @@
 <p><strong>小作業</strong>：繳交 A／B 對照（含三層差異表）＋一段推廣判斷（值不值得、壞在哪一步、誰驗收）。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

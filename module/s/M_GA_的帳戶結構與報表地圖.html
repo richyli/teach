@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GA 的帳戶結構與報表地圖</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,9 +14,8 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>GA 的帳戶結構與報表地圖</h1></div><p>在本單元中，會介紹 Google Analytics 的帳戶、資源、檢視三層怎麼組起來，五組報表分別回答什麼問題，以及目標與歸因為什麼決定了整份報表要怎麼讀。</p>
-<section class="mod-sec sec-objectives"><h3>🎯 學習目標</h3>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</a></li><li><a href="#sec-3">進行方式 ① 三層結構與那條不可逆的規則</a></li><li><a href="#sec-4">一個 Google 帳號可以掛很多個分析帳戶</a></li><li><a href="#sec-5">資源是資料的容器，換資源就是換一份資料</a></li><li><a href="#sec-6">檢視是同一份資料的不同看法，但篩選會真的丟掉東西</a></li><li><a href="#sec-7">所以永遠要留一個沒有篩選的檢視</a></li><li><a href="#sec-8">GA4 拿掉了檢視這一層，但坑還在</a></li><li><a href="#sec-9">進行方式 ② 五組報表各回答一種問題</a></li><li><a href="#sec-10">即時報表：只回答「現在正在發生什麼」</a></li><li><a href="#sec-11">目標對象：這些人是誰、用什麼看</a></li><li><a href="#sec-12">技術報表裡最有用的是螢幕解析度</a></li><li><a href="#sec-13">地區報表在台灣不準</a></li><li><a href="#sec-14">User Explorer 看得到單一使用者的完整行為</a></li><li><a href="#sec-15">客戶開發、行為、轉換分別對應前三節</a></li><li><a href="#sec-16">進行方式 ③ 目標決定整份報表怎麼讀</a></li><li><a href="#sec-17">目標是有商業或社會價值的行動</a></li><li><a href="#sec-18">目標通常會帶一個金額</a></li><li><a href="#sec-19">沒有目標的報表只能描述，不能判斷</a></li><li><a href="#sec-20">廣告的成本指標是另外一組</a></li><li><a href="#sec-21">歸因決定功勞算在誰頭上</a></li><li><a href="#sec-22">進行方式 ④ 跟別人比：基準化報表</a></li><li><a href="#sec-23">可以比的六個指標</a></li><li><a href="#sec-24">兩個限制要先講清楚</a></li><li><a href="#sec-25">它最好的用法是找方向，不是打分數</a></li><li><a href="#sec-26">⚠️ 迷思攔截</a></li><li><a href="#sec-27">先修與後續</a></li><li><a href="#sec-28">💬 討論／分享／反思</a></li><li><a href="#sec-29">判例演練</a></li><li><a href="#sec-30">配對分享</a></li><li><a href="#sec-31">寫下反思</a></li><li><a href="#sec-32">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>GA 的帳戶結構與報表地圖</h1></div><p>在本單元中，會介紹 Google Analytics 的帳戶、資源、檢視三層怎麼組起來，五組報表分別回答什麼問題，以及目標與歸因為什麼決定了整份報表要怎麼讀。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
 <tr>
@@ -44,7 +43,7 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-ai"><h3>🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動（10 分鐘，上課前完成）</h3>
 <p>請利用 AI 當成你的學習助理，請輸入下列提示</p>
 <blockquote>
 <p>請說明 Google Analytics 的帳戶（Account）、資源（Property）、檢視（View）三個層級各自的功能，以及一家公司有兩個網站和一個 App 時應該怎麼配置。說完之後，請告訴我 GA4 和舊版 Universal Analytics 在這個結構上有什麼不同。</p>
@@ -57,46 +56,46 @@ MathJax = {
 <div class="callout callout-student"><span class="co-title">學生閱讀｜這一題答錯會很貴</span><p>檢視層的篩選是<strong>在資料寫進去之前</strong>就把它丟掉，不是在顯示的時候藏起來。丟掉的資料永遠找不回來。所以實務上的鐵則是：一定要留一個完全沒有設過任何篩選的檢視當底稿。這一條在 GA4 換了做法，但觀念仍然要記得，因為考題還在考，而且其他分析工具也有同樣的坑。</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ① 三層結構與那條不可逆的規則</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">進行方式 ① 三層結構與那條不可逆的規則</h3>
 <ul>
 <li>帳戶管<strong>權限</strong>，資源管<strong>一個網站或 App 的資料</strong>，檢視管<strong>要怎麼看這份資料</strong>。</li>
 <li>檢視層的篩選是<strong>破壞性的</strong>：被濾掉的資料不會被保留。</li>
 <li>這一段結束你要能畫出三層結構，並說出留一個乾淨檢視的理由。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>一個 Google 帳號可以掛很多個分析帳戶</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">一個 Google 帳號可以掛很多個分析帳戶</h3>
 <p><img alt="Google Analytics 的帳戶、資源、檢視三層結構" src="../../img/wa_w2_ga_account_structure.png" /></p>
 <p><em>一個 Google 帳號底下可以有多個分析帳戶（通常一家公司一個），每個帳戶底下有多個資源（一個網站或一個 App 一個），每個資源底下有多個檢視。</em></p>
 <p><strong>分層的目的是分權</strong>。帳戶層決定誰看得到、誰改得動；資源層是資料真正被收進來的地方；檢視層是同一份資料的不同看法。</p>
 </section>
-<section class="mod-sec sec-content"><h3>資源是資料的容器，換資源就是換一份資料</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">資源是資料的容器，換資源就是換一份資料</h3>
 <p>一個網站一個資源，一個 App 一個資源。<strong>兩個資源的資料不會互通</strong>——這就是為什麼跨網站看同一個人這麼困難。</p>
 </section>
-<section class="mod-sec sec-content"><h3>檢視是同一份資料的不同看法，但篩選會真的丟掉東西</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">檢視是同一份資料的不同看法，但篩選會真的丟掉東西</h3>
 <p>檢視層可以設篩選器：只看某個目錄、排除內部 IP、只看某個國家。</p>
 <p><strong>篩選掉的資料不會被保留。</strong>這是最上層的篩選器，資料在寫進這個檢視之前就被丟了。三個月後想找回來，做不到。</p>
 </section>
-<section class="mod-sec sec-content"><h3>所以永遠要留一個沒有篩選的檢視</h3>
+<section class="mod-sec sec-content"><h3 id="sec-7">所以永遠要留一個沒有篩選的檢視</h3>
 <p>實務鐵則：每個資源至少留一個<strong>完全沒有設過任何篩選的檢視</strong>當底稿，其他檢視隨便你切。</p>
 <p>這一條在證照考題出現的頻率很高，原始投影片直接標了「必考」。</p>
 </section>
-<section class="mod-sec sec-content"><h3>GA4 拿掉了檢視這一層，但坑還在</h3>
+<section class="mod-sec sec-content"><h3 id="sec-8">GA4 拿掉了檢視這一層，但坑還在</h3>
 <p>GA4 的結構變成<strong>帳戶 → 資源 → 資料串流</strong>，沒有檢視。要做類似的事，改用資源層的資料篩選或報表層的比較功能。</p>
 <p>這個觀念仍然要記得，理由有兩個：證照題庫還在考舊架構，而且「在資料進來之前就丟掉」這種設計在其他工具裡到處都是。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ② 五組報表各回答一種問題</h3>
+<section class="mod-sec sec-content"><h3 id="sec-9">進行方式 ② 五組報表各回答一種問題</h3>
 <ul>
 <li>報表不是一堆表格，是<strong>依照使用者歷程排的五組</strong>：即時、目標對象、客戶開發、行為、轉換。</li>
 <li>記住「ABC」這個順序：<strong>Audience（誰）→ Acquisition（怎麼來）→ Behavior（做了什麼）→ Conversion（有沒有達成）</strong>。</li>
 <li>這一段結束你要能拿到一個問題就指出該去哪一組。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>即時報表：只回答「現在正在發生什麼」</h3>
+<section class="mod-sec sec-content"><h3 id="sec-10">即時報表：只回答「現在正在發生什麼」</h3>
 <p>以秒為單位看當下的流量與來源。它的實際用途只有兩種：<strong>內容剛發布時看有沒有起來</strong>，以及<strong>出事的時候看災情</strong>。</p>
 <p>不要拿即時報表做任何需要比較的判斷，它沒有歷史。</p>
 </section>
-<section class="mod-sec sec-content"><h3>目標對象：這些人是誰、用什麼看</h3>
+<section class="mod-sec sec-content"><h3 id="sec-11">目標對象：這些人是誰、用什麼看</h3>
 <p>這一組回答「誰」。裡面最常用的幾張：</p>
 <table>
 <thead>
@@ -145,65 +144,65 @@ MathJax = {
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3>技術報表裡最有用的是螢幕解析度</h3>
+<section class="mod-sec sec-content"><h3 id="sec-12">技術報表裡最有用的是螢幕解析度</h3>
 <p>瀏覽器、作業系統、網路、螢幕色彩都有人看，但<strong>對做內容和做版面的人來說，螢幕解析度與裝置類型（電腦／手機／平板）最有用</strong>——它直接決定你的版面要怎麼排、圖要做多大。</p>
 </section>
-<section class="mod-sec sec-content"><h3>地區報表在台灣不準</h3>
+<section class="mod-sec sec-content"><h3 id="sec-13">地區報表在台灣不準</h3>
 <p>地區是用 IP 反查的。台灣的固網與行動網路 IP 配置讓這個反查經常指向機房所在地，不是使用者所在地。</p>
 <p><strong>看到「三成流量來自台北」不要當成使用者分布</strong>，那可能只是電信商的出口在台北。</p>
 </section>
-<section class="mod-sec sec-content"><h3>User Explorer 看得到單一使用者的完整行為</h3>
+<section class="mod-sec sec-content"><h3 id="sec-14">User Explorer 看得到單一使用者的完整行為</h3>
 <p>它可以攤開某一個 client ID 的每一次造訪、每一頁、每一個動作。</p>
 <p>原始投影片對這張報表的註記是「有點噁心」——那是一個誠實的反應。<strong>技術上做得到，不代表你應該去看。</strong>分析的職業倫理從這裡開始：你手上有的資料，遠比使用者以為的多。</p>
 </section>
-<section class="mod-sec sec-content"><h3>客戶開發、行為、轉換分別對應前三節</h3>
+<section class="mod-sec sec-content"><h3 id="sec-15">客戶開發、行為、轉換分別對應前三節</h3>
 <p>客戶開發就是 <a href="M_%E6%B5%81%E9%87%8F%E5%BE%9E%E5%93%AA%E8%A3%A1%E4%BE%86_Source_Medium_%E8%88%87_Channel.html">流量從哪裡來 Source Medium 與 Channel</a>，行為就是 <a href="M_%E5%81%9C%E7%95%99%E3%80%81%E8%B7%B3%E5%87%BA%E8%88%87%E9%9B%A2%E9%96%8B.html">停留、跳出與離開</a>，轉換是下一段要講的目標。</p>
 <p><strong>這門課到目前為止教的每一個指標，都住在這四組報表裡。</strong>報表本身不必背，知道它們按什麼順序排就找得到。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ③ 目標決定整份報表怎麼讀</h3>
+<section class="mod-sec sec-content"><h3 id="sec-16">進行方式 ③ 目標決定整份報表怎麼讀</h3>
 <ul>
 <li>目標（Goal）是<strong>你自己定義的一個完成動作</strong>，達成一次就是一次轉換。</li>
 <li>沒有設目標的報表只能描述行為，<strong>不能回答「這樣算好嗎」</strong>。</li>
 <li>這一段結束你要能替一個你熟悉的網站寫出一個具體的目標。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>目標是有商業或社會價值的行動</h3>
+<section class="mod-sec sec-content"><h3 id="sec-17">目標是有商業或社會價值的行動</h3>
 <p>Google 的定義：目標用來衡量網站或 App 達成營運目標的程度，一個目標代表一次完成的活動，稱為轉換。</p>
 <p>常見的四種：抵達某一頁（完成頁）、停留時間或頁數達到門檻、完成某個事件（下載、播放、送出表單）、電子商務交易。</p>
 </section>
-<section class="mod-sec sec-content"><h3>目標通常會帶一個金額</h3>
+<section class="mod-sec sec-content"><h3 id="sec-18">目標通常會帶一個金額</h3>
 <p>即使不是電商，也可以替目標估一個金額——一次電子報訂閱值多少、一次表單填寫值多少。</p>
 <p><strong>帶了金額，報表才算得出「哪一個來源比較划算」。</strong>沒有金額，你只能比次數。</p>
 </section>
-<section class="mod-sec sec-content"><h3>沒有目標的報表只能描述，不能判斷</h3>
+<section class="mod-sec sec-content"><h3 id="sec-19">沒有目標的報表只能描述，不能判斷</h3>
 <p>跳出率、停留時間、頁數，全部都是描述。<strong>「這樣算好嗎」這個問題只有在有目標之後才回答得了</strong>——這正是第一週那三個檢查裡「比較對象」的最終形式。</p>
 </section>
-<section class="mod-sec sec-content"><h3>廣告的成本指標是另外一組</h3>
+<section class="mod-sec sec-content"><h3 id="sec-20">廣告的成本指標是另外一組</h3>
 <p>CPM（每千次曝光成本）、CPC（每次點擊成本）、CPV（每次觀看成本）、觸及、曝光——這些是花錢那一側的指標，會在 W4 展開。</p>
 <p>在這裡只要記得一件事：成本指標要跟目標的金額配著看，才算得出投報。</p>
 </section>
-<section class="mod-sec sec-content"><h3>歸因決定功勞算在誰頭上</h3>
+<section class="mod-sec sec-content"><h3 id="sec-21">歸因決定功勞算在誰頭上</h3>
 <p>歸因模式是一組規則，用來決定轉換路徑上的每一個接觸點各分到多少功勞。<strong>最終互動</strong>把 100% 給最後一個點擊，<strong>最初互動</strong>把 100% 給第一個。</p>
 <p>同一批資料，換一個歸因模式，各管道的「貢獻」會整個重排。<strong>所以看到「某某管道帶來 40% 轉換」，第一句要問的是用哪一種歸因。</strong></p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>進行方式 ④ 跟別人比：基準化報表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-22">進行方式 ④ 跟別人比：基準化報表</h3>
 <ul>
 <li>基準化（Benchmarking）拿你的資料跟<strong>同產業願意分享資料的其他公司</strong>比。</li>
 <li>可比的維度只有三個：管道分組、地區、裝置。</li>
 <li>這一段結束你要能說出這份比較的兩個限制。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>可以比的六個指標</h3>
+<section class="mod-sec sec-content"><h3 id="sec-23">可以比的六個指標</h3>
 <p>工作階段數、新工作階段百分比、新使用者工作階段數、單次工作階段頁數、平均工作階段時間長度、跳出率。</p>
 <p>都是這門課前幾節講過的東西——<strong>你現在具備讀懂這份比較的全部條件</strong>。</p>
 </section>
-<section class="mod-sec sec-content"><h3>兩個限制要先講清楚</h3>
+<section class="mod-sec sec-content"><h3 id="sec-24">兩個限制要先講清楚</h3>
 <p><strong>第一，樣本是自選的。</strong>只有選擇分享資料的公司才在裡面，那些公司未必代表整個產業。</p>
 <p><strong>第二，產業分類是自己填的。</strong>分類填得寬鬆或不精確，比較對象就不對。</p>
 </section>
-<section class="mod-sec sec-content"><h3>它最好的用法是找方向，不是打分數</h3>
+<section class="mod-sec sec-content"><h3 id="sec-25">它最好的用法是找方向，不是打分數</h3>
 <p>基準化適合回答「我在這個維度上跟同業差很多嗎」，不適合回答「我及格了沒」。</p>
 <p><strong>跟自己的歷史值比，永遠比跟基準比可靠。</strong></p>
 <blockquote>
@@ -211,7 +210,7 @@ MathJax = {
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-myths"><h3>⚠️ 迷思攔截</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-26">⚠️ 迷思攔截</h3>
 <table>
 <thead>
 <tr>
@@ -260,7 +259,7 @@ MathJax = {
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-27">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_%E9%BB%8F%E8%91%97%E5%BA%A6%E6%8C%87%E6%A8%99_DAU_WAU_MAU_%E8%88%87_Frequency.html">黏著度指標 DAU WAU MAU 與 Frequency</a>——W2 四個模組教的指標，這一節告訴你它們各自住在哪。</li>
 <li><strong>後續</strong>：<a href="M_GA4_%E8%88%87_AI_%E5%95%8F%E7%AD%94%E5%88%86%E6%9E%90.html">GA4 與 AI 問答分析</a>（W3）——有了地圖之後，才輪到把報表貼給 AI 問問題。</li>
@@ -268,9 +267,9 @@ MathJax = {
 <li><strong>平行相關</strong>：<a href="M_Data_Bias_%E8%B3%87%E6%96%99%E5%81%8F%E8%AA%A4.html">Data Bias 資料偏誤</a>——地區不準、客層是推估、基準樣本自選，三個都是同一類偏誤。</li>
 </ul>
 </section>
-<section class="mod-sec sec-discussion"><h3>💬 討論／分享／反思</h3>
+<section class="mod-sec sec-discussion"><h3 id="sec-28">💬 討論／分享／反思</h3>
 </section>
-<section class="mod-sec sec-activity"><h3>判例演練</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-29">判例演練</h3>
 <p>請兩人一組，說出下面五個問題各該去哪一組報表找答案，並寫出你會看哪一個指標：</p>
 <ol>
 <li>我們的讀者主要用手機還是電腦看？</li>
@@ -281,7 +280,7 @@ MathJax = {
 </ol>
 <p>第 3 題最容易答錯，寫下你為什麼選那一張。</p>
 </section>
-<section class="mod-sec sec-activity"><h3>配對分享</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-30">配對分享</h3>
 <p>請同學兩兩一組，各替一個自己熟悉的網站或帳號設計一個目標：</p>
 <ol>
 <li>寫出這個目標的具體完成條件（要能被工具偵測到）</li>
@@ -289,20 +288,38 @@ MathJax = {
 <li>對方要追問「達成這個目標的人，真的比較有價值嗎」</li>
 </ol>
 </section>
-<section class="mod-sec sec-activity"><h3>寫下反思</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-31">寫下反思</h3>
 <p>請寫下這一句並補完：</p>
 <blockquote>
 <p>這一節裡最讓我不安的是＿＿＿，因為＿＿＿。</p>
 </blockquote>
 </section>
-<section class="mod-sec sec-homework"><h3>小作業</h3>
+<section class="mod-sec sec-homework"><h3 id="sec-32">小作業</h3>
 <p>挑一個你有權限的分析後台（沒有的話用 Google 的示範帳戶），完成三件事：</p>
 <ol>
 <li>找出它的資源與檢視（或資料串流）各有幾個</li>
 <li>找出「裝置類別」報表，抄下手機與電腦的比例</li>
 <li>寫一句話說明「這份資料我不會拿來決定什麼」，並說出理由</li>
 </ol></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

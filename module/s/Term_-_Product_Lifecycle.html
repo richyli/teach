@@ -4,20 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Product Lifecycle｜產品生命週期</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Product Lifecycle｜產品生命週期</h1></div><p>Product Lifecycle</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">What this term means｜這個詞在說什麼</a></li><li><a href="#sec-2">Common misconceptions｜常見誤解</a></li><li><a href="#sec-3">Related terms｜相關詞</a></li><li><a href="#sec-4">Where it appears｜出現在</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Product Lifecycle｜產品生命週期</h1></div><p>Product Lifecycle</p>
 <p>The full loop a product runs through — research, documents, build, launch, metrics — where every stage owes the next one something concrete.</p>
 <p>一個產品從研究、寫文件、做出來、上線到看數字的完整循環，每一階都要交一樣東西給下一階。</p>
-<section class="mod-sec sec-content"><h3>What this term means｜這個詞在說什麼</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">What this term means｜這個詞在說什麼</h3>
 <p>This course uses five stages: research → <a href="Term_-_MRD.html">MRD</a> → <a href="Term_-_PRD.html">PRD</a> → launch → metrics, and the metrics become the next round's research question.</p>
 <p>What matters is not the names but the <strong>artefacts</strong>: a stage that produced nothing has not happened, however many meetings it consumed. Skipping a handover does not save time; it moves the cost into the stage where fixing it is most expensive.</p>
 <p>這門課用的五階是：研究 → MRD → PRD → 上線 → 指標，而指標又回頭變成下一輪的研究問題。</p>
 <p>關鍵不在階段名稱，在<strong>交付物</strong>：一個沒有產出任何東西的階段，不管開了幾次會，都等於沒有發生。跳過交接不會省時間，只會把成本移到後面更貴的階段。</p>
 </section>
-<section class="mod-sec sec-myths"><h3>Common misconceptions｜常見誤解</h3>
+<section class="mod-sec sec-myths"><h3 id="sec-2">Common misconceptions｜常見誤解</h3>
 <ul>
 <li>Memorising it as a flow chart. It is a set of handovers, not a conveyor belt.</li>
 <li>
@@ -29,12 +28,30 @@
 <li>與使用者旅程混用——那是使用者的過程，不是產品的過程。</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>Related terms｜相關詞</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">Related terms｜相關詞</h3>
 <p><a href="Term_-_MRD.html">MRD</a>、<a href="Term_-_PRD.html">PRD</a>、<a href="Term_-_User_Journey.html">User Journey</a></p>
 </section>
-<section class="mod-sec sec-content"><h3>Where it appears｜出現在</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">Where it appears｜出現在</h3>
 <p><a href="M_PM_Role_and_Product_Lifecycle.html">PM Role and Product Lifecycle</a></p></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

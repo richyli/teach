@@ -450,3 +450,33 @@ html[lang="en"] .sec-discussion::before { content: "In class"; }
     background: #ffffff; border-left: 3px solid #7fb79a; margin: .7rem 0;
     padding: .7rem 1rem; color: #2b4a3a; }
 .sec-discussion p { margin: .5rem 0; }
+
+/* ============================================================
+   模組頁左側目錄
+   pw 的 .layout/.sidebar/.content 已經處理版位與 800px 以下摺疊，
+   這裡只補目錄本身與教師版的連結列。
+   ============================================================ */
+.layout .content { flex: 1; min-width: 0; }
+.layout .container { max-width: 820px; margin: 0; padding: 2.4rem 2rem 5rem; }
+.sidebar .side-links { margin-bottom: 1.2rem; font-size: .82rem; line-height: 2; }
+.sidebar .side-links a { display: block; color: #777; text-decoration: none; }
+.sidebar .side-links a:hover { color: #0055cc; }
+.sidebar .toc ul { list-style: none; margin: 0; padding: 0; }
+.sidebar .toc li { margin: 0; }
+.sidebar .toc a {
+    display: block;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    font-size: .82rem;
+    line-height: 1.5;
+    color: #555;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+}
+.sidebar .toc a:hover { background: #efefef; color: #111; }
+.sidebar .toc a.active { color: #0055cc; background: #e8f0ff; border-left-color: #0055cc;
+                         font-weight: 600; }
+@media (max-width: 800px) {
+    .layout .container { padding: 1.4rem 1.2rem 4rem; }
+    .sidebar .toc a { padding: .22rem .4rem; }
+}

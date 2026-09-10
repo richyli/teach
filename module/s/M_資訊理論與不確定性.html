@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>資訊理論與不確定性</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>資訊理論與不確定性</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">不確定性是一種「猜測空間」，資訊量就是把它砍小</a></li><li><a href="#sec-2">把這把尺對準 LLM：context 不足＝高 entropy＝它只好硬補</a></li><li><a href="#sec-3">主管視角：跟工程師對話、自己用 agent 的標準動作</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>資訊理論與不確定性</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背公式，是為了能回答你本來就好奇、而且天天踩到的事。</p>
 <table>
 <thead>
@@ -45,7 +44,7 @@ MathJax = {
 </table>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>不確定性是一種「猜測空間」，資訊量就是把它砍小</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">不確定性是一種「猜測空間」，資訊量就是把它砍小</h3>
 <blockquote>
 <p>先備概念：entropy 是「平均不確定性」，公式是 $H = -\sum p_i \log_2 p_i$。<strong>這一堂不重推公式</strong>，只借它的直覺：分布越均勻、entropy 越高、越不可預測；餵對資訊就把分布壓尖、entropy 砍下來。</p>
 </blockquote>
@@ -151,7 +150,7 @@ MathJax = {
 <p>這就是幻覺的來源。<strong>它不是在說謊，是在高不確定性下被迫生成。</strong>
 所以下次它亂講，第一個該問的不是「這 AI 怎麼這麼笨」，而是「我少餵了哪一塊資訊」。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>把這把尺對準 LLM：context 不足＝高 entropy＝它只好硬補</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">把這把尺對準 LLM：context 不足＝高 entropy＝它只好硬補</h3>
 <p><strong>LLM 在做的事，一句話</strong>：給定目前的上下文，吐出「下一個 token 的機率分布」，再從分布裡 sample。這個分布有它的 entropy——<strong>分布越平，模型越不知道該說什麼，sample 出來就越像亂編。幻覺不是品德問題，是高 entropy 下被迫生成的數學後果。</strong></p>
 <p><strong>生成式 vs 判別式（一句話分清楚）</strong>：判別式模型是「在你給的選項裡選一個」（分類、是非），猜測空間小、容易驗證；生成式 LLM 是「從近乎無限的句子空間裡生一段」，猜測空間天生巨大，所以<strong>餵 context 砍 entropy 才是它能不能可靠的關鍵</strong>。</p>
 <p><strong>核心對照表：context 不足 → 高 entropy → 幻覺</strong></p>
@@ -357,7 +356,7 @@ MathJax = {
 <p>實務上先問兩題：這塊資訊真的能幫它收斂嗎？如果它明天出現在別人的螢幕上，我會不會出事？
 兩題都過才貼。</p></div>
 </section>
-<section class="mod-sec sec-content"><h3>主管視角：跟工程師對話、自己用 agent 的標準動作</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管視角：跟工程師對話、自己用 agent 的標準動作</h3>
 <p>把 entropy 當成你和工程師之間的<strong>共同語言</strong>。你不必會算，但你要會用它定位問題、問對問題。</p>
 <p><strong>該問工程師的三題（entropy 版）</strong>
 1. 「這個 AI 功能下一步<strong>靠什麼資訊</strong>收斂？它的 context 視窗多大、我們的內部資料餵不餵得進去？」（→ 它有沒有足夠的 bit 去砍 entropy）
@@ -384,7 +383,25 @@ MathJax = {
 <p><strong>小作業</strong>：列出部門裡最想交給 AI 的 3 件事，各寫一個會問工程師的問題、以及一個「該餵它什麼 context」。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

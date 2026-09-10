@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Shannon-Weaver 模式與冗餘</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,8 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>Shannon-Weaver 模式與冗餘</h1></div><p>傳播學院背得最熟的那張框框圖，其實是電路圖。這一堂把它還原回工程問題，
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">那張圖原本是電路圖</a></li><li><a href="#sec-2">冗餘不是廢話，是抗雜訊的保險</a></li><li><a href="#sec-3">主管視角：你的團隊的通道容量是多少</a></li><li><a href="#sec-4">先修與後續</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Shannon-Weaver 模式與冗餘</h1></div><p>傳播學院背得最熟的那張框框圖，其實是電路圖。這一堂把它還原回工程問題，
 再把「冗餘」這個被當成廢話的概念，翻成主管每天在做的取捨：<strong>訊息要寫多短才不會被誤讀。</strong>
 接在 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a> 之後。</p>
 <section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
@@ -57,7 +56,7 @@ MathJax = {
 這一題同時是傳播理論課，也是「AI 在高不確定性下會硬補」的實例。</p>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>那張圖原本是電路圖</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">那張圖原本是電路圖</h3>
 <p>Shannon 要解決的問題非常具體：<strong>電話線有雜訊，訊號會失真，一條線最多能可靠傳多少東西？</strong>
 他畫的圖是這樣：</p>
 <table>
@@ -115,7 +114,7 @@ Schramm 加上了「經驗範圍」——<strong>只有在傳播者與接收者�
 你對工程師講「這功能的 recall 要拉高」，如果他不知道你的場景，字傳到了，意思沒到。</p></div>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>冗餘不是廢話，是抗雜訊的保險</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">冗餘不是廢話，是抗雜訊的保險</h3>
 <p>Shannon 發現：真實語言的 entropy 遠低於理論上限，因為語言充滿<strong>可預測的部分</strong>。
 他估計<strong>英文的冗餘度約 50%</strong>——一半的字母其實可以刪掉而不影響理解。</p>
 <p>冗餘的定義很簡單：<strong>最小情報值與實際使用位元數之間的差距。</strong></p>
@@ -309,7 +308,7 @@ LINE 訊息被截斷、公告貼在牆上被撕掉一角、口頭傳達傳到第
 </ul>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>主管視角：你的團隊的通道容量是多少</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管視角：你的團隊的通道容量是多少</h3>
 <p><strong>「資訊量必須小於理解容量」</strong>這句話，是這一堂給主管最實用的一條。</p>
 <ul>
 <li>三十頁簡報壓成十分鐘講完 → 送出的資訊量超過通道容量 → 對方接收到的接近 0</li>
@@ -360,7 +359,7 @@ LINE 訊息被截斷、公告貼在牆上被撕掉一角、口頭傳達傳到第
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-prereq"><h3>先修與後續</h3>
+<section class="mod-sec sec-prereq"><h3 id="sec-4">先修與後續</h3>
 <ul>
 <li><strong>先修</strong>：<a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a>——沒有它，「冗餘＝低於理論上限的那一段」講不通</li>
 <li><strong>後續</strong>：<a href="M_%E8%AA%9E%E8%A8%80%E7%9A%84%E9%9A%8E%E6%95%B8%E8%BF%91%E4%BC%BC%E8%88%87%E9%A6%AC%E5%8F%AF%E5%A4%AB%E9%8F%88.html">語言的階數近似與馬可夫鏈</a>——英文冗餘 50% 這個數字是怎麼算出來的</li>
@@ -379,7 +378,25 @@ LINE 訊息被截斷、公告貼在牆上被撕掉一角、口頭傳達傳到第
 <p><strong>小作業</strong>：挑一則自家的對外公告，寫出低冗餘與高冗餘兩個版本，並說明各適合什麼通道。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>

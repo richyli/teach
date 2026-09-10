@@ -4,11 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>深度學習與 LLM 偏見來源</title>
-<link rel="stylesheet" href="../../style.33c0673a.css">
+<link rel="stylesheet" href="../../style.0f01de9b.css">
 </head>
 <body>
-<div class="container">
-<div class="hero"><h1>深度學習與 LLM 偏見來源</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">LLM 是怎麼「學」的（不碰數學）</a></li><li><a href="#sec-2">幻覺與偏見從哪來</a></li><li><a href="#sec-3">主管視角：該問工程師什麼</a></li><li><a href="#sec-4">延伸個案</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>深度學習與 LLM 偏見來源</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
 <p>每條目標都是「<strong>一項能力 → 能解釋一個真實問題</strong>」。學這個不是為了背神經網路結構，是為了搞懂 AI 為什麼會一本正經地胡說，以及它的偏見從哪來。</p>
 <table>
 <thead>
@@ -50,7 +49,7 @@
 <p><strong>第二步</strong>，實測它的失準邊界：問 AI 三個你這一行「<strong>最新的、最冷門的、最在地的</strong>」問題（例如上個月的法規變動、你們家鄉的地方新聞人物），看哪一題它開始胡說。</p>
 <p>把<strong>它胡說得最離譜的一題、以及你是怎麼識破的</strong>帶進課堂——這就是 15′b「偏見與失準從訓練資料來」的活教材。</p>
 </section>
-<section class="mod-sec sec-content"><h3>LLM 是怎麼「學」的（不碰數學）</h3>
+<section class="mod-sec sec-content"><h3 id="sec-1">LLM 是怎麼「學」的（不碰數學）</h3>
 <p>開場先破一個最常見的誤會：<strong>LLM 不是一個會查資料的搜尋引擎，也不是一個裝滿事實的資料庫。</strong> 它是一個被訓練到「<strong>看前文、猜下一個字最可能是什麼</strong>」的機率機器。</p>
 </section>
 <section class="mod-sec sec-content"><h4>一句話心智模型：它在預測下一個字，不是在查資料</h4>
@@ -89,7 +88,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>幻覺與偏見從哪來</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">幻覺與偏見從哪來</h3>
 <p>這一段把兩個最常被混為一談的問題拆開：<strong>幻覺</strong>（它編造不存在的事）和<strong>偏見</strong>（它系統性地偏向某一邊）。兩者來源不同，但都能用「資料分布」一句話講清楚。</p>
 </section>
 <section class="mod-sec sec-content"><h4>幻覺：高不確定性下，它硬生成最像的字</h4>
@@ -142,7 +141,7 @@
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3>主管視角：該問工程師什麼</h3>
+<section class="mod-sec sec-content"><h3 id="sec-3">主管視角：該問工程師什麼</h3>
 <p>你不需要會寫模型，但你要會<strong>問對問題</strong>，才不會被「我們上了 AI」這句話唬住。把上面兩段濃縮成三個你一定要問的問題。</p>
 <p><strong>該問工程師／廠商的三題</strong></p>
 <ol>
@@ -225,12 +224,30 @@
 </li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3>延伸個案</h3>
+<section class="mod-sec sec-content"><h3 id="sec-4">延伸個案</h3>
 <ul>
 <li><a href="Case_-_%E9%86%AB%E7%99%82%E6%BC%94%E7%AE%97%E6%B3%95%E6%8A%8A%E8%8A%B1%E8%B2%BB%E7%95%B6%E6%88%90%E5%81%A5%E5%BA%B7%E9%9C%80%E6%B1%82.html">醫療演算法把花費當成健康需求</a>：偏誤來自標籤選擇，不是訓練資料或模型架構</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：偽陽性在不同社區分布不均的實際後果</li>
 </ul></section>
-<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:54</p>
-</div>
+<p class="sitefoot">學生版｜自教材原始檔產生，更新於 2026-09-10 16:59</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
 </body>
 </html>
