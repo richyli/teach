@@ -56,6 +56,40 @@ MathJax = {
 <p>Engeström's Activity Theory describes human work as a six-element system: subject, object, tool, rules, community, and division of labor. Take one concrete case: a small newsroom introduces an AI agent that drafts every article summary. Fill in the six elements before the agent arrives, then fill them in again after. Then answer two questions. (1) Which element changed the most, and which one did nobody update? (2) Engeström argues that learning happens when contradictions between elements force the system to expand — name the specific contradiction this newsroom now has. Do not summarise the theory first. Fill in the table, then answer the two questions.</p>
 </blockquote>
 <p>Bring your filled table. Compare the "element nobody updated" column with two classmates — that column is where most real AI adoption failures live, and you will find that people picked different elements for good reasons.</p>
+</section>
+<section class="mod-sec sec-vocab"><h3>🔤 Vocabulary</h3>
+<p>Four words that this unit uses without stopping to explain them. The six elements themselves are defined in the table below, so they are not repeated here.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>中文</th>
+<th>In one line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAT</td>
+<td>文化歷史活動理論</td>
+<td>Cultural-Historical Activity Theory — the full name of the tradition this sits in, from Vygotsky through Leont'ev to Engeström</td>
+</tr>
+<tr>
+<td>Mediation</td>
+<td>中介</td>
+<td>Nobody acts on the world directly; the tool sits between the person and the object and shapes what can be done</td>
+</tr>
+<tr>
+<td>Contradiction</td>
+<td>矛盾</td>
+<td>Not an argument between people — two elements of the system now demand incompatible things</td>
+</tr>
+<tr>
+<td>Expansive learning</td>
+<td>擴張式學習</td>
+<td>Learning something that does not yet exist, by building a new system rather than getting better at the old one</td>
+</tr>
+</tbody>
+</table>
 <hr />
 </section>
 <section class="mod-sec sec-content"><h3>The unit of analysis is the system, not the person</h3>
@@ -111,6 +145,7 @@ MathJax = {
 <section class="mod-sec sec-content"><h3>A contradiction is the engine, not the fault</h3>
 <p>This is the part that is easy to nod at and hard to actually use. Engeström's claim is that contradictions between elements are <strong>not</strong> malfunctions to be trained away. They are what forces the system to expand into a new form. The expansive learning cycle names the seven steps that expansion runs through: questioning the existing practice, analysing where the conflict came from historically and empirically, modelling a new solution, examining the model, implementing it, reflecting, and consolidating the new practice. See expansive learning cycle and expansive learning.</p>
 <p>For a PM the operational version is short: when adoption stalls, do not ask who needs more training. Ask which two elements now disagree.</p>
+<p>Work through the four cases below before you read on. In every one the tool changed on day one — click the element that nobody changed with it. If you get one wrong, look at which element you clicked instead: that is the element you are personally most likely to forget when you plan a product.</p>
 <div class="widget" id="asd">
 <style>
 #asd { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
@@ -225,6 +260,99 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
 </blockquote>
 <hr />
 </section>
+<section class="mod-sec sec-content"><h3>Your product is a tool dropping into somebody else's system</h3>
+<p>Everything above described your own team. Now turn it around, because this is the part that changes how you plan a product.</p>
+<p>Whatever you build this semester will arrive in somebody else's activity system as a new <strong>tool</strong>. Your users already have an object they are aiming at, rules they work under, a community they answer to, and a division of labor they did not choose. Your product does not enter an empty space. It lands on a vertex.</p>
+<p>That is why "the users did not adopt it" is almost never a motivation problem. The product asked one element to change and left the other five where they were.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Adoption fails at the element you did not ask about</h3>
+<table>
+<thead>
+<tr>
+<th>What you shipped</th>
+<th>What you implicitly asked to change</th>
+<th>Who had to agree, and usually did not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A faster CMS for reporters</td>
+<td>The rule about who signs off before publication</td>
+<td>The editor whose authority is that sign-off</td>
+</tr>
+<tr>
+<td>An AI summary tool for a news app</td>
+<td>The reader's object — they came to be informed, not to be finished quickly</td>
+<td>Nobody; the object mismatch surfaces as low retention</td>
+</tr>
+<tr>
+<td>A shared analytics dashboard</td>
+<td>The division of labor between editorial and audience teams</td>
+<td>Both teams, neither of whom was in the room</td>
+</tr>
+<tr>
+<td>A student-organisation scheduling app</td>
+<td>The unwritten rule that the president decides in the group chat</td>
+<td>The president, whose informal power the app removes</td>
+</tr>
+</tbody>
+</table>
+<p>Read the middle column again. In each row the pitch was about the tool, and the fight was about a rule or a division of labor.</p>
+</section>
+<section class="mod-sec sec-content"><h3>The six elements land in specific sections of your MRD and PRD</h3>
+<p>This is the operational payoff. Each vertex of the triangle already has a home in the two documents this course makes you write — which means you can use the triangle as a completeness check rather than as a diagram.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Where it lives in your documents</th>
+<th>The question that section has to answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>MRD — persona and target segment</td>
+<td>Who exactly is doing this work, in what conditions?</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>MRD — problem statement and positioning</td>
+<td>What are they actually aiming at, as opposed to what they click?</td>
+</tr>
+<tr>
+<td>Tool</td>
+<td>PRD — features and acceptance criteria</td>
+<td>What does our product let them do that they could not do before?</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>PRD — permissions, workflow states, edge cases</td>
+<td>Whose approval does our flow assume, and does that person exist?</td>
+</tr>
+<tr>
+<td>Community</td>
+<td>MRD — stakeholder map and journey</td>
+<td>Who else shares this object and can veto adoption?</td>
+</tr>
+<tr>
+<td>Division of labor</td>
+<td>PRD — roles and the RACI behind the flow</td>
+<td>Who does what after we ship, and who loses work they used to own?</td>
+</tr>
+</tbody>
+</table>
+<p>An MRD that fills the top three and leaves the bottom three empty is the document that produces a well-received demo and no adoption.</p>
+</section>
+<section class="mod-sec sec-content"><h3>Three questions to put into the pitch itself</h3>
+<ol>
+<li>Which element of the user's system are we changing, and which one has to change with it?</li>
+<li>Who currently owns the work our product removes, and what do they get instead?</li>
+<li>What is the first contradiction we expect after launch, and what would we do when it shows up?</li>
+</ol>
+<p>The third one is the one judges remember, because most teams present a product with no predicted friction at all — and a system with no contradiction is a system nobody has actually looked at.</p>
+<hr />
+</section>
 <section class="mod-sec sec-myths"><h3>⚠️ Common misconceptions</h3>
 <table>
 <thead>
@@ -260,6 +388,16 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
 <td>It almost always rewrites rules and division of labor too, and those do not change by themselves</td>
 <td>Design the rule change in the same sprint as the tool</td>
 </tr>
+<tr>
+<td>"This is an organisational theory, not a product one"</td>
+<td>Every product you ship is a tool entering somebody else's activity system; adoption is decided by the five elements you did not design</td>
+<td>Use the triangle as a completeness check on the MRD and PRD</td>
+</tr>
+<tr>
+<td>"If the product is good enough, adoption follows"</td>
+<td>Adoption requires a rule or a division of labor to move, and those move only when a person with authority moves them</td>
+<td>Name that person in the stakeholder map before you build</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -273,19 +411,32 @@ contradiction sits, and in Engeström's account the contradiction is the engine,
 <li>Scholar note: Engeström, Yrjö.</li>
 </ul>
 </section>
+<section class="mod-sec sec-summary"><h3>In short</h3>
+<ul>
+<li>The unit that explains work is the six-element system, not the person — so when something does not get used, look for the element nobody updated rather than for a training gap.</li>
+<li>A contradiction between two elements is the engine of change, not a fault to be suppressed; the useful question is what it is forcing the system to become.</li>
+<li>Every product you plan is a new tool landing in somebody else's system, which is why the triangle doubles as a completeness check on your MRD and PRD.</li>
+</ul>
+</section>
 <section class="mod-sec sec-discussion"><h3>💬 Discussion and reflection</h3>
 </section>
 <section class="mod-sec sec-activity"><h3>Pair review</h3>
-<p>Swap the six-element table you filled in before class.</p>
+<p><strong>The situation.</strong> Your department launches an app for group assignments: it assigns tasks, tracks who has submitted what, and shows everyone's progress on a shared board. Three weeks in, most groups have gone back to the group chat and the app is used only to mark things finished after the fact.</p>
+<p>Work through it in pairs.</p>
 <ol>
-<li>Compare the "element nobody updated" column — if you chose differently, argue it out</li>
-<li>Name the specific contradiction in your partner's case, in the form "X now disagrees with Y"</li>
-<li>Say which step of the expansive learning cycle their organisation is stuck on</li>
+<li>Fill the six elements for a student group before the app arrived, then after</li>
+<li>Name the contradiction in the form "X now disagrees with Y"</li>
+<li>Say what would have to change for the app to be used as intended — and who has the authority to change it</li>
+<li>Now say what the product team should have asked in the MRD to catch this before building</li>
 </ol>
+<p>If you filled a table before class, run yours second and compare which element you each left unchanged.</p>
 </section>
 <section class="mod-sec sec-activity"><h3>Individual reflection</h3>
-<p>Write one sentence to keep: "In my own team this semester, the element we are least likely to update alongside the tool is <strong><em>_</em>_, and the first symptom will be </strong>____."</p></section>
-<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 10:39</p>
+<p>Write one sentence to keep: "In my own team this semester, the element we are least likely to update alongside the tool is <strong><em>_</em>_, and the first symptom will be </strong>____."</p>
+</section>
+<section class="mod-sec sec-homework"><h3>✍️ Take-home task</h3>
+<p>In no more than 200 words, take the product your team is planning this semester and answer three things: which element of the user's activity system your product changes, which element has to change alongside it, and who has the authority to change that second element. Name a person or a role, not a department. Bring it to W7 — it goes straight into the stakeholder section of your MRD.</p></section>
+<p class="sitefoot">Student view · generated from the source teaching materials, updated 2026-09-10 11:03</p>
 </div>
 </body>
 </html>
