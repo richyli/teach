@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>人工智慧生成圖像與創造力（2026）</title>
-<link rel="stylesheet" href="../../../style.4c9a1457.css">
+<link rel="stylesheet" href="../../../style.33c0673a.css">
 </head>
 <body>
 <div id="gate">
@@ -18,7 +18,7 @@
 <div id="content" class="container" hidden></div>
 <script>
 (function () {
-  var SALT = "CIKCOyjbPhKkV8ilRfzJEA==", IV = "9EXZ6nrw07yFmDlk", CT = "2vKy/5l+t6vedM5yCSWu5LzlvUQtKl3oS9/EjgSSKoZzEQpAzErNIIlc6oSwfkGjZcHz8AHmWCBPnLjjNlgISkMG55VGFut96JI4RZK4hHUpnOwKF/BWl3fSisMWJSiuBJ0WgFV+JsHjFOiqAUOtj7wFcmtbM6iIIWSjsqNpDYkGA5evODoEIbK2Nkxo9yDBVItWAAbTrWBOuqAn3onUQT2kRM2CPavDPHxDL8fI8la1GKqK1f3yLVirVHQn/dW0sGXqkLioVudZnCAdmFgEVVgcg0dGo6X18IfxU+HjXuG0OCEaLwKuApalAEnCF+ZaQX/RfRhVT3CXGfFlwam+di95DKGdZ4eXlm9/gaoPZMDq1f+NbJ5S/W+Yv4MWtXKB0z/4IRhVQPUnvL0vF22w7juHHDRFnEobXDHYvfZ8ELBcaqVdUp+3hiaK/GCufqH8DXj3LFpenqle8cwDzLOML/IQYm1JAEYypbAB/z77o8RTZFo3qHMXKgwcmczfz13WtmVHskp0fZv4EUsfa/5rv/m/kgcX/GYAAcc/Kt1rFhRDfdRBfxuWknqqiwNgOroAe6rfEEM7obeWNvUTj4Sg2uuhRnVq4I1+qjNniHAQQsEuNjfskRBDTCkmcq4NcyYslLlR/svcWlGHOotQnUY55BhFQIt8zCuFDdCatdIYko2WMJEHmlnWBLHqJCnP3PUE9IPDBdTG245UXfTDdi4dBf+zZ8WR6hCTCp1v5HTDyDJYFU0ym2wimOSnDcwAGAkJDoU7yLS5UzEjjZPdfWunH/NVv+DOwD4ztcND3Lnk0MFmMnaGw+0J1vdUy2N2ZirioUJXeZkEKdQ9M5y8CsXLeCTOeNUfKt22DVHiJwQHuO0jb/8VYMb3zERRrrqeewSseAF3cjXMSxfl7ihi", ITER = 250000, KEY = "teach_site_pw";
+  var SALT = "eRo6oWekTYsAfZGhuG8ZRA==", IV = "s4y4jWEEUwiZL36g", CT = "wynZJHNM27Tw/vV0zZtW9wCeYwqw7SpQdP5EIIrBn/cC8qHihwJd6SGvYy0BJ5eHVB59O8/sNyqnJSfHAJyU//x9gNJUYyL9kPdgmU/4h6EENJg/vbSqVi4cpKc1BHM/xaI6XwgJ1Ape9Qzugh7szVKawOy43IxYQOrlxV0TGTFHXgFT/fzuRSN/PmfTKn532XNmLLRpFu7aw1UbCZu4oLZhChRlA06dXrxteNjx2Zx1JLoSTBszGn4IQdoiVJq8EWJZRaq6VZwu8G2aZr3Tav5uPgL7GFeL3HAqy2qnlfX8GhrHd6fZ3746tH+yZ/9v+10Hb5am8gUitCSHzE9hZtEHI9VnIBBlINrjVCp2f+w79Qtq0EGZyq9JIouxD1yjUOePrx/7dxjW89678qFGZ/kFvpvSWIQGuKJWMJdCN4i5sr4eGH1uAZDNpN4fJsI9HwBYSgcxcDQIy+4viNpcTRKdzGiHejOfX+BLPfAHWBoQhXeLuyOGX2mV+fG9WZGda7Ebfk2Tx4Ql+eFEPcBUXy/p+mdxs2eujwuf/0/GpWJZ0OteIIVvpq0PTf8zZnRamp9VwUP+tbBayVLzxBgkQwEkipiUigs0Hl0/z8EnNmuIYZ0JbCiXfRYodTR66j+Eddbh5bSYf334XqAIxZgC4d6ahw9XyZnDG1D38er5uxaHbvLeg6C5AajHYEvDNk3sLpET3TXMlH3yzAakom4P1qKmfAwTu1LsducBN3W0GCPh78T3qZouXjd/0Q9gWEsRii09zIwJmw0dRP9/Afo96gDnSdKUEz4Hmb2wSxQ3sOe9jjrvk42kj+76PL6wxEJ4ot+/omIlfBKcU3WoZsNSIDap6JOpStu5QvaUkgG5X9588oH2xJ4D4n2ibt5EGsagqpSZJE5l2Hy04GJ5", ITER = 250000, KEY = "teach_site_pw";
   function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
     for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
   async function unlock(pw, quiet) {
@@ -41,6 +41,10 @@
       });
       document.getElementById("gate").style.display = "none";
       sessionStorage.setItem(KEY, pw);
+      if (location.hash.length > 1) {
+        var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (t) { t.scrollIntoView(); t.classList.add("jump"); }
+      }
     } catch (e) {
       sessionStorage.removeItem(KEY);
       if (!quiet) {

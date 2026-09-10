@@ -356,6 +356,22 @@ pre { max-width: 100%; overflow-x: auto; }
 .sec-summary > h3 { margin: 0 0 .5rem; color: #1d5470; font-size: 1.08rem; }
 .sec-summary > *:last-child { margin-bottom: 0; }
 
+/* 解答連結：學生頁活動標題旁的 ›，連到教師版（需密碼）對應位置 */
+a.ans {
+    text-decoration: none;
+    color: #9bb0c4;
+    font-size: .78em;
+    font-weight: 400;
+    padding: 0 .25rem;
+    border: 1px solid #dbe4ec;
+    border-radius: 4px;
+    vertical-align: .08em;
+}
+a.ans:hover { color: #1f5c3e; border-color: #9dc7b1; background: #f2f8f4; text-decoration: none; }
+
+/* 從解答連結跳過來時，標出落點 */
+.jump { background: #fff8dc; transition: background 1.2s ease-out; }
+
 /* ── 迷思攔截 ── */
 .sec-myths { background: #fffaf6; border: 1px solid #f0dcc8; border-radius: 10px;
              padding: 1rem 1.2rem .6rem; }

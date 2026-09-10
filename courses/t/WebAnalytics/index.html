@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>網路數據分析 Web Analytics（2026）</title>
-<link rel="stylesheet" href="../../../style.4c9a1457.css">
+<link rel="stylesheet" href="../../../style.33c0673a.css">
 </head>
 <body>
 <div id="gate">
@@ -18,7 +18,7 @@
 <div id="content" class="container" hidden></div>
 <script>
 (function () {
-  var SALT = "OHddS/J1dhk9BJVcCIE9mQ==", IV = "zX/UBsb6aknMcUZ3", CT = "4Sc/tFtwBEKeTacgWJ88bqHhAiT7byxJppzXJhzz2M9F6y0vIBAD20bpFiFBDnGhajuW5AYGGSgnOJLkU6EUHlqRpqUeYcHraD9RVoK1rUOX6PluMnWls7gDB4eQDeY0o/pam6wh3lR4wVK6ungXZiPbfH585tG5AOqSim2m4Q766uN9NUDDBlgVpous6gVrTCTxhbui4vemaeifVZmyTbnFIupXS8512g8CUJ6wNei2lBvlLPJmhc1TBFLLKBodNA8dH+k1Im/Dbl+/K8P0knT/S7owbuJENedFC67sE87rt8pHUePMx+ljLYeV9hXgZqrs4Z1jj4Lky1gdKhmXXGVneZBVnFcQDNWMpsYILdfDBP/WR6TyS7VPvo7kCrv75BGwnb+xq5Sb7Ue548H+hBIcj/X1KMKmT0Dza65ritaz4PrydtFxA8kXXuEVszmAZ7hGV59zMvMLg+wcFNF2KyJsMO9JQtk3FBfvjzqKzey3tbXMIZnmm7zI4E1Z3S9iBwrvzVQdyNBuHjsw2eleRBIFdSFvPKx8lvcWfWWhaH2ouPLwBbA/2UVvhgamFgXa9peKskAj9r/evrFv3ZUfX6K9JuVOIH2xSd7zIGh5io/GkL+FNrdk9v2VGjVfOm0FGPPHBI/vxi/K7FXnpSHlVa1bCOSrLB7wVLg0lwpg9/ON5TVLSc/oBvadBQNflwK9/+woMHv33WCzm34duG89q5aByg2iqOyVvRd/jp0XE0ohozBB17COKyCFHUw21KTo7eHdRJda46Ilr6YPEvRCOCmM9oJh5jgp+WxNCmXyhKu72rqmfuPCSXUiDDSqgHP3lSe3Xg4Bz8GdxOeiFFbij+Bo+3Or6rVocQM8RT/poclWCDVL6LvYdBuXOKtV", ITER = 250000, KEY = "teach_site_pw";
+  var SALT = "ZQZ09BF5AB0/XmdEt+j9mw==", IV = "KoMQNpqRnnMnLt8W", CT = "n8+TUQ4AZrOCdD7BZ+hTITQTfq+jkHXIcAvfl/1WgMJcg3cjSfcGeWBDtnfDmWaKkmqhnjTJiGA2ke8VtDXA7UlcvSrJisah7Uh21PR9pZBmmccWEU0D7vkZC1byJzOKL+o/yFMl+3kGGWd9H5A+qcogUwWlFW07QiFjX+/TDpxQhw/I5vKFEHMltxIIU2z5MYDMerSJtQ/oc3y63qyMbbMSwy4zk28KJQsmHWLc2FMJAjgVzK3zJrPh1mz3thoQIHji9U8IOAHKty7CrMlD7f2eOnq1dG7vzlOiG31R9DVdhOds0Zt7Zaiaf/ZeY67U5RrRpm3DRdE8OPw6l12bmgj7KBY9b512REyQhbROVQNFaWVbegnru2gwM8EfZGPNKNgFOzy4m1THlea14yS8k2+oE99149s0aPm3BqeuzzdLRzDFcPO2VmUGJZDexVFJ7Kx9/KQbgSO578kipCBPk/6BSxgkIt9yt2JTkfZgTP3et73WzDvJztr/PYAuO36Ym7xu5fA8Y7fNRo5l66sFZUZ7Mg8SDx8yRGB2km7Rai6Js9lvHPoRmaD/hynMlMAjprRvAW5C8oU5DZKnuo/20MopB8GYlcArj02tuLZowNXngaxeAZkcJ7eAD3711MMNyhYye3XOJ0sSSDngAeeHPSsErML/y/9H9mt2sYb9bgvRKdgq8TB3V1J/dLLARrvzk8vpux+sV58JVUG76uSETTHkihh7gyJ2wgqlKiaSFOmKGiwIkw0u+AKJ3E//GXWopMwWvZWFl8D3YovaTHu5y6ZEoa+oj9CEq8Q2JdtMODhi0JlKn5x+Rgqoz4Y66IVpYlUdVmtW0tx9FB+9n+demXBkKWhlbTPj/Mwz35kpsQE3jPnanF0b86ri1ou+", ITER = 250000, KEY = "teach_site_pw";
   function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
     for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
   async function unlock(pw, quiet) {
@@ -41,6 +41,10 @@
       });
       document.getElementById("gate").style.display = "none";
       sessionStorage.setItem(KEY, pw);
+      if (location.hash.length > 1) {
+        var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (t) { t.scrollIntoView(); t.classList.add("jump"); }
+      }
     } catch (e) {
       sessionStorage.removeItem(KEY);
       if (!quiet) {
