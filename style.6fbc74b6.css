@@ -193,6 +193,16 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 2.5rem 0; }
 .weekblock ul { margin: 0; padding-left: 1.2rem; }
 .weekblock li { margin: .25rem 0; }
 .weekblock.off { opacity: .55; }
+/* 進度表卡片的四類小標籤：AI / Theory / Product / PM */
+.ctags { margin-left: .35rem; white-space: nowrap; }
+.ctag { display: inline-block; margin-left: .25rem; padding: 0 .38rem;
+        border-radius: 3px; border: 1px solid transparent;
+        font-size: .68rem; line-height: 1.5; font-weight: 600;
+        letter-spacing: .02em; vertical-align: .08em; }
+.ctag-ai      { background: #eef3ff; border-color: #c2d2f5; color: #2d4f9e; }
+.ctag-theory  { background: #f3eefc; border-color: #d6c9ef; color: #5b3f9c; }
+.ctag-product { background: #eaf6ee; border-color: #bfe0cb; color: #26663f; }
+.ctag-pm      { background: #fdf1e6; border-color: #f0d3b4; color: #97551a; }
 .modtable { width: 100%; border-collapse: collapse; font-size: .92rem; }
 .modtable th, .modtable td { border-bottom: 1px solid #eee; padding: .4rem .5rem; text-align: left; }
 .sitefoot { margin-top: 2rem; color: #999; font-size: .8rem; }
