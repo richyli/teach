@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Term - Functional Spec</title>
+<link rel="stylesheet" href="../../style.33c0673a.css">
+</head>
+<body>
+<div id="gate">
+  <h2 style="font-size:1.05rem;color:#444;margin-bottom:1rem;">教師版 — 請輸入密碼</h2>
+  <input id="pw" type="password" inputmode="numeric" autofocus autocomplete="off">
+  <button id="go">進入</button>
+  <p class="err" id="err"></p>
+  <p class="hint">此頁內容加密儲存，密碼正確才會解開。<br>
+  找課程內容請走 <a href="../s/Term_-_Functional_Spec.html">學生版</a>。</p>
+</div>
+<div id="content" class="container" hidden></div>
+<script>
+(function () {
+  var SALT = "qmENfxnxOnV3y06hTGMqtA==", IV = "sN6wbMJ4OmS7Pxtb", CT = "7x8di9MtV1pQvi1PYKRX4edB+WJZtnJtl93isLJk0AXfwXWvGfvKTgvhTC9XF4OLsZQ4gsDxF7vePxomnUzaWs/d6gCzqgKWHA4KYHMHDAGMmcvAanXv4gSXh2Sd+YaqUy9Vyd6l0jg5nNTPQqPpDoyH1quT6Fo0HO2D0iyzu1Mgjsn91KmVh1Qtk8iMRpYW3R3LK1bOp+xnzCYQsN+r2ExYEgFbztyNDam6V36aWZANL8CeZqK+qY3aXbsyhBlp1EU1YbsULTesfqVq6Jt2zH/nz4YMuYq4L3J6GTeuygvf6Fe3KZ6t+JlF1Xt5FCegxN7G22oOV0FmMNt8FlE4WkoIbnlgwlpZspjDJczY/uSNZy5leiayQRmfExeqb78QEDHvIsonTdpm0NiK7ayX6Aqc4IgQatDqz+Qdp2bzPRWYXMadwBhF+0isk8QlNdqV0Jv7VVn9AsHWyxhdFi2DYIgqdxqbikw5qdcFb0VVml6tUe4mpfA06Y01Mm0spsU8kg3k2Hwrjbu3RpIGjwS2Q5zrsZC3+OahaVNXA5LGoh12rzzF3++TUenjItaeewAc21mtZtk2ddRl9sihzRMf+6uGoRZpeR2/Ud8Ws0uA8uH4EP/64kPNXs8bryt+Ad46IKAZ0uJKeVeLfjsaNqddZ10+QCzqLxbFib1eNx6jWHBcRGix0DkqqzzmhiYR/xuoIwBachIWOKJj6awGG0idEwVOJtpq8D/AkW7AolvIXafZcpuJF1mVRJlgLlS4Y/V6M/i9n9YtqytezhotpzdncWeaidWyJ4Y1QwsBlDMd0tJ140XZuUbt1TOkt+unLjlT+9ZnpMV3VvfHEL0Utd4W7WzbHFlWIBKf8yajKyZffu5yod95AhsA/BIpx58w+Azx+dO5a9nqOw013PIu5Drd358xJCIfzHXPoYnbhEO6iVQs5Y//ApraCF7QyIOhdTnS7aZRDyrl8fmciLBVlvARgQbMJow2W96g/Yx+66qxlLXEMouzJkl7YkuYabl9lABlvyd6r2t14XTbzlfrvq+KSdhF6HG5N7b1nbu9y9rxNu9kUp0XC7ubqG0AE0z0QSTEcVEuTwBLxVNVhoIO+0Pj1y1fUfCJcbyB1dwkgNOfDxApqlMg4+/aetTFYIPK2Cke9RIpzPgSFhZ+qYumRfUJaYcUViBH2eY4eeKvaBjw0Esufnv0PrUvHFgGFe1Tlc255dSW3dXQlknyktvx5Nb4Gd2jsRB3x6zMYIglBxQ6DsSFtxOoDdNe1RVK6qtIXWk+OeAbh4pcfmnr/jEzC/6rarKry44JdY8J1ojlT1xQBeFw9KbA1AO71Z8SxiLsHLyIVAlNHqlk6lrpeJgGPXdar3q8vuign5q24RnX/TvaYRyzdkWzBEYZuSzBLEmbX1RAeOmjz73IXjlLeOevY6Su7xojIE9enZzsBGaJ6hcBfRVCRH9RgYXnu6Qn2cspbZ+Fbnm064q5fMRofaCf8UrwMuMZJHp1I7NomaLhFHzw+03qN/mNuHflUM4L7gE0zgRxUkj7SRNsFzdVaoC6P4ypC5KXvVW1l6O+UmI1QTM3sCJVlqyOuwFfyBcdnrGezqzpAHcyV4jXSzI/XZNIllYmCcU5DmEecIdLSkT/7EcTNd2UMBgG37yUr3CGgaE1h/DLNU46Xxz5oDFeDyYR9fVeO4lvH6tDx+ntoTzynBv6a8hWM8QXyNPiCpyIK7hau/YU8LBlzmHkB2DiuiODTkN6uleUi/1ZNej/unqU3+VbSY/bGn+Tj0Td+VH2z8yYZx20Fx6M6iZuqzuFiovG4tg0EPRRvsFeT+Vii/TgIgdwSlzjl/Npf++JnRrvEjcs+N3TuBhtleRAC60akTlWVUbjPzOAdY8PXv+ss+Y26uYNvFx83mBCyv/Dlq5/ZrMNRmHuukT8kPJzj91luhBRIjQvGNCQwVn+aKzUXZSdY+1V8J/2RmrqxD9Hsvi0s35vn3zPjUkU2OVxxmdZRzdsGds1a9ueMAaEE6K46LFT+HYOxez7Az32e1TDo0t6pEvqvRzEZJ3EiSjUSaitzA==", ITER = 250000, KEY = "teach_site_pw";
+  function b64(s) { var r = atob(s), a = new Uint8Array(r.length);
+    for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  async function unlock(pw, quiet) {
+    try {
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw),
+        "PBKDF2", false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64(SALT), iterations: ITER, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+      var el = document.getElementById("content");
+      el.innerHTML = new TextDecoder().decode(buf);
+      el.hidden = false;
+      el.querySelectorAll("script").forEach(function (old) {
+        var s = document.createElement("script");
+        for (var i = 0; i < old.attributes.length; i++)
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+      document.getElementById("gate").style.display = "none";
+      sessionStorage.setItem(KEY, pw);
+      if (location.hash.length > 1) {
+        var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (t) { t.scrollIntoView(); t.classList.add("jump"); }
+      }
+    } catch (e) {
+      sessionStorage.removeItem(KEY);
+      if (!quiet) {
+        document.getElementById("err").textContent = "密碼不對";
+        document.getElementById("pw").value = "";
+        document.getElementById("pw").focus();
+      }
+    }
+  }
+  document.getElementById("go").addEventListener("click", function () {
+    unlock(document.getElementById("pw").value, false);
+  });
+  document.getElementById("pw").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock(this.value, false);
+  });
+  var saved = sessionStorage.getItem(KEY);
+  if (saved) unlock(saved, true);
+})();
+</script>
+</body>
+</html>
