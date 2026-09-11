@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>搜尋空間與河內塔</title>
+<link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">河內塔只有三條規則，難的不是規則而是路線</a></li><li><a href="#sec-5">把所有可能的擺法畫出來，就看見了搜尋空間</a></li><li><a href="#sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</a></li><li><a href="#sec-7">片數每多一片，最少步數就翻一倍</a></li><li><a href="#sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</a></li><li><a href="#sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享：估一次你自己的搜尋空間</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>搜尋空間與河內塔</h1></div><p>在本單元中，會介紹搜尋空間是什麼、為什麼問題大一點答案就多好幾個位數，以及這件事怎麼決定了一個問題該交給規則還是交給學來的直覺。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>一個決策問題的搜尋空間是什麼、大概有幾個位數</td>
+<td>為什麼工程師聽到你的需求之後第一句常常是「這個範圍要先縮小」？他在問的不是你想要什麼，是這題有多少種可能。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>指出</strong>自己工作裡哪些規則其實是在砍搜尋空間</td>
+<td>你每天排版、派工、選題時腦中那幾條「不用考慮」的原則，從哪裡來、砍掉了什麼？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一個問題適合用規則解，還是非得用學來的直覺</td>
+<td>同樣是下棋，為什麼西洋棋二十幾年前就輸了、圍棋卻撐到 2016 年？這條分界線在你的業務上落在哪裡？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示：</p>
+<blockquote>
+<p>河內塔有三根柱子，一次只能搬一片，大的不能疊在小的上面。請先算出三片的全部合法擺法有幾種，把算式寫出來。接著算出四片、十片、六十四片各有幾種擺法，以及各自的最少搬動步數。最後回答一個問題：擺法的總數與最少步數是兩個不同的數字，它們各自代表什麼意思？請直接給算式與數字，先不要解釋河內塔的歷史或傳說。</p>
+</blockquote>
+<p>它回答之後，再追問這一句：</p>
+<blockquote>
+<p>如果我不是要最少步數，而是要「任何一種可行解」，難度會差多少？</p>
+</blockquote>
+<p>當你拿到回答後，把「擺法總數」與「最少步數」這兩個數字記下來，等一下跟同學比對——很多人會把這兩個當成同一件事，而它們差別正好是接下來要用的那個概念。</p>
+</section>
+<section class="mod-sec sec-vocab"><h3 id="sec-3">🔤 關鍵詞</h3>
+<table>
+<thead>
+<tr>
+<th>詞</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>窮舉 brute force</td>
+<td>把所有可能一個一個試過去，不用任何技巧</td>
+</tr>
+<tr>
+<td>剪枝 pruning</td>
+<td>在還沒展開之前就判定某一整片可能性不用看，直接砍掉</td>
+</tr>
+<tr>
+<td>已解遊戲 solved game</td>
+<td>全部可能都算過了，雙方不犯錯的結果事先就知道</td>
+</tr>
+<tr>
+<td>啟發式 heuristic</td>
+<td>不保證最好、但通常夠好的判斷捷徑，人與機器都靠它活著</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">河內塔只有三條規則，難的不是規則而是路線</h3>
+<ul>
+<li>規則三條：一次搬一片、大的不能壓在小的上面、全部從左邊搬到右邊。</li>
+<li>三條規則十秒鐘講得完，但知道規則不等於知道怎麼走。</li>
+<li>所有「規則簡單、路線難找」的問題，難的都是同一件事：可能性太多。</li>
+</ul>
+<p>規則本身不構成難度。真正吃掉時間的是：在符合規則的所有走法裡面，哪一條會通到終點，而且最短。這個落差就是接下來整個單元要處理的東西。</p>
+<p>請先自己把三片搬完，再把片數加到四片、五片，注意你花的時間怎麼變。</p>
+<div class="widget" id="ht">
+<style>
+#ht { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#ht h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#ht .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
+#ht .bar { margin: .2rem 0 .9rem; }
+#ht button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#ht button:hover { background: #eef4fd; }
+#ht button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#ht .board { display: flex; gap: .6rem; align-items: flex-end; justify-content: center;
+      background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: 1rem .6rem .5rem; }
+#ht .peg { flex: 1 1 0; position: relative; height: 150px; cursor: pointer;
+      display: flex; flex-direction: column-reverse; align-items: center; gap: 3px;
+      border-bottom: 6px solid #c8d2de; border-radius: 3px; padding-bottom: 2px; }
+#ht .peg::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 140px; background: #dde4ec; border-radius: 3px; }
+#ht .peg.sel { background: #eef4fd; }
+#ht .peg .lbl { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center;
+      font-size: .78rem; color: #7a8796; }
+#ht .disc { position: relative; height: 20px; border-radius: 4px; color: #fff;
+      font-size: .76rem; line-height: 20px; text-align: center; }
+#ht .disc.lift { outline: 2px dashed #24528f; outline-offset: 2px; }
+#ht .stat { margin-top: 1.7rem; font-size: .88rem; line-height: 1.9; }
+#ht .stat b { color: #24528f; }
+#ht .out { margin-top: .7rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.8; }
+#ht .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#ht table { border-collapse: collapse; margin-top: .8rem; font-size: .84rem; width: 100%; }
+#ht th, #ht td { border: 1px solid #e2e2e2; padding: .3rem .5rem; text-align: right; }
+#ht th:first-child, #ht td:first-child { text-align: left; }
+#ht th { background: #f4f6f9; color: #33475b; font-weight: 700; }
+</style>
+
+<h5>河內塔：自己搬一次，再看最少要幾步</h5>
+<p class="lede">規則三條：一次只能搬一片、上面那片一定比下面小、全部從左邊搬到右邊。
+先點起點柱、再點目標柱。把 3 片搬完之後把片數加到 4、再加到 5，看步數怎麼長。</p>
+
+<div class="bar">
+  <button data-n="3" class="on">3 片</button>
+  <button data-n="4">4 片</button>
+  <button data-n="5">5 片</button>
+  <button data-n="6">6 片</button>
+  <button id="ht-reset">重來</button>
+</div>
+
+<div class="board">
+  <div class="peg" data-p="0"><span class="lbl">A 起點</span></div>
+  <div class="peg" data-p="1"><span class="lbl">B 中繼</span></div>
+  <div class="peg" data-p="2"><span class="lbl">C 終點</span></div>
+</div>
+
+<div class="stat">你走了 <b id="ht-moves">0</b> 步　·　這個片數的最少步數是 <b id="ht-min">7</b> 步</div>
+<div class="out" id="ht-out" hidden></div>
+
+<table>
+  <tr><th>片數</th><th>最少步數 2ⁿ−1</th><th>一秒搬一片要多久</th></tr>
+  <tr><td>3</td><td>7</td><td>7 秒</td></tr>
+  <tr><td>10</td><td>1,023</td><td>17 分鐘</td></tr>
+  <tr><td>20</td><td>1,048,575</td><td>12 天</td></tr>
+  <tr><td>40</td><td>1,099,511,627,775</td><td>3 萬 4 千年</td></tr>
+  <tr><td>64</td><td>18,446,744,073,709,551,615</td><td>約 5,850 億年</td></tr>
+</table>
+
+<script>
+(function () {
+  var root = document.getElementById("ht");
+  var pegs = [].slice.call(root.querySelectorAll(".peg"));
+  var movesEl = root.querySelector("#ht-moves");
+  var minEl = root.querySelector("#ht-min");
+  var out = root.querySelector("#ht-out");
+  var COLORS = ["#24528f", "#2f7d6b", "#a8703a", "#8a4f7d", "#3b6ea5", "#6b7a2f"];
+  var n = 3, towers = [[], [], []], moves = 0, sel = null;
+
+  function setup(k) {
+    n = k; towers = [[], [], []]; moves = 0; sel = null;
+    for (var i = n; i >= 1; i--) towers[0].push(i);
+    minEl.textContent = (Math.pow(2, n) - 1).toLocaleString("en-US");
+    out.hidden = true; out.className = "out";
+    draw();
+  }
+
+  function draw() {
+    movesEl.textContent = moves;
+    pegs.forEach(function (peg, pi) {
+      [].slice.call(peg.querySelectorAll(".disc")).forEach(function (d) { d.remove(); });
+      peg.classList.toggle("sel", sel === pi);
+      towers[pi].forEach(function (size, idx) {
+        var d = document.createElement("div");
+        d.className = "disc";
+        d.style.width = (28 + size * (56 / n)) + "%";
+        d.style.background = COLORS[(size - 1) % COLORS.length];
+        d.textContent = size;
+        if (sel === pi && idx === towers[pi].length - 1) d.classList.add("lift");
+        peg.appendChild(d);
+      });
+    });
+  }
+
+  function click(pi) {
+    if (sel === null) {
+      if (!towers[pi].length) return;
+      sel = pi; draw(); return;
+    }
+    if (sel === pi) { sel = null; draw(); return; }
+    var disc = towers[sel][towers[sel].length - 1];
+    var top = towers[pi][towers[pi].length - 1];
+    if (top && top < disc) {
+      out.hidden = false; out.className = "out";
+      out.innerHTML = "第 " + disc + " 片比第 " + top + " 片大，不能疊上去。這條規則就是把搜尋空間切掉一大塊的東西——沒有它，這個題目根本不用想。";
+      sel = null; draw(); return;
+    }
+    towers[pi].push(towers[sel].pop());
+    moves++; sel = null; draw();
+    if (towers[2].length === n) {
+      var best = Math.pow(2, n) - 1;
+      out.hidden = false;
+      out.className = "out ok";
+      out.innerHTML = moves === best
+        ? "搬完了，而且正好是 " + best + " 步，這就是最佳解。這條路線是這個搜尋空間裡最短的一條。"
+        : "搬完了，你用了 " + moves + " 步，最少是 " + best + " 步，多走了 " + (moves - best) + " 步。"
+          + "差距就是「有解」跟「最佳解」之間的距離——專家系統要回答的通常是後者。";
+    } else {
+      out.hidden = true;
+    }
+  }
+
+  pegs.forEach(function (peg, pi) { peg.addEventListener("click", function () { click(pi); }); });
+  [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (x) { x.classList.remove("on"); });
+      b.classList.add("on");
+      setup(parseInt(b.dataset.n, 10));
+    });
+  });
+  root.querySelector("#ht-reset").addEventListener("click", function () { setup(n); });
+  setup(3);
+})();
+</script>
+</div>
+
+<blockquote>
+<p><strong>規則負責定義什麼不能做，搜尋空間負責決定這題有多難——兩者是分開的，難度不會因為規則變簡單就下降。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">把所有可能的擺法畫出來，就看見了搜尋空間</h3>
+<ul>
+<li>三片三柱，每一片可以在三根柱子的其中一根，所以合法擺法有 $3^3 = 27$ 種。</li>
+<li>27 種擺法可以整張畫出來，每個點是一種擺法，每條線是一次合法搬動。</li>
+<li>從起點到終點的走法有無限多條（可以繞路），但最短的只有一條，就是圖上紅色那一側。</li>
+</ul>
+<p><svg viewBox="0 0 820 470" role="img" aria-label="三片河內塔的全部 27 種擺法，以及從起點到終點最短的那一條路線" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><line x1="410.0" y1="70.3" x2="366.2" y2="115.8" stroke="#c9d6e4" stroke-width="1"/><line x1="410.0" y1="70.3" x2="453.8" y2="115.8" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="115.8" x2="453.8" y2="115.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="161.3" x2="278.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="161.3" x2="366.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="206.8" x2="366.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="161.3" x2="453.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="161.3" x2="541.2" y2="206.8" stroke="#d05070" stroke-width="2.6"/><line x1="453.8" y1="206.8" x2="541.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="366.2" y1="115.8" x2="322.5" y2="161.3" stroke="#c9d6e4" stroke-width="1"/><line x1="453.8" y1="115.8" x2="497.5" y2="161.3" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="206.8" x2="453.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="235.0" y1="252.3" x2="191.2" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="235.0" y1="252.3" x2="278.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="297.8" x2="278.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="147.5" y1="343.3" x2="103.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="147.5" y1="343.3" x2="191.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="103.8" y1="388.8" x2="191.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="343.3" x2="278.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="343.3" x2="366.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="388.8" x2="366.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="297.8" x2="147.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="297.8" x2="322.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="388.8" x2="278.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="585.0" y1="252.3" x2="541.2" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="585.0" y1="252.3" x2="628.8" y2="297.8" stroke="#d05070" stroke-width="2.6"/><line x1="541.2" y1="297.8" x2="628.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="343.3" x2="453.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="343.3" x2="541.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="453.8" y1="388.8" x2="541.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="672.5" y1="343.3" x2="628.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="672.5" y1="343.3" x2="716.2" y2="388.8" stroke="#d05070" stroke-width="2.6"/><line x1="628.8" y1="388.8" x2="716.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="541.2" y1="297.8" x2="497.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="628.8" y1="297.8" x2="672.5" y2="343.3" stroke="#d05070" stroke-width="2.6"/><line x1="541.2" y1="388.8" x2="628.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="206.8" x2="235.0" y2="252.3" stroke="#c9d6e4" stroke-width="1"/><line x1="541.2" y1="206.8" x2="585.0" y2="252.3" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="388.8" x2="453.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><circle cx="410.0" cy="70.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="366.2" cy="115.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="453.8" cy="115.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="322.5" cy="161.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="366.2" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="497.5" cy="161.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="453.8" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="541.2" cy="206.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="235.0" cy="252.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="191.2" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="147.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="103.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="191.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="322.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="366.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="585.0" cy="252.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="541.2" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="628.8" cy="297.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="497.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="453.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="541.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="672.5" cy="343.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="628.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="716.2" cy="388.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="410.0" cy="70.3" r="9" fill="none" stroke="#24528f" stroke-width="2"/><circle cx="716.2" cy="388.8" r="9" fill="none" stroke="#24528f" stroke-width="2"/><text x="410.0" y="52.3" font-size="13.5" fill="#24528f" text-anchor="middle">起點：三片都在 A</text><text x="722.2" y="418.8" font-size="13.5" fill="#24528f" text-anchor="end">終點：三片都在 C</text><text x="95.8" y="418.8" font-size="13.5" fill="#5b6b7c" text-anchor="start">三片都在 B</text><text x="26" y="458" font-size="12.5" fill="#5b6b7c">每個點是一種擺法，每條線是一次合法的搬動。紅線那 7 步是最短路徑；其餘的線全部走得通，只是比較遠。</text></svg></p>
+<p>畫得出來，就代表你可以用眼睛找最佳解。這件事只在數字小的時候成立，而它成立的範圍比大部分人以為的窄得多。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要先看這張圖</span><p>這張圖是後面所有內容的底。專家系統、推薦系統、排班系統、AI 選題，本質上都是在一張這樣的圖裡面找路。差別只在圖的大小，以及找路的方法是有人寫死的規則，還是機器自己學出來的直覺。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</h3>
+<ul>
+<li>隨便亂搬也會搬完，那是「有解」。</li>
+<li>三片的最少步數是 7 步，這是「最佳解」。</li>
+<li>大部分商業系統的價值不在於找得到答案，而在於找得到夠好的答案。</li>
+</ul>
+<p>你剛剛如果多走了幾步，那幾步就是有解與最佳解之間的距離。這個距離在河內塔上只是浪費幾秒鐘，換到排班、配送、廣告投放上，就是每天真金白銀的成本差。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">片數每多一片，最少步數就翻一倍</h3>
+<ul>
+<li>最少步數是 $2^n - 1$：3 片是 7 步，10 片是 1,023 步，20 片是一百萬步。</li>
+<li>64 片是 18,446,744,073,709,551,615 步，一秒搬一片要約 5,850 億年。</li>
+<li>宇宙年齡是 138 億年，所以這個數字不是「很久」，是「這輩子不用談」。</li>
+</ul>
+<p>傳說裡僧侶搬完 64 片世界就毀滅，聽起來像神話，其實是在描述指數成長。問題規模只從 3 變成 64，時間從七秒變成宇宙年齡的四十幾倍。</p>
+<p>請把下面幾個問題點過一遍，特別注意河內塔 3 片與 64 片那兩條的落差。</p>
+<div class="widget" id="sss">
+<style>
+#sss { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#sss h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#sss .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
+#sss .row { display: grid; grid-template-columns: 9.5rem 1fr; gap: .5rem .7rem;
+      align-items: center; margin: .45rem 0; }
+#sss .name { font-size: .86rem; color: #33475b; }
+#sss .track { background: #eef1f5; border-radius: 999px; height: 22px; position: relative; overflow: hidden; }
+#sss .fill { height: 100%; background: linear-gradient(90deg,#4d7ebf,#24528f); border-radius: 999px;
+      transition: width .5s ease; }
+#sss .val { position: absolute; right: .55rem; top: 0; line-height: 22px; font-size: .76rem; color: #33475b; }
+#sss .val.inv { color: #fff; right: auto; left: .55rem; }
+#sss .pick { margin: 1rem 0 .3rem; }
+#sss button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#sss button:hover { background: #eef4fd; }
+#sss button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#sss .out { margin-top: .8rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.85; }
+#sss .out b { color: #24528f; }
+#sss .note { font-size: .8rem; color: #7a8796; margin-top: .7rem; line-height: 1.7; }
+</style>
+
+<h5>搜尋空間有多大：同一把尺量六個問題</h5>
+<p class="lede">長條的長度是「可能狀態數的位數」，不是狀態數本身——真的照比例畫，前五條全部會變成看不見的一點。
+點下面任何一個問題，看它窮舉要花多久。</p>
+
+<div id="sss-bars"></div>
+
+<div class="pick" id="sss-pick"></div>
+<div class="out" id="sss-out">選一個問題。</div>
+
+<p class="note">窮舉時間都假設一秒可以檢查一百萬種可能。宇宙年齡約 138 億年，可觀測宇宙的原子數約 10<sup>80</sup>。</p>
+
+<script>
+(function () {
+  var root = document.getElementById("sss");
+  var DATA = [
+    { k: "hanoi3", name: "河內塔 3 片", digits: 2, n: "27（3³）種擺法",
+      why: "三片三柱，每片可以在三根柱子之一，所以是 3³。整張圖畫得出來，所以你剛剛真的可以用眼睛找最佳解。" },
+    { k: "hanoi64", name: "河內塔 64 片", digits: 31, n: "約 3.4 × 10³⁰ 種擺法",
+      why: "片數只從 3 加到 64，狀態數多了二十八個位數。最佳解本身是 1.8 × 10¹⁹ 步，一秒一步要五千八百億年——" +
+           "傳說裡搬完世界就毀滅，其實是在說這個數字有多大。" },
+    { k: "ttt", name: "井字棋", digits: 6, n: "約 26 萬局",
+      why: "小到可以整棵樹展開，所以井字棋是「已解遊戲」：雙方都不犯錯必定和局。能窮舉的問題不需要專家，只需要算力。" },
+    { k: "chess", name: "西洋棋", digits: 45, n: "約 10⁴⁴ 個合法盤面",
+      why: "窮舉沒有希望，但用規則與評估函數剪枝可以打贏人類——1997 年 Deep Blue 走的就是這條路。" },
+    { k: "go", name: "圍棋", digits: 171, n: "約 2.1 × 10¹⁷⁰ 個合法盤面",
+      why: "比可觀測宇宙的原子數還多九十個位數。任何形式的窮舉都出局，所以 AlphaGo 改用學來的直覺去挑幾條路看——" +
+           "這正是規則型系統被機率型系統換掉的分界線。" },
+    { k: "fruit", name: "挑水果專家系統", digits: 11, n: "約 10¹¹ 種條件組合",
+      why: "三十幾個判斷因素，每個開或關，組合數就破千億。所以知識庫不會去枚舉組合，只會存事實加規則，讓推理引擎當場算——" +
+           "這是專家系統之所以可行的關鍵設計。" },
+    { k: "mrt", name: "動物園到頭前庄", digits: 2, n: "數十條合理路線",
+      why: "路線本身很少，難的是判準：最少轉乘、最短時間、還是最少走路？搜尋空間小的時候，問題從「找得到嗎」變成「你要的是哪一個最佳」。" }
+  ];
+  var MAX = 171;
+  var bars = root.querySelector("#sss-bars");
+  var pick = root.querySelector("#sss-pick");
+  var out = root.querySelector("#sss-out");
+
+  DATA.forEach(function (d) {
+    var row = document.createElement("div");
+    row.className = "row";
+    var pct = Math.max(4, Math.round(d.digits / MAX * 100));
+    row.innerHTML = '<div class="name">' + d.name + '</div>'
+      + '<div class="track"><div class="fill" style="width:' + pct + '%"></div>'
+      + '<div class="val' + (pct > 55 ? " inv" : "") + '">' + d.digits + ' 位數</div></div>';
+    bars.appendChild(row);
+
+    var b = document.createElement("button");
+    b.textContent = d.name;
+    b.addEventListener("click", function () {
+      [].slice.call(pick.querySelectorAll("button")).forEach(function (x) { x.classList.remove("on"); });
+      b.classList.add("on");
+      out.innerHTML = "<b>" + d.name + "</b>：" + d.n + "。" + d.why;
+    });
+    pick.appendChild(b);
+  });
+})();
+</script>
+</div>
+
+<blockquote>
+<p><strong>指數成長的可怕之處不是數字大，是它讓「再加一點點資源就好」這個直覺完全失效。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</h3>
+<ul>
+<li>從動物園站到頭前庄站，合理路線只有幾十條，全部列出來不費力。</li>
+<li>難的是判準：最少轉乘、最短時間、還是最少走路？</li>
+<li>三個判準會給出三個不同的最佳解，而它們都是對的。</li>
+</ul>
+<p>搜尋空間小到可以全部看過的時候，技術問題就結束了，剩下的是價值問題。你要系統替你最佳化什麼，這件事沒有技術答案，只有選擇。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段跟你的關係</span><p>你下次跟工程師談需求，如果對方說「這個技術上沒問題」，通常意思是搜尋空間夠小。這時候該吵的不是做不做得到，是照哪個判準排序——那才是你身為主管真正該決定的事，而且工程師不會替你決定。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</h3>
+<ul>
+<li>井字棋約 26 萬局，全部算得完，所以它是已解遊戲：雙方都不犯錯必定和局。</li>
+<li>圍棋合法盤面約 $2.1 \times 10^{170}$ 個，比可觀測宇宙的原子數還多九十個位數。</li>
+<li>西洋棋約 $10^{44}$，窮舉不可能，但靠規則加剪枝可以贏——1997 年 Deep Blue 走的就是這條路。</li>
+</ul>
+<p>三個遊戲排成一條線，就把整個 AI 的技術路線圖畫出來了。空間小到能窮舉，用規則；空間大但結構清楚，用規則加剪枝；空間大到連剪枝都撐不住，只能改用學來的直覺去猜幾條路看，這就是 AlphaGo 與後來所有機器學習系統走的路。</p>
+<p>接下來三個單元要講的專家系統，落在前兩段。它能做的事情多到超乎想像，而它做不到的事情也就從這條線上開始。</p>
+<hr />
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-10">⚠️ 迷思攔截</h3>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>規則簡單的問題就是簡單的問題</td>
+<td>河內塔規則三條，64 片要 5,850 億年</td>
+<td>難度看的是搜尋空間，不是規則條數</td>
+</tr>
+<tr>
+<td>電腦很快，算力夠就能窮舉</td>
+<td>圍棋盤面數比宇宙原子數還多九十個位數</td>
+<td>指數成長面前，加硬體等於沒加</td>
+</tr>
+<tr>
+<td>找得到答案就等於解決了</td>
+<td>隨便亂搬也會搬完河內塔</td>
+<td>商業價值多半在最佳解，不在可行解</td>
+</tr>
+<tr>
+<td>搜尋空間小就代表這題不重要</td>
+<td>動物園到頭前庄只有幾十條路線</td>
+<td>空間小的時候，難的是選判準，而判準是主管的事</td>
+</tr>
+<tr>
+<td>AlphaGo 之後規則型系統就過時了</td>
+<td>停車費率、保費、報稅至今都是規則型</td>
+<td>兩條路線各有地盤，分界線是空間大小與結構清不清楚</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-prereq"><h3 id="sec-11">先修與後續</h3>
+<ul>
+<li><strong>後續</strong>：<a href="M_%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1%E7%9A%84%E4%B8%89%E5%80%8B%E5%85%83%E4%BB%B6.html">專家系統的三個元件</a>——專家系統就是用規則在這張圖裡砍路的機器</li>
+<li><strong>後續</strong>：<a href="M_%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86%E8%88%87%E5%8F%8D%E5%90%91%E6%8E%A8%E7%90%86.html">正向推理與反向推理</a>——兩種在搜尋空間裡走路的方向</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%85%A9%E6%AC%A1_AI_%E5%AF%92%E5%86%AC%E8%88%87%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1.html">兩次 AI 寒冬與專家系統</a>——同一個技術的產業史版本，講它為什麼垮</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%BE%9E%E8%A6%8F%E5%89%87%E5%88%B0%E6%A9%9F%E7%8E%87%E7%9A%84%E8%BD%89%E5%90%91.html">從規則到機率的轉向</a>——搜尋空間大到規則撐不住之後，路線怎麼換軌</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-12">小結論</h3>
+<p>搜尋空間就是一個問題所有可能答案的總數。你現在可以做三件事：拿到一個需求時先問「這題有幾種可能」，而不是先問「做不做得到」；看見自己每天那些「不用考慮」的原則，知道它們是在砍空間，也知道砍掉的東西不會再回來；聽到工程師說某件事不可行時，分得出他說的是搜尋空間太大，還是判準還沒定。</p>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-13">💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-14">配對分享：估一次你自己的搜尋空間</h3>
+<p><strong>情境</strong></p>
+<p>你是一家綜合型新聞網站的內容主管。首頁每天有 24 個推薦版位（6 排 × 4 格），自家編輯台一天產出約 180 則稿子，另外還有通訊社供稿約 400 則，也就是每天要從約 580 則裡面挑 24 則並決定順序。排版權限在你手上，總編輯可以否決任何一格，但實務上他只在出事之後才回頭看。每天下午 3 點要定隔天早上 7 點的版面，晚上 11 點還有一次調整機會。</p>
+<p>上週三出現一個狀況：值班編輯花了 70 分鐘才排完，平常是 25 分鐘；而且交出來的版面最後四格，是照前一天原樣複製貼上的。你問他，他說「後面實在看不完了」。</p>
+<p>請同學兩兩一組，依序做四件事：</p>
+<ol>
+<li>估算這個決定的搜尋空間大概有幾個位數，算式寫出來就好，不必算到精確。</li>
+<li>列出值班編輯實際上用了哪些規則把這個空間砍小，至少三條。</li>
+<li>判斷「最後四格照前一天複製貼上」是什麼的症狀，並說出如果不處理，下一次會出現在哪裡。</li>
+<li>每一條判斷後面，引用情境裡讓你這樣判斷的那一句話。</li>
+</ol>
+<p>引不出句子的那一條，就是你自己補進去的假設，把它標出來。</p>
+<p>互相挑對方一點：對方砍空間的那幾條規則，有沒有哪一條其實是在砍掉他不想面對的稿子。</p>
+<p>〔加碼選項：手上有自己部門真實的版位數與稿量的，換成自己的數字再跑一次。〕</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-15">個人反思</h3>
+<blockquote>
+<p>我原本以為這個決定難在〔＿＿＿〕，現在我會先問——〔＿＿＿〕。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-16">小作業</h3>
+<p>挑一個你每週都要做、而且選項多到看不完的決定，寫下三行：這個決定的搜尋空間大概有幾個位數、你實際上用哪三條規則把它砍到能處理的大小、這三條規則是誰定的。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-11 14:11</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>

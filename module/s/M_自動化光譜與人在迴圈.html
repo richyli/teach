@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自動化光譜與人在迴圈</title>
+<link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">自動化不是開關，是六個檔位</a></li><li><a href="#sec-5">人對一條流程只有六個控制點</a></li><li><a href="#sec-6">人在迴圈內、迴圈上、迴圈外，是三種不同的處境</a></li><li><a href="#sec-7">「人在迴圈」寫進守則的時候，要寫的是哪一格</a></li><li><a href="#sec-8">自主武器是這條光譜的極端，也是它為什麼重要的原因</a></li><li><a href="#sec-9">Society-in-the-loop：不只是操作者，而是整個社會該不該有一格</a></li><li><a href="#sec-10">把自家流程放進這張表，最後一欄要自己填</a></li><li><a href="#sec-11">⚠️ 迷思攔截</a></li><li><a href="#sec-12">先修與後續</a></li><li><a href="#sec-13">小結論</a></li><li><a href="#sec-14">💬 討論／分享／反思</a></li><li><a href="#sec-15">配對分享：把一條流程放進檔位</a></li><li><a href="#sec-16">個人反思</a></li><li><a href="#sec-17">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>自動化光譜與人在迴圈</h1></div><p>在本單元中，會介紹自動化其實有六個檔位、人對一條流程有哪六個控制點，以及「人在迴圈」這句話在不同檔位底下指的不是同一件事。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>自動化六個檔位的差別，並把一個真實流程放進去</td>
+<td>廠商說「這個是全自動的」，他講的是哪一檔？這句話在合約上代表什麼？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>指認</strong>一條流程上人還握著哪幾個控制點</td>
+<td>你的編輯室已經在用 AI 的那幾段，人到底還能不能喊停？喊停的人是誰？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一段流程該停在哪一檔，並說出理由</td>
+<td>同樣一段工作，為什麼有的媒體推到自動化就停手，有的推到自主？誰承擔了差別？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示：</p>
+<blockquote>
+<p>請把下面六個詞排成一個由低到高的光譜，並說明相鄰兩個之間的分界線是什麼：人工、自動、遙控、自動化、自主、智慧。排完之後，請用同一條產線當例子，說明這條產線在六個檔位分別長什麼樣子。最後回答一個問題：從「自動化」跨到「自主」的那一步，人失去了什麼。請直接排序與舉例，不要先解釋自動化的歷史。</p>
+</blockquote>
+<p>它回答之後，再追問這一句：</p>
+<blockquote>
+<p>如果一家公司說自己的系統是「全自動」，這句話可能指的是哪幾檔？</p>
+</blockquote>
+<p>當你拿到回答後，把它寫的「從自動化跨到自主，人失去了什麼」那一句記下來，等一下跟同學比對——多數人會答「失去控制」，而真正失去的是別的東西。</p>
+</section>
+<section class="mod-sec sec-vocab"><h3 id="sec-3">🔤 關鍵詞</h3>
+<table>
+<thead>
+<tr>
+<th>詞</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>In the loop</td>
+<td>人在迴圈裡：每一步都要人動手或點頭，機器不會自己往下走</td>
+</tr>
+<tr>
+<td>On the loop</td>
+<td>人在迴圈上：機器自己跑，人看著，必要時喊停</td>
+</tr>
+<tr>
+<td>Out of the loop</td>
+<td>人在迴圈外：機器自己跑完，人只在事後才看到結果</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">自動化不是開關，是六個檔位</h3>
+<ul>
+<li>從人工到智慧之間有六個檔位，不是「有沒有自動化」兩個選項。</li>
+<li>相鄰兩檔的差別很小，但累積起來會改變誰在負責。</li>
+<li>「全自動」這三個字在合約上至少可以指四檔中的任何一檔。</li>
+</ul>
+<p>六檔依序是：人工 Manual、自動 Automatic、遙控 Remote Control、自動化 Automation、自主 Autonomous、智慧 Intelligent。判斷落在哪一檔，看五件事：人工依賴程度、複雜性、效率、誰在做決策、有沒有學習能力。</p>
+<p>用一條烤麵包產線走過六檔，差別最清楚。請點下面每一檔，注意綠色的控制點怎麼一格一格消失。</p>
+<div class="widget" id="al">
+<style>
+#al { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#al h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#al .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
+#al .steps { display: flex; gap: .3rem; margin: .2rem 0 1rem; flex-wrap: wrap; }
+#al .step { flex: 1 1 5.5rem; text-align: center; border: 1px solid #c9d4e4; background: #fff;
+      color: #24528f; border-radius: 8px; padding: .45rem .3rem; cursor: pointer; font-size: .83rem; }
+#al .step:hover { background: #eef4fd; }
+#al .step.on { background: #24528f; color: #fff; border-color: #24528f; }
+#al .step small { display: block; font-size: .72rem; opacity: .75; }
+#al .panel { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: .8rem 1rem; }
+#al .panel h5 { margin: .1rem 0 .5rem; font-size: .92rem; color: #24528f; }
+#al .ctrl { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: .4rem;
+      margin: .8rem 0 .5rem; }
+#al .c { border: 1px solid #dbe2ea; border-radius: 8px; padding: .4rem .3rem; text-align: center;
+      font-size: .82rem; }
+#al .c.human { background: #eef7f1; border-color: #a8d4bd; color: #216b4f; }
+#al .c.machine { background: #f4f4f5; border-color: #e0e0e0; color: #9a9a9a; }
+#al .c small { display: block; font-size: .7rem; opacity: .8; }
+#al table { border-collapse: collapse; width: 100%; font-size: .82rem; margin-top: .6rem; }
+#al th, #al td { border: 1px solid #e6e6e6; padding: .3rem .5rem; text-align: left; }
+#al th { background: #f4f6f9; color: #33475b; }
+#al .ex { margin-top: .7rem; font-size: .87rem; line-height: 1.85; }
+#al .ex b { color: #24528f; }
+#al .risk { margin-top: .7rem; padding: .6rem .85rem; border-radius: 8px; background: #fff7ef;
+      border: 1px solid #ecd3b4; font-size: .87rem; line-height: 1.8; }
+#al .loop { margin-top: .8rem; font-size: .84rem; color: #5b6b7c; line-height: 1.8; }
+#al .loop b { color: #24528f; }
+</style>
+
+<h5>自動化的六個檔位：換一檔，人就少拿走一樣東西</h5>
+<p class="lede">點任何一檔，看烤麵包這條產線在那一檔長什麼樣，以及人類對這條流程還剩下哪幾個控制點。
+綠色是人還握著的，灰色是已經交出去的。</p>
+
+<div class="steps" id="al-steps"></div>
+
+<div class="panel">
+  <h6 id="al-title"></h6>
+  <div id="al-desc" class="ex"></div>
+  <div class="ctrl" id="al-ctrl"></div>
+  <div class="loop" id="al-loop"></div>
+  <table id="al-tb"></table>
+  <div class="ex" id="al-media"></div>
+  <div class="risk" id="al-risk"></div>
+</div>
+
+<script>
+(function () {
+  var CTRLS = ["發起", "控制", "中斷", "預測結果", "檢查", "評估"];
+  var L = [
+    { k: "人工", en: "Manual", desc: "從秤麵粉到出爐每一步都由人做。機器只是工具，不會自己動。",
+      human: [1,1,1,1,1,1],
+      loop: "人不在迴圈裡，人就是迴圈本身。",
+      row: ["人工", "人工", "有限", "人", "無"],
+      media: "對照到媒體：記者自己打電話、自己寫稿、自己下標、自己排版。",
+      risk: "風險不在系統，在人——會累、會偏心、產量有上限，但每一個判斷都找得到負責的人。" },
+    { k: "自動", en: "Automatic", desc: "攪拌機自己轉、烤箱自己控溫，但每一台都要人去按下開始，機器與機器之間不相通。",
+      human: [1,1,1,1,1,1],
+      loop: "人在迴圈裡（in the loop）：每一段都要人去啟動、去接。",
+      row: ["人工啟動", "低", "特定流程高效", "人", "無"],
+      media: "對照到媒體：用轉檔軟體、用排版樣板、用自動上字幕，一次一個檔案，人按一次動一次。",
+      risk: "最容易被低估的一檔。看起來只是省力，但人對「機器做得對不對」的檢查標準已經開始鬆掉。" },
+    { k: "遙控", en: "Remote Control", desc: "人不在現場，但決定還是人下的。廠房在桃園，你在台北按下開始。",
+      human: [1,1,1,0,1,1],
+      loop: "人在迴圈裡，但看到的只剩下螢幕上的東西。",
+      row: ["人工啟動", "低到中", "特定流程高效", "人", "無"],
+      media: "對照到媒體：遠端導播、遠端連線出機、在家發稿排班。",
+      risk: "距離本身會吃掉資訊。你看不到現場的異常，只看得到被儀表板挑出來的那幾個數字。" },
+    { k: "自動化", en: "Automation", desc: "進料、攪拌、發酵、烘烤、包裝整條串起來，人只在開工時設定參數與出問題時介入。",
+      human: [1,0,1,0,1,1],
+      loop: "人在迴圈上（on the loop）：不逐步操作，但看著、必要時喊停。",
+      row: ["人工啟動", "中等", "高效可拓展", "流程間自主", "無"],
+      media: "對照到媒體：自動抓稿、自動分發多平台多版本、自動產生社群貼文與縮圖。",
+      risk: "人還有中斷權，但中斷的前提是看得懂儀表板。真正的問題是「異常」由誰定義——沒被定義成異常的事不會亮燈。" },
+    { k: "自主", en: "Autonomous", desc: "不用人下令就自己進料、開工、決定今天做多少、決定何時停工。人可以完全不介入。",
+      human: [0,0,1,0,0,1],
+      loop: "人在迴圈外（out of the loop）：只剩下拔插頭這個動作，以及事後評估。",
+      row: ["自主操作", "高等", "高效可拓展", "自主", "優化"],
+      media: "對照到媒體：自動選題並自動發布的帳號、自動化的內容農場、無人審核的推薦排序。",
+      risk: "這一檔的分界不是技術，是責任。出錯的時候，最後一個做決定的是系統，但要負責的還是機構。" },
+    { k: "智慧", en: "Intelligent", desc: "在自主的基礎上加上學習：感測環境、預測下一個時段的需求，自己決定要做哪一種麵包、做多少。",
+      human: [0,0,1,0,0,0],
+      loop: "人在迴圈外，而且連目標函數都可能是系統自己調的。",
+      row: ["自主操作", "高等可提升", "高效可拓展，並主動提升", "自主", "學習、推理、應用"],
+      media: "對照到媒體：依即時互動自己改寫標題、自己調整推播時間與對象、自己決定哪類題目值得投資源。",
+      risk: "它會越跑越好，但「好」是照它學到的那把尺。你要監督的不再是它有沒有照規則做，而是那把尺是誰的。" }
+  ];
+
+  var root = document.getElementById("al");
+  var steps = root.querySelector("#al-steps");
+  var i = 0;
+
+  function draw() {
+    var d = L[i];
+    [].slice.call(steps.children).forEach(function (b, k) { b.classList.toggle("on", k === i); });
+    root.querySelector("#al-title").textContent = d.k + "　" + d.en;
+    root.querySelector("#al-desc").textContent = d.desc;
+    root.querySelector("#al-ctrl").innerHTML = CTRLS.map(function (c, k) {
+      return '<div class="c ' + (d.human[k] ? "human" : "machine") + '">' + c
+        + "<small>" + (d.human[k] ? "人" : "機器") + "</small></div>";
+    }).join("");
+    root.querySelector("#al-loop").innerHTML = "<b>人在哪裡：</b>" + d.loop;
+    root.querySelector("#al-tb").innerHTML =
+      "<tr><th>人工依賴</th><th>複雜性</th><th>效率</th><th>決策</th><th>學習能力</th></tr><tr>"
+      + d.row.map(function (x) { return "<td>" + x + "</td>"; }).join("") + "</tr>";
+    root.querySelector("#al-media").innerHTML = d.media;
+    root.querySelector("#al-risk").innerHTML = "<b>這一檔的風險長什麼樣：</b>" + d.risk;
+  }
+
+  L.forEach(function (d, k) {
+    var b = document.createElement("div");
+    b.className = "step";
+    b.innerHTML = d.k + "<small>" + d.en + "</small>";
+    b.addEventListener("click", function () { i = k; draw(); });
+    steps.appendChild(b);
+  });
+  draw();
+})();
+</script>
+</div>
+
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這張表怎麼用在採購上</span><p>廠商說「全自動」的時候，你要追問的不是它多自動，是這五欄裡的「決策」那一欄填什麼。決策在流程之間自主，跟決策完全自主，是兩個完全不同的責任結構——而規格書上經常只寫「自動化」三個字。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">人對一條流程只有六個控制點</h3>
+<ul>
+<li>六個控制點：發起、控制、中斷、預測結果、檢查、評估。</li>
+<li>每往上一檔，人就交出其中一兩個。</li>
+<li>「人還在」跟「人還握著哪幾個」是兩件事。</li>
+</ul>
+<p>這六個點是判斷自動化程度最實在的工具，因為它們每一個都可以用一句話驗證：這件事是誰開始的？跑的過程中誰能改？出事時誰能按下停止？結果出來之前有人知道會是什麼嗎？做完之後有誰逐件看過？整體做得好不好由誰評斷？</p>
+<p>答不出人名的那一格，就是已經交出去的那一格。</p>
+<blockquote>
+<p><strong>控制權不是一次交出去的，是一格一格交出去的——而且每一格交出去的當下，都只是為了省一點時間。</strong></p>
+</blockquote>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">人在迴圈內、迴圈上、迴圈外，是三種不同的處境</h3>
+<ul>
+<li>迴圈內 in the loop：每一步都要人點頭，機器停下來等你。</li>
+<li>迴圈上 on the loop：機器自己跑，人看著儀表板，必要時喊停。</li>
+<li>迴圈外 out of the loop：機器跑完了，人在事後才看到結果。</li>
+</ul>
+<p><svg viewBox="0 0 820 270" role="img" aria-label="人相對於決策迴圈的三種位置：迴圈內、迴圈上、迴圈外" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="lpa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7f93a8"/></marker><marker id="lpr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#d05070"/></marker></defs><g><rect x="6" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="135" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈內 · in the loop</text><circle cx="135" cy="140" r="56" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 135 84 A 56 56 0 0 1 187 176" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="135" cy="126" r="11" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 121 158 Q 135 138 149 158 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="135" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">每一步都要人動手或點頭</text><text x="135" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">六個控制點幾乎都在人手上</text></g><g><rect x="281" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="410" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈上 · on the loop</text><circle cx="410" cy="152" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 410 106 A 46 46 0 0 1 452 180" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="410" cy="62" r="10" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 397 90 Q 410 72 423 90 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><line x1="410" y1="94" x2="410" y2="102" stroke="#7f93a8" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M 436 82 L 462 116" stroke="#d05070" stroke-width="2" marker-end="url(#lpr)"/><text x="470" y="78" font-size="11.5" fill="#a3324f">中斷</text><text x="410" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器自己跑，人看著儀表板</text><text x="410" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">剩下的主要是中斷與評估</text></g><g><rect x="556" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="685" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈外 · out of the loop</text><circle cx="655" cy="150" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 655 104 A 46 46 0 0 1 697 178" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="780" cy="112" r="10" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><path d="M 767 140 Q 780 122 793 140 Z" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><line x1="705" y1="160" x2="762" y2="140" stroke="#d8d8d8" stroke-width="1.4" stroke-dasharray="3 5"/><text x="735" y="196" font-size="11.5" fill="#9a9a9a" text-anchor="middle">事後才看到</text><text x="685" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器跑完了才輪到人</text><text x="685" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">只剩拔插頭與事後評估</text></g></svg></p>
+<p>這三個位置不是三種技術，是三種責任安排。同一套技術可以設計成三者中的任何一種，而那是管理決定，不是工程決定。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">「人在迴圈」寫進守則的時候，要寫的是哪一格</h3>
+<ul>
+<li>守則上寫「維持人在迴圈」等於什麼都沒寫，因為三種都算人在迴圈。</li>
+<li>要寫得可執行，得指名六個控制點裡的哪幾格由誰負責。</li>
+<li>最容易被寫成空話的是「檢查」——沒有逐件檢查的資源時，這一格其實是空的。</li>
+</ul>
+<p>這一段直接接得上你要草擬的編輯室守則。守則如果只寫「AI 產出須經人工審核」，實務上會退化成看一眼就按送出。寫得住的版本要回答三件事：審核的人是誰、他有多少時間、他有沒有權力退回。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">自主武器是這條光譜的極端，也是它為什麼重要的原因</h3>
+<ul>
+<li>致命自主武器爭論的核心不是準不準，是誰按下那一格。</li>
+<li>這個題目把「人在迴圈」從技術問題變成國際規範問題。</li>
+<li>媒體的自動化沒有那麼激烈，但責任結構的形狀一模一樣。</li>
+</ul>
+<p>把最極端的案例放進來，是為了讓中間地帶的問題變得看得見。一個自動發布的帳號誤發一則假訊息，跟一架自主無人機誤擊，在道德量級上完全不同，但兩者要回答的問題是同一句：決定是誰做的，責任歸誰。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼課堂上要看軍事案例</span><p>因為軍事領域被迫最早、最公開地處理這個問題，所以留下了最清楚的語彙。in the loop、on the loop、out of the loop 這組詞就是從那裡來的，後來才被搬進民間的 AI 治理討論。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">Society-in-the-loop：不只是操作者，而是整個社會該不該有一格</h3>
+<ul>
+<li>Human-in-the-loop 處理的是一個操作者與一套系統之間的關係。</li>
+<li>Society-in-the-loop 處理的是當系統影響到所有人時，社會怎麼進入這個迴圈。</li>
+<li>差別在於：前者問「誰能喊停」，後者問「誰有資格決定規則」。</li>
+</ul>
+<p><svg viewBox="0 0 820 190" role="img" aria-label="Human-in-the-loop 與 Society-in-the-loop 的對照" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="sla" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a4a5a"/></marker></defs><rect x="6" y="10" width="392" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="202" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Human-in-the-loop</text><circle cx="96" cy="100" r="12" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 80 134 Q 96 112 112 134 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="96" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">操作者</text><path d="M 126 112 L 246 112" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="186" y="102" font-size="11" fill="#5b6b7c" text-anchor="middle">監看·中斷</text><rect x="250" y="84" width="134" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="317" y="118" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text><rect x="416" y="10" width="398" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="615" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Society-in-the-loop</text><g fill="#eef7f1" stroke="#216b4f" stroke-width="1.5"><circle cx="470" cy="78" r="9"/><circle cx="500" cy="102" r="9"/><circle cx="470" cy="126" r="9"/><circle cx="440" cy="102" r="9"/></g><text x="470" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">利害關係人與社會</text><path d="M 522 102 L 640 102" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="581" y="92" font-size="11" fill="#5b6b7c" text-anchor="middle">社會契約</text><text x="581" y="126" font-size="11" fill="#5b6b7c" text-anchor="middle">誰有資格定規則</text><rect x="644" y="74" width="152" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="720" y="108" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text></svg></p>
+<p>對媒體來說這個區分很實在：你的推薦演算法要不要調整，內部有人可以喊停，這是 human-in-the-loop；但讀者、被報導的人、整個公共討論環境要不要有一格，那是 society-in-the-loop 的問題。揭露規範之所以存在，就是在替第二種留一個入口。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">把自家流程放進這張表，最後一欄要自己填</h3>
+<ul>
+<li>前五欄（人工依賴、複雜性、效率、決策、學習能力）是描述，照定義填得出來。</li>
+<li>第六欄是風險，沒有標準答案，必須自己判斷。</li>
+<li>而風險那一欄，才是決定要不要往上推一檔的依據。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>人工依賴</th>
+<th>複雜性</th>
+<th>效率</th>
+<th>決策</th>
+<th>學習能力</th>
+<th>風險</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人工</td>
+<td>全程人工</td>
+<td>人工</td>
+<td>有限</td>
+<td>人</td>
+<td>看人</td>
+<td>由你填</td>
+</tr>
+<tr>
+<td>自動</td>
+<td>人工啟動</td>
+<td>低</td>
+<td>特定流程高效</td>
+<td>人</td>
+<td>無</td>
+<td>由你填</td>
+</tr>
+<tr>
+<td>自動化</td>
+<td>人工啟動</td>
+<td>中等</td>
+<td>高效可拓展</td>
+<td>流程間自主</td>
+<td>無</td>
+<td>由你填</td>
+</tr>
+<tr>
+<td>自主</td>
+<td>自主操作</td>
+<td>高等</td>
+<td>高效可拓展</td>
+<td>自主</td>
+<td>優化</td>
+<td>由你填</td>
+</tr>
+<tr>
+<td>智慧</td>
+<td>自主操作</td>
+<td>高等可提升</td>
+<td>高效可拓展，並主動提升</td>
+<td>自主</td>
+<td>學習、推理、應用</td>
+<td>由你填</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-11">⚠️ 迷思攔截</h3>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自動化就是有沒有兩種狀態</td>
+<td>六個檔位，每一檔的責任結構不同</td>
+<td>問「決策那一欄填什麼」</td>
+</tr>
+<tr>
+<td>只要保留人工審核就安全</td>
+<td>三種迴圈位置都叫人在迴圈</td>
+<td>指名六個控制點裡的哪幾格、由誰負責</td>
+</tr>
+<tr>
+<td>人還在現場就代表人還有控制權</td>
+<td>遙控那一檔人在但看不到現場異常</td>
+<td>控制權看的是控制點，不是位置</td>
+</tr>
+<tr>
+<td>自主與智慧是同一件事</td>
+<td>自主是不用命令，智慧是還會學</td>
+<td>看有沒有學習能力那一欄</td>
+</tr>
+<tr>
+<td>推到越上面的檔位越好</td>
+<td>上一檔省下的時間，換的是責任的位置</td>
+<td>風險那一欄要自己填</td>
+</tr>
+<tr>
+<td>人在迴圈是技術規格</td>
+<td>同一套技術可以設計成三種位置</td>
+<td>這是管理決定，不是工程決定</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-prereq"><h3 id="sec-12">先修與後續</h3>
+<ul>
+<li><strong>後續</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4_AI_%E6%B2%BB%E7%90%86%E8%88%87%E6%8F%AD%E9%9C%B2.html">編輯室 AI 治理與揭露</a>——守則要寫的就是這六個控制點歸誰</li>
+<li><strong>後續</strong>：<a href="M_%E7%B7%A8%E8%BC%AF%E5%AE%A4%E5%AE%88%E5%89%87%E8%8D%89%E6%93%AC%E5%AF%A6%E4%BD%9C.html">編輯室守則草擬實作</a>——現場把這張表填成可執行的條文</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%B7%A5%E4%BD%9C%E6%8B%86%E8%A7%A3%E8%88%87_AI_%E6%A8%A1%E7%B5%84%E6%9B%BF%E4%BB%A3.html">工作拆解與 AI 模組替代</a>——同一件事的另一個切法：不看檔位看格子</li>
+<li><strong>平行相關</strong>：<a href="M_AI_%E7%95%8C%E7%B7%9A%E8%A8%8E%E8%AB%96.html">AI 界線討論</a>——哪幾格不管技術做不做得到都不交出去</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-13">小結論</h3>
+<p>自動化有六個檔位，人對一條流程有六個控制點，而「人在迴圈」至少有三種完全不同的意思。你現在可以做三件事：聽到「全自動」時追問決策那一欄填什麼；把自家已經在跑的 AI 流程逐格點名，找出那些答不出人名的控制點；在守則裡把「人工審核」改寫成指名到人、指名到權限的條文。第三件是下一個單元要動手做的事。</p>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-14">💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-15">配對分享：把一條流程放進檔位</h3>
+<p><strong>情境</strong></p>
+<p>你是一家新聞網站的數位營運主管。三個月前，公司導入了一套自動化工具，處理社群發文：系統每 15 分鐘掃一次剛上線的稿件，自動產生三個版本的貼文文案與一張示意圖，排進 Facebook 與 Instagram 的發文佇列，依過去互動數據決定發文時間。</p>
+<p>權限結構是這樣：社群小編（2 人，輪班）可以在佇列裡改文案、可以刪掉不發；系統排定的發文時間他們改不動，那是工程部設定的；你可以要求工程部調整規則，但需要開單，平均三個工作天。總編輯從來沒有進過這套系統的後台。</p>
+<p>上線後的數字：社群發文量從每天 40 則變成 120 則，互動總數上升 35%，小編加班時數下降。上個月發生一件事：一則社會案件的稿子，系統配的示意圖是生成的，畫面裡有一棟長得很像案發地點的建築，貼文在凌晨 1 點自動發出，早上 9 點才有人看到，當天下午家屬來電抗議。事後檢討會上，小編說「那個時段我們沒有排班」。</p>
+<p>請同學兩兩一組，依序做五件事：</p>
+<ol>
+<li>判斷這條流程現在落在六個檔位的哪一檔，說出你的依據。</li>
+<li>六個控制點逐格點名：發起、控制、中斷、預測結果、檢查、評估，各是誰。填不出人名的就寫「空的」。</li>
+<li>指出凌晨那一則出事的直接原因，是哪一格空的。</li>
+<li>提出一個具體修改，讓那一格有人，而且說明這個修改會犧牲掉上面哪一個數字。</li>
+<li>每一條判斷後面，引用情境裡讓你這樣判斷的那一句話。</li>
+</ol>
+<p>引不出句子的那一條，就是你自己補進去的假設，標出來。</p>
+<p>互相挑對方一點：對方提的修改，如果社群發文量因此掉回 60 則，公司會不會接受。</p>
+<p>〔加碼選項：換成自家真的在跑的一段自動化流程，跑同一套五步。〕</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-16">個人反思</h3>
+<blockquote>
+<p>我原本以為我們那段流程是〔＿＿＿〕檔，現在我會先問——〔＿＿＿〕。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
+<p>挑一段你部門已經在跑的自動化流程，畫一張六格表，逐格填上負責的人名。填不出人名的格子用紅筆圈起來，並在旁邊寫一句：這一格空著，最壞會發生什麼事。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-11 14:11</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>
