@@ -97,11 +97,12 @@ MathJax = {
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-5">一邊搬，一邊看著搜尋空間亮起來</h3>
 <ul>
-<li>三片三柱，每一片可以在三根柱子的其中一根，所以合法擺法有 $3^3 = 27$ 種。</li>
-<li>27 種擺法可以整張畫出來：每個點是一種擺法，每條線是一次合法的搬動。</li>
+<li>兩片三柱，每一片可以在三根柱子的其中一根，所以合法擺法有 $3^2 = 9$ 種，三步就走得完。</li>
+<li>九個點可以整張畫出來：每個點是一種擺法，每條線是一次合法的搬動。</li>
 <li>你每搬一片，就是在這張圖上從一個點走到隔壁的一個點。</li>
 </ul>
-<p>請把三片搬到 C，注意右邊那張圖上的深藍色點怎麼移動、藍線怎麼長出來。搬完之後按「show 最佳解」，比對你的藍線跟紅線差在哪裡；再把片數加到四片、五片，看整張圖怎麼爆炸。</p>
+<p>先用兩片跑一次。九個點旁邊都有標籤，前一個字母是大片在哪根柱子、後一個是小片，所以起點是 AA、終點是 CC，最短的走法是 AA → AB → CB → CC 三步。搬的時候注意右邊那個深藍色的點怎麼移動、藍線怎麼長出來。</p>
+<p>兩片跑完再換三片：點數從 9 變成 27，最少步數從 3 變成 7。按「show 最佳解」比對你的藍線跟紅線差在哪裡；再加到四片、五片，看整張圖怎麼爆炸。</p>
 <div class="widget" id="hss">
 <style>
 #hss { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
@@ -137,14 +138,20 @@ MathJax = {
 #hss .key { font-size: .78rem; color: #7a8796; margin-top: .5rem; line-height: 1.8; }
 #hss .sw { display: inline-block; width: 22px; height: 3px; vertical-align: middle;
       margin: 0 .25rem 0 .6rem; border-radius: 2px; }
+#hss .tbl { border-collapse: collapse; margin-top: .9rem; font-size: .83rem; width: 100%; }
+#hss .tbl th, #hss .tbl td { border: 1px solid #e2e2e2; padding: .3rem .5rem; text-align: right; }
+#hss .tbl th:first-child, #hss .tbl td:first-child { text-align: left; }
+#hss .tbl th { background: #f4f6f9; color: #33475b; font-weight: 700; }
 </style>
 
 <h5>自己搬一次，右邊同步告訴你走到搜尋空間的哪一點</h5>
 <p class="lede">左邊每搬一片，右邊那張圖就跟著亮一個點。整張圖是這個題目所有可能的擺法，
-灰線是所有合法的搬動，紅線是最短的那一條，藍線是你實際走過的路。</p>
+灰線是所有合法的搬動，紅線是最短的那一條，藍線是你實際走過的路。
+<b>先從兩片開始</b>——九個點、三步走完，整個搜尋空間可以一眼讀完，再往上加片數。</p>
 
 <div class="bar">
-  <button data-n="3" class="on">3 片</button>
+  <button data-n="2" class="on">2 片</button>
+  <button data-n="3">3 片</button>
   <button data-n="4">4 片</button>
   <button data-n="5">5 片</button>
   <button id="hss-undo">退一步</button>
@@ -161,8 +168,8 @@ MathJax = {
       <div class="peg" data-p="2"><span class="lbl">C 終點</span></div>
     </div>
     <div class="stat">
-      你走了 <b id="hss-moves">0</b> 步　·　最少 <b id="hss-min">7</b> 步<br>
-      你踩過 <b id="hss-seen">1</b> 種擺法　·　全部共 <b id="hss-total">27</b> 種
+      你走了 <b id="hss-moves">0</b> 步　·　最少 <b id="hss-min">3</b> 步<br>
+      你踩過 <b id="hss-seen">1</b> 種擺法　·　全部共 <b id="hss-total">9</b> 種
     </div>
   </div>
   <div class="panel">
@@ -172,11 +179,22 @@ MathJax = {
       <span class="sw" style="background:#d05070"></span>最少步數的那一條
       <span class="sw" style="background:#24528f"></span>你走過的
       <span class="sw" style="background:#dbe3ec"></span>其餘合法的搬動
+      <div id="hss-legend"></div>
     </div>
   </div>
 </div>
 
-<div class="out" id="hss-out">先把三片搬到 C。</div>
+<div class="out" id="hss-out">先用兩片試一次：整張圖只有 9 個點，一眼看得完。</div>
+
+<table class="tbl">
+  <tr><th>片數</th><th>擺法總數 3ⁿ</th><th>最少步數 2ⁿ−1</th><th>一秒一步要多久</th></tr>
+  <tr><td>2</td><td>9</td><td>3</td><td>3 秒</td></tr>
+  <tr><td>3</td><td>27</td><td>7</td><td>7 秒</td></tr>
+  <tr><td>5</td><td>243</td><td>31</td><td>31 秒</td></tr>
+  <tr><td>10</td><td>59,049</td><td>1,023</td><td>17 分鐘</td></tr>
+  <tr><td>20</td><td>約 35 億</td><td>1,048,575</td><td>12 天</td></tr>
+  <tr><td>64</td><td>約 3.4 × 10³⁰</td><td>18,446,744,073,709,551,615</td><td>約 5,850 億年</td></tr>
+</table>
 
 <script>
 (function () {
@@ -187,7 +205,7 @@ MathJax = {
   var COLORS = ["#24528f", "#2f7d6b", "#a8703a", "#8a4f7d", "#3b6ea5"];
   var W = 480, H = 430;
 
-  var n = 3, state = [], history = [], sel = null, seen = {},
+  var n = 2, state = [], history = [], sel = null, seen = {},
       nodes = {}, edges = [], best = [], showBest = false;
 
   // ---- geometry: the Hanoi graph is a Sierpinski triangle -----------------
@@ -266,7 +284,8 @@ MathJax = {
       var x = key(path[j]), y = key(path[j + 1]);
       mine[x < y ? x + "|" + y : y + "|" + x] = 1;
     }
-    var r = n <= 3 ? 5.5 : (n === 4 ? 4 : 2.8);
+    var PEG = ["A", "B", "C"];
+    var r = n === 2 ? 8 : (n === 3 ? 5.5 : (n === 4 ? 4 : 2.8));
     var s = ['<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="這個片數下所有可能的擺法，'
       + '以及最短路徑與你走過的路徑">'];
     edges.forEach(function (e) {
@@ -285,10 +304,20 @@ MathJax = {
         + '" r="' + (cur ? r + 3 : r) + '" fill="' + fill
         + '" stroke="' + (cur ? "#16325c" : "#b9c6d6") + '" stroke-width="1.3"/>');
     });
+    if (n === 2) {
+      Object.keys(nodes).forEach(function (k) {
+        var p = nodes[k];
+        var lab = k.split("").reverse().map(function (c) { return PEG[+c]; }).join("");
+        s.push('<text x="' + p[0].toFixed(1) + '" y="' + (p[1] + 21).toFixed(1)
+          + '" font-size="12.5" fill="' + (k === key(state) ? "#16325c" : "#7a8796")
+          + '" font-weight="' + (k === key(state) ? "700" : "400")
+          + '" text-anchor="middle" font-family="system-ui,sans-serif">' + lab + "</text>");
+      });
+    }
     var st = nodes[key(new Array(n).fill(0))], gl = nodes[key(new Array(n).fill(2))];
-    s.push('<text x="' + st[0] + '" y="' + (st[1] - 12) + '" font-size="12" fill="#5b6b7c" '
+    s.push('<text x="' + st[0] + '" y="' + (st[1] - 16) + '" font-size="12" fill="#5b6b7c" '
       + 'text-anchor="middle" font-family="system-ui,sans-serif">全部在 A</text>');
-    s.push('<text x="' + gl[0] + '" y="' + (gl[1] + 24) + '" font-size="12" fill="#a3324f" '
+    s.push('<text x="' + (gl[0] + 4) + '" y="' + (gl[1] + 40) + '" font-size="12" fill="#a3324f" '
       + 'text-anchor="end" font-family="system-ui,sans-serif">全部在 C</text>');
     s.push("</svg>");
     svgBox.innerHTML = s.join("");
@@ -333,6 +362,9 @@ MathJax = {
     root.querySelector("#hss-total").textContent = Math.pow(3, n).toLocaleString("en-US");
     out.className = "out";
     out.textContent = "先把 " + n + " 片搬到 C。";
+    root.querySelector("#hss-legend").innerHTML = n === 2
+      ? "點旁邊的標籤：前一個字母是大片在哪根柱子，後一個是小片。AA＝兩片都在 A，CC＝兩片都在 C。"
+      : "";
     render();
   }
 
@@ -398,7 +430,7 @@ MathJax = {
         + "中間那些點全部走得通，只是比較遠。";
     }
   });
-  setup(3);
+  setup(2);
 })();
 </script>
 </div>
@@ -607,7 +639,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-16">小作業</h3>
 <p>挑一個你每週都要做、而且選項多到看不完的決定，寫下三行：這個決定的搜尋空間大概有幾個位數、你實際上用哪三條規則把它砍到能處理的大小、這三條規則是誰定的。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-11 15:02</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-11 15:31</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
