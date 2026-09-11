@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1955 達特茅斯提案細讀</title>
+<link rel="stylesheet" href="../../style.524e224d.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">📄 原始文件</a></li><li><a href="#sec-4">這份文件第一次把「人工智慧」四個字寫下來</a></li><li><a href="#sec-5">那句話不是結論，是開工前先請大家接受的賭注</a></li><li><a href="#sec-6">七個題目：1955 年認為 AI 要解決的就是這些</a></li><li><a href="#sec-7">第二題那條路，就是你等一下要上的專家系統</a></li><li><a href="#sec-8">第七題那句話，今天有一個參數的名字</a></li><li><a href="#sec-9">提案裡沒有一句話談風險</a></li><li><a href="#sec-10">和今天最大的三個差異</a></li><li><a href="#sec-11">⚠️ 迷思攔截</a></li><li><a href="#sec-12">先修與後續</a></li><li><a href="#sec-13">小結論</a></li><li><a href="#sec-14">💬 討論／分享／反思</a></li><li><a href="#sec-15">配對分享：找出提案裡那句沒被驗證的話</a></li><li><a href="#sec-16">個人反思</a></li><li><a href="#sec-17">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>1955 達特茅斯提案細讀</h1></div><p>在本單元中，會介紹 AI 這個詞第一次出現的那份文件寫了什麼、它把這個領域切成哪七個題目，以及七十年後這七題各自的下場。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>說出</strong>這份提案當初把 AI 切成哪七個題目</td>
+<td>「人工智慧」這四個字是誰、在什麼情況下發明的？當初指的跟你現在講的是同一件事嗎？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>比對</strong>七個題目各自在今天的下場，分出走通的與換路的</td>
+<td>為什麼專家系統這條路花了三十年才被放棄？當年它是七分之一，不是唯一。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>評估</strong>一份技術提案裡「被當成前提的那句話」站不站得住</td>
+<td>你桌上那份 AI 導入提案，哪一句是已經驗證的、哪一句是他請你先相信的？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示：</p>
+<blockquote>
+<p>1955 年 8 月 31 日，McCarthy、Minsky、Rochester、Shannon 四個人署名了一份文件，叫做 A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence。請列出這份提案裡的七個研究題目，每一個用一句話說明原文的意思。列完之後，請在每一個題目後面標註三件事：這個題目今天用什麼技術在做、是不是照當年設想的方式做成的、如果不是，實際走的是哪一條路。請直接列，不要先講會議本身的故事。</p>
+</blockquote>
+<p>它回答之後，再追問這一句：</p>
+<blockquote>
+<p>這七個題目裡，有哪幾個到今天還沒有答案？</p>
+</blockquote>
+<p>當你拿到回答後，把它標成「還沒有答案」的那幾題記下來，等一下跟同學比對——七十年前只給了兩個月的題目，有幾個到現在還開著。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">📄 原始文件</h3>
+<p>要讀的是 1955 年 8 月 31 日署名的那份提案，署名人四位：J. McCarthy（Dartmouth College）、M. L. Minsky（Harvard University）、N. Rochester（I.B.M. Corporation）、C. E. Shannon（Bell Telephone Laboratories）。</p>
+<ul>
+<li><strong>McCarthy 自己放在 Stanford 的全文</strong>：&lt;<a href="http://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html">http://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html</a>&gt;</li>
+<li><strong>掃描的原件</strong>：&lt;<a href="https://raysolomonoff.com/dartmouth/boxa/dart564props.pdf">https://raysolomonoff.com/dartmouth/boxa/dart564props.pdf</a>&gt;</li>
+<li><strong>AI Magazine 2006 年的重刊</strong>：&lt;<a href="https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/1904">https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/1904</a>&gt;（27 卷 4 期，頁 12–14）</li>
+</ul>
+<p>要讀的是正文那幾段，也就是開頭的假設與七個題目。後面還附了四位署名人各自想做什麼的個人段落，Shannon 談的是用不可靠的元件做出可靠的計算，McCarthy 談的是設計一種能處理猜測與自我指涉的人工語言——那兩段可以之後再看。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">這份文件第一次把「人工智慧」四個字寫下來</h3>
+<ul>
+<li>日期是 1955 年 8 月 31 日，提案的是隔年夏天在達特茅斯學院辦的一場研究營。</li>
+<li>規格寫在第一句：兩個月、十個人。</li>
+<li>經費申請 13,500 美元：六位教員各 1,200、兩位研究生各 700，其餘是差旅、秘書與雜支。</li>
+</ul>
+<p>原文第一句是這樣寫的：</p>
+<blockquote>
+<p>We propose that a 2 month, 10 man study of artificial intelligence be carried out during the summer of 1956 at Dartmouth College in Hanover, New Hampshire.</p>
+</blockquote>
+<p>這個領域的名字就是在這一句裡被造出來的。值得停一下的是規模：十個人、兩個月、一萬三千五百美元，要處理的是接下來七十年還沒處理完的東西。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">那句話不是結論，是開工前先請大家接受的賭注</h3>
+<ul>
+<li>提案的方法論前提只有一句，而整份文件的正當性都掛在它上面。</li>
+<li>它的形式是「假設」（conjecture），不是已經證明的東西。</li>
+<li>七十年後，這句話的字面意思失敗了，但它想要的結果反而發生了。</li>
+</ul>
+<p>原文：</p>
+<blockquote>
+<p>The study is to proceed on the basis of the conjecture that every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it.</p>
+</blockquote>
+<p>拆開來看有兩半。前半是「智慧的每個面向原則上都能被精確描述」，後半是「所以機器可以模擬它」。他們以為要先做到前半才能拿到後半。</p>
+<p>實際發生的事情是：<strong>後半成立了，前半沒有。</strong> 今天沒有人精確描述了語言能力是什麼，語言模型還是做出來了——靠的是堆資料與算力，讓能力自己長出來。方法論的賭注輸了，結論卻贏了。</p>
+<blockquote>
+<p><strong>一份提案最危險的句子，通常不是它宣稱做得到什麼，而是它請你先接受的那個前提——因為那句話不會被驗收。</strong></p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一點跟你有什麼關係</span><p>你桌上每一份 AI 導入提案都有這樣一句話，只是藏得比較深。「只要資料整理乾淨，模型就能準確預測」「只要流程標準化，AI 就接得上」——這些都是 conjecture，不是結論。看提案先找這一句，再問它有沒有被驗證過。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">七個題目：1955 年認為 AI 要解決的就是這些</h3>
+<ul>
+<li>七個題目是這份提案對「智慧包含什麼」的第一份拆解表。</li>
+<li>它們不是平行的七條技術路線，而是七個他們認為必須各自攻破的問題。</li>
+<li>七十年後回頭看，走通的、換路的、走失的、還開著的都有。</li>
+</ul>
+<p>七個題目依序是：自動計算機（Automatic Computers）、怎麼讓電腦使用語言（How Can a Computer be Programmed to Use a Language）、神經元網路（Neuron Nets）、計算規模的理論（Theory of the Size of a Calculation）、自我改善（Self-Improvement）、抽象（Abstractions）、隨機性與創造力（Randomness and Creativity）。</p>
+<p>請一題一題判斷它今天的下場，再看答案。</p>
+<div class="widget" id="d7">
+<style>
+#d7 { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#d7 h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#d7 .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
+#d7 .case { background: #fff; border: 1px solid #e2e2e2; border-left: 4px solid #24528f;
+      border-radius: 0 8px 8px 0; padding: .8rem 1rem; margin: .8rem 0 .6rem; }
+#d7 .num { font-size: .78rem; color: #7a8796; letter-spacing: .04em; }
+#d7 .en { font-size: .87rem; line-height: 1.7; color: #33475b; font-style: italic;
+      margin: .35rem 0 .5rem; }
+#d7 .zh { font-size: .93rem; line-height: 1.85; }
+#d7 button { font: inherit; font-size: .81rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#d7 button:hover { background: #eef4fd; }
+#d7 button:disabled { opacity: .55; cursor: default; }
+#d7 .out { margin-top: .8rem; padding: .75rem .95rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.9; }
+#d7 .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#d7 .out.no { background: #fff3f5; border-color: #e6b8c4; }
+#d7 .out b { color: #24528f; }
+#d7 .tag { display: inline-block; border-radius: 999px; padding: .08rem .55rem; font-size: .76rem;
+      margin-right: .4rem; }
+#d7 .tag.A { background: #eef7f1; color: #216b4f; border: 1px solid #a8d4bd; }
+#d7 .tag.B { background: #eef4fd; color: #24528f; border: 1px solid #c9d9ef; }
+#d7 .tag.C { background: #f4f4f5; color: #6b7683; border: 1px solid #dcdcdc; }
+#d7 .tag.D { background: #fff3f5; color: #a3324f; border: 1px solid #e6b8c4; }
+#d7 .score { font-size: .82rem; color: #666; margin-top: .7rem; line-height: 1.8; }
+</style>
+
+<h5>1955 年寫下的七個題目，七十年後各自變成了什麼</h5>
+<p class="lede">每一題先讀原文，再判斷它今天的下場。四個選項沒有好壞之分，
+真正要看的是最後那一格：七題裡真正照原本設想走通的只有兩題。</p>
+
+<div class="case" id="d7-case">Loading…</div>
+<div id="d7-btns">
+  <button data-k="A">照他們想的方式實現了</button>
+  <button data-k="B">實現了，但走的是另一條路</button>
+  <button data-k="C">長成別的學科，離 AI 遠了</button>
+  <button data-k="D">到今天還在爭論</button>
+</div>
+<div class="out" id="d7-out" hidden></div>
+<div><button id="d7-next" hidden>下一題 →</button></div>
+<div class="score" id="d7-score"></div>
+
+<script>
+(function () {
+  var LABEL = { A: "照他們想的方式實現了", B: "實現了，但走的是另一條路",
+                C: "長成別的學科，離 AI 遠了", D: "到今天還在爭論" };
+  var T = [
+    { n: "1. Automatic Computers",
+      en: "“If a machine can do a job, then an automatic calculator can be programmed to simulate the machine… the bottleneck is not machine capacity but our ability to write programs.”",
+      zh: "他們判斷：機器容量不是限制，限制是人寫程式的能力與速度。",
+      a: "B",
+      why: "這條的下場是整個對照裡最反諷的一題。今天寫程式便宜到可以叫 AI 代寫，"
+         + "真正卡住的反而是他們認為不成問題的那一邊——算力、電力與資料。<b>七十年後，瓶頸整個掉了個頭。</b>" },
+    { n: "2. How Can a Computer be Programmed to Use a Language",
+      en: "“It may be speculated that a large part of human thought consists of manipulating words according to rules of reasoning and rules of conjecture.”",
+      zh: "他們推測：人類思考有很大一部分是照推理規則與猜測規則在操作詞語。",
+      a: "B",
+      why: "前半句對了，後半句錯了。今天的語言模型確實是在操作詞，但不是照規則，是照機率。"
+         + "<b>照規則操作詞那條路，就是你這堂課正在上的專家系統——它走了三十年，然後輸了。</b>" },
+    { n: "3. Neuron Nets",
+      en: "“How can a set of (hypothetical) neurons be arranged so as to form concepts?”",
+      zh: "他們問：一組假想的神經元要怎麼排列，才能形成概念。",
+      a: "A",
+      why: "七題裡最接近字面成真的一題：今天的深度網路做的就是這件事。"
+         + "但要注意中間那段——這條路在 1969 年之後被冷落了將近三十年，"
+         + "<b>在 1956 年它只是七分之一，沒有人知道它會是贏家。</b>" },
+    { n: "4. Theory of the Size of a Calculation",
+      en: "“If we are given a well-defined problem… one way of measuring the complexity of a calculating device is to require… a measure of the efficiency of a calculation.”",
+      zh: "他們想要：一套能衡量計算效率與問題複雜度的理論。",
+      a: "C",
+      why: "這條長成了計算複雜度理論，也就是 P 對 NP 那一支，變成獨立的學門，"
+         + "在往後幾十年裡跟 AI 幾乎沒有往來。"
+         + "<b>不過它最近以另一個面貌回來了：scaling law 與推論成本，問的是同一件事——這個計算值不值得。</b>" },
+    { n: "5. Self-Improvement",
+      en: "“Probably a truly intelligent machine will carry out activities which may best be described as self-improvement.”",
+      zh: "他們猜：真正有智慧的機器大概會做出可以稱為自我改善的活動。",
+      a: "D",
+      why: "三句話寫完的第五點，今天是整個 AI 安全辯論的核心。遞迴自我改進到底會不會發生、"
+         + "會多快發生，正反雙方都拿不出可以外部驗證的證據。"
+         + "<b>你這學期要讀的那篇 An Alien Mind，主要在講的就是這一點。</b>" },
+    { n: "6. Abstractions",
+      en: "“A direct attempt to classify these and to describe machine methods of forming abstractions from sensory and other data would seem worthwhile.”",
+      zh: "他們打算：把抽象的種類分類出來，再描述機器從感官資料形成抽象的方法。",
+      a: "B",
+      why: "結果實現了，但沒有人去分類抽象的種類。今天的做法是讓模型自己學出一個向量空間，"
+         + "抽象變成空間裡的方向與距離，而那些方向叫什麼名字，多數時候沒有人知道。"
+         + "<b>他們想要一張分類表，拿到的是一個看不懂的空間。</b>" },
+    { n: "7. Randomness and Creativity",
+      en: "“The difference between creative thinking and unimaginative competent thinking lies in the injection of a some randomness. The randomness must be guided by intuition to be efficient.”",
+      zh: "他們猜：創造性思考與稱職但沒想像力的思考，差別在於注入一些隨機性，而隨機性要由直覺引導才有效率。",
+      a: "A",
+      why: "這一句幾乎是字面上被實作出來的，名字叫 temperature——"
+         + "調高一點輸出就發散，調低一點就保守。"
+         + "<b>你上一堂課才調過的那個參數，是 1955 年寫在提案第七點的猜測。</b>" }
+  ];
+  var root = document.getElementById("d7");
+  var caseEl = root.querySelector("#d7-case");
+  var out = root.querySelector("#d7-out");
+  var next = root.querySelector("#d7-next");
+  var score = root.querySelector("#d7-score");
+  var btns = [].slice.call(root.querySelectorAll("#d7-btns button"));
+  var i = 0, right = 0, done = 0;
+
+  function show() {
+    var t = T[i];
+    caseEl.innerHTML = '<div class="num">' + t.n + '</div>'
+      + '<div class="en">' + t.en + '</div>'
+      + '<div class="zh">' + t.zh + '</div>';
+    out.hidden = true; next.hidden = true;
+    btns.forEach(function (b) { b.disabled = false; });
+  }
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = T[i], ok = b.dataset.k === t.a;
+      if (ok) right++;
+      done++;
+      out.hidden = false;
+      out.className = "out " + (ok ? "ok" : "no");
+      out.innerHTML = '<span class="tag ' + t.a + '">' + LABEL[t.a] + "</span>" + t.why;
+      btns.forEach(function (x) { x.disabled = true; });
+      score.textContent = "答對 " + right + " / " + done;
+      if (i < T.length - 1) next.hidden = false;
+      else score.innerHTML = "答對 " + right + " / " + done
+        + "　·　七題裡只有第 3 與第 7 是照原本設想走通的。"
+        + "其餘五題不是換了路線、就是走進別的學科、或者到今天還沒有答案——"
+        + "而這份提案當年只申請了兩個月。";
+    });
+  });
+  next.addEventListener("click", function () { i++; show(); });
+  show();
+})();
+</script>
+</div>
+
+<p><svg viewBox="0 0 820 532" role="img" aria-label="1955 年達特茅斯提案的七個題目，與它們在今天各自變成什麼的對照" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><text x="14" y="28" font-size="13.5" font-weight="700" fill="#24528f">1955 年提案寫下的七個題目</text><text x="806" y="28" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="end">七十年後它變成什麼</text><rect x="14" y="52" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="84.0" font-size="12" fill="#7a8796">1</text><text x="52" y="84.0" font-size="13.5" fill="#22303f">自動計算機</text><line x1="304" y1="79.0" x2="516" y2="79.0" stroke="#c9d9ef" stroke-width="2.2"/><circle cx="410" cy="79.0" r="9" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="410" y="82.5" font-size="10.5" font-weight="700" fill="#24528f" text-anchor="middle">B</text><rect x="518" y="52" width="288" height="54" rx="8" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="538" y="84.0" font-size="13.5" fill="#24528f">算力與資料反而變成瓶頸</text><rect x="14" y="115" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="147.0" font-size="12" fill="#7a8796">2</text><text x="52" y="147.0" font-size="13.5" fill="#22303f">讓電腦使用語言</text><line x1="304" y1="142.0" x2="516" y2="142.0" stroke="#c9d9ef" stroke-width="2.2"/><circle cx="410" cy="142.0" r="9" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="410" y="145.5" font-size="10.5" font-weight="700" fill="#24528f" text-anchor="middle">B</text><rect x="518" y="115" width="288" height="54" rx="8" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="538" y="147.0" font-size="13.5" fill="#24528f">語言模型：操作詞，但靠機率</text><rect x="14" y="178" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="210.0" font-size="12" fill="#7a8796">3</text><text x="52" y="210.0" font-size="13.5" fill="#22303f">神經元網路</text><line x1="304" y1="205.0" x2="516" y2="205.0" stroke="#a8d4bd" stroke-width="2.2"/><circle cx="410" cy="205.0" r="9" fill="#f2f8f4" stroke="#a8d4bd" stroke-width="1.6"/><text x="410" y="208.5" font-size="10.5" font-weight="700" fill="#216b4f" text-anchor="middle">A</text><rect x="518" y="178" width="288" height="54" rx="8" fill="#f2f8f4" stroke="#a8d4bd" stroke-width="1.6"/><text x="538" y="210.0" font-size="13.5" fill="#216b4f">深度學習，冷落三十年才回來</text><rect x="14" y="241" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="273.0" font-size="12" fill="#7a8796">4</text><text x="52" y="273.0" font-size="13.5" fill="#22303f">計算規模的理論</text><line x1="304" y1="268.0" x2="516" y2="268.0" stroke="#dcdcdc" stroke-width="2.2"/><circle cx="410" cy="268.0" r="9" fill="#f4f4f5" stroke="#dcdcdc" stroke-width="1.6"/><text x="410" y="271.5" font-size="10.5" font-weight="700" fill="#6b7683" text-anchor="middle">C</text><rect x="518" y="241" width="288" height="54" rx="8" fill="#f4f4f5" stroke="#dcdcdc" stroke-width="1.6"/><text x="538" y="273.0" font-size="13.5" fill="#6b7683">計算複雜度理論／scaling law</text><rect x="14" y="304" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="336.0" font-size="12" fill="#7a8796">5</text><text x="52" y="336.0" font-size="13.5" fill="#22303f">自我改善</text><line x1="304" y1="331.0" x2="516" y2="331.0" stroke="#e6b8c4" stroke-width="2.2"/><circle cx="410" cy="331.0" r="9" fill="#fff3f5" stroke="#e6b8c4" stroke-width="1.6"/><text x="410" y="334.5" font-size="10.5" font-weight="700" fill="#a3324f" text-anchor="middle">D</text><rect x="518" y="304" width="288" height="54" rx="8" fill="#fff3f5" stroke="#e6b8c4" stroke-width="1.6"/><text x="538" y="336.0" font-size="13.5" fill="#a3324f">遞迴自我改進，至今仍在爭論</text><rect x="14" y="367" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="399.0" font-size="12" fill="#7a8796">6</text><text x="52" y="399.0" font-size="13.5" fill="#22303f">抽象</text><line x1="304" y1="394.0" x2="516" y2="394.0" stroke="#c9d9ef" stroke-width="2.2"/><circle cx="410" cy="394.0" r="9" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="410" y="397.5" font-size="10.5" font-weight="700" fill="#24528f" text-anchor="middle">B</text><rect x="518" y="367" width="288" height="54" rx="8" fill="#eef4fd" stroke="#c9d9ef" stroke-width="1.6"/><text x="538" y="399.0" font-size="13.5" fill="#24528f">模型自己學出來的向量空間</text><rect x="14" y="430" width="288" height="54" rx="8" fill="#ffffff" stroke="#ccd6e2" stroke-width="1.2"/><text x="34" y="462.0" font-size="12" fill="#7a8796">7</text><text x="52" y="462.0" font-size="13.5" fill="#22303f">隨機性與創造力</text><line x1="304" y1="457.0" x2="516" y2="457.0" stroke="#a8d4bd" stroke-width="2.2"/><circle cx="410" cy="457.0" r="9" fill="#f2f8f4" stroke="#a8d4bd" stroke-width="1.6"/><text x="410" y="460.5" font-size="10.5" font-weight="700" fill="#216b4f" text-anchor="middle">A</text><rect x="518" y="430" width="288" height="54" rx="8" fill="#f2f8f4" stroke="#a8d4bd" stroke-width="1.6"/><text x="538" y="462.0" font-size="13.5" fill="#216b4f">temperature 這個參數</text><text x="14" y="499" font-size="11.5" fill="#5b6b7c">A 照他們想的方式實現　·　B 實現了但走的是另一條路　·　C 長成別的學科　·　D 到今天還在爭論</text><text x="14" y="519" font-size="11.5" fill="#5b6b7c">七題裡只有 3 與 7 是 A。這份提案申請的是兩個月。</text></svg></p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">第二題那條路，就是你等一下要上的專家系統</h3>
+<ul>
+<li>第二題推測：人類思考有很大一部分是照推理規則與猜測規則在操作詞語。</li>
+<li>把這句話工程化，得到的就是規則型系統——知識庫存規則，推理引擎照規則跑。</li>
+<li>這條路走了三十年，做出了真正好用的東西，然後在語言這件事上輸給了第三題。</li>
+</ul>
+<p>原文：</p>
+<blockquote>
+<p>It may be speculated that a large part of human thought consists of manipulating words according to rules of reasoning and rules of conjecture. From this point of view, forming a generalization consists of admitting a new word and some rules whereby sentences containing it imply and are implied by others.</p>
+</blockquote>
+<p>今天的語言模型確實在操作詞，但不是照規則，是照機率。這一點值得記住：<strong>同一個目標，1955 年就寫下來了，兩條路各花了幾十年，贏的那條當年只是七分之一。</strong></p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">第七題那句話，今天有一個參數的名字</h3>
+<ul>
+<li>第七題猜：創造性思考與稱職但沒想像力的思考，差別在於注入一些隨機性。</li>
+<li>而且加了一個條件：隨機性必須由直覺引導才有效率。</li>
+<li>這兩句話合起來，幾乎就是 temperature 的規格書。</li>
+</ul>
+<p>原文：</p>
+<blockquote>
+<p>A fairly attractive and yet clearly incomplete conjecture is that the difference between creative thinking and unimaginative competent thinking lies in the injection of a some randomness. The randomness must be guided by intuition to be efficient.</p>
+</blockquote>
+<p>「由直覺引導的隨機性」——今天的做法是讓機率分布本身承擔那個直覺，temperature 只調整要多信任分布的尾巴。你在 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a> 調過的那個參數，是 1955 年寫在第七點的猜測。</p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">提案裡沒有一句話談風險</h3>
+<ul>
+<li>整份提案是純研究計畫：題目、方法、人員、經費。</li>
+<li>找不到任何關於危險、誤用、倫理或社會後果的段落。</li>
+<li>這不是疏忽，是那個年代這件事離應用還太遠。</li>
+</ul>
+<p>值得對照的是你這學期的課表：治理、揭露、著作權、變革管理、倫理論文報告，加起來超過一半。<strong>從「這東西能不能做出來」到「這東西該由誰負責」，中間隔了七十年，而那七十年不是技術問題花掉的。</strong></p>
+<p>還有一個細節：整份文件裡 data 這個詞只出現一次，寫在第六題，指的是機器要處理的感官輸入，不是今天意義下的訓練資料。<strong>今天整個產業的成本結構壓在資料上，而那份提案裡根本沒有這個概念。</strong></p>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">和今天最大的三個差異</h3>
+<ul>
+<li>方法論反過來了：他們以為要先理解智慧才做得出智慧，實際上是先做出來，到現在還沒理解。</li>
+<li>規模差了好幾個數量級，而且規模本身變成了方法——當年沒有人想過「更多」可以是一條技術路線。</li>
+<li>責任歸屬完全缺席：提案裡沒有人要對機器做的事負責，因為那時候機器還不會對誰做什麼。</li>
+</ul>
+<p>第一項是最該記住的。這份提案假設可以把智慧拆解到精確描述，然後逐項實作。今天的做法幾乎是它的反面：不拆解、不描述，把規模推上去等能力浮現。<strong>兩條路都通向「機器會做這件事」，但只有第一條路通向「我們知道它為什麼會」——而我們走的是第二條。</strong></p>
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-11">⚠️ 迷思攔截</h3>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>達特茅斯會議發明了 AI 技術</td>
+<td>它發明的是名字與研究綱領</td>
+<td>那場會沒有做出任何系統</td>
+</tr>
+<tr>
+<td>提案裡那句話是已證明的結論</td>
+<td>原文自己寫的是 conjecture</td>
+<td>前提與結論要分開讀</td>
+</tr>
+<tr>
+<td>神經網路是後來才有的路線</td>
+<td>它是提案第三題，1955 年就在名單上</td>
+<td>它只是被冷落了三十年</td>
+</tr>
+<tr>
+<td>當年的人沒想到今天這些問題</td>
+<td>自我改善與創造力都寫在名單上</td>
+<td>他們想到了，只是低估了難度</td>
+</tr>
+<tr>
+<td>專家系統是走錯的路</td>
+<td>它是第二題的正當實作，且至今仍在用</td>
+<td>它輸的是語言那一塊，不是全部</td>
+</tr>
+<tr>
+<td>七十年前的文件跟主管無關</td>
+<td>那七個題目就是今天廠商在賣的東西</td>
+<td>拿它當一張對照表用</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-prereq"><h3 id="sec-12">先修與後續</h3>
+<ul>
+<li><strong>後續</strong>：<a href="M_%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1%E7%9A%84%E4%B8%89%E5%80%8B%E5%85%83%E4%BB%B6.html">專家系統的三個元件</a>——第二題那條路的具體長相</li>
+<li><strong>後續</strong>：<a href="M_ELIZA_%E8%88%87%E7%90%86%E8%A7%A3%E7%9A%84%E9%8C%AF%E8%A6%BA.html">ELIZA 與理解的錯覺</a>——第二題最便宜的一種做法，以及它引發的問題</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a>——第七題那個參數的來歷；Shannon 也是這份提案的署名人</li>
+<li><strong>平行相關</strong>：<a href="M_AI_%E7%9A%84%E8%AA%95%E7%94%9F%E8%88%87%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%86%B1%E6%BD%AE.html">AI 的誕生與第一次熱潮</a>——同一段歷史的另一個切面：會議之後那二十年的預言為什麼落空</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%85%A9%E6%AC%A1_AI_%E5%AF%92%E5%86%AC%E8%88%87%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1.html">兩次 AI 寒冬與專家系統</a>——第二題那條路的商業結局</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-13">小結論</h3>
+<p>這份兩頁的提案發明了 AI 這個詞，把這個領域切成七個題目，並且請大家先接受一句沒有被驗證的假設。你現在可以做三件事：用那七個題目當對照表，看廠商在賣的是哪一格；讀任何技術提案時先找出那句「請你先相信」的話，再問它驗證過沒有；記住方法論上的反轉——今天我們做得出來的東西，多數我們並不知道它為什麼做得到，而這正是治理那幾週要處理的起點。</p>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-14">💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-15">配對分享：找出提案裡那句沒被驗證的話</h3>
+<p><strong>情境</strong></p>
+<p>你是一家中型新聞集團的數位長，手上有一份廠商送來的導入提案，二十四頁，要價新台幣 480 萬元，導入期六個月。提案的核心是一套「智慧選題與流量預測系統」，宣稱可以在稿件上線前預測 24 小時流量，誤差在兩成以內。</p>
+<p>提案書裡有這幾句話。第 3 頁：「讀者行為具有高度規律性，只要蒐集足夠的歷史數據，即可準確預測未來表現。」第 9 頁：「本系統已於三家媒體客戶導入，平均提升流量 32%。」第 14 頁：「模型採用最新的深度學習架構，準確率達 87%。」第 19 頁：「導入後編輯可將選題時間減少 40%，專注於深度報導。」第 22 頁：「後續維運由貴公司資訊部門負責，本公司提供三個月技術轉移。」</p>
+<p>你問了兩個問題，得到兩個答案：那三家客戶的名字「因保密協議不便揭露」；87% 的準確率「是在客戶 A 的資料上跑出來的」。</p>
+<p>請同學兩兩一組，依序做四件事：</p>
+<ol>
+<li>指出這五句裡面，哪一句扮演的是達特茅斯提案那句 conjecture 的角色——被當成前提、而且不會被驗收。</li>
+<li>把五句話分成三堆：已驗證的、可驗證但沒給證據的、根本不可驗收的。</li>
+<li>對「不可驗收」那一堆，各寫一個你會在下次會議上問的問題，要問到對方沒辦法用「保密協議」擋掉。</li>
+<li>每一條判斷後面，引用情境裡讓你這樣判斷的那一句話。</li>
+</ol>
+<p>引不出句子的那一條，就是你自己補進去的假設，標出來。</p>
+<p>互相挑對方一點：對方歸進「已驗證」的那幾句，證據到底是誰提供的。</p>
+<p>〔加碼選項：手上真的有一份廠商提案的，換成自己那份跑同一套四步。〕</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-16">個人反思</h3>
+<blockquote>
+<p>我原本以為評估一份技術提案要看〔＿＿＿〕，現在我會先問——〔＿＿＿〕。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
+<p>找一份你手上真實的 AI 提案或簡報（廠商的、內部的都可以），抄出其中三句話：一句是已經驗證的事實、一句是可驗證但沒給證據的宣稱、一句是被當成前提而且不會被驗收的假設。每一句後面寫一行：你打算怎麼處理它。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-11 15:02</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script>
+</body>
+</html>

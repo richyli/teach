@@ -14,7 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">河內塔只有三條規則，難的不是規則而是路線</a></li><li><a href="#sec-5">把所有可能的擺法畫出來，就看見了搜尋空間</a></li><li><a href="#sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</a></li><li><a href="#sec-7">片數每多一片，最少步數就翻一倍</a></li><li><a href="#sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</a></li><li><a href="#sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享：估一次你自己的搜尋空間</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>搜尋空間與河內塔</h1></div><p>在本單元中，會介紹搜尋空間是什麼、為什麼問題大一點答案就多好幾個位數，以及這件事怎麼決定了一個問題該交給規則還是交給學來的直覺。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">河內塔只有三條規則，難的不是規則而是路線</a></li><li><a href="#sec-5">一邊搬，一邊看著搜尋空間亮起來</a></li><li><a href="#sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</a></li><li><a href="#sec-7">片數每多一片，最少步數就翻一倍</a></li><li><a href="#sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</a></li><li><a href="#sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享：估一次你自己的搜尋空間</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>搜尋空間與河內塔</h1></div><p>在本單元中，會介紹搜尋空間是什麼、為什麼問題大一點答案就多好幾個位數，以及這件事怎麼決定了一個問題該交給規則還是交給學來的直覺。</p>
 <section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
@@ -90,162 +90,320 @@ MathJax = {
 <li>所有「規則簡單、路線難找」的問題，難的都是同一件事：可能性太多。</li>
 </ul>
 <p>規則本身不構成難度。真正吃掉時間的是：在符合規則的所有走法裡面，哪一條會通到終點，而且最短。這個落差就是接下來整個單元要處理的東西。</p>
-<p>請先自己把三片搬完，再把片數加到四片、五片，注意你花的時間怎麼變。</p>
-<div class="widget" id="ht">
-<style>
-#ht { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
-      background: #fbfbfc; margin: 1.6rem 0; }
-#ht h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
-#ht .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
-#ht .bar { margin: .2rem 0 .9rem; }
-#ht button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
-      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
-#ht button:hover { background: #eef4fd; }
-#ht button.on { background: #24528f; color: #fff; border-color: #24528f; }
-#ht .board { display: flex; gap: .6rem; align-items: flex-end; justify-content: center;
-      background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: 1rem .6rem .5rem; }
-#ht .peg { flex: 1 1 0; position: relative; height: 150px; cursor: pointer;
-      display: flex; flex-direction: column-reverse; align-items: center; gap: 3px;
-      border-bottom: 6px solid #c8d2de; border-radius: 3px; padding-bottom: 2px; }
-#ht .peg::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 6px; height: 140px; background: #dde4ec; border-radius: 3px; }
-#ht .peg.sel { background: #eef4fd; }
-#ht .peg .lbl { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center;
-      font-size: .78rem; color: #7a8796; }
-#ht .disc { position: relative; height: 20px; border-radius: 4px; color: #fff;
-      font-size: .76rem; line-height: 20px; text-align: center; }
-#ht .disc.lift { outline: 2px dashed #24528f; outline-offset: 2px; }
-#ht .stat { margin-top: 1.7rem; font-size: .88rem; line-height: 1.9; }
-#ht .stat b { color: #24528f; }
-#ht .out { margin-top: .7rem; padding: .7rem .9rem; border-radius: 8px;
-      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .9rem; line-height: 1.8; }
-#ht .out.ok { background: #eef7f1; border-color: #a8d4bd; }
-#ht table { border-collapse: collapse; margin-top: .8rem; font-size: .84rem; width: 100%; }
-#ht th, #ht td { border: 1px solid #e2e2e2; padding: .3rem .5rem; text-align: right; }
-#ht th:first-child, #ht td:first-child { text-align: left; }
-#ht th { background: #f4f6f9; color: #33475b; font-weight: 700; }
-</style>
-
-<h5>河內塔：自己搬一次，再看最少要幾步</h5>
-<p class="lede">規則三條：一次只能搬一片、上面那片一定比下面小、全部從左邊搬到右邊。
-先點起點柱、再點目標柱。把 3 片搬完之後把片數加到 4、再加到 5，看步數怎麼長。</p>
-
-<div class="bar">
-  <button data-n="3" class="on">3 片</button>
-  <button data-n="4">4 片</button>
-  <button data-n="5">5 片</button>
-  <button data-n="6">6 片</button>
-  <button id="ht-reset">重來</button>
-</div>
-
-<div class="board">
-  <div class="peg" data-p="0"><span class="lbl">A 起點</span></div>
-  <div class="peg" data-p="1"><span class="lbl">B 中繼</span></div>
-  <div class="peg" data-p="2"><span class="lbl">C 終點</span></div>
-</div>
-
-<div class="stat">你走了 <b id="ht-moves">0</b> 步　·　這個片數的最少步數是 <b id="ht-min">7</b> 步</div>
-<div class="out" id="ht-out" hidden></div>
-
-<table>
-  <tr><th>片數</th><th>最少步數 2ⁿ−1</th><th>一秒搬一片要多久</th></tr>
-  <tr><td>3</td><td>7</td><td>7 秒</td></tr>
-  <tr><td>10</td><td>1,023</td><td>17 分鐘</td></tr>
-  <tr><td>20</td><td>1,048,575</td><td>12 天</td></tr>
-  <tr><td>40</td><td>1,099,511,627,775</td><td>3 萬 4 千年</td></tr>
-  <tr><td>64</td><td>18,446,744,073,709,551,615</td><td>約 5,850 億年</td></tr>
-</table>
-
-<script>
-(function () {
-  var root = document.getElementById("ht");
-  var pegs = [].slice.call(root.querySelectorAll(".peg"));
-  var movesEl = root.querySelector("#ht-moves");
-  var minEl = root.querySelector("#ht-min");
-  var out = root.querySelector("#ht-out");
-  var COLORS = ["#24528f", "#2f7d6b", "#a8703a", "#8a4f7d", "#3b6ea5", "#6b7a2f"];
-  var n = 3, towers = [[], [], []], moves = 0, sel = null;
-
-  function setup(k) {
-    n = k; towers = [[], [], []]; moves = 0; sel = null;
-    for (var i = n; i >= 1; i--) towers[0].push(i);
-    minEl.textContent = (Math.pow(2, n) - 1).toLocaleString("en-US");
-    out.hidden = true; out.className = "out";
-    draw();
-  }
-
-  function draw() {
-    movesEl.textContent = moves;
-    pegs.forEach(function (peg, pi) {
-      [].slice.call(peg.querySelectorAll(".disc")).forEach(function (d) { d.remove(); });
-      peg.classList.toggle("sel", sel === pi);
-      towers[pi].forEach(function (size, idx) {
-        var d = document.createElement("div");
-        d.className = "disc";
-        d.style.width = (28 + size * (56 / n)) + "%";
-        d.style.background = COLORS[(size - 1) % COLORS.length];
-        d.textContent = size;
-        if (sel === pi && idx === towers[pi].length - 1) d.classList.add("lift");
-        peg.appendChild(d);
-      });
-    });
-  }
-
-  function click(pi) {
-    if (sel === null) {
-      if (!towers[pi].length) return;
-      sel = pi; draw(); return;
-    }
-    if (sel === pi) { sel = null; draw(); return; }
-    var disc = towers[sel][towers[sel].length - 1];
-    var top = towers[pi][towers[pi].length - 1];
-    if (top && top < disc) {
-      out.hidden = false; out.className = "out";
-      out.innerHTML = "第 " + disc + " 片比第 " + top + " 片大，不能疊上去。這條規則就是把搜尋空間切掉一大塊的東西——沒有它，這個題目根本不用想。";
-      sel = null; draw(); return;
-    }
-    towers[pi].push(towers[sel].pop());
-    moves++; sel = null; draw();
-    if (towers[2].length === n) {
-      var best = Math.pow(2, n) - 1;
-      out.hidden = false;
-      out.className = "out ok";
-      out.innerHTML = moves === best
-        ? "搬完了，而且正好是 " + best + " 步，這就是最佳解。這條路線是這個搜尋空間裡最短的一條。"
-        : "搬完了，你用了 " + moves + " 步，最少是 " + best + " 步，多走了 " + (moves - best) + " 步。"
-          + "差距就是「有解」跟「最佳解」之間的距離——專家系統要回答的通常是後者。";
-    } else {
-      out.hidden = true;
-    }
-  }
-
-  pegs.forEach(function (peg, pi) { peg.addEventListener("click", function () { click(pi); }); });
-  [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (b) {
-    b.addEventListener("click", function () {
-      [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (x) { x.classList.remove("on"); });
-      b.classList.add("on");
-      setup(parseInt(b.dataset.n, 10));
-    });
-  });
-  root.querySelector("#ht-reset").addEventListener("click", function () { setup(n); });
-  setup(3);
-})();
-</script>
-</div>
-
 <blockquote>
 <p><strong>規則負責定義什麼不能做，搜尋空間負責決定這題有多難——兩者是分開的，難度不會因為規則變簡單就下降。</strong></p>
 </blockquote>
 <hr />
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">把所有可能的擺法畫出來，就看見了搜尋空間</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">一邊搬，一邊看著搜尋空間亮起來</h3>
 <ul>
 <li>三片三柱，每一片可以在三根柱子的其中一根，所以合法擺法有 $3^3 = 27$ 種。</li>
-<li>27 種擺法可以整張畫出來，每個點是一種擺法，每條線是一次合法搬動。</li>
-<li>從起點到終點的走法有無限多條（可以繞路），但最短的只有一條，就是圖上紅色那一側。</li>
+<li>27 種擺法可以整張畫出來：每個點是一種擺法，每條線是一次合法的搬動。</li>
+<li>你每搬一片，就是在這張圖上從一個點走到隔壁的一個點。</li>
 </ul>
-<p><svg viewBox="0 0 820 470" role="img" aria-label="三片河內塔的全部 27 種擺法，以及從起點到終點最短的那一條路線" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><line x1="410.0" y1="70.3" x2="366.2" y2="115.8" stroke="#c9d6e4" stroke-width="1"/><line x1="410.0" y1="70.3" x2="453.8" y2="115.8" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="115.8" x2="453.8" y2="115.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="161.3" x2="278.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="161.3" x2="366.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="206.8" x2="366.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="161.3" x2="453.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="161.3" x2="541.2" y2="206.8" stroke="#d05070" stroke-width="2.6"/><line x1="453.8" y1="206.8" x2="541.2" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="366.2" y1="115.8" x2="322.5" y2="161.3" stroke="#c9d6e4" stroke-width="1"/><line x1="453.8" y1="115.8" x2="497.5" y2="161.3" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="206.8" x2="453.8" y2="206.8" stroke="#c9d6e4" stroke-width="1"/><line x1="235.0" y1="252.3" x2="191.2" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="235.0" y1="252.3" x2="278.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="297.8" x2="278.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="147.5" y1="343.3" x2="103.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="147.5" y1="343.3" x2="191.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="103.8" y1="388.8" x2="191.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="343.3" x2="278.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="322.5" y1="343.3" x2="366.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="388.8" x2="366.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="297.8" x2="147.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="297.8" x2="322.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="191.2" y1="388.8" x2="278.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="585.0" y1="252.3" x2="541.2" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="585.0" y1="252.3" x2="628.8" y2="297.8" stroke="#d05070" stroke-width="2.6"/><line x1="541.2" y1="297.8" x2="628.8" y2="297.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="343.3" x2="453.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="497.5" y1="343.3" x2="541.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="453.8" y1="388.8" x2="541.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="672.5" y1="343.3" x2="628.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="672.5" y1="343.3" x2="716.2" y2="388.8" stroke="#d05070" stroke-width="2.6"/><line x1="628.8" y1="388.8" x2="716.2" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="541.2" y1="297.8" x2="497.5" y2="343.3" stroke="#c9d6e4" stroke-width="1"/><line x1="628.8" y1="297.8" x2="672.5" y2="343.3" stroke="#d05070" stroke-width="2.6"/><line x1="541.2" y1="388.8" x2="628.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><line x1="278.8" y1="206.8" x2="235.0" y2="252.3" stroke="#c9d6e4" stroke-width="1"/><line x1="541.2" y1="206.8" x2="585.0" y2="252.3" stroke="#d05070" stroke-width="2.6"/><line x1="366.2" y1="388.8" x2="453.8" y2="388.8" stroke="#c9d6e4" stroke-width="1"/><circle cx="410.0" cy="70.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="366.2" cy="115.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="453.8" cy="115.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="322.5" cy="161.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="366.2" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="497.5" cy="161.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="453.8" cy="206.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="541.2" cy="206.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="235.0" cy="252.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="191.2" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="147.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="103.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="191.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="322.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="278.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="366.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="585.0" cy="252.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="541.2" cy="297.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="628.8" cy="297.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="497.5" cy="343.3" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="453.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="541.2" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="672.5" cy="343.3" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="628.8" cy="388.8" r="4" fill="#ffffff" stroke="#7f93a8" stroke-width="1.4"/><circle cx="716.2" cy="388.8" r="5.5" fill="#d05070" stroke="#a3324f" stroke-width="1.4"/><circle cx="410.0" cy="70.3" r="9" fill="none" stroke="#24528f" stroke-width="2"/><circle cx="716.2" cy="388.8" r="9" fill="none" stroke="#24528f" stroke-width="2"/><text x="410.0" y="52.3" font-size="13.5" fill="#24528f" text-anchor="middle">起點：三片都在 A</text><text x="722.2" y="418.8" font-size="13.5" fill="#24528f" text-anchor="end">終點：三片都在 C</text><text x="95.8" y="418.8" font-size="13.5" fill="#5b6b7c" text-anchor="start">三片都在 B</text><text x="26" y="458" font-size="12.5" fill="#5b6b7c">每個點是一種擺法，每條線是一次合法的搬動。紅線那 7 步是最短路徑；其餘的線全部走得通，只是比較遠。</text></svg></p>
-<p>畫得出來，就代表你可以用眼睛找最佳解。這件事只在數字小的時候成立，而它成立的範圍比大部分人以為的窄得多。</p>
+<p>請把三片搬到 C，注意右邊那張圖上的深藍色點怎麼移動、藍線怎麼長出來。搬完之後按「show 最佳解」，比對你的藍線跟紅線差在哪裡；再把片數加到四片、五片，看整張圖怎麼爆炸。</p>
+<div class="widget" id="hss">
+<style>
+#hss { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+#hss h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+#hss .lede { color: #666; font-size: .88rem; margin: .2rem 0 .9rem; line-height: 1.7; }
+#hss .bar { margin: .2rem 0 .8rem; }
+#hss button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+#hss button:hover { background: #eef4fd; }
+#hss button.on { background: #24528f; color: #fff; border-color: #24528f; }
+#hss .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: .9rem; }
+#hss .panel { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: .7rem .9rem .9rem; }
+#hss .panel h5 { margin: .1rem 0 .6rem; font-size: .86rem; color: #24528f; }
+#hss .board { display: flex; gap: .6rem; align-items: flex-end; justify-content: center; padding-top: .4rem; }
+#hss .peg { flex: 1 1 0; position: relative; height: 158px; cursor: pointer;
+      display: flex; flex-direction: column-reverse; align-items: center; gap: 3px;
+      border-bottom: 6px solid #c8d2de; border-radius: 3px; padding-bottom: 2px; }
+#hss .peg::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 148px; background: #dde4ec; border-radius: 3px; }
+#hss .peg.sel { background: #eef4fd; }
+#hss .peg .lbl { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center;
+      font-size: .78rem; color: #7a8796; }
+#hss .disc { position: relative; height: 19px; border-radius: 4px; color: #fff;
+      font-size: .74rem; line-height: 19px; text-align: center; }
+#hss .disc.lift { outline: 2px dashed #24528f; outline-offset: 2px; }
+#hss svg { width: 100%; height: auto; display: block; }
+#hss .stat { margin-top: 1.6rem; font-size: .87rem; line-height: 1.9; }
+#hss .stat b { color: #24528f; }
+#hss .out { margin-top: .7rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .89rem; line-height: 1.85; }
+#hss .out.ok { background: #eef7f1; border-color: #a8d4bd; }
+#hss .key { font-size: .78rem; color: #7a8796; margin-top: .5rem; line-height: 1.8; }
+#hss .sw { display: inline-block; width: 22px; height: 3px; vertical-align: middle;
+      margin: 0 .25rem 0 .6rem; border-radius: 2px; }
+</style>
+
+<h5>自己搬一次，右邊同步告訴你走到搜尋空間的哪一點</h5>
+<p class="lede">左邊每搬一片，右邊那張圖就跟著亮一個點。整張圖是這個題目所有可能的擺法，
+灰線是所有合法的搬動，紅線是最短的那一條，藍線是你實際走過的路。</p>
+
+<div class="bar">
+  <button data-n="3" class="on">3 片</button>
+  <button data-n="4">4 片</button>
+  <button data-n="5">5 片</button>
+  <button id="hss-undo">退一步</button>
+  <button id="hss-reset">重來</button>
+  <button id="hss-solve">show 最佳解</button>
+</div>
+
+<div class="grid">
+  <div class="panel">
+    <h6>① 先點起點柱，再點目標柱</h6>
+    <div class="board">
+      <div class="peg" data-p="0"><span class="lbl">A 起點</span></div>
+      <div class="peg" data-p="1"><span class="lbl">B 中繼</span></div>
+      <div class="peg" data-p="2"><span class="lbl">C 終點</span></div>
+    </div>
+    <div class="stat">
+      你走了 <b id="hss-moves">0</b> 步　·　最少 <b id="hss-min">7</b> 步<br>
+      你踩過 <b id="hss-seen">1</b> 種擺法　·　全部共 <b id="hss-total">27</b> 種
+    </div>
+  </div>
+  <div class="panel">
+    <h6>② 這個題目的搜尋空間</h6>
+    <div id="hss-svg"></div>
+    <div class="key">
+      <span class="sw" style="background:#d05070"></span>最少步數的那一條
+      <span class="sw" style="background:#24528f"></span>你走過的
+      <span class="sw" style="background:#dbe3ec"></span>其餘合法的搬動
+    </div>
+  </div>
+</div>
+
+<div class="out" id="hss-out">先把三片搬到 C。</div>
+
+<script>
+(function () {
+  var root = document.getElementById("hss");
+  var pegsEl = [].slice.call(root.querySelectorAll(".peg"));
+  var svgBox = root.querySelector("#hss-svg");
+  var out = root.querySelector("#hss-out");
+  var COLORS = ["#24528f", "#2f7d6b", "#a8703a", "#8a4f7d", "#3b6ea5"];
+  var W = 480, H = 430;
+
+  var n = 3, state = [], history = [], sel = null, seen = {},
+      nodes = {}, edges = [], best = [], showBest = false;
+
+  // ---- geometry: the Hanoi graph is a Sierpinski triangle -----------------
+  function mid(p, q) { return [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; }
+  function posOf(st, A, B, C) {
+    if (!st.length) return [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3];
+    var k = st[st.length - 1], rest = st.slice(0, -1);
+    var AB = mid(A, B), AC = mid(A, C), BC = mid(B, C);
+    if (k === 0) return posOf(rest, A, AB, AC);
+    if (k === 1) return posOf(rest, AB, B, BC);
+    return posOf(rest, AC, BC, C);
+  }
+
+  function key(st) { return st.join(""); }
+
+  function movable(st) {
+    // returns list of [disc, targetPeg]
+    var res = [];
+    for (var d = 0; d < st.length; d++) {
+      var blocked = false;
+      for (var s = 0; s < d; s++) if (st[s] === st[d]) { blocked = true; break; }
+      if (blocked) continue;
+      for (var t = 0; t < 3; t++) {
+        if (t === st[d]) continue;
+        var ok = true;
+        for (var s2 = 0; s2 < d; s2++) if (st[s2] === t) { ok = false; break; }
+        if (ok) res.push([d, t]);
+      }
+    }
+    return res;
+  }
+
+  function buildGraph() {
+    var A = [W / 2, 26], B = [26, H - 54], C = [W - 26, H - 54];
+    nodes = {}; edges = [];
+    var all = [[]];
+    for (var d = 0; d < n; d++) {
+      var next = [];
+      all.forEach(function (s) { for (var p = 0; p < 3; p++) next.push(s.concat([p])); });
+      all = next;
+    }
+    all.forEach(function (s) { nodes[key(s)] = posOf(s, A, B, C); });
+    var done = {};
+    all.forEach(function (s) {
+      movable(s).forEach(function (mv) {
+        var t = s.slice(); t[mv[0]] = mv[1];
+        var a = key(s), b = key(t), id = a < b ? a + "|" + b : b + "|" + a;
+        if (done[id]) return;
+        done[id] = 1; edges.push([a, b]);
+      });
+    });
+    // BFS for the shortest route from all-on-A to all-on-C
+    var start = new Array(n).fill(0), goal = key(new Array(n).fill(2));
+    var prev = {}, q = [start], vis = {}; vis[key(start)] = 1;
+    while (q.length) {
+      var cur = q.shift();
+      if (key(cur) === goal) break;
+      movable(cur).forEach(function (mv) {
+        var t = cur.slice(); t[mv[0]] = mv[1];
+        if (vis[key(t)]) return;
+        vis[key(t)] = 1; prev[key(t)] = key(cur); q.push(t);
+      });
+    }
+    best = [goal];
+    while (prev[best[0]]) best.unshift(prev[best[0]]);
+  }
+
+  function drawGraph() {
+    var bestEdge = {}, mine = {};
+    for (var i = 0; i < best.length - 1; i++) {
+      var a = best[i], b = best[i + 1];
+      bestEdge[a < b ? a + "|" + b : b + "|" + a] = 1;
+    }
+    var path = history.concat([state]);
+    for (var j = 0; j < path.length - 1; j++) {
+      var x = key(path[j]), y = key(path[j + 1]);
+      mine[x < y ? x + "|" + y : y + "|" + x] = 1;
+    }
+    var r = n <= 3 ? 5.5 : (n === 4 ? 4 : 2.8);
+    var s = ['<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="這個片數下所有可能的擺法，'
+      + '以及最短路徑與你走過的路徑">'];
+    edges.forEach(function (e) {
+      var id = e[0] < e[1] ? e[0] + "|" + e[1] : e[1] + "|" + e[0];
+      var col = mine[id] ? "#24528f" : (showBest && bestEdge[id] ? "#d05070" : "#dbe3ec");
+      var wd = mine[id] ? 2.6 : (showBest && bestEdge[id] ? 2.4 : 1);
+      var p = nodes[e[0]], q = nodes[e[1]];
+      s.push('<line x1="' + p[0].toFixed(1) + '" y1="' + p[1].toFixed(1)
+        + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1)
+        + '" stroke="' + col + '" stroke-width="' + wd + '"/>');
+    });
+    Object.keys(nodes).forEach(function (k) {
+      var p = nodes[k], cur = k === key(state);
+      var fill = cur ? "#24528f" : (seen[k] ? "#9db8dc" : "#ffffff");
+      s.push('<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1)
+        + '" r="' + (cur ? r + 3 : r) + '" fill="' + fill
+        + '" stroke="' + (cur ? "#16325c" : "#b9c6d6") + '" stroke-width="1.3"/>');
+    });
+    var st = nodes[key(new Array(n).fill(0))], gl = nodes[key(new Array(n).fill(2))];
+    s.push('<text x="' + st[0] + '" y="' + (st[1] - 12) + '" font-size="12" fill="#5b6b7c" '
+      + 'text-anchor="middle" font-family="system-ui,sans-serif">全部在 A</text>');
+    s.push('<text x="' + gl[0] + '" y="' + (gl[1] + 24) + '" font-size="12" fill="#a3324f" '
+      + 'text-anchor="end" font-family="system-ui,sans-serif">全部在 C</text>');
+    s.push("</svg>");
+    svgBox.innerHTML = s.join("");
+  }
+
+  function drawBoard() {
+    pegsEl.forEach(function (peg, pi) {
+      [].slice.call(peg.querySelectorAll(".disc")).forEach(function (d) { d.remove(); });
+      peg.classList.toggle("sel", sel === pi);
+      var on = [];
+      for (var d = 0; d < n; d++) if (state[d] === pi) on.push(d);
+      on.sort(function (a, b) { return b - a; });
+      on.forEach(function (d, idx) {
+        var el = document.createElement("div");
+        el.className = "disc";
+        el.style.width = (28 + (d + 1) * (56 / n)) + "%";
+        el.style.background = COLORS[d % COLORS.length];
+        el.textContent = d + 1;
+        if (sel === pi && idx === on.length - 1) el.classList.add("lift");
+        peg.appendChild(el);
+      });
+    });
+    root.querySelector("#hss-moves").textContent = history.length;
+    root.querySelector("#hss-seen").textContent = Object.keys(seen).length;
+  }
+
+  function topOf(pi) {
+    var t = -1;
+    for (var d = 0; d < n; d++) if (state[d] === pi && (t < 0 || d < t)) t = d;
+    return t;
+  }
+
+  function render() { drawBoard(); drawGraph(); }
+
+  function setup(k) {
+    n = k;
+    state = new Array(n).fill(0);
+    history = []; sel = null; seen = {}; showBest = false;
+    seen[key(state)] = 1;
+    buildGraph();
+    root.querySelector("#hss-min").textContent = (Math.pow(2, n) - 1).toLocaleString("en-US");
+    root.querySelector("#hss-total").textContent = Math.pow(3, n).toLocaleString("en-US");
+    out.className = "out";
+    out.textContent = "先把 " + n + " 片搬到 C。";
+    render();
+  }
+
+  function click(pi) {
+    if (sel === null) { if (topOf(pi) >= 0) { sel = pi; render(); } return; }
+    if (sel === pi) { sel = null; render(); return; }
+    var d = topOf(sel), t = topOf(pi);
+    if (d < 0) { sel = null; render(); return; }
+    if (t >= 0 && t < d) {
+      out.className = "out";
+      out.innerHTML = "第 " + (d + 1) + " 片比第 " + (t + 1) + " 片大，不能疊上去。"
+        + "這條規則就是把搜尋空間切掉一大塊的東西——右邊那張圖之所以只有 "
+        + Math.pow(3, n) + " 個點而不是無限多個，靠的就是它。";
+      sel = null; render(); return;
+    }
+    history.push(state.slice());
+    state = state.slice(); state[d] = pi;
+    seen[key(state)] = 1;
+    sel = null;
+    render();
+    check();
+  }
+
+  function check() {
+    if (state.every(function (p) { return p === 2; })) {
+      var b = Math.pow(2, n) - 1;
+      out.className = "out ok";
+      out.innerHTML = history.length === b
+        ? "搬完了，正好 " + b + " 步，這就是最佳解。右邊那條藍線現在跟最短路徑重疊——"
+          + "整張圖上只有這一條這麼短。"
+        : "搬完了。你走了 " + history.length + " 步，最少 " + b + " 步，多走了 "
+          + (history.length - b) + " 步。按「show 最佳解」讓紅線出來，"
+          + "看你的藍線在哪裡繞出去了——那段繞路就是「有解」與「最佳解」的差別。";
+    } else {
+      out.className = "out";
+      out.innerHTML = "目前的擺法是右圖上那個深藍色的點。你已經踩過 "
+        + Object.keys(seen).length + " 種，全部有 " + Math.pow(3, n) + " 種。";
+    }
+  }
+
+  pegsEl.forEach(function (peg, pi) { peg.addEventListener("click", function () { click(pi); }); });
+  [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (x) {
+        x.classList.remove("on");
+      });
+      b.classList.add("on");
+      setup(parseInt(b.dataset.n, 10));
+    });
+  });
+  root.querySelector("#hss-reset").addEventListener("click", function () { setup(n); });
+  root.querySelector("#hss-undo").addEventListener("click", function () {
+    if (!history.length) return;
+    state = history.pop(); sel = null; render(); check();
+  });
+  root.querySelector("#hss-solve").addEventListener("click", function () {
+    showBest = !showBest;
+    drawGraph();
+    if (showBest) {
+      out.className = "out";
+      out.innerHTML = "紅線是最短的那一條，共 " + (Math.pow(2, n) - 1)
+        + " 步，沿著三角形的一整條邊走。注意它一次也沒有拐進圖的中間——"
+        + "中間那些點全部走得通，只是比較遠。";
+    }
+  });
+  setup(3);
+})();
+</script>
+</div>
+
+<p>畫得出來，就代表你可以用眼睛找最佳解。這件事只在數字小的時候成立，而它成立的範圍比大部分人以為的窄得多——五片就已經是 243 個點，那張圖開始看不清楚了。</p>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要先看這張圖</span><p>這張圖是後面所有內容的底。專家系統、推薦系統、排班系統、AI 選題，本質上都是在一張這樣的圖裡面找路。差別只在圖的大小，以及找路的方法是有人寫死的規則，還是機器自己學出來的直覺。</p></div>
 <hr />
 </section>
@@ -449,7 +607,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-16">小作業</h3>
 <p>挑一個你每週都要做、而且選項多到看不完的決定，寫下三行：這個決定的搜尋空間大概有幾個位數、你實際上用哪三條規則把它砍到能處理的大小、這三條規則是誰定的。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-11 14:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-11 15:02</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
