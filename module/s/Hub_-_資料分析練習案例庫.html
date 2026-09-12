@@ -11,8 +11,35 @@
 <p>課堂上每個單元只會帶你跑一題。想多練的，整份案例庫都在下面，每一題都標了會踩到什麼坑、以及怎麼自己確認有沒有做對。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">先拿到資料，再往下看</h3>
 <p>這條線全部用同一家虛構媒體集團的資料——鯤島傳媒集團。它是模擬的，但結構跟問題都照真實媒體公司的資料倉儲做，包括那些會讓你算錯的地方。</p>
-<p>到課程網站的檔案區下載 <code>kmg_L1</code> 資料包，裡面有四樣東西：兩個 csv、一份資料字典、一個 manifest。</p>
-<p><strong>四樣都要下載。</strong> 很多人只拿 csv 就開始問，那是後面所有錯誤的起點——不給資料字典，AI 會自己猜欄位的意思，猜錯不會告訴你。</p>
+<p><strong>四個檔都要下載</strong>，放進同一個資料夾：</p>
+<table>
+<thead>
+<tr>
+<th>檔案</th>
+<th>是什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../files/kmg_L1/content_monthly_2024_10.csv">content_monthly_2024_10.csv</a></td>
+<td>內容月報表，一則內容一列</td>
+</tr>
+<tr>
+<td><a href="../../files/kmg_L1/ad_daily_2024_10.csv">ad_daily_2024_10.csv</a></td>
+<td>廣告日報表，一個活動在一個版位的一天一列</td>
+</tr>
+<tr>
+<td><a href="../../files/kmg_L1/DATA_DICTIONARY.md">DATA_DICTIONARY.md</a></td>
+<td>資料字典，每一欄是什麼意思</td>
+</tr>
+<tr>
+<td><a href="../../files/kmg_L1/manifest.json">manifest.json</a></td>
+<td>每個檔案的指紋</td>
+</tr>
+</tbody>
+</table>
+<p>連結按右鍵選「另存連結」比較保險，直接點有些瀏覽器會當成網頁打開。</p>
+<p><strong>四樣都要。</strong> 很多人只拿 csv 就開始問，那是後面所有錯誤的起點——不給資料字典，AI 會自己猜欄位的意思，猜錯不會告訴你。</p>
 <p>拿到之後先跟 Claude Code 說這一句：</p>
 <blockquote>
 <p>請讀這個資料夾裡的 manifest.json，然後計算每一個 csv 檔案的 SHA256，跟 manifest 裡記的值比對，告訴我是否一致。</p>
@@ -919,7 +946,7 @@
 <section class="mod-sec sec-content"><h3 id="sec-30">做完之後</h3>
 <p>這十九題全部做完，你會有一份自己的查核清單——那比任何一個模型都有用。把它寫下來，下次拿到一份不認識的資料時照著跑一遍。</p>
 <p>案例會持續增加。資料補上去之後，「等資料釋出」那一區的單元也會跟著開出新的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 01:57</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 02:03</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
