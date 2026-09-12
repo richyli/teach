@@ -149,6 +149,7 @@ MathJax = {
                       font-variant-numeric: tabular-nums; }
 #sep-thr .cost .who { color: #8a5a2b; font-weight: 600; }
 #sep-thr .cost .who2 { color: #a03535; font-weight: 600; }
+#sep-thr .crow { display: flex; align-items: center; gap: .8rem; }
 #sep-thr .chart svg { width: 100%; max-width: 34rem; height: auto; display: block; margin: .4rem auto; }
 #sep-thr .ax { stroke: #c9c9c9; stroke-width: 1; }
 #sep-thr .grid { stroke: #f0f0f0; stroke-width: 1; }
@@ -169,11 +170,63 @@ MathJax = {
 #sep-thr .hint.show { display: block; }
 #sep-thr .src { font-size: .76rem; color: #8a8a8a; line-height: 1.7; margin-top: 1rem;
                 border-top: 1px solid #ececec; padding-top: .7rem; }
+
+/* 全螢幕（投影用）：左邊數字、右邊曲線，代價那兩行換成一眼看得懂的圖示。
+   原生 Fullscreen API 走 :fullscreen；瀏覽器擋掉時建置層改掛 .figzoom-open。 */
+#sep-thr .fs-face, #sep-thr .fs-cross { display: none; }
+#sep-thr .fs-cross .xs { display: flex; flex-wrap: wrap; gap: .3rem; align-items: flex-end; }
+#sep-thr .fs-cross svg { width: 1.4rem; height: 2rem; color: #a03535; display: block; }
+#sep-thr .fs-cross .cap { font-size: .8rem; color: #999; margin-top: .4rem; line-height: 1.6; }
+
+#sep-thr:fullscreen .fs-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr);
+                               gap: 1.4rem 2.2rem; align-items: start; }
+#sep-thr:fullscreen .fs-grid > .panel { border-top: 0; padding-top: 0; margin-top: 0; }
+#sep-thr:fullscreen .chart svg { max-width: none; }
+#sep-thr:fullscreen h4 { font-size: 1.5rem; }
+#sep-thr:fullscreen .lede { font-size: 1.02rem; }
+#sep-thr:fullscreen .metric .v { font-size: 1.7rem; }
+#sep-thr:fullscreen .metric .k, #sep-thr:fullscreen .metric .s { font-size: .88rem; }
+#sep-thr:fullscreen table.mx { max-width: none; }
+#sep-thr:fullscreen table.mx .num { font-size: 1.7rem; }
+#sep-thr:fullscreen .cost { font-size: 1.1rem; }
+#sep-thr:fullscreen .cost .big { font-size: 2rem; }
+#sep-thr:fullscreen .now b { font-size: 1.6rem; }
+#sep-thr:fullscreen .qbox { font-size: 1.02rem; }
+#sep-thr:fullscreen .fs-face { display: block; flex: none; width: 4.4rem; text-align: center;
+                               font-size: 3.2rem; line-height: 1.1; }
+#sep-thr:fullscreen .fs-face .fl { display: block; font-size: .78rem; color: #8a5a2b; margin-top: .1rem; }
+#sep-thr:fullscreen .fs-cross { display: block; margin-top: .6rem; }
+
+#sep-thr.figzoom-open .fs-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr);
+                                 gap: 1.4rem 2.2rem; align-items: start; }
+#sep-thr.figzoom-open .fs-grid > .panel { border-top: 0; padding-top: 0; margin-top: 0; }
+#sep-thr.figzoom-open .chart svg { max-width: none; }
+#sep-thr.figzoom-open h4 { font-size: 1.5rem; }
+#sep-thr.figzoom-open .lede { font-size: 1.02rem; }
+#sep-thr.figzoom-open .metric .v { font-size: 1.7rem; }
+#sep-thr.figzoom-open .metric .k, #sep-thr.figzoom-open .metric .s { font-size: .88rem; }
+#sep-thr.figzoom-open table.mx { max-width: none; }
+#sep-thr.figzoom-open table.mx .num { font-size: 1.7rem; }
+#sep-thr.figzoom-open .cost { font-size: 1.1rem; }
+#sep-thr.figzoom-open .cost .big { font-size: 2rem; }
+#sep-thr.figzoom-open .now b { font-size: 1.6rem; }
+#sep-thr.figzoom-open .qbox { font-size: 1.02rem; }
+#sep-thr.figzoom-open .fs-face { display: block; flex: none; width: 4.4rem; text-align: center;
+                                 font-size: 3.2rem; line-height: 1.1; }
+#sep-thr.figzoom-open .fs-face .fl { display: block; font-size: .78rem; color: #8a5a2b; margin-top: .1rem; }
+#sep-thr.figzoom-open .fs-cross { display: block; margin-top: .6rem; }
+
+/* 窄螢幕就算全螢幕也不分欄，不然兩邊都被擠成一條 */
+@media (max-width: 900px) {
+  #sep-thr:fullscreen .fs-grid { grid-template-columns: 1fr; }
+  #sep-thr.figzoom-open .fs-grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <h5>🎛 互動：把門檻拉一拉，看兩種錯往相反方向跑</h5>
 <p class="lede">模型沒有變、資料沒有變，變的只有「幾分以上要發警示」這一個數字。拉動下面的滑桿，看四格與四個指標怎麼一起動。</p>
 
+<div class="fs-grid">
 <div class="panel">
   <div class="row">
     <label>警示門檻</label>
@@ -212,10 +265,16 @@ MathJax = {
   </table>
 
   <div class="cost">
-    每找到 1 位真的敗血症病人，醫護要處理 <span class="big" id="v-nne">8.3</span> 次警示
-    →<span class="who"> 這是護理師與值班醫師的工作量</span><br>
-    同時有 <span class="big" id="v-miss">1,709</span> 位敗血症病人完全沒被示警
-    →<span class="who2"> 這是病人自己承擔的風險</span>
+    <div class="crow">
+      <span class="fs-face" id="v-face">😕<span class="fl">吃力</span></span>
+      <span>每找到 1 位真的敗血症病人，醫護要處理 <span class="big" id="v-nne">8.3</span> 次警示
+      →<span class="who"> 這是護理師與值班醫師的工作量</span></span>
+    </div>
+    <div class="crow" style="margin-top:.3rem">
+      <span>同時有 <span class="big" id="v-miss">1,709</span> 位敗血症病人完全沒被示警
+      →<span class="who2"> 這是病人自己承擔的風險</span></span>
+    </div>
+    <div class="fs-cross" id="v-cross"></div>
   </div>
 </div>
 
@@ -234,6 +293,7 @@ MathJax = {
   </div>
   <p class="lede" style="margin:.2rem 0 0">兩條線一路互相交換：門檻往右，藍線（特異度）爬上去，紅線（敏感度）掉下來。
   灰色區間是開發商建議的 5–8 分，虛線是這家醫院實際選的 6 分。<b>這張圖上沒有任何一點可以讓兩條線同時最高，這就是兩難。</b></p>
+</div>
 </div>
 
 <div class="panel">
@@ -256,7 +316,8 @@ MathJax = {
 
 <p class="src"><b>數字怎麼來的：</b>總人數 38,455、敗血症 2,552、門檻 6 的四格（843／1,709／6,128／29,775）與 33%、12%、NNE 8 都是
 Wong et al. (2021) <i>JAMA Internal Medicine</i> 論文提供的數字。其餘門檻的敏感度與特異度是從該論文 Figure 1 的向量曲線判讀出來的（誤差約 ±1 個百分點），
-四格則由這兩條曲線乘回 2,552 與 35,903 換算。<b>所以門檻 6 的數字可以拿去引用，其他門檻只能用來看趨勢。</b></p>
+四格則由這兩條曲線乘回 2,552 與 35,903 換算。<b>所以門檻 6 的數字可以拿去引用，其他門檻只能用來看趨勢。</b>
+全螢幕時的十字架代表「沒被示警的病人」，不是死亡人數——論文沒有追蹤這些病人後來怎麼了。</p>
 
 <script>
 (function () {
@@ -276,6 +337,12 @@ Wong et al. (2021) <i>JAMA Internal Medicine</i> 論文提供的數字。其餘�
     [15.0, 9.66, 96.54]
   ];
   var SEPSIS = 2552, NOSEP = 35903, TOTAL = 38455;
+
+  // 每抓到一位病人要看的警示次數越多，臉越垮
+  var FACES = [[7, '🙂', '還好'], [8, '😐', '開始累'], [9, '😕', '吃力'],
+               [10, '😟', '很吃力'], [12, '😣', '疲於奔命'], [99, '😫', '沒人跟得上']];
+  var CROSS = '<svg viewBox="0 0 10 14" aria-hidden="true" focusable="false">' +
+              '<path d="M4 0.5h2v3.5h3v2H6v8H4v-8H1v-2h3z" fill="currentColor"/></svg>';
 
   var X0 = 40, X1 = 440, Y0 = 190, Y1 = 20;
   function px(t) { return X0 + (t - 1) / 14 * (X1 - X0); }
@@ -333,8 +400,21 @@ Wong et al. (2021) <i>JAMA Internal Medicine</i> 論文提供的數字。其餘�
     document.getElementById('c-tn').textContent = fmt(c.tn);
     document.getElementById('c-alertn').textContent = fmt(alerts);
     document.getElementById('c-quietn').textContent = fmt(TOTAL - alerts);
-    document.getElementById('v-nne').textContent = (alerts / c.tp).toFixed(1);
+
+    var nne = alerts / c.tp;
+    document.getElementById('v-nne').textContent = nne.toFixed(1);
     document.getElementById('v-miss').textContent = fmt(c.fn);
+
+    var face = FACES[FACES.length - 1];
+    for (var k = 0; k < FACES.length; k++) { if (nne < FACES[k][0]) { face = FACES[k]; break; } }
+    document.getElementById('v-face').innerHTML = face[1] + '<span class="fl">' + face[2] + '</span>';
+
+    var n = Math.ceil(c.fn / 100), xs = '';
+    for (var j = 0; j < n; j++) { xs += CROSS; }
+    document.getElementById('v-cross').innerHTML =
+      '<div class="xs" role="img" aria-label="' + fmt(c.fn) + ' 位沒被示警的敗血症病人">' + xs + '</div>' +
+      '<div class="cap">一個十字架＝100 位沒被示警的敗血症病人（這個門檻共 ' + fmt(c.fn) +
+      ' 位）。論文沒有追蹤他們後來怎麼了；在門檻 6，其中 60% 仍靠醫護自己的判斷及時用了藥。</div>';
 
     var b = counts(BASE);
     document.getElementById('m-sens').className = 'metric' + (c.tp > b.tp ? ' up' : c.tp < b.tp ? ' down' : '');
@@ -400,7 +480,7 @@ Wong et al. (2021) <i>JAMA Internal Medicine</i> 論文提供的數字。其餘�
 <li>Wong, A., et al. (2021). External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients. <em>JAMA Internal Medicine</em>, 181(8), 1065–1070. <a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307">[https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307](https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307)</a></li>
 <li>四格數字由論文報告的總數、警示數與漏掉數反推，反推結果與論文提供的 sensitivity 33%、PPV 12%、NNE 8 完全一致。</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 16:12</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:20</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
