@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>創意週記與評量導引</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -109,7 +109,7 @@ MathJax = {
 </tbody>
 </table>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 306" role="img" aria-label="創意週記的兩維度評分標準" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 306" role="img" aria-label="創意週記的兩維度評分標準" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <text x="400" y="26" text-anchor="middle" font-size="14.5" fill="#22303f" font-weight="700">同儕評分實際用的兩個維度</text>
 <text x="30" y="92" text-anchor="start" font-size="14" fill="#22303f" font-weight="700">概念連結</text>
 <rect x="140" y="50" width="150" height="76" rx="6" fill="#f7f7f7" stroke="#c9d9ef" stroke-width="1.5"/>
@@ -140,7 +140,7 @@ MathJax = {
 <rect x="30" y="238" width="740" height="54" rx="6" fill="#fff8e8" stroke="#e6c964" stroke-width="1.5"/>
 <text x="400" y="260" text-anchor="middle" font-size="14" fill="#7a5b00" font-weight="700">兩個維度都不含文筆、結構、字數、感人</text>
 <text x="400" y="282" text-anchor="middle" font-size="12.5" fill="#7a5b00" font-weight="400">把形容詞全部刪掉，這篇還剩下什麼判斷？</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">3 分到 4 分的差別，只在有沒有你自己的質疑。</figcaption>
 </figure>
 
@@ -324,7 +324,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-activity"><h3 id="sec-12">個人反思</h3>
 <p>在週記最後補一行：「這次我是把概念具象化了，還是只是寫得漂亮？」</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -342,6 +342,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

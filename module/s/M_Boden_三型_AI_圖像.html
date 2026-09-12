@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Boden 三型 × AI 圖像</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><div class="content"><div class="container"><div class="hero"><h1>Boden 三型 × AI 圖像</h1></div><ul>
@@ -17,6 +17,37 @@
 <li><strong>全班一題收斂</strong>：哪一型最難用 AI 做出來？多數人會卡在 transformational——因為模型傾向把你「想違反的規則」自動補回去。一起講一兩個成功逼它破規則的提示寫法。</li>
 <li><strong>寫下個人反思</strong>：用一句話回答「我最常待在哪一型、最少碰哪一型？下次我想刻意往哪一型推？」記在自己的筆記裡，當作之後提示策略的調整方向。</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
 </body>
 </html>

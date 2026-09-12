@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Entropy 與 Shannon 資訊理論</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -64,7 +64,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-1">資訊就是「消除不確定性」（直覺）</h3>
 <p><strong>先玩再說</strong>：世界盃足球賽 32 隊，你心裡選一隊當冠軍，我來猜。<strong>只能問是非題，每問一次算你一次代價。</strong></p>
-<div class="widget" id="wc-guess">
+<div class="widget figzoom" id="wc-guess"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #wc-guess { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
             background: #fbfbfc; margin: 1.6rem 0; }
@@ -427,7 +427,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 永遠要問「對誰」。</p>
 <p><strong>一張圖記住</strong>：兩種結果時，H 隨機率畫出一條倒 U——兩端（0 或 1）是 0，正中央（0.5）是最高的 1 bit。<strong>最公平 = 最不可預測 = 資訊量最大。</strong></p>
 </blockquote>
-<div class="widget" id="ent-sim">
+<div class="widget figzoom" id="ent-sim"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #ent-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
            background: #fbfbfc; margin: 1.6rem 0; }
@@ -919,7 +919,7 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
 <p><strong>小作業</strong>：找一個你工作上常做的「判斷／決策」，寫下：(1) 決策前有幾種可能結果、大致機率分布長怎樣；(2) 哪一筆資料最能「砍一半」、最值得先去查。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -937,6 +937,37 @@ $$H = -(0.9\log_2 0.9 + 0.1\log_2 0.1) \approx 0.47 \text{ bits}$$
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

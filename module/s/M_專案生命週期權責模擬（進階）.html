@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>專案生命週期權責模擬（進階）</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">為什麼要學（動機）</a></li><li><a href="#sec-2">學習目標（能力 → 能解釋的真實問題）</a></li><li><a href="#sec-3">課前／起手式：與 AI 對話（先探索動態感再進課堂）</a></li><li><a href="#sec-4">模擬設定</a></li><li><a href="#sec-5">回合流程（4 回合）</a></li><li><a href="#sec-6">收尾　跨回合復盤（~15′，全模擬的靈魂）</a></li><li><a href="#sec-7">小作業</a></li><li><a href="#sec-8">【教師指南　GM Facilitation Kit】</a></li><li><a href="#sec-9">延伸概念卡（wiki）</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>專案生命週期權責模擬（進階）</h1></div><section class="mod-sec sec-content"><h3 id="sec-1">為什麼要學（動機）</h3>
@@ -146,7 +146,7 @@
 <li><a href="../../../wiki/權責框架的情境適配.md">權責框架的情境適配</a>（類型×規模×時長三軸＋動態原則）</li>
 <li><a href="../../../wiki/分工與權責框架全景.md">分工與權責框架全景</a>、<a href="../../../wiki/當責與負責.md">當責與負責</a>、<a href="../../../wiki/職務分離.md">職務分離</a>、<a href="../../../wiki/三道防線.md">三道防線</a>、<a href="../../../wiki/授權層級.md">授權層級</a>、<a href="../../../wiki/Vroom-Yetton%20決策參與模型.md">Vroom-Yetton 決策參與模型</a>、<a href="../../../wiki/同意決與共識決.md">同意決與共識決</a></li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -164,6 +164,37 @@
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

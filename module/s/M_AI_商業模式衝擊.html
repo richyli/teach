@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 商業模式衝擊</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">流量崩解：零點擊經濟</a></li><li><a href="#sec-2">兩條路：授權金 vs 訴訟</a></li><li><a href="#sec-3">主管視角：營收防守與進攻</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>AI 商業模式衝擊</h1></div><section class="mod-sec sec-objectives"><h4>🎯 學習目標</h4>
@@ -239,7 +239,7 @@
 - <strong>一起收斂一題</strong>：投票表決──如果只能押一條路，你選「告 OpenAI 拿賠償」還是「簽授權金合作」？各陣營講一句理由，老師標出立場分布。
 - <strong>寫下個人反思</strong>：寫一句──回到我關心的媒體／產業，AI 對它的商業模式，「最先崩的是哪一塊收入、我打算用哪個再定位動作去補」。</p>
 </blockquote></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -257,6 +257,37 @@
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

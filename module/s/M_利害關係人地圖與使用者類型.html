@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>利害關係人地圖與使用者類型</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -117,7 +117,7 @@ MathJax = {
 </tbody>
 </table>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 420" role="img" aria-label="利害關係人同心圓地圖" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 420" role="img" aria-label="利害關係人同心圓地圖" style="width:100%;height:auto;max-width:760px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <ellipse cx="400" cy="220" rx="360" ry="200" fill="#f4f7fb" stroke="#dde6f2"/>
 <ellipse cx="400" cy="220" rx="255" ry="145" fill="#e9f0fa" stroke="#cbdcf0"/>
 <ellipse cx="400" cy="220" rx="150" ry="88" fill="#dbe8fa" stroke="#b6cdea"/>
@@ -127,7 +127,7 @@ MathJax = {
 <text x="400" y="320" text-anchor="middle" font-size="13.5" fill="#2a5288" font-weight="600">購買者</text>
 <text x="400" y="52" text-anchor="middle" font-size="13.5" fill="#8a3a52" font-weight="700">破壞者（競爭者、駭客、壓力團體、輿論）</text>
 <text x="400" y="400" text-anchor="middle" font-size="12.5" fill="#5b6b7c" font-weight="400">離產品越遠，越不會出現在使用者訪談裡——但否決權常常在那裡</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">六類的排法是照離產品多遠，不是照重要程度。</figcaption>
 </figure>
 
@@ -137,7 +137,7 @@ MathJax = {
 <li><strong>功能性受益者最容易被漏掉</strong>，因為他們不出現在使用畫面裡。看報表的人、操作者的主管，往往才是決定續不續約的人。</li>
 <li><strong>破壞者是唯一「你成功他就受損」的一類</strong>。他們不會來參加你的使用者訪談，但會在上線那天用你沒想過的方式出現。</li>
 </ul>
-<div class="widget" id="sh-audit">
+<div class="widget figzoom" id="sh-audit"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #sh-audit { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -330,7 +330,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h4>小作業</h4>
 <p>挑一個你每天在用、但不是你做的產品（校務系統、社群平台、外送 App 都可以），畫出它的六類利害關係人地圖，並寫 300 字說明：如果你是它的產品經理，你會先去訪談哪一類人、為什麼不是使用者。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -348,6 +348,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

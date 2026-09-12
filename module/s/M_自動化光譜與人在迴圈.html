@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>自動化光譜與人在迴圈</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -87,7 +87,7 @@ MathJax = {
 </ul>
 <p>六檔依序是：人工 Manual、自動 Automatic、遙控 Remote Control、自動化 Automation、自主 Autonomous、智慧 Intelligent。判斷落在哪一檔，看五件事：人工依賴程度、複雜性、效率、誰在做決策、有沒有學習能力。</p>
 <p>用一條烤麵包產線走過六檔，差別最清楚。請點下面每一檔，注意綠色的控制點怎麼一格一格消失。</p>
-<div class="widget" id="al">
+<div class="widget figzoom" id="al"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #al { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
       background: #fbfbfc; margin: 1.6rem 0; }
@@ -232,7 +232,7 @@ MathJax = {
 <li>迴圈上 on the loop：機器自己跑，人看著儀表板，必要時喊停。</li>
 <li>迴圈外 out of the loop：機器跑完了，人在事後才看到結果。</li>
 </ul>
-<p><svg viewBox="0 0 820 270" role="img" aria-label="人相對於決策迴圈的三種位置：迴圈內、迴圈上、迴圈外" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="lpa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7f93a8"/></marker><marker id="lpr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#d05070"/></marker></defs><g><rect x="6" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="135" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈內 · in the loop</text><circle cx="135" cy="140" r="56" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 135 84 A 56 56 0 0 1 187 176" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="135" cy="126" r="11" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 121 158 Q 135 138 149 158 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="135" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">每一步都要人動手或點頭</text><text x="135" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">六個控制點幾乎都在人手上</text></g><g><rect x="281" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="410" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈上 · on the loop</text><circle cx="410" cy="152" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 410 106 A 46 46 0 0 1 452 180" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="410" cy="62" r="10" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 397 90 Q 410 72 423 90 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><line x1="410" y1="94" x2="410" y2="102" stroke="#7f93a8" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M 436 82 L 462 116" stroke="#d05070" stroke-width="2" marker-end="url(#lpr)"/><text x="470" y="78" font-size="11.5" fill="#a3324f">中斷</text><text x="410" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器自己跑，人看著儀表板</text><text x="410" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">剩下的主要是中斷與評估</text></g><g><rect x="556" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="685" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈外 · out of the loop</text><circle cx="655" cy="150" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 655 104 A 46 46 0 0 1 697 178" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="780" cy="112" r="10" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><path d="M 767 140 Q 780 122 793 140 Z" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><line x1="705" y1="160" x2="762" y2="140" stroke="#d8d8d8" stroke-width="1.4" stroke-dasharray="3 5"/><text x="735" y="196" font-size="11.5" fill="#9a9a9a" text-anchor="middle">事後才看到</text><text x="685" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器跑完了才輪到人</text><text x="685" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">只剩拔插頭與事後評估</text></g></svg></p>
+<figure class="figzoom"><svg viewBox="0 0 820 270" role="img" aria-label="人相對於決策迴圈的三種位置：迴圈內、迴圈上、迴圈外" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="lpa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7f93a8"/></marker><marker id="lpr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#d05070"/></marker></defs><g><rect x="6" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="135" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈內 · in the loop</text><circle cx="135" cy="140" r="56" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 135 84 A 56 56 0 0 1 187 176" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="135" cy="126" r="11" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 121 158 Q 135 138 149 158 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="135" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">每一步都要人動手或點頭</text><text x="135" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">六個控制點幾乎都在人手上</text></g><g><rect x="281" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="410" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈上 · on the loop</text><circle cx="410" cy="152" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 410 106 A 46 46 0 0 1 452 180" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="410" cy="62" r="10" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 397 90 Q 410 72 423 90 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><line x1="410" y1="94" x2="410" y2="102" stroke="#7f93a8" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M 436 82 L 462 116" stroke="#d05070" stroke-width="2" marker-end="url(#lpr)"/><text x="470" y="78" font-size="11.5" fill="#a3324f">中斷</text><text x="410" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器自己跑，人看著儀表板</text><text x="410" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">剩下的主要是中斷與評估</text></g><g><rect x="556" y="10" width="258" height="250" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="685" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">人在迴圈外 · out of the loop</text><circle cx="655" cy="150" r="46" fill="none" stroke="#c9d6e4" stroke-width="9"/><path d="M 655 104 A 46 46 0 0 1 697 178" fill="none" stroke="#7f93a8" stroke-width="2" marker-end="url(#lpa)"/><circle cx="780" cy="112" r="10" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><path d="M 767 140 Q 780 122 793 140 Z" fill="#f4f4f5" stroke="#9a9a9a" stroke-width="1.6"/><line x1="705" y1="160" x2="762" y2="140" stroke="#d8d8d8" stroke-width="1.4" stroke-dasharray="3 5"/><text x="735" y="196" font-size="11.5" fill="#9a9a9a" text-anchor="middle">事後才看到</text><text x="685" y="222" font-size="11.5" fill="#5b6b7c" text-anchor="middle">機器跑完了才輪到人</text><text x="685" y="242" font-size="11.5" fill="#5b6b7c" text-anchor="middle">只剩拔插頭與事後評估</text></g></svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <p>這三個位置不是三種技術，是三種責任安排。同一套技術可以設計成三者中的任何一種，而那是管理決定，不是工程決定。</p>
 <hr />
 </section>
@@ -261,7 +261,7 @@ MathJax = {
 <li>Society-in-the-loop 處理的是當系統影響到所有人時，社會怎麼進入這個迴圈。</li>
 <li>差別在於：前者問「誰能喊停」，後者問「誰有資格決定規則」。</li>
 </ul>
-<p><svg viewBox="0 0 820 190" role="img" aria-label="Human-in-the-loop 與 Society-in-the-loop 的對照" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="sla" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a4a5a"/></marker></defs><rect x="6" y="10" width="392" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="202" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Human-in-the-loop</text><circle cx="96" cy="100" r="12" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 80 134 Q 96 112 112 134 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="96" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">操作者</text><path d="M 126 112 L 246 112" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="186" y="102" font-size="11" fill="#5b6b7c" text-anchor="middle">監看·中斷</text><rect x="250" y="84" width="134" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="317" y="118" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text><rect x="416" y="10" width="398" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="615" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Society-in-the-loop</text><g fill="#eef7f1" stroke="#216b4f" stroke-width="1.5"><circle cx="470" cy="78" r="9"/><circle cx="500" cy="102" r="9"/><circle cx="470" cy="126" r="9"/><circle cx="440" cy="102" r="9"/></g><text x="470" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">利害關係人與社會</text><path d="M 522 102 L 640 102" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="581" y="92" font-size="11" fill="#5b6b7c" text-anchor="middle">社會契約</text><text x="581" y="126" font-size="11" fill="#5b6b7c" text-anchor="middle">誰有資格定規則</text><rect x="644" y="74" width="152" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="720" y="108" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text></svg></p>
+<figure class="figzoom"><svg viewBox="0 0 820 190" role="img" aria-label="Human-in-the-loop 與 Society-in-the-loop 的對照" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="sla" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a4a5a"/></marker></defs><rect x="6" y="10" width="392" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="202" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Human-in-the-loop</text><circle cx="96" cy="100" r="12" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><path d="M 80 134 Q 96 112 112 134 Z" fill="#eef7f1" stroke="#216b4f" stroke-width="1.8"/><text x="96" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">操作者</text><path d="M 126 112 L 246 112" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="186" y="102" font-size="11" fill="#5b6b7c" text-anchor="middle">監看·中斷</text><rect x="250" y="84" width="134" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="317" y="118" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text><rect x="416" y="10" width="398" height="170" rx="10" fill="#ffffff" stroke="#e6ebf2"/><text x="615" y="36" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">Society-in-the-loop</text><g fill="#eef7f1" stroke="#216b4f" stroke-width="1.5"><circle cx="470" cy="78" r="9"/><circle cx="500" cy="102" r="9"/><circle cx="470" cy="126" r="9"/><circle cx="440" cy="102" r="9"/></g><text x="470" y="158" font-size="11.5" fill="#5b6b7c" text-anchor="middle">利害關係人與社會</text><path d="M 522 102 L 640 102" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#sla)" marker-end="url(#sla)"/><text x="581" y="92" font-size="11" fill="#5b6b7c" text-anchor="middle">社會契約</text><text x="581" y="126" font-size="11" fill="#5b6b7c" text-anchor="middle">誰有資格定規則</text><rect x="644" y="74" width="152" height="56" rx="8" fill="#eef4fd" stroke="#24528f" stroke-width="1.6"/><text x="720" y="108" font-size="13" fill="#24528f" text-anchor="middle">演算法系統</text></svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <p>對媒體來說這個區分很實在：你的推薦演算法要不要調整，內部有人可以喊停，這是 human-in-the-loop；但讀者、被報導的人、整個公共討論環境要不要有一格，那是 society-in-the-loop 的問題。揭露規範之所以存在，就是在替第二種留一個入口。</p>
 <hr />
 </section>
@@ -412,7 +412,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
 <p>挑一段你部門已經在跑的自動化流程，畫一張六格表，逐格填上負責的人名。填不出人名的格子用紅筆圈起來，並在旁邊寫一句：這一格空著，最壞會發生什麼事。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -430,6 +430,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

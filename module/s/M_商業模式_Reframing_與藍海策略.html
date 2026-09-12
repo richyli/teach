@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>商業模式 Reframing 與藍海策略</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><div class="content"><div class="container"><div class="hero"><h1>商業模式 Reframing 與藍海策略</h1></div><ul>
@@ -23,6 +23,37 @@
 <li><strong>一起收斂一題</strong>：老師抽 2–3 組上台，全班只聚焦一個問題——「這個 reframe 如果是真的，現有業者為什麼至今沒做？」用 Christensen 的角度逼出「不是他們笨，是他們沒動機」的結構性理由。</li>
 <li><strong>寫下個人反思</strong>：在作業背面寫一句話——「我自己這個產業／工作裡，最不敢動的那個假設是什麼？拿掉它我會怕什麼？」這句不評分，但下次選題時拿出來對照。</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
 </body>
 </html>

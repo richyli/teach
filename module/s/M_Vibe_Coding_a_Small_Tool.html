@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vibe Coding a Small Tool</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">🎯 Learning objectives</a></li><li><a href="#sec-2">Working with AI: the Tekton / Yingzao method</a></li><li><a href="#sec-3">Hands-on</a></li><li><a href="#sec-4">✍️ Take-home task</a></li><li><a href="#sec-5">💬 Discussion and reflection</a></li><li><a href="#sec-6">Hands-on showcase</a></li><li><a href="#sec-7">Pair review</a></li><li><a href="#sec-8">Individual reflection</a></li><li><a href="#sec-9">🔗 Links</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Vibe Coding a Small Tool</h1></div><p>This unit covers writing a three-part spec before any code exists, recognising how AI output fails, and deciding whether a tool you built is worth adopting for real.</p>
@@ -72,7 +72,7 @@
 <li>The weekly sharing slot: <a href="M_AI_Skill_Sharing.html">AI Skill Sharing</a> — bring the published tool to demo, critique, and archive.</li>
 <li>The uncertainty underneath: "leave a gap in the spec and the AI decides for you" is, in information terms, uncertainty you failed to remove. Every unspecified thing is a choice you handed over.</li>
 </ul></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -90,6 +90,37 @@
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

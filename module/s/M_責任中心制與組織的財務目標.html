@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>責任中心制與組織的財務目標</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -116,7 +116,7 @@ MathJax = {
 </tbody>
 </table>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 350" role="img" aria-label="五種責任中心的權限階梯" style="width:100%;height:auto;max-width:740px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 350" role="img" aria-label="五種責任中心的權限階梯" style="width:100%;height:auto;max-width:740px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <rect x="40" y="28" width="700" height="50" rx="6" fill="#eaf1fc" stroke="#c9d9ef" stroke-width="1.5"/>
 <text x="56" y="50" text-anchor="start" font-size="14" fill="#22303f" font-weight="700">投資中心 Investment Center</text>
 <text x="56" y="68" text-anchor="start" font-size="12" fill="#5b6b7c" font-weight="400">考核：投資報酬率　｜　決定得了：售價・成本・用人・費用・重大投資</text>
@@ -135,11 +135,11 @@ MathJax = {
 <path d="M755 40 L755 330" stroke="#0055cc" stroke-width="1.5" marker-end="url(#ar)"/>
 <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0055cc"/></marker></defs>
 <text x="775" y="190" text-anchor="middle" font-size="12" fill="#0055cc" transform="rotate(90 775 190)">權限越往下越少</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">一個單位只該為它控制得了的事負責。</figcaption>
 </figure>
 
-<div class="widget" id="rc-decide">
+<div class="widget figzoom" id="rc-decide"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #rc-decide { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -344,7 +344,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
 <p>找一份你有興趣的職缺（任何產業），從職務說明推測它屬於哪一種責任中心，寫出三個判斷依據，以及你會在面試時問哪一句話來確認。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -362,6 +362,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

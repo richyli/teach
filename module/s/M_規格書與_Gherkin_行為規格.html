@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>規格書與 Gherkin 行為規格</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><div class="content"><div class="container"><div class="hero"><h1>規格書與 Gherkin 行為規格</h1></div><ul>
@@ -40,6 +40,37 @@ And 庫存不足的商品被標示出來
 <p><strong>小作業</strong>：把你一個產品的核心功能，寫成 3 個 Gherkin 場景（含 1 個出錯場景），貼給 AI 做做看，記錄它哪裡照做、哪裡仍走鐘。</p>
 </li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
 </body>
 </html>

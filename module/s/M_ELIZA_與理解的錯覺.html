@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ELIZA 與理解的錯覺</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -114,7 +114,7 @@ MathJax = {
 <p>分解規則負責把句子拆開、抓出要用的片段；重組規則負責把片段折過來貼回去。中間還有一個關鍵字排名機制：一句話裡有好幾個關鍵字時，選排名最高的那個處理。</p>
 <p>技術基礎四項：SLIP 做文字解析、腳本系統讓行為可替換、雜湊查找讓關鍵字比對夠快、記憶機制可以記住前面講過的東西稍後再拿出來用。</p>
 <p>請自己跟它說幾句話，右邊會告訴你每一句回應的完整來歷。</p>
-<div class="widget" id="ez">
+<div class="widget figzoom" id="ez"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #ez { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
       background: #fbfbfc; margin: 1.6rem 0; }
@@ -320,7 +320,7 @@ MathJax = {
 <li>推理引擎：只有關鍵字比對、排名與句型重組，沒有任何推論。</li>
 <li>知識庫：空的，而且是<strong>故意</strong>空的。</li>
 </ul>
-<p><svg viewBox="0 0 820 330" role="img" aria-label="用專家系統三個元件拆解 ELIZA：介面是滿的，推理引擎很薄，知識庫是空的" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="eza" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a4a5a"/></marker><marker id="ezx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#c9c9c9"/></marker></defs><rect x="310" y="60" width="180" height="46" rx="8" fill="#fff7ef" stroke="#ecd3b4" stroke-width="1.5"/><text x="400" y="80" font-size="13" font-weight="700" fill="#8a5a28" text-anchor="middle">腳本 DOCTOR</text><text x="400" y="98" font-size="11" fill="#a06f38" text-anchor="middle">換掉它就換一個人格</text><path d="M 400 110 L 400 174" stroke="#c0794a" stroke-width="1.5" marker-end="url(#eza)"/><circle cx="52" cy="198" r="15" fill="#ffffff" stroke="#22303f" stroke-width="1.6"/><text x="52" y="240" font-size="13" fill="#22303f" text-anchor="middle">使用者</text><path d="M 74 218 L 100 218" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#eza)" marker-end="url(#eza)"/><rect x="105" y="180" width="140" height="76" rx="9" fill="#24528f" stroke="#24528f" stroke-width="1.6"/><text x="175" y="212" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">介面</text><text x="175" y="234" font-size="11.5" fill="#cfe0f5" text-anchor="middle">工程幾乎都在這裡</text><path d="M 250 218 L 295 218" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#eza)" marker-end="url(#eza)"/><rect x="300" y="180" width="180" height="76" rx="9" fill="#ffffff" stroke="#24528f" stroke-width="1.6"/><rect x="301" y="236" width="178" height="19" rx="4" fill="#cfe0f5"/><text x="390" y="206" font-size="15" font-weight="700" fill="#24528f" text-anchor="middle">推理引擎</text><text x="390" y="250" font-size="11" fill="#24528f" text-anchor="middle">比對·排名·重組</text><text x="390" y="226" font-size="11" fill="#7a8796" text-anchor="middle">沒有推論</text><path d="M 485 218 L 530 218" stroke="#c9c9c9" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ezx)"/><text x="507" y="208" font-size="11" fill="#a3324f" text-anchor="middle">從不查詢</text><rect x="535" y="180" width="180" height="76" rx="9" fill="#ffffff" stroke="#d05070" stroke-width="1.8" stroke-dasharray="7 5"/><text x="625" y="208" font-size="15" font-weight="700" fill="#a3324f" text-anchor="middle">知識庫</text><text x="625" y="232" font-size="12.5" fill="#a3324f" text-anchor="middle">空的，而且是故意的</text><text x="20" y="292" font-size="12.5" fill="#5b6b7c">心理治療師是被挑出來的角色：那是唯一一種「什麼都不知道也不算失禮」的對話。</text><text x="20" y="314" font-size="12.5" fill="#5b6b7c">換成醫生或律師，同一支程式第三句就會垮掉——因為那兩種角色必須真的知道一些事。</text></svg></p>
+<figure class="figzoom"><svg viewBox="0 0 820 330" role="img" aria-label="用專家系統三個元件拆解 ELIZA：介面是滿的，推理引擎很薄，知識庫是空的" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><defs><marker id="eza" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3a4a5a"/></marker><marker id="ezx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#c9c9c9"/></marker></defs><rect x="310" y="60" width="180" height="46" rx="8" fill="#fff7ef" stroke="#ecd3b4" stroke-width="1.5"/><text x="400" y="80" font-size="13" font-weight="700" fill="#8a5a28" text-anchor="middle">腳本 DOCTOR</text><text x="400" y="98" font-size="11" fill="#a06f38" text-anchor="middle">換掉它就換一個人格</text><path d="M 400 110 L 400 174" stroke="#c0794a" stroke-width="1.5" marker-end="url(#eza)"/><circle cx="52" cy="198" r="15" fill="#ffffff" stroke="#22303f" stroke-width="1.6"/><text x="52" y="240" font-size="13" fill="#22303f" text-anchor="middle">使用者</text><path d="M 74 218 L 100 218" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#eza)" marker-end="url(#eza)"/><rect x="105" y="180" width="140" height="76" rx="9" fill="#24528f" stroke="#24528f" stroke-width="1.6"/><text x="175" y="212" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">介面</text><text x="175" y="234" font-size="11.5" fill="#cfe0f5" text-anchor="middle">工程幾乎都在這裡</text><path d="M 250 218 L 295 218" stroke="#3a4a5a" stroke-width="1.4" marker-start="url(#eza)" marker-end="url(#eza)"/><rect x="300" y="180" width="180" height="76" rx="9" fill="#ffffff" stroke="#24528f" stroke-width="1.6"/><rect x="301" y="236" width="178" height="19" rx="4" fill="#cfe0f5"/><text x="390" y="206" font-size="15" font-weight="700" fill="#24528f" text-anchor="middle">推理引擎</text><text x="390" y="250" font-size="11" fill="#24528f" text-anchor="middle">比對·排名·重組</text><text x="390" y="226" font-size="11" fill="#7a8796" text-anchor="middle">沒有推論</text><path d="M 485 218 L 530 218" stroke="#c9c9c9" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ezx)"/><text x="507" y="208" font-size="11" fill="#a3324f" text-anchor="middle">從不查詢</text><rect x="535" y="180" width="180" height="76" rx="9" fill="#ffffff" stroke="#d05070" stroke-width="1.8" stroke-dasharray="7 5"/><text x="625" y="208" font-size="15" font-weight="700" fill="#a3324f" text-anchor="middle">知識庫</text><text x="625" y="232" font-size="12.5" fill="#a3324f" text-anchor="middle">空的，而且是故意的</text><text x="20" y="292" font-size="12.5" fill="#5b6b7c">心理治療師是被挑出來的角色：那是唯一一種「什麼都不知道也不算失禮」的對話。</text><text x="20" y="314" font-size="12.5" fill="#5b6b7c">換成醫生或律師，同一支程式第三句就會垮掉——因為那兩種角色必須真的知道一些事。</text></svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <p>Weizenbaum 挑羅傑斯式治療師這個角色，是為了繞開替程式建一個真實世界知識庫這件事。治療師本來就不必給答案、不必查資料、把問題反射回去是專業行為而不是失職。<strong>角色設定替他省掉了整個知識庫。</strong></p>
 <p>對照你剛上完的那一節：廠商簡報九成時間花在介面，你要問的是知識庫在哪裡、誰維護、換一個產業要重寫多少。ELIZA 是這個問題最古老也最乾淨的示範——<strong>介面可以做到很好，好到讓人不再問後面有沒有東西。</strong></p>
 <hr />
@@ -435,7 +435,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
 <p>找一個你自己機構、或你常用的對話系統，跟它講五句話，把每一句回應標註成三類之一：它真的查了東西、它只是把我的話折回來、它用了預設回應。最後寫一行：這個系統的知識庫裡到底有什麼。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -453,6 +453,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

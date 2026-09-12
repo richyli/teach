@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>兩次 AI 寒冬與專家系統</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -65,7 +65,7 @@ MathJax = {
 <p><strong>技術上撞到的牆</strong>是組合爆炸：在小世界裡列舉得完的規則，一放到真實世界就爆掉。前一節那些系統的共同弱點，在這裡集中結帳。</p>
 <p><strong>質疑的聲音更早就有</strong>：Dreyfus 在 1965 年的〈Alchemy and AI〉主張人的心智不等同於電腦，AI 有其內在限制；1969 年 Minsky 與 Papert 的《Perceptrons》指出單層感知器的能力限制，也讓類神經網路的研究沉寂了一段時間。</p>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 300" role="img" aria-label="AI 寒冬的循環結構" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 300" role="img" aria-label="AI 寒冬的循環結構" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <text x="400" y="26" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">兩次寒冬的共同結構</text>
 <rect x="30" y="52" width="112" height="52" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
 <text x="86" y="74" text-anchor="middle" font-size="12.5" fill="#22303f" font-weight="600">具體承諾</text>
@@ -100,7 +100,7 @@ MathJax = {
 <rect x="30" y="240" width="740" height="46" rx="6" fill="#eef7f1" stroke="#8fc0a6" stroke-width="1.5"/>
 <text x="400" y="262" text-anchor="middle" font-size="13" fill="#1a6b45" font-weight="700">退潮後留下來的：規則引擎、反向傳播、機率推論、可解釋的要求</text>
 <text x="400" y="280" text-anchor="middle" font-size="12" fill="#3a6b55" font-weight="400">判斷技術潮，不要問「會不會是泡沫」，要問「退潮後剩什麼」</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">切斷金流的往往不是技術本身，是一份寫著「投入與產出不成比例」的評估報告。</figcaption>
 </figure>
 
@@ -228,7 +228,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h4>小作業</h4>
 <p>挑一個 1980 年代的專家系統（DENDRAL、MYCIN、XCON 或其他），寫 300 字說明：它解決了什麼問題、為什麼商業上一度成功、以及它的做法今天還存在於哪裡。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -246,6 +246,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Risk Management and Pre-mortem</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">Core</a></li><li><a href="#sec-2">Hands-on — Pre-mortem with AI</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li><li><a href="#sec-7">Case library</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Risk Management and Pre-mortem</h1></div><p>This unit covers the risk register, the risks that are specific to AI products, the regulatory picture in Taiwan and the EU, and a pre-mortem you run with an agent as a second pair of eyes.</p>
@@ -44,7 +44,7 @@
 <ul>
 <li><a href="../Product/Case%20-%20Anime%20Revenue%20Structure%20and%20Isekai%20Saturation.md">Case - Anime Revenue Structure and Isekai Saturation</a>: the W15 case. Source-material exhaustion is an endogenous consequence of the commissioning rule, not an external shock. Give the mechanism first, ask for a three-year prediction, then reveal.</li>
 </ul></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -62,6 +62,37 @@
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude Code Onboarding</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -95,7 +95,7 @@ MathJax = {
 </table>
 <p>The second column is the one people underestimate. A workflow that fails produces the same failure a thousand times. An agent that fails reads the error message and takes a different route, which is useful when you are right and expensive when you are wrong — because it will also route around your intention.</p>
 <p>Read each of the four descriptions below and decide which of the three it is before you look at the answer. Two of them are deliberately borderline.</p>
-<div class="widget" id="aoc">
+<div class="widget figzoom" id="aoc"><button type="button" class="figzoom-btn" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fullscreen</span></button>
 <style>
 #aoc { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -232,7 +232,7 @@ described as doing, not from what it is called.</p>
 <p>"Help me tidy this up" is not a small version of the instruction above. It is an instruction with two of the three parts missing, and the model fills the gaps with the most statistically ordinary interpretation available: a summary, in its own voice, at whatever length it feels like. You did not ask for that, but you also did not ask for anything else.</p>
 <p>This is the pattern the whole course keeps returning to. Anything you leave unspecified gets filled in with a plausible default, and plausible defaults are where product decisions quietly get made for you — the same failure the PRD Stress Test in W11 is built around.</p>
 <p>Read the four weak instructions below and decide which part is missing from each. Getting this wrong in class costs nothing; getting it wrong on your assignment costs an afternoon.</p>
-<div class="widget" id="p3p">
+<div class="widget figzoom" id="p3p"><button type="button" class="figzoom-btn" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fullscreen</span></button>
 <style>
 #p3p { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -442,7 +442,7 @@ of the three parts. Select every part you think is missing, then check.</p>
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-20">✍️ Take-home task</h3>
 <p>Run one real piece of work through Claude Code before next week. Record one thing it got right, one thing it got wrong, and one line on how you would change the instruction next time. Bring the wrong one — that is the material for Skill Race.</p></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -460,6 +460,37 @@ of the three parts. Select every part you think is missing, then check.</p>
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

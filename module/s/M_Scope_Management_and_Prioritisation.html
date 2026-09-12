@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scope Management and Prioritisation</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
 <div class="layout"><aside class="sidebar"><div class="sidebar-label">On this page</div><nav class="toc"><ul><li><a href="#sec-1">Core</a></li><li><a href="#sec-2">Role play — PM × Boss × Eng-Lead Tug-of-War</a></li><li><a href="#sec-3">✍️ Take-home task</a></li><li><a href="#sec-4">💬 Discussion and reflection</a></li><li><a href="#sec-5">Pair review</a></li><li><a href="#sec-6">Individual reflection</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Scope Management and Prioritisation</h1></div><p>This unit covers scope creep and the MVP, two prioritisation frameworks, saying no upward, and what happens to all of it once Agentic AI makes building cheaper.</p>
@@ -39,7 +39,7 @@
 </section>
 <section class="mod-sec sec-activity"><h3 id="sec-6">Individual reflection</h3>
 <p>Write one sentence to keep: "Next time I face the boss's deadline card, I will say no upward by ______." Then a second: the thing you noticed today about where you concede too easily, or refuse to concede at all.</p></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -57,6 +57,37 @@
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

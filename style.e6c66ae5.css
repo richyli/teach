@@ -506,3 +506,52 @@ html[lang="en"] .sec-discussion::before { content: "In class"; }
     .layout .container { padding: 1.4rem 1.2rem 4rem; }
     .sidebar .toc a { padding: .22rem .4rem; }
 }
+
+/* ============================================================
+   圖表全螢幕（inline SVG 與 widget）
+   教室投影時後排看不清楚，手機上更小：每張圖右上角一個全螢幕鈕，
+   點下去用 Fullscreen API 佔滿螢幕，瀏覽器擋掉就退回蓋滿視窗的覆蓋層。
+   ============================================================ */
+.figzoom { position: relative; margin: 1.2rem 0; padding: 0; }
+figure.figzoom > svg { display: block; margin: 0 auto; }
+.figzoom-btn {
+    position: absolute; top: .4rem; right: .4rem;
+    display: inline-flex; align-items: center; gap: .25rem;
+    padding: .2rem .45rem;
+    border: 1px solid #d8dee6; border-radius: 6px;
+    background: rgba(255, 255, 255, .88);
+    color: #5b6b7c; font-size: .74rem; line-height: 1.4;
+    font-family: inherit; cursor: pointer;
+}
+.figzoom-btn:hover { color: #24528f; border-color: #24528f; background: #ffffff; }
+.figzoom-btn svg { display: block; }
+
+/* 原生全螢幕：圖置中放到最大（SVG 的 inline style 要用 !important 蓋掉） */
+.figzoom:fullscreen {
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; padding: 2vh 2vw; margin: 0;
+    width: 100%; height: 100%; overflow: auto;
+}
+.figzoom:fullscreen > svg {
+    width: auto !important; height: auto !important;
+    max-width: 96vw !important; max-height: 92vh !important;
+}
+.widget.figzoom:fullscreen { display: block; padding: 3vh 4vw; }
+
+/* 瀏覽器不給全螢幕（iOS Safari 對非 video 元素）時的覆蓋層 */
+.figzoom.figzoom-open {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    background: #ffffff; padding: 2vh 2vw; margin: 0; overflow: auto;
+}
+.figzoom.figzoom-open > svg {
+    width: auto !important; height: auto !important;
+    max-width: 96vw !important; max-height: 92vh !important;
+}
+.widget.figzoom.figzoom-open { display: block; padding: 3vh 4vw; }
+.figzoom.figzoom-open .figzoom-btn { position: fixed; top: .8rem; right: 1rem; }
+body.figzoom-lock { overflow: hidden; }
+
+@media (max-width: 800px) {
+    .figzoom-btn span { display: none; }
+}

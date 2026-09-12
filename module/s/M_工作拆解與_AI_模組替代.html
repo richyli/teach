@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>工作拆解與 AI 模組替代</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -97,7 +97,7 @@ MathJax = {
 <li>適合交出去的特徵：反覆、繁瑣、規則清楚、人類反而容易出錯。</li>
 <li>不是每一塊都需要最新技術，很多格子用二十年前的專家系統就解決了。</li>
 </ul>
-<p><svg viewBox="0 0 820 330" role="img" aria-label="十六個常見 AI 模組，分成感知、動作、語言與生成、判斷與學習四個家族" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><g><rect x="2" y="8" width="196" height="316" rx="10" fill="#f3f8f5" stroke="#a8d4bd"/><text x="100" y="34" font-size="13.5" font-weight="700" fill="#216b4f" text-anchor="middle">感知</text><rect x="16" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">計算機視覺</text><rect x="16" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">語音辨識</text><rect x="16" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">物聯網模組</text><text x="100" y="196" font-size="11" fill="#4a7d64" text-anchor="middle">把世界變成資料</text><text x="100" y="216" font-size="11" fill="#4a7d64" text-anchor="middle">最成熟、最便宜</text><text x="100" y="236" font-size="11" fill="#4a7d64" text-anchor="middle">也最少人再檢查</text></g><g><rect x="208" y="8" width="196" height="316" rx="10" fill="#fdf6ef" stroke="#ecd3b4"/><text x="306" y="34" font-size="13.5" font-weight="700" fill="#8a5a28" text-anchor="middle">動作</text><rect x="222" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#e8d7c0"/><text x="306" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">細微運動控制</text><rect x="222" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#e8d7c0"/><text x="306" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">移動與導航</text><text x="306" y="196" font-size="11" fill="#a06f38" text-anchor="middle">人兩歲就會的事</text><text x="306" y="216" font-size="11" fill="#a06f38" text-anchor="middle">機器要花最多錢</text><text x="306" y="236" font-size="11" fill="#a06f38" text-anchor="middle">越直覺的動作越貴</text></g><g><rect x="414" y="8" width="196" height="316" rx="10" fill="#eef4fd" stroke="#c9d9ef"/><text x="512" y="34" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">語言與生成</text><rect x="428" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">自然語言處理</text><rect x="428" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">文本閱讀理解</text><rect x="428" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">文本翻譯</text><rect x="428" y="174" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="196" font-size="12.5" fill="#22303f" text-anchor="middle">文字生成</text><rect x="428" y="216" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="238" font-size="12.5" fill="#22303f" text-anchor="middle">圖像生成</text><text x="512" y="278" font-size="11" fill="#3d5a7d" text-anchor="middle">這三年變化最大的一欄</text><text x="512" y="298" font-size="11" fill="#3d5a7d" text-anchor="middle">出錯時讀起來一樣通順</text></g><g><rect x="620" y="8" width="196" height="316" rx="10" fill="#f6f4f9" stroke="#d5cbe4"/><text x="718" y="34" font-size="13.5" font-weight="700" fill="#5a3d8a" text-anchor="middle">判斷與學習</text><rect x="634" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">專家系統</text><rect x="634" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">數據分類</text><rect x="634" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">模型建構訓練</text><rect x="634" y="174" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="196" font-size="12.5" fill="#22303f" text-anchor="middle">強化學習模組</text><rect x="634" y="216" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="238" font-size="12.5" fill="#22303f" text-anchor="middle">資料視覺化</text><rect x="634" y="258" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="280" font-size="12.5" fill="#22303f" text-anchor="middle">人類交互回饋</text><text x="718" y="316" font-size="11" fill="#6d5199" text-anchor="middle">最舊的那一個仍然最好用</text></g></svg></p>
+<figure class="figzoom"><svg viewBox="0 0 820 330" role="img" aria-label="十六個常見 AI 模組，分成感知、動作、語言與生成、判斷與學習四個家族" style="width:100%;height:auto;max-width:820px" font-family="system-ui, -apple-system, Segoe UI, sans-serif"><g><rect x="2" y="8" width="196" height="316" rx="10" fill="#f3f8f5" stroke="#a8d4bd"/><text x="100" y="34" font-size="13.5" font-weight="700" fill="#216b4f" text-anchor="middle">感知</text><rect x="16" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">計算機視覺</text><rect x="16" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">語音辨識</text><rect x="16" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#bcd9c9"/><text x="100" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">物聯網模組</text><text x="100" y="196" font-size="11" fill="#4a7d64" text-anchor="middle">把世界變成資料</text><text x="100" y="216" font-size="11" fill="#4a7d64" text-anchor="middle">最成熟、最便宜</text><text x="100" y="236" font-size="11" fill="#4a7d64" text-anchor="middle">也最少人再檢查</text></g><g><rect x="208" y="8" width="196" height="316" rx="10" fill="#fdf6ef" stroke="#ecd3b4"/><text x="306" y="34" font-size="13.5" font-weight="700" fill="#8a5a28" text-anchor="middle">動作</text><rect x="222" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#e8d7c0"/><text x="306" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">細微運動控制</text><rect x="222" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#e8d7c0"/><text x="306" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">移動與導航</text><text x="306" y="196" font-size="11" fill="#a06f38" text-anchor="middle">人兩歲就會的事</text><text x="306" y="216" font-size="11" fill="#a06f38" text-anchor="middle">機器要花最多錢</text><text x="306" y="236" font-size="11" fill="#a06f38" text-anchor="middle">越直覺的動作越貴</text></g><g><rect x="414" y="8" width="196" height="316" rx="10" fill="#eef4fd" stroke="#c9d9ef"/><text x="512" y="34" font-size="13.5" font-weight="700" fill="#24528f" text-anchor="middle">語言與生成</text><rect x="428" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">自然語言處理</text><rect x="428" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">文本閱讀理解</text><rect x="428" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">文本翻譯</text><rect x="428" y="174" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="196" font-size="12.5" fill="#22303f" text-anchor="middle">文字生成</text><rect x="428" y="216" width="168" height="34" rx="7" fill="#ffffff" stroke="#cfdcee"/><text x="512" y="238" font-size="12.5" fill="#22303f" text-anchor="middle">圖像生成</text><text x="512" y="278" font-size="11" fill="#3d5a7d" text-anchor="middle">這三年變化最大的一欄</text><text x="512" y="298" font-size="11" fill="#3d5a7d" text-anchor="middle">出錯時讀起來一樣通順</text></g><g><rect x="620" y="8" width="196" height="316" rx="10" fill="#f6f4f9" stroke="#d5cbe4"/><text x="718" y="34" font-size="13.5" font-weight="700" fill="#5a3d8a" text-anchor="middle">判斷與學習</text><rect x="634" y="48" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="70" font-size="12.5" fill="#22303f" text-anchor="middle">專家系統</text><rect x="634" y="90" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="112" font-size="12.5" fill="#22303f" text-anchor="middle">數據分類</text><rect x="634" y="132" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="154" font-size="12.5" fill="#22303f" text-anchor="middle">模型建構訓練</text><rect x="634" y="174" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="196" font-size="12.5" fill="#22303f" text-anchor="middle">強化學習模組</text><rect x="634" y="216" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="238" font-size="12.5" fill="#22303f" text-anchor="middle">資料視覺化</text><rect x="634" y="258" width="168" height="34" rx="7" fill="#ffffff" stroke="#ddd5ea"/><text x="718" y="280" font-size="12.5" fill="#22303f" text-anchor="middle">人類交互回饋</text><text x="718" y="316" font-size="11" fill="#6d5199" text-anchor="middle">最舊的那一個仍然最好用</text></g></svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼要記住這十六個名字</span><p>不是為了背，是為了在會議上能把需求翻譯成可以報價的東西。你說「我希望系統能幫我看合約」，廠商可以報三千萬也可以報三萬；你說「我需要文本閱讀理解，輸入是 PDF，輸出是五個欄位的摘要」，報價就會落在一個你比得出來的範圍。</p></div>
 <hr />
 </section>
@@ -108,7 +108,7 @@ MathJax = {
 <li>對的顆粒度是：每一格都可以單獨完成，而且可以指名一個模組或指名一個人。</li>
 </ul>
 <p>下面四條流程請至少跑兩條，其中一定要跑「編輯室發一則即時新聞」。對完答案之後，注意黃色那幾格。</p>
-<div class="widget" id="tam">
+<div class="widget figzoom" id="tam"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #tam { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
       background: #fbfbfc; margin: 1.6rem 0; }
@@ -381,7 +381,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-17">小作業</h3>
 <p>挑自己的一件例行工作，拆成至少八格，做成一張三欄表：這一格在做什麼、花多久、交給哪個模組或保留給人。最後加一行：如果可以交出去的那幾格明天就交出去，省下的時間你要投在哪一格。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -399,6 +399,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

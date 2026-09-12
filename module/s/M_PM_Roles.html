@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PM Roles</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -129,7 +129,7 @@ MathJax = {
 </table>
 <p>Most first jobs open in the two right-hand cells. The point of the semester is to give you enough of the left-hand cells that you can hold a conversation there.</p>
 <p>Place the four job descriptions below into the grid before you read the research section. If two of them look identical to you, that is the point: they carry the same title and sit in different quadrants.</p>
-<div class="widget" id="pmq">
+<div class="widget figzoom" id="pmq"><button type="button" class="figzoom-btn" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fullscreen</span></button>
 <style>
 #pmq { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -328,7 +328,7 @@ advertised as "Product Manager". Read the duty and place it.</p>
 </section>
 <section class="mod-sec sec-activity"><h3 id="sec-18">Individual reflection</h3>
 <p>Write one sentence to keep: "The quadrant I am strongest in today is <strong><em>_</em>_, and the one thing I would have to build to be credible in the quadrant next to it is </strong>____."</p></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -346,6 +346,37 @@ advertised as "Product Manager". Read the duty and place it.</p>
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

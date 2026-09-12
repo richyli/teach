@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ESG 與影響力指標</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -100,7 +100,7 @@ MathJax = {
 </tbody>
 </table>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 296" role="img" aria-label="ESG 重大性因產業而異" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 296" role="img" aria-label="ESG 重大性因產業而異" style="width:100%;height:auto;max-width:780px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <text x="400" y="28" text-anchor="middle" font-size="14.5" fill="#22303f" font-weight="700">同一套 ESG 框架，不同產業被評的題目不一樣</text>
 <text x="145" y="58" text-anchor="middle" font-size="14" fill="#5b6b7c" font-weight="700">銀行</text>
 <rect x="30" y="74" width="230" height="38" rx="6" fill="#fafafa" stroke="#e0e0e0" stroke-width="1.5"/>
@@ -126,7 +126,7 @@ MathJax = {
 <rect x="30" y="226" width="740" height="56" rx="6" fill="#eaf1fc" stroke="#0055cc" stroke-width="1.5"/>
 <text x="400" y="250" text-anchor="middle" font-size="14" fill="#0055cc" font-weight="700">隱私與資料安全是傳播產業最重要的社會面因素</text>
 <text x="400" y="272" text-anchor="middle" font-size="11.5" fill="#4a6b8a" font-weight="400">在互動媒體與服務業權重接近三成（依 2022 年課堂資料，上課前請重查當期）</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">問一家公司 ESG 好不好之前，先問它這一行被評的是哪幾題。</figcaption>
 </figure>
 
@@ -218,7 +218,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h4>小作業</h4>
 <p>挑一家你關注的媒體或平台公司，找出它最近一次的 ESG 評級與一份影響力報告，寫 300 字：它選擇量了什麼、避開了什麼、你會建議它先補哪一項。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -236,6 +236,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

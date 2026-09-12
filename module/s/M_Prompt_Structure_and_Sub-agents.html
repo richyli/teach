@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prompt Structure and Sub-agents</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -96,7 +96,7 @@ MathJax = {
 <section class="mod-sec sec-content"><h3 id="sec-9">More agents is not more capability</h3>
 <p>Each additional agent adds something you have to read, reconcile, and eventually be responsible for. Sub-agents earn their place when the sub-task is genuinely separable and its output can be judged on its own. They cost you when the task needs shared memory, when the pieces have to agree with each other, or when nobody is going to read the extra output anyway.</p>
 <p>Decide the five cases below before you look at the answers. Two of them are traps.</p>
-<div class="widget" id="sao">
+<div class="widget figzoom" id="sao"><button type="button" class="figzoom-btn" title="Fullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Fullscreen</span></button>
 <style>
 #sao { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
        background: #fbfbfc; margin: 1.6rem 0; }
@@ -261,7 +261,7 @@ goes to an agent with its own clean context, or is not an AI task at all. Two ar
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-16">✍️ Take-home task</h3>
 <p>Take the instruction you wrote in the first session of this week and add the two missing pieces — one constraint and one statement of what done looks like. Run it again on the same material and keep both outputs. One paragraph on what changed.</p></section>
-<p class="sitefoot">Student view · updated 2026-09-12 12:11</p></div></div></div><script>
+<p class="sitefoot">Student view · updated 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -279,6 +279,37 @@ goes to an agent with its own clean context, or is not an AI task at all. Two ar
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

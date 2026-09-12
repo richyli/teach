@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>COMPAS 再犯演算法個案</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -98,7 +98,7 @@ MathJax = {
 <p>後續的形式化研究證明：<strong>當兩個群體的基礎比率不同時，這兩種公平在數學上不可能同時滿足。</strong> 這不是誰算錯，是你必須選一個定義，而且選擇本身要被說明、被究責。</p>
 <p>對主管的意義：以後有人拿一個總分跟你說「我們的系統很公平」，你要問的是——<strong>你用的是哪一個公平的定義？另一個定義下的數字是多少？</strong></p></div>
 <p>順帶一提：ProPublica 用 Cox 比例風險模型算出的一致性指標是 <strong>0.636</strong>（暴力再犯 0.651），低於 Northpointe 自己設的 0.70 門檻。暴力再犯量表的正預測值只有 <strong>0.20</strong>——被標為高暴力風險的人，五個裡只有一個真的發生。</p>
-<div class="widget" id="cm-sim">
+<div class="widget figzoom" id="cm-sim"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #cm-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
           background: #fbfbfc; margin: 1.6rem 0; }
@@ -819,7 +819,7 @@ MathJax = {
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：廠商宣稱 AUC 0.76–0.83，外部驗證 0.63；每八次警示一次是真的</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：同一種偽陽性分布不均，但已進入監理處分階段</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -837,6 +837,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>

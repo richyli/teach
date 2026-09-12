@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 的虛構史與大眾想像</title>
-<link rel="stylesheet" href="../../style.86cfe714.css">
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -98,7 +98,7 @@ MathJax = {
 </tbody>
 </table>
 <figure style="margin:1.6rem 0;">
-<svg viewBox="0 0 800 400" role="img" aria-label="AI 在虛構作品裡的原型" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
+<figure class="figzoom"><svg viewBox="0 0 800 400" role="img" aria-label="AI 在虛構作品裡的原型" style="width:100%;height:auto;max-width:790px;display:block;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;">
 <text x="400" y="26" text-anchor="middle" font-size="15" fill="#22303f" font-weight="700">一百年來，AI 在虛構作品裡的幾種固定角色</text>
 <rect x="30" y="48" width="740" height="46" rx="6" fill="#fafcff" stroke="#b03a3a" stroke-width="1.5"/>
 <text x="50" y="76" text-anchor="start" font-size="14" fill="#b03a3a" font-weight="700">叛變的造物</text>
@@ -123,7 +123,7 @@ MathJax = {
 <rect x="30" y="338" width="740" height="52" rx="6" fill="#fff8e8" stroke="#e6c964" stroke-width="1.5"/>
 <text x="400" y="360" text-anchor="middle" font-size="14" fill="#7a5b00" font-weight="700">沒有原型的那一種：安靜地把一件很窄的事做完</text>
 <text x="400" y="380" text-anchor="middle" font-size="12" fill="#7a5b00" font-weight="400">那正是真實 AI 的多數樣貌，但它沒有戲劇張力，所以幾乎沒被拍出來</text>
-</svg>
+</svg><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button></figure>
 <figcaption style="text-align:center;color:#777;font-size:.82rem;margin-top:.5rem;">你腦中的 AI 形象，是被戲劇需求挑選過的。</figcaption>
 </figure>
 
@@ -231,7 +231,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h4>小作業</h4>
 <p>找一則最近的 AI 新聞報導，分析它的標題、用詞與配圖借用了哪一個虛構原型，寫 300 字說明：這個借用讓讀者多期待或多害怕了什麼，以及報導裡有沒有東西被這個框架擠掉。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 12:10</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 12:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
@@ -249,6 +249,37 @@ MathJax = {
     if (map[current]) map[current].classList.add('active');
   }, { rootMargin: '0px 0px -70% 0px' });
   heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 </body>
