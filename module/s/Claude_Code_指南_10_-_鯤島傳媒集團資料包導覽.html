@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 10｜鯤島傳媒集團資料包導覽</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">這家公司是誰</a></li><li><a href="#sec-2">資料包裡有什麼</a></li><li><a href="#sec-3">交給 AI 之前先做兩件事</a></li><li><a href="#sec-4">這份資料有三個地方特別容易算錯</a></li><li><a href="#sec-5">每次開始分析之前，先跑這三句</a></li><li><a href="#sec-6">一個真的會發生的例子</a></li><li><a href="#sec-7">接下來</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 10｜鯤島傳媒集團資料包導覽</h1></div><p>在本單元中，會介紹這門課要用的資料是什麼、資料包裡每一樣東西的用途，以及把資料交給 AI 之前一定要先做的兩件事。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">這家公司是誰</h3>
+<p>鯤島傳媒集團是一家虛構的台北媒體集團，2012 年由紙媒轉型，2021 年開始做付費訂閱。它有五個事業處：</p>
+<table>
+<thead>
+<tr>
+<th>事業處</th>
+<th>在做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新聞內容處</td>
+<td>網站與 App 的新聞、深度報導、評論</td>
+</tr>
+<tr>
+<td>影音與聲音處</td>
+<td>影音專題、Podcast、短影音</td>
+</tr>
+<tr>
+<td>讀者事業處</td>
+<td>會員、訂閱、電子報、客服</td>
+</tr>
+<tr>
+<td>商業發展處</td>
+<td>廣告與業配</td>
+</tr>
+<tr>
+<td>知識商務處</td>
+<td>選物電商、線上課、活動</td>
+</tr>
+</tbody>
+</table>
+<p>資料是模擬的，但<strong>結構與問題是真的</strong>——它長得像一家真實媒體公司的資料倉儲，包括那些會讓你算錯的地方。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">資料包裡有什麼</h3>
+<p>下載後你會看到四樣東西。很多人只看第一樣就開始問，那是後面所有錯誤的起點。</p>
+<table>
+<thead>
+<tr>
+<th>檔案</th>
+<th>是什麼</th>
+<th>你要拿它做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>content_monthly_2024_10.csv</code></td>
+<td>內容月報表，一則內容一列</td>
+<td>主要分析對象</td>
+</tr>
+<tr>
+<td><code>ad_daily_2024_10.csv</code></td>
+<td>廣告日報表，一個活動在一個版位的一天一列</td>
+<td>廣告那幾題用</td>
+</tr>
+<tr>
+<td><code>DATA_DICTIONARY.md</code></td>
+<td>資料字典，寫清楚每一欄是什麼意思</td>
+<td><strong>跟 csv 一起交給 AI</strong></td>
+</tr>
+<tr>
+<td><code>manifest.json</code></td>
+<td>每個檔案的指紋</td>
+<td>確認你拿到的跟同學一樣</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">交給 AI 之前先做兩件事</h3>
+</section>
+<section class="mod-sec sec-content"><h4>一、比對指紋</h4>
+<p>請這樣跟它說：</p>
+<blockquote>
+<p>請讀這個資料夾裡的 manifest.json，然後計算每一個 csv 檔案的 SHA256，跟 manifest 裡記的值比對，告訴我是否一致。</p>
+</blockquote>
+<p>十秒鐘的事，但之後你發現「我的數字跟同學不一樣」的時候，可以立刻判斷是資料不同還是算法不同。指紋一樣，爭論當場結束。</p>
+</section>
+<section class="mod-sec sec-content"><h4>二、把字典一起交出去</h4>
+<p>只給 csv，它會自己猜欄位的意思，猜錯了不會告訴你。正確的開頭是：</p>
+<blockquote>
+<p>請先讀這個資料夾裡的 DATA_DICTIONARY.md，再讀 content_monthly_2024_10.csv。讀完之後，請用你自己的話覆述一次這張表的每一列代表什麼，以及瀏覽量、不重複使用者、工作階段數這三個欄位的差別。確認我們對欄位的理解一致之後，我再問你問題。</p>
+</blockquote>
+<p>它覆述錯了，你當場就發現；等它算完才發現，你已經浪費半小時。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">這份資料有三個地方特別容易算錯</h3>
+<p>字典裡都寫了，但字典不會提醒你「所以會出事」。先知道有這三件事，你會警覺一點。</p>
+<p><strong>一、有三個不同的分母。</strong> 瀏覽量、不重複使用者、工作階段數是三個不同的東西。任何比率算出來之前，先講清楚分子是什麼、分母是什麼。換一個分母，排名就可能換人。</p>
+<p><strong>二、金額欄位不一定同一個單位。</strong> 廣告日報表有一欄叫 <code>currency</code>。看到這種欄位，就不可以直接把金額加起來。</p>
+<p><strong>三、有一欄寫著「事後回填」。</strong> 字典裡有一欄叫「什麼時候才知道」。寫著「事後回填」的欄位，代表它包含了那一列所屬期間之後才發生的事。現在先記住有這件事，之後的單元會告訴你它為什麼危險。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">每次開始分析之前，先跑這三句</h3>
+<p>這三個動作是這門課從頭到尾的查核習慣：</p>
+<table>
+<thead>
+<tr>
+<th>動作</th>
+<th>具體怎麼問</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>要算式</td>
+<td>「把你剛才每個數字的算式列出來」</td>
+</tr>
+<tr>
+<td>對分母</td>
+<td>「這個比率的分子是什麼、分母是什麼？換成另一個分母，排名會變嗎？」</td>
+</tr>
+<tr>
+<td>查來源</td>
+<td>「這個數字是資料裡算出來的，還是你補的？在第幾列？」</td>
+</tr>
+</tbody>
+</table>
+<p>還有一個這份資料特別適合的第四句：<strong>「這份資料總共幾列、幾個欄位？」</strong> 它講不出來，代表它根本沒真的讀完就開始回答了。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">一個真的會發生的例子</h3>
+<p>同一份內容月報表，問「哪個事業處最值得投資源」：</p>
+<ul>
+<li>用瀏覽量排：影音與聲音處第一。</li>
+<li>用訂閱數排：新聞內容處第一，而且差了四倍以上。</li>
+</ul>
+<p>兩個答案都是對的，資料也沒有錯。<strong>是「最值得」這個詞本來就要先定義</strong>，而定義的人是你，不是 AI。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接下來</h3>
+<p>拿到資料之後，回到課堂模組 <a href="M_%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%93_AI_%E8%AE%80%E4%B8%80%E5%BC%B5%E8%A1%A8.html">第一次讓 AI 讀一張表</a>，那裡有完整的動手步驟與當堂練習。</p>
+<p>想自己多做幾題的，<a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 有十九個案例，每一題都標了會踩到什麼坑、以及怎麼自己確認做對了。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 01:45</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

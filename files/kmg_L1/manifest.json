@@ -1,0 +1,21 @@
+{
+  "release": "L1",
+  "master_seed": 20260912,
+  "files": [
+    {
+      "name": "ad_daily_2024_10.csv",
+      "bytes": 70852,
+      "sha256": "ae821bc8a889024640a779615ddce1bf334d2fdd2e2417b15ea132d9894f4f2a"
+    },
+    {
+      "name": "content_monthly_2024_10.csv",
+      "bytes": 243896,
+      "sha256": "221dd6feeb0d6916e2250aad28eea90261fa992d3dbad14230fea82f7637e923"
+    },
+    {
+      "name": "DATA_DICTIONARY.md",
+      "bytes": 5016,
+      "sha256": "d2efe9b8f51d05ec41f87690ff0f09ccc9616ed4ebeb1875374c5e930638419f"
+    }
+  ]
+}

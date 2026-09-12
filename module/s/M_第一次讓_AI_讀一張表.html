@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一次讓 AI 讀一張表</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">你交給它的不只是檔案，還有欄位是什麼意思</a></li><li><a href="#sec-4">先確認你拿到的資料跟同學一樣</a></li><li><a href="#sec-5">問一個有答案的問題</a></li><li><a href="#sec-6">換一個分母，冠軍就換人</a></li><li><a href="#sec-7">廣告那一題會撞到同一件事</a></li><li><a href="#sec-8">三件事沒做完，就不要拿去開會</a></li><li><a href="#sec-9">⚠️ 迷思攔截</a></li><li><a href="#sec-10">先修與後續</a></li><li><a href="#sec-11">小結論</a></li><li><a href="#sec-12">💬 討論／分享／反思</a></li><li><a href="#sec-13">配對分享</a></li><li><a href="#sec-14">個人反思</a></li><li><a href="#sec-15">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>第一次讓 AI 讀一張表</h1></div><p>在本單元中，會介紹怎麼把一份資料交給 Claude Code、怎麼問一個有答案的問題，以及怎麼確認它給的答案是對的。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>交付</strong>一份資料給 AI，並且在問問題之前先給它欄位定義</td>
+<td>為什麼同樣一份檔案，我問出來的答案跟同學差那麼多？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>辨識</strong>一個比率的分子與分母，並說出換一個分母結論會怎麼變</td>
+<td>為什麼同一個月的同一份報表，可以做出兩個相反的結論？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>一個看起來合理的答案值不值得拿去開會</td>
+<td>主管問我「這數字確定嗎」，我要先檢查哪三件事？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示：</p>
+<blockquote>
+<p>我手上有一份媒體網站的月報表，每一列是一則內容，欄位包含瀏覽量、不重複使用者、工作階段數、跳出的工作階段數、撞到付費牆的次數、以及從這則內容完成訂閱的人數。我想知道「哪一種內容最值得投資源」。請列出五種不同的算法，每一種都寫清楚分子是什麼、分母是什麼，以及這種算法會偏袒哪一種內容。先不要問我要資料，我只要這五種算法。</p>
+</blockquote>
+<p>它回答之後，再追問這一句：</p>
+<blockquote>
+<p>這五種算法裡，如果我是總編輯，哪一種最容易讓我做出錯的決定？為什麼？</p>
+</blockquote>
+<p>當你拿到回答後，把它列的五種算法抄下來帶到課堂上——等一下我們會拿真的資料跑其中兩種，你會看到冠軍換人。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>重點不是它答得對不對，是讓你先意識到「最值得投資源」這句話本身沒有唯一答案。同一份資料，換一個算法就換一個贏家，而換算法的人是你。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">你交給它的不只是檔案，還有欄位是什麼意思</h3>
+<ul>
+<li>只給檔案，它會自己猜欄位的意思，而且猜錯了不會告訴你。</li>
+<li>資料包裡附了一份資料字典，那份要跟檔案一起交出去。</li>
+<li>這一步做了沒做，決定你後面所有數字的可信度。</li>
+</ul>
+<p>打開資料包，你會看到三樣東西：兩個 <code>.csv</code> 檔、一份 <code>DATA_DICTIONARY.md</code>、還有一個 <code>manifest.json</code>。很多人只把 <code>.csv</code> 丟給它就開始問，然後得到一個講得很順但分母是錯的答案。</p>
+<p>字典裡有一欄叫「什麼時候才知道」，現在先不管它，下一個單元會用到。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">先確認你拿到的資料跟同學一樣</h3>
+<ul>
+<li>資料包裡的 <code>manifest.json</code> 記了每個檔案的指紋。</li>
+<li>指紋一樣，代表你們拿到的是同一份資料。</li>
+<li>這一步只花十秒，卻能省掉之後半小時的爭論。</li>
+</ul>
+<p>請這樣跟它說：</p>
+<blockquote>
+<p>請讀這個資料夾裡的 manifest.json，然後計算每一個 csv 檔案的 SHA256，跟 manifest 裡記的值比對，告訴我是否一致。</p>
+</blockquote>
+<p>之後如果你發現「我的數字跟同學不一樣」，先比指紋。指紋一樣，那就是你們的算法不同，不是資料不同——爭論當場結束。</p>
+<blockquote>
+<p><strong>「我的數字跟別人不一樣」有兩種可能：資料不同，或算法不同。先排除第一種，才有辦法討論第二種。</strong></p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">問一個有答案的問題</h3>
+<ul>
+<li>「幫我分析一下」不是問題，它會回你一篇作文。</li>
+<li>有答案的問題長這樣：一個明確的對象、一個明確的排序依據、一個明確的範圍。</li>
+<li>範圍講死，它才不會自己加上你沒說的假設。</li>
+</ul>
+<p>把下面這段整段貼進去（EMA 版換成內容月報表的那一題）：</p>
+<blockquote>
+<p>請讀這個資料夾裡的 DATA_DICTIONARY.md，再讀 ad_daily_2024_10.csv。
+我要回答一個問題：這個月哪一個版位的點閱率最高？
+請先告訴我你打算怎麼算點閱率，分子是什麼、分母是什麼，等我確認之後再算。
+算完請一併給我：每個版位的曝光總數、點擊總數、以及你算出來的點閱率，並且把算式列出來。</p>
+</blockquote>
+<p>注意中間那一句：<strong>先講你要怎麼算，等我確認再算</strong>。這一句會逼它把假設攤開來，而不是算完之後才發現它用了你不同意的分母。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">換一個分母，冠軍就換人</h3>
+<ul>
+<li>同一份資料、同一個月，兩種算法會選出兩個不同的贏家。</li>
+<li>這不是資料有問題，是「最好」這個詞本來就要先定義。</li>
+<li>決定用哪個分母的是你，不是它。</li>
+</ul>
+<p>拿內容月報表跑兩次，你會看到這個：</p>
+<table>
+<thead>
+<tr>
+<th>問法</th>
+<th>冠軍</th>
+<th>數字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>哪個事業處帶進最多瀏覽量</td>
+<td>影音與聲音處</td>
+<td>424,380 次</td>
+</tr>
+<tr>
+<td>哪個事業處帶進最多訂閱</td>
+<td>新聞內容處</td>
+<td>11,379 人</td>
+</tr>
+</tbody>
+</table>
+<p>再往下看一層，差距更清楚：新聞內容處每一萬次瀏覽帶進 271 個訂閱，影音與聲音處是 59 個。</p>
+<p>如果你是總編輯，看第一張表你會加碼影音；看第二張表你會加碼新聞。<strong>兩張表用的是同一份檔案、同一個月。</strong></p>
+<blockquote>
+<p><strong>報表不會自己說出結論。結論是你選擇分母的那一刻決定的。</strong></p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">廣告那一題會撞到同一件事</h3>
+<ul>
+<li>廣告表裡有一欄叫 <code>currency</code>，裡面混著兩種幣別。</li>
+<li>有這一欄還直接把金額加起來，數字會整個歪掉。</li>
+<li>歪掉的方向不是小數點，是換一個決策。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>怎麼算</th>
+<th>程序化平台佔總營收</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接把 <code>revenue</code> 加起來</td>
+<td>1.7%</td>
+</tr>
+<tr>
+<td>先照 <code>currency</code> 換算再加</td>
+<td>35.7%</td>
+</tr>
+</tbody>
+</table>
+<p>1.7% 的話，這條線可以砍掉；35.7% 的話，它是第二大收入來源。<strong>同一份檔案，差別只在有沒有看那一欄。</strong></p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這種事在真實工作裡很常見</span><p>不是因為做報表的人粗心，是因為資料來自不同系統，每個系統記錄的單位本來就不一樣。你的工作不是抱怨資料髒，是在用它之前先問一句：這一欄的單位是什麼？</p></div>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">三件事沒做完，就不要拿去開會</h3>
+<ul>
+<li>這三件事是這門課從頭到尾的查核動作，你已經在前面的單元看過。</li>
+<li>今天第一次把它用在真的資料上。</li>
+<li>做完你還是可能錯，但你會知道自己錯在哪裡。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>動作</th>
+<th>具體怎麼問</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>要算式</td>
+<td>「把你剛才每個數字的算式列出來」</td>
+</tr>
+<tr>
+<td>對分母</td>
+<td>「這個比率的分子是什麼、分母是什麼？換成另一個分母，排名會變嗎？」</td>
+</tr>
+<tr>
+<td>查來源</td>
+<td>「這個數字是資料裡算出來的，還是你補的？在第幾列？」</td>
+</tr>
+</tbody>
+</table>
+<p>第三個動作今天有一個新的用法：問它「這份資料總共幾列、幾個欄位」。如果它講不出來，代表它根本沒真的讀完。</p>
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-9">⚠️ 迷思攔截</h3>
+<p>這張表是這一段最容易誤會的幾件事。</p>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「檔案丟給它就好了」</td>
+<td>它會自己猜欄位的意思，猜錯不會說</td>
+<td>字典跟檔案一起交，並要它先覆述一次欄位定義</td>
+</tr>
+<tr>
+<td>「它算出來的數字一定是從資料來的」</td>
+<td>它有時候會把「合理的數字」直接寫出來</td>
+<td>問「這在第幾列」，問不出來就是它補的</td>
+</tr>
+<tr>
+<td>「排名第一就是最好」</td>
+<td>「最好」要先講清楚用什麼排序</td>
+<td>至少換一個分母再排一次，看排名會不會變</td>
+</tr>
+<tr>
+<td>「總和就是把那一欄加起來」</td>
+<td>有 <code>currency</code>、有重複列的時候，加總是錯的</td>
+<td>加總前先問：單位一致嗎？主鍵唯一嗎？</td>
+</tr>
+<tr>
+<td>「數字對了就可以拿去報告」</td>
+<td>數字對不代表問題問對了</td>
+<td>先講清楚這個數字要支持什麼決定</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-prereq"><h3 id="sec-10">先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_%E8%AE%93_Claude_Code_%E8%87%AA%E5%B7%B1%E6%8A%8A%E7%92%B0%E5%A2%83%E8%A3%9D%E5%A5%BD.html">讓 Claude Code 自己把環境裝好</a>——沒有它，今天沒有工具可以用。</li>
+<li><strong>先修</strong>：<a href="M_AI_%E5%9C%A8%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E7%9A%84%E8%A7%92%E8%89%B2%E8%88%87%E9%99%90%E5%BA%A6.html">AI 在數據分析的角色與限度</a>——「要算式、對分母、查來源」那三個動作在那一節講過，今天第一次用在真資料上。</li>
+<li><strong>後續</strong>：兩張表接起來才有意義——今天這張表是已經接好的，下一個單元會發現原始資料庫不長這樣。</li>
+<li><strong>想多練</strong>：<a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a>——這一組還有兩題入門、一題進階，都用同一份資料。</li>
+<li><strong>平行相關</strong>：<a href="M_%E5%81%9C%E7%95%99%E3%80%81%E8%B7%B3%E5%87%BA%E8%88%87%E9%9B%A2%E9%96%8B.html">停留、跳出與離開</a>——分母爭議在網站指標裡的完整版。</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-11">小結論</h3>
+<p>你現在可以把一份資料交給 AI、問出一個有答案的問題，並且在拿去開會之前先驗過一輪。三件事帶走：字典要跟檔案一起交，不然它會自己猜；比率的結論是分母決定的，換分母就可能換冠軍；加總之前先看有沒有 <code>currency</code> 這種欄位。下一個單元開始，資料不會再是接好的一張表。</p>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-12">💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-13">配對分享</h3>
+<p><strong>情境</strong>：你們兩個是鯤島傳媒集團讀者事業處的分析助理。下週三上午十點有一場明年度預算會議，總經理要在會上決定把多出來的一千萬投給影音與聲音處還是新聞內容處。週一下午三點，你的主管把 <code>content_monthly_2024_10.csv</code> 丟給你，說「幫我看一下哪個處比較值得投，明天中午前給我一頁」。你用 AI 跑了十分鐘，得到的第一個答案是：影音與聲音處四十二萬次瀏覽，全集團最高，新聞內容處四十一萬九千次，第二名。兩者只差不到一千次。主管在會議前一晚十點傳訊息問你：「這個結論你確定嗎，我明天要拿去講。」而你知道，這份報表你只跑了瀏覽量這一個指標，另外那一欄「從這則內容完成訂閱的人數」你根本還沒看。</p>
+<p>請同學兩兩一組，一人當分析助理、一人當主管：</p>
+<ol>
+<li>分析助理先用一句話回覆主管，這句話要同時做到兩件事：不隱瞞你只看了一個指標，也不讓主管覺得你什麼都沒做。</li>
+<li>主管追問一句：「那你覺得還要看什麼？看了會不會翻盤？」分析助理回答，並說出你打算怎麼在明天中午前驗完。</li>
+<li>兩個人一起判斷：如果換成轉換數，排名會翻盤（新聞內容處 11,379，影音與聲音處 2,511）——那麼原本那一頁到底該不該送出去？各自引用情境裡讓你這樣判斷的那一句話。</li>
+</ol>
+<p>第 3 題沒有唯一答案，但兩種立場的根據強度不一樣。主張「不該送」的根據很硬：情境明講了「另外那一欄根本還沒看」，而那一欄一看就翻盤。主張「照送但加註」的根據比較軟，它靠的是情境裡的時間壓力（明天中午前、會議在週三上午），這是現實限制不是分析理由——講的時候要自己說清楚這一點。</p>
+<p>〔加碼選項：你在打工或社團做過的某份報表，回頭想想它用的是哪個分母。不強迫。〕</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-14">個人反思</h3>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為看報表是看〔＿＿＿〕，現在我會先問〔＿＿＿〕。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-15">小作業</h3>
+<p>用 L1 資料包回答一個你自己想問的問題，交出三樣東西：你問 AI 的那段提示原文、它給的算式、以及你換一個分母再算一次的結果。最後寫兩句話：換分母之後結論有沒有變，以及你最後打算採用哪一個、為什麼。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 01:45</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

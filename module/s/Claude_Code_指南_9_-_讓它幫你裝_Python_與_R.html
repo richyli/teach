@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 9｜讓它幫你裝 Python 與 R</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">這份指南不會告訴你安裝指令</a></li><li><a href="#sec-2">動手之前先照三條規定擺好位置</a></li><li><a href="#sec-3">把這段整段貼給它</a></li><li><a href="#sec-4">最後那一句是整段裡最重要的一句</a></li><li><a href="#sec-5">怎麼知道它真的裝好了</a></li><li><a href="#sec-6">卡住的時候，這樣講</a></li><li><a href="#sec-7">這幾種卡點最常見</a></li><li><a href="#sec-8">接下來</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 9｜讓它幫你裝 Python 與 R</h1></div><p>在本單元中，會介紹怎麼讓 Claude Code 把這台電腦的分析環境裝起來、怎麼確認它真的裝好了，以及卡住的時候要怎麼把問題描述清楚。</p>
+<p>這一份接在 <a href="Claude_Code_%E6%8C%87%E5%8D%97_8_-_%E5%8D%A1%E4%BD%8F%E4%BA%86%E6%80%8E%E9%BA%BC%E8%BE%A6%E8%88%87%E5%AE%89%E5%85%A8%E5%AE%88%E5%89%87.html">指南 8</a> 後面。前面八份讓你把 Claude Code 跑起來、會下指令、懂權限模式；從這一份開始，它要幫你處理的不再是文字，而是資料。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">這份指南不會告訴你安裝指令</h3>
+<p>安裝指令由軟體公司維護，改版很快。今天抄下來的指令，明年就對不上畫面了。不會過期的是另外兩件事：<strong>你要它交出什麼</strong>，以及<strong>你怎麼確認它真的做到了</strong>。</p>
+<p>所以下面給你的是一段提示，和一張驗收清單。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-2">動手之前先照三條規定擺好位置</h3>
+<p>這三條不是原理，是經驗。照做只花兩分鐘，可以省掉初學者最常撞的三種錯誤。</p>
+<table>
+<thead>
+<tr>
+<th>規定</th>
+<th>怎麼做</th>
+<th>不照做會發生什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虛擬環境放短路徑</td>
+<td>Windows 放 <code>C:/cvenv</code>，Mac 放家目錄底下的 <code>cvenv</code></td>
+<td>套件裝到一半失敗，而且失敗訊息完全看不懂</td>
+</tr>
+<tr>
+<td>專案資料夾放短路徑</td>
+<td>Windows 放 <code>C:/kmg</code>，Mac 放家目錄底下的 <code>kmg</code></td>
+<td>雲端同步會把檔案鎖住，程式讀不到</td>
+</tr>
+<tr>
+<td>路徑不要有中文和空白</td>
+<td>資料夾名字用英文小寫</td>
+<td>有些工具會在中文路徑上直接爆掉</td>
+</tr>
+</tbody>
+</table>
+<p>特別提醒：<strong>不要把專案放在桌面</strong>，也不要放在 OneDrive、iCloud、Google 雲端硬碟同步的資料夾裡。這三個地方是災難的溫床。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">把這段整段貼給它</h3>
+<p>先新開一個資料夾（照上面的規定），在裡面啟動 Claude Code，然後貼這段：</p>
+<blockquote>
+<p>我要做這門課的資料分析，會用到 Python 和 R，我不會寫程式。請依序完成以下五件事，每完成一件就告訴我結果：
+一，偵測我的作業系統、Python 和 R 的位置與版本，如果找不到就告訴我還沒裝。
+二，把偵測結果寫成這個資料夾裡的 ENVIRONMENT.md，內容包含每一項的完整路徑。
+三，建立一個虛擬環境，Windows 請建在 C:/cvenv，Mac 請建在家目錄底下的 cvenv，然後安裝 pandas、numpy、matplotlib、jupyter。
+四，找出 Rscript 的完整路徑，寫進 ENVIRONMENT.md，並產生一個叫做 run_r 的包裝腳本，讓我以後不必打那串很長的路徑。
+五，寫一支 verify_env 的小程式並執行它，逐項印出綠燈或紅燈，包含 Python 版本、每一個套件、以及 R 能不能被叫動。
+過程中如果需要我的權限，或需要我做決定，請先停下來問我。不要自己修改系統設定、不要改 PATH、不要動系統內建的 Python。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">最後那一句是整段裡最重要的一句</h3>
+<p>它有能力改你的系統設定，而且改壞了你不會馬上知道。要求它在需要權限的時候停下來問你，你才有機會說不。</p>
+<p>一個會自己動手的 AI，跟一個只會回你文字的聊天框，差別就在它真的會改你的電腦。方便和風險是同一件事的兩面。你現在畫的這條線，之後每一次用它處理公司檔案、處理真實資料，都還會再用到。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">怎麼知道它真的裝好了</h3>
+<p>它說「完成了」不算數。下面三項都要親眼看到：</p>
+<table>
+<thead>
+<tr>
+<th>要驗什麼</th>
+<th>通過的樣子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每一個套件都真的裝起來</td>
+<td><code>verify_env</code> 逐項印出綠燈，沒有紅燈</td>
+</tr>
+<tr>
+<td>R 叫得動</td>
+<td>用 <code>run_r</code> 跑出一行 R 的版本資訊</td>
+</tr>
+<tr>
+<td>留下可以對照的紀錄</td>
+<td>資料夾裡有 <code>ENVIRONMENT.md</code>，裡面每一項都有完整路徑</td>
+</tr>
+</tbody>
+</table>
+<p><code>ENVIRONMENT.md</code> 要留著。換電腦、換學期、套件更新的時候，直接把它貼給 Claude Code 當起點，比從頭來一次快得多。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">卡住的時候，這樣講</h3>
+<p>「不能跑」「壞了」「有錯誤」——這三句話送出去，等於什麼都沒說。一次講三件事：</p>
+<ol>
+<li><strong>我剛剛做了什麼</strong>：把你打的指令原封不動貼上，不要重打一次。</li>
+<li><strong>它回了什麼</strong>：錯誤訊息貼開頭二十行和結尾二十行。真正的原因常常在開頭，最後一行只是結果。</li>
+<li><strong>我的環境</strong>：把 <code>ENVIRONMENT.md</code> 整份貼上。</li>
+</ol>
+<p>然後固定加這一句收尾：</p>
+<blockquote>
+<p>請先講你判斷的原因，再給一個最小的修法，不要一次改三個地方。改完告訴我怎麼確認有修好。</p>
+</blockquote>
+<p>為什麼要「一次只改一個地方」？因為一次改三個，修好了你也不知道是哪一個奏效，下次再壞還是只能從頭來。這跟做分析是同一個道理：一次動一個變因，才知道是誰造成的。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">這幾種卡點最常見</h3>
+<table>
+<thead>
+<tr>
+<th>你會看到</th>
+<th>多半是什麼問題</th>
+<th>先試什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打 <code>python</code> 卻跳出應用程式商店</td>
+<td>Windows 的 Python 捷徑擋在前面</td>
+<td>把整段畫面貼給它，說「我打 python 出現商店」</td>
+</tr>
+<tr>
+<td>一串紅字，提到 script、execution、disabled</td>
+<td>Windows 的執行原則擋住了</td>
+<td>貼完整訊息，並說明你沒有管理員權限</td>
+</tr>
+<tr>
+<td>停在要求輸入密碼的畫面</td>
+<td>權限問題，不是提示的問題</td>
+<td>這一題要去找人，不是找 AI</td>
+</tr>
+<tr>
+<td>一直卡著沒反應</td>
+<td>多半只是在下載，網路慢</td>
+<td>先等三分鐘再說，不要重跑</td>
+</tr>
+<tr>
+<td><code>Rscript</code> 找不到</td>
+<td>R 裝了但不在系統的搜尋清單上</td>
+<td>這是預設行為不是故障，請它掃出完整路徑</td>
+</tr>
+</tbody>
+</table>
+<p>最後那一項要特別講：<strong>R 裝完之後不在搜尋清單上是正常的</strong>，不是你裝壞了。不要自己去改系統設定，讓它把完整路徑找出來寫進 <code>run_r</code> 就好。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接下來</h3>
+<p>環境裝好之後，下一份是 <a href="Claude_Code_%E6%8C%87%E5%8D%97_10_-_%E9%AF%A4%E5%B3%B6%E5%82%B3%E5%AA%92%E9%9B%86%E5%9C%98%E8%B3%87%E6%96%99%E5%8C%85%E5%B0%8E%E8%A6%BD.html">指南 10</a>，你會拿到這門課要用的第一份資料。</p>
+<p>整條分析線的地圖與可以自己練的案例，都在 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a>。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 01:45</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

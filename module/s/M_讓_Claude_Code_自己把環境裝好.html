@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>讓 Claude Code 自己把環境裝好</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">這一單元不教安裝步驟，教驗收標準</a></li><li><a href="#sec-4">你要它做的五件事</a></li><li><a href="#sec-5">最後一句是整段裡最重要的一句</a></li><li><a href="#sec-6">三條規定，兩行指令就能省掉三種災難</a></li><li><a href="#sec-7">卡住的時候怎麼講，決定你要卡多久</a></li><li><a href="#sec-8">為什麼要它「一次只改一個地方」</a></li><li><a href="#sec-9">怎麼知道它真的裝好了</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>讓 Claude Code 自己把環境裝好</h1></div><p>在本單元中，會介紹怎麼指揮 Claude Code 把這台電腦的分析環境裝起來、怎麼確認它真的裝好了，以及卡住的時候要怎麼把問題描述清楚。</p>
+<section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>你會的能力</th>
+<th>讓你能解釋的真實問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>指揮</strong> AI 完成一件你自己不會做的系統設定，並要求它把結果寫成一份文件</td>
+<td>我完全不懂什麼是虛擬環境，為什麼我還是可以把它裝對？</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>描述</strong>一個技術故障，讓對方第一次回覆就能修</td>
+<td>為什麼我說「它壞了」沒人理我，同學說一樣的事就有人幫他修好？</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>判斷</strong>它說「裝好了」是不是真的裝好了</td>
+<td>它說完成了，但我怎麼知道它不是在唬我？</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-ai"><h3 id="sec-2">🤖 課前 AI 互動</h3>
+<p>請利用 AI 當成你的學習助理，請輸入下列提示：</p>
+<blockquote>
+<p>我要在自己的電腦上做資料分析，會用到 Python 和 R。我完全沒有寫過程式。請先問我三個問題，確認我的作業系統和現在電腦上已經有什麼，然後再告訴我接下來會發生哪幾個步驟。每個步驟請用一句話說明它在做什麼、以及做完之後我會多出什麼東西。先不要給我任何指令，我只想先知道全貌。</p>
+</blockquote>
+<p>它回答之後，再追問這一句：</p>
+<blockquote>
+<p>這幾個步驟裡面，哪一步最常出錯？出錯的時候畫面上會出現什麼字？</p>
+</blockquote>
+<p>當你拿到回答後，把它說「最常出錯」的那一步記下來，等一下跟同學比對——你們兩個的答案很可能不一樣，因為它是照你的作業系統回答的。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜這一段你自己讀就懂</span><p>這一題沒有標準答案。重點是你在動手之前，先知道自己要走幾步路、每一步做完會多出什麼。不知道全貌就開始貼指令，出錯的時候你連自己走到哪裡都講不出來。</p></div>
+<hr />
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一單元不教安裝步驟，教驗收標準</h3>
+<ul>
+<li>安裝指令由軟體公司維護，改版很快；今天抄下來的指令，明年就對不上畫面。</li>
+<li>不會過期的是另外兩件事：<strong>你要它交出什麼</strong>，以及<strong>你怎麼確認它真的做到了</strong>。</li>
+<li>所以我們的作法是：把目標講清楚，讓它自己想辦法，然後驗收。</li>
+</ul>
+<p>你不需要知道怎麼裝，你需要知道裝完之後應該長什麼樣子。這跟你請水電師傅來家裡是同一件事——你不必會接線，但你要會開燈確認。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">你要它做的五件事</h3>
+<ul>
+<li>這五件事是一整個學期只做一次的開場，做完就不必再碰。</li>
+<li>五件事有順序，前一件沒成功，後面會連環失敗。</li>
+<li>最後一件是驗收，它是整段裡唯一不能跳過的。</li>
+</ul>
+<p>請新開一個資料夾，在裡面啟動 Claude Code，把下面這段整段貼進去：</p>
+<blockquote>
+<p>我要做這門課的資料分析，會用到 Python 和 R，我不會寫程式。請依序完成以下五件事，每完成一件就告訴我結果：
+一，偵測我的作業系統、Python 和 R 的位置與版本，如果找不到就告訴我還沒裝。
+二，把偵測結果寫成這個資料夾裡的 ENVIRONMENT.md，內容包含每一項的完整路徑。
+三，建立一個虛擬環境，Windows 請建在 C:/cvenv，Mac 請建在家目錄底下的 cvenv，然後安裝 pandas、numpy、matplotlib、jupyter。
+四，找出 Rscript 的完整路徑，寫進 ENVIRONMENT.md，並產生一個叫做 run_r 的包裝腳本，讓我以後不必打那串很長的路徑。
+五，寫一支 verify_env 的小程式並執行它，逐項印出綠燈或紅燈，包含 Python 版本、每一個套件、以及 R 能不能被叫動。
+過程中如果需要我的權限，或需要我做決定，請先停下來問我。不要自己修改系統設定、不要改 PATH、不要動系統內建的 Python。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">最後一句是整段裡最重要的一句</h3>
+<ul>
+<li>它有能力改你的系統設定，而且改壞了你不會知道。</li>
+<li>需要權限的時候停下來問你，你才有機會說不。</li>
+<li>這條界線不是這門課特有的規矩，是你以後用任何 agent 都該畫的線。</li>
+</ul>
+<p>一個會自己動手的 AI，跟一個只會回你文字的聊天框，差別就在它真的會改你的電腦。方便和風險是同一件事的兩面。你現在畫的這條線，之後每一次用它處理公司檔案、處理真實資料，都還會再用到。</p>
+<blockquote>
+<p><strong>放手讓它做，不等於讓它做任何事。界線要在它動手之前講，不是出事之後補。</strong></p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">三條規定，兩行指令就能省掉三種災難</h3>
+<ul>
+<li>虛擬環境建在短路徑，可以避開 Windows 的路徑長度限制。</li>
+<li>專案資料夾不要放在雲端同步資料夾、不要放桌面、路徑不要有中文和空白。</li>
+<li>這兩條加起來，就擋掉了初學者最常撞的三種錯誤。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>規定</th>
+<th>怎麼做</th>
+<th>不照做會發生什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虛擬環境放短路徑</td>
+<td>Windows 放 <code>C:/cvenv</code>，Mac 放家目錄的 <code>cvenv</code></td>
+<td>套件裝到一半失敗，而且失敗訊息完全看不懂</td>
+</tr>
+<tr>
+<td>專案資料夾放短路徑</td>
+<td>Windows 放 <code>C:/kmg</code>，Mac 放家目錄的 <code>kmg</code></td>
+<td>雲端同步會把檔案鎖住，程式讀不到</td>
+</tr>
+<tr>
+<td>路徑不要有中文和空白</td>
+<td>資料夾名字用英文小寫</td>
+<td>有些工具會在中文路徑上直接爆掉</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼是這三條</span><p>這三條不是原理，是經驗。你現在照做就好，等你撞到別台電腦上的怪問題，會回頭想起這三行。</p></div>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">卡住的時候怎麼講，決定你要卡多久</h3>
+<ul>
+<li>「不能跑」「壞了」「有錯誤」這三句話送出去，等於什麼都沒說。</li>
+<li>一次講三件事：我做了什麼、它回了什麼、我的環境長怎樣。</li>
+<li>錯誤訊息要貼開頭和結尾，不要只貼最後那一行紅字。</li>
+</ul>
+<p>求救的時候照這個順序講：</p>
+<ol>
+<li><strong>我剛剛做了什麼</strong>：把你打的指令原封不動貼上，不要重打一次。</li>
+<li><strong>它回了什麼</strong>：錯誤訊息貼開頭二十行和結尾二十行。真正的原因常常在開頭，最後一行只是結果。</li>
+<li><strong>我的環境</strong>：把 <code>ENVIRONMENT.md</code> 整份貼上。</li>
+</ol>
+<p>然後固定加這一句收尾：</p>
+<blockquote>
+<p>請先講你判斷的原因，再給一個最小的修法，不要一次改三個地方。改完告訴我怎麼確認有修好。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">為什麼要它「一次只改一個地方」</h3>
+<ul>
+<li>一次改三個地方，修好了你也不知道是哪一個奏效。</li>
+<li>下次再壞，你還是只能從頭來一次。</li>
+<li>這個要求跟做分析是同一個道理：一次動一個變因，才知道是誰造成的。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">怎麼知道它真的裝好了</h3>
+<ul>
+<li>它說「完成了」不算數，能跑出綠燈才算。</li>
+<li>驗證要驗到「能做出你真正要做的事」，不是只驗「檔案存在」。</li>
+<li>綠燈之外還要留下一份文件，下次壞掉才有東西可以對照。</li>
+</ul>
+<p>驗收清單，三項都要親眼看到：</p>
+<table>
+<thead>
+<tr>
+<th>要驗什麼</th>
+<th>通過的樣子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每一個套件都真的裝起來</td>
+<td><code>verify_env</code> 逐項印出綠燈，沒有紅燈</td>
+</tr>
+<tr>
+<td>R 叫得動</td>
+<td>用 <code>run_r</code> 跑出一行 R 的版本資訊</td>
+</tr>
+<tr>
+<td>留下可以對照的紀錄</td>
+<td>資料夾裡有 <code>ENVIRONMENT.md</code>，裡面每一項都有完整路徑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>它說裝好了是它的說法，綠燈是證據。以後每一次它說「完成」，你都要問一句：拿什麼證明？</strong></p>
+</blockquote>
+</section>
+<section class="mod-sec sec-myths"><h3 id="sec-10">⚠️ 迷思攔截</h3>
+<p>這張表是這一段最容易誤會的幾件事。</p>
+<table>
+<thead>
+<tr>
+<th>常見迷思</th>
+<th>為什麼太簡化</th>
+<th>攔截</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「我不會寫程式，所以裝不起來」</td>
+<td>安裝跟寫程式是兩件事。你要做的是描述目標與驗收，不是打指令</td>
+<td>你的工作在前端（說清楚要什麼）和後端（確認做到了）</td>
+</tr>
+<tr>
+<td>「它說完成了就是好了」</td>
+<td>它判斷「完成」的依據是指令有沒有報錯，不是東西能不能用</td>
+<td>一律要求跑驗證腳本，看綠燈</td>
+</tr>
+<tr>
+<td>「裝不起來代表我電腦爛」</td>
+<td>多數卡點是權限、路徑、版本三件事，跟電腦好壞無關</td>
+<td>把錯誤訊息完整貼給它，它多半兩三輪就能修</td>
+</tr>
+<tr>
+<td>「出錯就重來一次」</td>
+<td>重來會蓋掉現場，下次同樣的錯還是不會修</td>
+<td>先把錯誤訊息存下來，再重來</td>
+</tr>
+<tr>
+<td>「環境裝好就一勞永逸」</td>
+<td>換電腦、換學期、套件更新都會再壞一次</td>
+<td>留著 <code>ENVIRONMENT.md</code>，下次直接貼給它當起點</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-prereq"><h3 id="sec-11">先修與後續</h3>
+<ul>
+<li><strong>先修</strong>：<a href="M_Claude_Code_%E4%B8%8A%E6%89%8B.html">Claude Code 上手</a>——沒有它，你不知道要在哪裡打字、也不知道權限模式在問什麼。</li>
+<li><strong>後續</strong>：<a href="M_%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%93_AI_%E8%AE%80%E4%B8%80%E5%BC%B5%E8%A1%A8.html">第一次讓 AI 讀一張表</a>——環境裝好之後，第一件事就是拿它讀一份真的資料。</li>
+<li><strong>想多練</strong>：<a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a>——整條分析線的地圖與十九個可以自己做的案例。</li>
+<li><strong>平行相關</strong>：<a href="M_AI_%E5%9C%A8%E6%95%B8%E6%93%9A%E5%88%86%E6%9E%90%E7%9A%84%E8%A7%92%E8%89%B2%E8%88%87%E9%99%90%E5%BA%A6.html">AI 在數據分析的角色與限度</a>——本單元的「驗收」動作，就是那一節「要算式、對分母、查來源」的前一步：先確認工具是好的，再確認數字是對的。</li>
+</ul>
+</section>
+<section class="mod-sec sec-summary"><h3 id="sec-12">小結論</h3>
+<p>你現在可以指揮一個 AI 完成一件你自己不會做的事，並且知道怎麼驗收它。三件事帶走：目標和驗收標準要自己講清楚，因為那是不會過期的部分；需要權限的時候它必須停下來問你，這條線由你來畫；它說「完成」不算數，綠燈才算數。這三件事在接下來每一個單元都會再用到——只是對象從「裝環境」換成「算數字」。</p>
+</section>
+<section class="mod-sec sec-discussion"><h3 id="sec-13">💬 討論／分享／反思</h3>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-14">配對分享</h3>
+<p><strong>情境</strong>：兩個同學同時要裝環境。小葳用的是自己的筆電，Windows 系統，習慣把所有檔案都放在桌面，桌面又設定成自動同步到雲端硬碟；她的中文使用者名稱讓資料夾路徑裡有中文字。阿哲用的是公司配的筆電，Mac 系統，公司資訊部門把他的帳號設成沒有管理員權限，安裝任何東西都會跳出要輸入密碼的視窗，而他沒有那組密碼。兩個人都在同一堂課、貼了同一段提示、跑到第三步就停住了。小葳的畫面出現一串紅字，最後一行寫著找不到路徑；阿哲的畫面則是停在一個要求輸入密碼的提示上，游標一直閃。</p>
+<p>請同學兩兩一組，一人扮演小葳、一人扮演阿哲：</p>
+<ol>
+<li>各自替自己那個角色寫出一則求救訊息，照「我做了什麼、它回了什麼、我的環境」三段式，最後加上那句固定收尾。</li>
+<li>交換，讀對方寫的那一則，指出它缺了三段裡的哪一段。</li>
+<li>一起判斷：這兩個人卡住的原因，哪一個靠改提示就能解決，哪一個非得先去找人不可？並各自引用情境裡讓你這樣判斷的那一句話。</li>
+</ol>
+<p>第 3 題有明確答案，兩邊的根據都寫在情境裡：阿哲缺的是權限，那是人的問題不是提示的問題，因為情境寫了他沒有那組密碼；小葳的路徑問題可以靠換資料夾位置解決，因為情境寫了桌面自動同步、而且路徑裡有中文。</p>
+<p>〔加碼選項：你自己的電腦如果剛好卡住了，換成你的真實情況再跑一次。〕</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-15">個人反思</h3>
+<p>請寫下這一句並補完：</p>
+<blockquote>
+<p>我原本以為裝環境是〔＿＿＿〕的事，現在我會先〔＿＿＿〕。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-homework"><h3 id="sec-16">小作業</h3>
+<p>把你電腦上的 <code>ENVIRONMENT.md</code> 交上來，並在最後補一段：你卡住過的地方、你當時怎麼描述它、後來是怎麼過的。完全沒卡住的人，寫下你覺得下一次最可能壞在哪一項，以及你打算怎麼確認。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 01:45</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>
