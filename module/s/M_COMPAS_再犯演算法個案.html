@@ -63,52 +63,191 @@ MathJax = {
 <p>先看整體。ProPublica 用 Cox 模型算兩個族群的區辨能力，結果是<strong>白人被告 62.5%、黑人被告 62.3%</strong>。幾乎一樣。</p>
 <p><strong>如果只看這一個數字，這套系統對兩個族群一樣準，沒有問題。</strong></p>
 <p>接下來把同一批人拆成四格，一格一格看。四格的意思是：橫著看是系統怎麼說，直著看是兩年後實際發生了什麼。</p>
-</section>
-<section class="mod-sec sec-content"><h4>黑人被告 3,696 人</h4>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>系統標「低風險」</th>
-<th>系統標「高風險」</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>兩年內沒有再犯</strong>（1,795 人）</td>
-<td>990</td>
-<td><strong>805</strong></td>
-</tr>
-<tr>
-<td><strong>兩年內再犯了</strong>（1,901 人）</td>
-<td>532</td>
-<td>1,369</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>白人被告 2,454 人</h4>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>系統標「低風險」</th>
-<th>系統標「高風險」</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>兩年內沒有再犯</strong>（1,488 人）</td>
-<td>1,139</td>
-<td><strong>349</strong></td>
-</tr>
-<tr>
-<td><strong>兩年內再犯了</strong>（966 人）</td>
-<td>461</td>
-<td>505</td>
-</tr>
-</tbody>
-</table>
+<p>四格的六個指標都列在下面。<strong>先點「準確率」，再點「偽陽性率」</strong>，看同一批人可以被講成多不一樣；要投影就按右上角的全視窗。</p>
+<div class="widget ctt-wrap">
+<style>
+.ctt-wrap { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+.ctt-wrap h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+.ctt-wrap .lede { color: #666; font-size: .88rem; margin: .2rem 0 .9rem; line-height: 1.7; }
+.ctt-bar { margin: .2rem 0 .9rem; }
+.ctt-wrap button { font: inherit; font-size: .82rem; padding: .32rem .85rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+.ctt-wrap button:hover { background: #eef4fd; }
+.ctt-wrap button.on { background: #24528f; color: #fff; border-color: #24528f; }
+.ctt-wrap .ctt-full { float: right; }
+.ctt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: .9rem; }
+.ctt-panel { background: #fff; border: 1px solid #e2e2e2; border-radius: 9px; padding: .8rem .9rem 1rem; }
+.ctt-panel h5 { margin: .1rem 0 .6rem; font-size: .92rem; color: #24528f; }
+.ctt-panel h5 span { color: #7a8796; font-weight: 400; font-size: .84rem; }
+.ctt-m { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.ctt-m th, .ctt-m td { border: 1px solid #dfe5ec; padding: .5rem .4rem; text-align: center; }
+.ctt-m th { background: #f4f6f9; color: #33475b; font-weight: 700; font-size: .8rem; line-height: 1.5; }
+.ctt-m th.rh { text-align: left; width: 38%; }
+.ctt-m td.cell { font-size: 1.35rem; font-weight: 700; color: #33475b; transition: background .15s; }
+.ctt-m td.cell .sub { display: block; font-size: .68rem; font-weight: 400; color: #9aa7b4; letter-spacing: .06em; }
+.ctt-m td.cell.hi { background: #fff3f5; color: #a3324f; box-shadow: inset 0 0 0 2px #d05070; }
+.ctt-m td.cell.hi .sub { color: #c07087; }
+.ctt-stats { margin-top: .7rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: .35rem; }
+.ctt-stat { border: 1px solid #e6ebf2; border-radius: 7px; padding: .4rem .3rem; text-align: center;
+      cursor: pointer; background: #fcfdfe; }
+.ctt-stat:hover { background: #eef4fd; }
+.ctt-stat.on { background: #eef4fd; border-color: #24528f; }
+.ctt-stat b { display: block; font-size: 1.02rem; color: #24528f; }
+.ctt-stat span { font-size: .72rem; color: #7a8796; line-height: 1.4; display: block; }
+.ctt-formula { margin-top: .55rem; font-size: .82rem; color: #5b6b7c; line-height: 1.8;
+      background: #f7f9fb; border: 1px solid #eceff3; border-radius: 6px; padding: .4rem .6rem; min-height: 2.4rem; }
+.ctt-formula code { background: none; font-size: .84rem; color: #a3324f; }
+.ctt-gap { margin-top: .9rem; padding: .75rem .95rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .89rem; line-height: 1.85; }
+.ctt-gap b { color: #24528f; }
+.ctt-gap .big { color: #a3324f; }
+
+.ctt-wrap.ctt-big { position: fixed; inset: 0; z-index: 9999; margin: 0; border-radius: 0;
+      overflow: auto; padding: 1.4rem 2rem 2rem; background: #fbfbfc; }
+.ctt-wrap.ctt-big .ctt-grid { grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 1.4rem; }
+.ctt-wrap.ctt-big .ctt-m { font-size: 1.15rem; }
+.ctt-wrap.ctt-big .ctt-m th { font-size: 1rem; }
+.ctt-wrap.ctt-big .ctt-m td.cell { font-size: 2.5rem; }
+.ctt-wrap.ctt-big .ctt-m td.cell .sub { font-size: .9rem; }
+.ctt-wrap.ctt-big .ctt-panel h5 { font-size: 1.3rem; }
+.ctt-wrap.ctt-big .ctt-stat b { font-size: 1.5rem; }
+.ctt-wrap.ctt-big .ctt-stat span { font-size: .92rem; }
+.ctt-wrap.ctt-big .ctt-formula { font-size: 1.02rem; }
+.ctt-wrap.ctt-big .ctt-gap { font-size: 1.15rem; }
+.ctt-wrap.ctt-big h4, .ctt-wrap.ctt-big .lede { font-size: 1.1rem; }
+</style>
+
+<h5>兩組被告的四格表<button class="ctt-full">全視窗</button></h5>
+<p class="lede">同一套系統、同一段期間。點下面任何一個指標，兩邊用到的格子會一起亮起來，
+底下也會告訴你這個指標在兩組之間差多少。<b>先點準確率，再點偽陽性率</b>，看同一批人可以被講成多不一樣。</p>
+
+<div class="ctt-bar" id="ctt-bar"></div>
+<div class="ctt-grid" id="ctt-grid"></div>
+<div class="ctt-gap" id="ctt-gap"></div>
+
+<script>
+(function () {
+  var GROUPS = [
+    { key: "b", name: "黑人被告", n: 3696, tn: 990, fp: 805, fn: 532, tp: 1369 },
+    { key: "w", name: "白人被告", n: 2454, tn: 1139, fp: 349, fn: 461, tp: 505 }
+  ];
+  var METRICS = [
+    { key: "acc", name: "準確率", en: "Accuracy", cells: ["tp", "tn"],
+      f: function (g) { return (g.tp + g.tn) / g.n; },
+      show: function (g) { return "(TP " + g.tp + " ＋ TN " + g.tn + ") ÷ " + g.n; },
+      note: "答對的比例。兩種相反的錯誤在這裡被加在一起，所以看不出方向。" },
+    { key: "pre", name: "精確率", en: "Precision（PPV）", cells: ["tp", "fp"],
+      f: function (g) { return g.tp / (g.tp + g.fp); },
+      show: function (g) { return "TP " + g.tp + " ÷ (TP " + g.tp + " ＋ FP " + g.fp + ")"; },
+      note: "被標高風險的人裡，真的再犯的比例。<b>Northpointe 用來主張公平的就是這個。</b>" },
+    { key: "rec", name: "召回率", en: "Recall（TPR）", cells: ["tp", "fn"],
+      f: function (g) { return g.tp / (g.tp + g.fn); },
+      show: function (g) { return "TP " + g.tp + " ÷ (TP " + g.tp + " ＋ FN " + g.fn + ")"; },
+      note: "真的會再犯的人裡，被抓出來的比例。抓不到的那些就是漏放。" },
+    { key: "f1", name: "F1", en: "F1 score", cells: ["tp", "fp", "fn"],
+      f: function (g) {
+        var p = g.tp / (g.tp + g.fp), r = g.tp / (g.tp + g.fn);
+        return 2 * p * r / (p + r);
+      },
+      show: function () { return "2 × 精確率 × 召回率 ÷ (精確率 ＋ 召回率)"; },
+      note: "精確率與召回率的調和平均。它完全不看 TN，所以沒再犯又被放過的人不進這個數字。" },
+    { key: "fpr", name: "偽陽性率", en: "FPR", cells: ["fp", "tn"],
+      f: function (g) { return g.fp / (g.fp + g.tn); },
+      show: function (g) { return "FP " + g.fp + " ÷ (FP " + g.fp + " ＋ TN " + g.tn + ")"; },
+      note: "沒有再犯的人裡，被誤標成高風險的比例。<b>ProPublica 指控的就是這個。</b>" },
+    { key: "fnr", name: "偽陰性率", en: "FNR", cells: ["fn", "tp"],
+      f: function (g) { return g.fn / (g.fn + g.tp); },
+      show: function (g) { return "FN " + g.fn + " ÷ (FN " + g.fn + " ＋ TP " + g.tp + ")"; },
+      note: "真的再犯的人裡，被誤標成低風險而放過的比例。等於 1 − 召回率。" }
+  ];
+  var CELLDEF = {
+    tn: ["真陰性 TN", "沒再犯 · 標低風險"],
+    fp: ["偽陽性 FP", "沒再犯 · 標高風險"],
+    fn: ["偽陰性 FN", "再犯了 · 標低風險"],
+    tp: ["真陽性 TP", "再犯了 · 標高風險"]
+  };
+  var pct = function (x) { return (100 * x).toFixed(1) + "%"; };
+
+  var root = document.querySelector(".ctt-wrap");
+  if (!root) return;
+  var bar = root.querySelector("#ctt-bar");
+  var grid = root.querySelector("#ctt-grid");
+  var gapEl = root.querySelector("#ctt-gap");
+  var sel = "acc";
+
+  METRICS.forEach(function (m) {
+    var b = document.createElement("button");
+    b.textContent = m.name + "　" + m.en;
+    b.dataset.m = m.key;
+    b.addEventListener("click", function () { sel = m.key; render(); });
+    bar.appendChild(b);
+  });
+
+  function panel(g) {
+    var m = METRICS.filter(function (x) { return x.key === sel; })[0];
+    var hi = m.cells;
+    function cell(k) {
+      var on = hi.indexOf(k) >= 0 ? " hi" : "";
+      return '<td class="cell' + on + '">' + g[k]
+        + '<span class="sub">' + CELLDEF[k][0] + "</span></td>";
+    }
+    var stats = METRICS.map(function (x) {
+      return '<div class="ctt-stat' + (x.key === sel ? " on" : "") + '" data-m="' + x.key + '">'
+        + "<b>" + pct(x.f(g)) + "</b><span>" + x.name + "<br>" + x.en + "</span></div>";
+    }).join("");
+    return '<div class="ctt-panel"><h6>' + g.name + " <span>N = " + g.n.toLocaleString("en-US")
+      + "</span></h6>"
+      + '<table class="ctt-m"><tr><th class="rh"></th>'
+      + "<th>系統標<br>「低風險」</th><th>系統標<br>「高風險」</th></tr>"
+      + '<tr><th class="rh">兩年內<br>沒有再犯</th>' + cell("tn") + cell("fp") + "</tr>"
+      + '<tr><th class="rh">兩年內<br>再犯了</th>' + cell("fn") + cell("tp") + "</tr></table>"
+      + '<div class="ctt-stats">' + stats + "</div>"
+      + '<div class="ctt-formula">' + m.name + " ＝ " + m.show(g)
+      + " ＝ <code>" + pct(m.f(g)) + "</code></div></div>";
+  }
+
+  function render() {
+    grid.innerHTML = GROUPS.map(panel).join("");
+    [].slice.call(bar.querySelectorAll("button")).forEach(function (b) {
+      b.classList.toggle("on", b.dataset.m === sel);
+    });
+    [].slice.call(grid.querySelectorAll(".ctt-stat")).forEach(function (s) {
+      s.addEventListener("click", function () { sel = s.dataset.m; render(); });
+    });
+    var m = METRICS.filter(function (x) { return x.key === sel; })[0];
+    var vb = m.f(GROUPS[0]), vw = m.f(GROUPS[1]);
+    var d = Math.abs(vb - vw) * 100;
+    var word = d < 5 ? "幾乎一樣" : (d < 15 ? "差得看得出來" : "差很多");
+    gapEl.innerHTML = "<b>" + m.name + "（" + m.en + "）</b>："
+      + "黑人被告 <b>" + pct(vb) + "</b>、白人被告 <b>" + pct(vw) + "</b>，"
+      + "相差 <b class=\"" + (d >= 15 ? "big" : "") + "\">" + d.toFixed(1) + " 個百分點</b>，"
+      + word + "。<br>" + m.note;
+  }
+
+  var btn = root.querySelector(".ctt-full");
+  function big(on) {
+    root.classList.toggle("ctt-big", on);
+    btn.textContent = on ? "離開全視窗" : "全視窗";
+    if (on) {
+      if (root.requestFullscreen) { try { root.requestFullscreen(); } catch (e) { /* 退回覆蓋式全視窗 */ } }
+    } else if (document.fullscreenElement && document.exitFullscreen) {
+      try { document.exitFullscreen(); } catch (e) { /* 已經離開了 */ }
+    }
+  }
+  btn.addEventListener("click", function () { big(!root.classList.contains("ctt-big")); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && root.classList.contains("ctt-big")) big(false);
+  });
+  document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement && root.classList.contains("ctt-big")) big(false);
+  });
+
+  render();
+})();
+</script>
+</div>
+
 </section>
 <section class="mod-sec sec-content"><h4>一次讀一列，只看那一列</h4>
 <p><strong>先看「沒有再犯」那一列。</strong>這些人兩年內都沒事，系統本來不該標他們高風險。</p>
@@ -888,7 +1027,7 @@ MathJax = {
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：廠商宣稱 AUC 0.76–0.83，外部驗證 0.63；每八次警示一次是真的</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：同一種偽陽性分布不均，但已進入監理處分階段</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 13:42</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 13:48</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
