@@ -372,50 +372,187 @@ MathJax = {
 <p>這六件事，12 頁交接文件裡<strong>一件都沒寫</strong>。你問他為什麼沒寫，他說「這哪有什麼好寫的」。</p>
 <p>請同學兩兩一組，依序做五件事。每一條判斷後面，都要引用情境裡讓你這樣判斷的那一句話。</p>
 <ol>
-<li>逐件判定成因，填下面這張表。
+<li>逐件判定成因，用下面的表格選，並寫一句理由。
    〔提示：有一件可以歸到兩個成因，有一件<strong>根本不是知識問題</strong>。〕</li>
 </ol>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>成因（五選一）</th>
-<th>理由：情境裡的哪一句</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>B</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>C</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>D</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>E</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>F</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+<div class="widget tcm-wrap">
+<style>
+.tcm-wrap { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+      background: #fbfbfc; margin: 1.6rem 0; }
+.tcm-wrap h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+.tcm-wrap .lede { color: #666; font-size: .88rem; margin: .2rem 0 .9rem; line-height: 1.7; }
+.tcm-tbl { width: 100%; border-collapse: collapse; font-size: .89rem; }
+.tcm-tbl th, .tcm-tbl td { border: 1px solid #e2e2e2; padding: .45rem .55rem; vertical-align: top; }
+.tcm-tbl th { background: #f4f6f9; color: #33475b; font-weight: 700; font-size: .84rem; text-align: left; }
+.tcm-tbl td.k { width: 2.2rem; text-align: center; font-weight: 700; color: #24528f; background: #fafbfd; }
+.tcm-tbl td.ev { line-height: 1.7; }
+.tcm-tbl td.ev q { color: #5b6b7c; font-style: normal; }
+.tcm-wrap select, .tcm-wrap input[type=text] { font: inherit; font-size: .86rem; width: 100%;
+      padding: .32rem .4rem; border: 1px solid #c9d4e4; border-radius: 6px; background: #fff;
+      color: #22303f; box-sizing: border-box; }
+.tcm-wrap select.done { background: #eef4fd; border-color: #24528f; }
+.tcm-wrap .bar { margin-top: .8rem; }
+.tcm-wrap button { font: inherit; font-size: .82rem; padding: .32rem .85rem; margin: .18rem .3rem .18rem 0;
+      border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
+.tcm-wrap button:hover { background: #eef4fd; }
+.tcm-out { margin-top: .75rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .88rem; line-height: 1.85; }
+.tcm-out.full { background: #eef7f1; border-color: #a8d4bd; }
+.tcm-out pre { white-space: pre-wrap; font: inherit; margin: .5rem 0 0; }
+@media (max-width: 640px) {
+  .tcm-tbl, .tcm-tbl tbody, .tcm-tbl tr, .tcm-tbl td { display: block; width: 100%; box-sizing: border-box; }
+  .tcm-tbl thead { display: none; }
+  .tcm-tbl tr { margin-bottom: .7rem; border: 1px solid #e2e2e2; border-radius: 8px; overflow: hidden; }
+  .tcm-tbl td { border: 0; border-bottom: 1px solid #eee; }
+  .tcm-tbl td.k { text-align: left; background: #f4f6f9; }
+}
+</style>
+
+<h5>逐件判定成因</h5>
+<p class="lede">六件事各挑一個成因，並寫一句理由——理由要寫情境裡的哪一句話讓你這樣判斷。
+填完按「整理成一段」，把整理好的內容念給同學聽。</p>
+
+<table class="tcm-tbl">
+  <thead>
+    <tr><th></th><th style="width:38%">發生了什麼</th><th style="width:27%">成因</th><th>理由：情境裡的哪一句</th></tr>
+  </thead>
+  <tbody>
+    <tr data-k="A"><td class="k">A</td>
+      <td class="ev">臨時記者會改地點，他早上就先知道<br><q>「他們每次要改都是這樣」</q></td></tr>
+    <tr data-k="B"><td class="k">B</td>
+      <td class="ev">「這個再研究看看」＝案子死了<br><q>「這句話就是這個意思啊」</q></td></tr>
+    <tr data-k="C"><td class="k">C</td>
+      <td class="ev">科長叫接手的人「先問你們那位老大哥」<br><q>「他跟我熟而已」</q></td></tr>
+    <tr data-k="D"><td class="k">D</td>
+      <td class="ev">建設公司的案子只找乙專員查證<br><q>「找他比較準」，再問就不講了</q></td></tr>
+    <tr data-k="E"><td class="k">E</td>
+      <td class="ev">換發言人後，週五下午的稿被壓到週一<br><q>「喔對，換人以後就這樣」</q></td></tr>
+    <tr data-k="F"><td class="k">F</td>
+      <td class="ev">一份資料他說不能寫，但不說會害到誰<br><q>「你不要問」</q></td></tr>
+  </tbody>
 </table>
+
+<div class="bar">
+  <button class="tcm-gen">整理成一段</button>
+  <button class="tcm-clear">清空</button>
+</div>
+<div class="tcm-out">已填 <b class="tcm-n">0</b> / 6。</div>
+
+<script>
+(function () {
+  var OPTS = ["不願意公開", "學習樣本太少", "複雜、多變量", "動態變化",
+              "無法察覺的習慣與風俗", "這不是知識問題"];
+  var EVENT = {
+    A: "臨時記者會改地點，他早上就先知道",
+    B: "「這個再研究看看」等於案子死了",
+    C: "科長叫接手的人先問那位老大哥",
+    D: "建設公司的案子只找乙專員查證",
+    E: "換發言人後，週五下午的稿被壓到週一",
+    F: "一份資料他說不能寫，但不說會害到誰"
+  };
+  var KEY = "tcm-v1";
+
+  var root = document.querySelector(".tcm-wrap");
+  if (!root) return;
+  var rows = [].slice.call(root.querySelectorAll(".tcm-tbl tbody tr"));
+  var out = root.querySelector(".tcm-out");
+  var nEl = root.querySelector(".tcm-n");
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function save(d) {
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) { /* 無痕視窗等情況，忽略 */ }
+  }
+  var data = load();
+
+  rows.forEach(function (tr) {
+    var k = tr.dataset.k;
+    var tdSel = document.createElement("td");
+    var sel = document.createElement("select");
+    var o0 = document.createElement("option");
+    o0.value = ""; o0.textContent = "請選擇…";
+    sel.appendChild(o0);
+    OPTS.forEach(function (o) {
+      var op = document.createElement("option");
+      op.value = o; op.textContent = o;
+      sel.appendChild(op);
+    });
+    tdSel.appendChild(sel);
+    tr.appendChild(tdSel);
+
+    var tdWhy = document.createElement("td");
+    var why = document.createElement("input");
+    why.type = "text";
+    why.placeholder = "情境裡的哪一句…";
+    tdWhy.appendChild(why);
+    tr.appendChild(tdWhy);
+
+    var saved = data[k] || {};
+    if (saved.cause) sel.value = saved.cause;
+    if (saved.why) why.value = saved.why;
+    sel.classList.toggle("done", !!sel.value);
+
+    function sync() {
+      data[k] = { cause: sel.value, why: why.value };
+      save(data);
+      sel.classList.toggle("done", !!sel.value);
+      count();
+    }
+    sel.addEventListener("change", sync);
+    why.addEventListener("input", sync);
+  });
+
+  function filled() {
+    return rows.filter(function (tr) {
+      var k = tr.dataset.k;
+      return data[k] && data[k].cause;
+    }).length;
+  }
+
+  function count() {
+    var n = filled();
+    nEl.textContent = n;
+    out.className = "tcm-out" + (n === 6 ? " full" : "");
+    if (n < 6) {
+      out.innerHTML = "已填 <b class=\"tcm-n\">" + n + "</b> / 6。";
+    } else {
+      out.innerHTML = "已填 <b class=\"tcm-n\">6</b> / 6。"
+        + "送出之前先回頭檢查兩件事：<b>其中一件有兩個成因</b>，"
+        + "<b>另一件根本不是知識問題</b>。你有沒有抓到？";
+    }
+    nEl = root.querySelector(".tcm-n");
+  }
+
+  root.querySelector(".tcm-gen").addEventListener("click", function () {
+    var lines = rows.map(function (tr) {
+      var k = tr.dataset.k, d = data[k] || {};
+      return k + "　" + EVENT[k] + "\n　　成因：" + (d.cause || "（未填）")
+        + "\n　　理由：" + (d.why || "（未填）");
+    });
+    out.className = "tcm-out" + (filled() === 6 ? " full" : "");
+    out.innerHTML = "念這一段給同學聽，請他挑你哪一條理由指不回情境裡的句子："
+      + "<pre>" + lines.join("\n\n").replace(/</g, "&lt;") + "</pre>";
+  });
+
+  root.querySelector(".tcm-clear").addEventListener("click", function () {
+    data = {};
+    save(data);
+    rows.forEach(function (tr) {
+      tr.querySelector("select").value = "";
+      tr.querySelector("select").classList.remove("done");
+      tr.querySelector("input").value = "";
+    });
+    out.className = "tcm-out";
+    out.innerHTML = "已填 <b class=\"tcm-n\">0</b> / 6。";
+    nEl = root.querySelector(".tcm-n");
+  });
+
+  count();
+})();
+</script>
+</div>
+
 <ol>
 <li>挑出「其實是外顯的、只是沒有人想到要寫」的那幾件。
    〔提示：看哪一件寫下來之後，一個入行第三年的人照著做就會。〕</li>
@@ -436,7 +573,7 @@ MathJax = {
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-19">小作業</h3>
 <p>把自己的工作當成一套專家系統盤點一次，寫成四行：別人最常來問你哪三件事、這三件裡哪幾件寫得下來、寫不下來的那幾件屬於五個成因裡的哪一種、你希望其中哪一件被系統接走。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 13:03</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 13:09</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
