@@ -40,6 +40,11 @@ MathJax = {
 <td><strong>判斷</strong>一則演算法報導要拿到什麼證據才站得住，並設計自家的查證路徑</td>
 <td>如果明天有讀者爆料某個政府系統有偏見，我的編輯台要怎麼查？要什麼資料？</td>
 </tr>
+<tr>
+<td>4</td>
+<td><strong>區分</strong>分配性傷害與再現性傷害，並指出自家哪些系統屬於前者</td>
+<td>同樣是演算法有偏差，為什麼有些只要調內容策略，有些非得在流程裡設攔截點不可？</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -953,6 +958,34 @@ MathJax = {
 
 <hr />
 </section>
+<section class="mod-sec sec-content"><h4>這些百分比最後變成年</h4>
+<p>到目前為止，兩組被告的差異都還只是百分比。<strong>下面這個案子是它落地的樣子。</strong></p>
+<p>2013 年 8 月，威斯康辛州 La Crosse 郡的法官 Scott Horne 在庭上宣告，被告 Eric Loomis「經由 COMPAS 評估，被辨識為對社區屬於高風險的個人」，接著判處 <strong>8 年 6 個月</strong>有期徒刑。Loomis 被起訴的罪名是駕駛贓車與拒捕逃逸。</p>
+<p>Loomis 主張在量刑階段使用這個分數侵害他的正當法律程序權利。州政府的辯護是：法官可以在其他因素之外一併考量這個分數。同時，州政府在最高法院做出裁決之前，<strong>暫停在判決前調查報告中附上分數</strong>。</p>
+<p>威斯康辛州助理檢察長 Christine Remington 在州最高法院言詞辯論時說：</p>
+<blockquote>
+<p>風險分數本身不應該決定一個被告的刑度。我們不希望法院說，我面前這個人在 COMPAS 上是 10 分的風險，所以我要判他最重的刑。</p>
+</blockquote>
+</section>
+<section class="mod-sec sec-content"><h4>後來州最高法院怎麼判</h4>
+<p>2016 年 7 月，威斯康辛州最高法院維持原判：<strong>只要使用方式正確，法院在量刑時參考 COMPAS 風險評估並不違反正當法律程序。</strong></p>
+<p>但它同時要求，附有 COMPAS 報告的判決前調查報告必須載明幾項警語：這個分數建立在<strong>群體資料</strong>上、<strong>沒有在威斯康辛州的人口上做過交叉驗證</strong>、而且<strong>已經被批評可能帶有種族偏見</strong>。</p>
+<p>停一下看這個結果的形狀：法院承認了工具的三個問題，然後要求把這三個問題<strong>印在表格上</strong>。誰因為分數多關幾個月，這件事沒有改變。</p>
+</section>
+<section class="mod-sec sec-content"><h4>這叫分配性傷害，它跟「數字不好看」是兩回事</h4>
+<ul>
+<li>演算法公平的文獻把傷害分兩類：<strong>分配性傷害</strong>（allocative harm，也常被稱作分配偏誤 allocation bias）與<strong>再現性傷害</strong>（representational harm）。</li>
+<li>分配性傷害是指系統的差異決定了<strong>誰拿到什麼、誰失去什麼</strong>——工作、貸款、保釋、刑期。</li>
+<li>再現性傷害是指系統強化了對某個群體的刻板印象或抹除，傷的是形象與地位，不直接分配資源。</li>
+</ul>
+<p>把前面那兩張四格表接到這裡：黑人被告的偽陽性率 44.9%、白人 23.5%，<strong>這個差距被分配出去的東西是自由的年數</strong>。Loomis 案讓你看到中間那條傳動軸——分數進入判決前調查報告，法官在庭上引用它，刑期就出來了。</p>
+<blockquote>
+<p><strong>統計上的落差不會停在報表上。只要有人拿它做決定，它就會變成某一群人實際失去的東西——而那群人不會知道自己是因為哪一格被分到那一邊。</strong></p>
+</blockquote>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼媒體主管要記住這個詞</span><p>你的機構做的每一個自動判斷，都要先問它是哪一類傷害。推薦演算法把某個族群的報導推得比較少，是再現性傷害；用自動評分決定誰的投稿被退、誰的申訴被優先處理、誰的帳號被停權，那是分配性傷害。</p>
+<p>兩者的處理方式不同：再現性傷害可以靠內容策略與編輯判斷補救；<strong>分配性傷害必須在決策流程裡設攔截點</strong>，因為東西一旦分出去就收不回來。第 11 週要草擬的守則，主要是在處理第二種。</p></div>
+<hr />
+</section>
 <section class="mod-sec sec-content"><h3 id="sec-3">三、它預測的到底是什麼</h3>
 <p>ProPublica 把再犯定義為：「評估之後發生的、有指紋建檔且含起訴立案的逮捕」，排除交通與地方性違規。</p>
 <p>這是資料上唯一可行的定義。但<strong>逮捕不等於犯罪</strong>：巡邏密度、攔查機率、起訴裁量在不同社區並不相同。當某些社區被更密集地執法，那裡的人「被逮捕」的機率就高於他們實際犯罪率所應對應的水準。</p>
@@ -1030,6 +1063,16 @@ MathJax = {
 <td>複核者看得到的是分數，看不到分數怎麼來；他多半只會確認而不會推翻</td>
 <td>連回 <a href="Case_-_DOGE_%E7%94%A8_AI_%E7%A0%8D%E6%B3%95%E8%A6%8F%E8%80%8C%E6%94%BF%E5%BA%9C%E6%8B%92%E7%B5%95%E6%8F%AD%E9%9C%B2.html">DOGE 用 AI 砍法規而政府拒絕揭露</a> 的人在迴圈徒具形式</td>
 </tr>
+<tr>
+<td>「法官只是參考，又不是照分數判」</td>
+<td>州政府的辯護就是這句，但 Loomis 被判 8 年 6 個月時，法官在庭上引用的正是這個分數</td>
+<td>問：你怎麼證明它「只是參考」？拿得出沒有照它走的案例嗎？</td>
+</tr>
+<tr>
+<td>「加警語就算處理了」</td>
+<td>威斯康辛最高法院要求標示三項限制，但誰多關幾個月沒有改變</td>
+<td>揭露是給決策者的，不是給被分配到後果的那個人的</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -1059,6 +1102,7 @@ MathJax = {
 <li><strong>方法論說明文</strong>（四格數字的出處，本節兩張表都從這裡來）：&lt;<a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm</a>&gt;</li>
 <li><strong>原始資料與程式碼</strong>（可自己重跑）：&lt;<a href="https://github.com/propublica/compas-analysis">https://github.com/propublica/compas-analysis</a>&gt;</li>
 <li><strong>Northpointe 的反駁</strong>：Dieterich, W., Mendoza, C., &amp; Brennan, T.（2016）。COMPAS Risk Scales: Demonstrating Accuracy Equity and Predictive Parity。</li>
+<li><strong>Loomis 案判決</strong>：State v. Loomis, 2016 WI 68, 371 Wis. 2d 235, 881 N.W.2d 749（威斯康辛州最高法院，2016-07-13）。判決全文：&lt;<a href="https://www.wicourts.gov/sc/opinion/DisplayDocument.pdf?content=pdf&amp;seqNo=171690">https://www.wicourts.gov/sc/opinion/DisplayDocument.pdf?content=pdf&amp;seqNo=171690</a>&gt;；案情摘要與後續討論見《哈佛法律評論》第 130 卷：&lt;<a href="https://harvardlawreview.org/print/vol-130/state-v-loomis/">https://harvardlawreview.org/print/vol-130/state-v-loomis/</a>&gt;</li>
 <li>完整筆記與數字：wiki <code>ProPublica如何檢驗COMPAS再犯演算法</code>、<code>準確率相同誤判卻落在不同族群</code>、<code>以逮捕紀錄當再犯的代理變項</code></li>
 <li>公平性判準衝突的形式化證明：Chouldechova (2017)；Kleinberg, Mullainathan &amp; Raghavan (2016)</li>
 </ul>
@@ -1069,7 +1113,7 @@ MathJax = {
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：廠商宣稱 AUC 0.76–0.83，外部驗證 0.63；每八次警示一次是真的</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：同一種偽陽性分布不均，但已進入監理處分階段</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 15:39</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 15:51</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
