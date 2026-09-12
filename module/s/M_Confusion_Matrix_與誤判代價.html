@@ -718,7 +718,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
   </div>
   <div class="row">
     <label>真陽性比率</label>
-    <input type="range" id="cm-prev" min="1" max="500" value="50">
+    <input type="range" id="cm-prev" min="1" max="600" value="50">
     <span class="pct" id="cm-prevv">5.0%</span>
   </div>
 
@@ -848,6 +848,18 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
   root.dataset.ready = "1";
 
   var SCEN = [
+    { key: "compas_b", name: "COMPAS 再犯風險（黑人被告）",
+      pos: "兩年內再犯", act: "標為高風險，進入保釋與量刑的參考",
+      n: 3700, prev: 514, d: 75, thr: 30,
+      cfn: 30, cfp: 30,
+      fnl: "FN 標了低風險，兩年內卻再犯", fpl: "FP 標了高風險，兩年內沒有再犯",
+      desc: "ProPublica 2016 年重建的佛州 Broward County 資料，黑人被告 3,696 人（滑桿以 3,700 近似），兩年內實際再犯 51.4%。<b>漏掉</b>＝一個會再犯的人被當成低風險；<b>誤抓</b>＝一個不會再犯的人被貼上高風險標籤，保釋金與刑期都可能因此變重。兩邊的代價預設設成一樣——<b>該不該一樣，就是這一節要吵的事</b>。" },
+    { key: "compas_w", name: "COMPAS 再犯風險（白人被告）",
+      pos: "兩年內再犯", act: "標為高風險，進入保釋與量刑的參考",
+      n: 2450, prev: 394, d: 75, thr: 46,
+      cfn: 30, cfp: 30,
+      fnl: "FN 標了低風險，兩年內卻再犯", fpl: "FP 標了高風險，兩年內沒有再犯",
+      desc: "同一套系統、同一段期間的白人被告 2,454 人（滑桿以 2,450 近似），兩年內實際再犯 39.4%。<b>先跟上一個情境比四格</b>：整體準確率差不多，但沒再犯卻被標高風險的比率只有黑人那組的一半。<b>再把兩組的門檻拉成一樣</b>，看哪些數字會合起來、哪些不會。" },
     { key: "fake", name: "假訊息偵測",
       pos: "假訊息", act: "下架送審",
       n: 10000, prev: 50, d: 180, thr: 50,
@@ -1403,7 +1415,7 @@ Blackstone 那句話的意思，用今天的語言講就是：<strong>FN 的代�
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：正預測值 12%、漏掉 67%，一個門檻在真實場域的代價</li>
 <li><a href="M_COMPAS_%E5%86%8D%E7%8A%AF%E6%BC%94%E7%AE%97%E6%B3%95%E5%80%8B%E6%A1%88.html">COMPAS 再犯演算法個案</a>：把四格依族群拆開之後才看得到的落差</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 13:09</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 13:42</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

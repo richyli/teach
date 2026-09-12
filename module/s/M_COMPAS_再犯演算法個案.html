@@ -60,44 +60,98 @@ MathJax = {
 <hr />
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-2">二、讀數字：同樣的準確率，相反的錯誤</h3>
-<p>先給整體正確率：<strong>白人被告 62.5%，黑人被告 62.3%。</strong> 幾乎一樣。</p>
-<p>再把 confusion matrix 依族群拆開：</p>
+<p>先看整體。ProPublica 用 Cox 模型算兩個族群的區辨能力，結果是<strong>白人被告 62.5%、黑人被告 62.3%</strong>。幾乎一樣。</p>
+<p><strong>如果只看這一個數字，這套系統對兩個族群一樣準，沒有問題。</strong></p>
+<p>接下來把同一批人拆成四格，一格一格看。四格的意思是：橫著看是系統怎麼說，直著看是兩年後實際發生了什麼。</p>
+</section>
+<section class="mod-sec sec-content"><h4>黑人被告 3,696 人</h4>
 <table>
 <thead>
 <tr>
-<th>指標</th>
-<th>黑人被告</th>
-<th>白人被告</th>
+<th></th>
+<th>系統標「低風險」</th>
+<th>系統標「高風險」</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>偽陽性率 FPR（<strong>沒再犯</strong>卻被標高風險）</td>
-<td><strong>44.85%</strong></td>
-<td>23.45%</td>
+<td><strong>兩年內沒有再犯</strong>（1,795 人）</td>
+<td>990</td>
+<td><strong>805</strong></td>
 </tr>
 <tr>
-<td>偽陰性率 FNR（<strong>再犯了</strong>卻被標低風險）</td>
-<td>27.99%</td>
-<td><strong>47.72%</strong></td>
-</tr>
-<tr>
-<td>正預測值 PPV（標高風險的人裡真的再犯的比例）</td>
-<td>0.63</td>
-<td>0.59</td>
+<td><strong>兩年內再犯了</strong>（1,901 人）</td>
+<td>532</td>
+<td>1,369</td>
 </tr>
 </tbody>
 </table>
-<p>沒有再犯的黑人被告，被誤標為高風險的機率<strong>接近白人的兩倍</strong>；真的再犯的白人被告，被誤標為低風險的頻率<strong>比黑人高出七成</strong>。若只看 COMPAS 最高風險那一段（8–10 分），黑人被誤標為高風險的機率是白人的<strong>三倍</strong>（16% 對 5%）。</p>
-<p><strong>Northpointe 的反駁也是真的</strong>：兩個族群的正預測值相近（0.63 對 0.59），依「校準」這個定義，系統是公平的。</p>
+</section>
+<section class="mod-sec sec-content"><h4>白人被告 2,454 人</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>系統標「低風險」</th>
+<th>系統標「高風險」</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>兩年內沒有再犯</strong>（1,488 人）</td>
+<td>1,139</td>
+<td><strong>349</strong></td>
+</tr>
+<tr>
+<td><strong>兩年內再犯了</strong>（966 人）</td>
+<td>461</td>
+<td>505</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>一次讀一列，只看那一列</h4>
+<p><strong>先看「沒有再犯」那一列。</strong>這些人兩年內都沒事，系統本來不該標他們高風險。</p>
+<ul>
+<li>黑人被告：1,795 個沒再犯的人裡，805 個被標成高風險。<strong>44.9%，接近一半。</strong></li>
+<li>白人被告：1,488 個沒再犯的人裡，349 個被標成高風險。<strong>23.5%。</strong></li>
+</ul>
+<p>同樣是沒有再犯的人，<strong>黑人被誤標成高風險的機率，接近白人的兩倍。</strong></p>
+<p><strong>再看「真的再犯了」那一列。</strong>這些人兩年內真的再犯，系統標他們低風險就是漏掉了。</p>
+<ul>
+<li>白人被告：966 個再犯的人裡，461 個被標成低風險。<strong>47.7%，將近一半被漏掉。</strong></li>
+<li>黑人被告：1,901 個再犯的人裡，532 個被標成低風險。<strong>28.0%。</strong></li>
+</ul>
+<p>同樣是真的再犯的人，<strong>白人被漏掉的機率，比黑人高出七成。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h4>兩句話講完這一節</h4>
+<p><strong>這套系統對黑人傾向「寧可錯殺」，對白人傾向「寧可錯放」。而兩邊的整體準確率幾乎一樣。</strong></p>
+<p>錯誤的總量差不多，錯誤的<strong>方向</strong>相反——而承擔哪一種錯誤，決定的是有沒有人多關幾個月。</p>
+<p>若只看 COMPAS 最高風險那一段（8–10 分），黑人被誤標為高風險的機率是白人的<strong>三倍</strong>（16% 對 5%）。</p>
+<div class="callout callout-student"><span class="co-title">學生閱讀｜那三個準確率為什麼對不起來</span><p>上面出現了三組數字，值得停一下：62.5%／62.3% 是 ProPublica 用 Cox 模型算的<strong>區辨能力</strong>（會不會把風險高的人排在前面），不是四格算出來的答對率。你自己拿四格算，會得到黑人 63.8%、白人 67.0%。</p>
+<p>兩種算法給的結論一樣：<strong>差距在三個百分點以內。</strong>而誤標高風險的比率差了快兩倍。</p>
+<p>所以同一套系統可以報出好幾個準確率。<strong>你要問的是「你報的是哪一個」，以及「拆開族群之後還一樣嗎」。</strong></p></div>
+</section>
+<section class="mod-sec sec-content"><h4>Northpointe 的反駁也是真的</h4>
+<p>被標為高風險的人裡面，真的再犯的比例兩族群相近（黑人 0.63、白人 0.59）。依「校準」這個定義，系統是公平的。</p>
 <div class="callout callout-student"><span class="co-title">學生閱讀｜為什麼兩邊可以同時是對的</span><p>因為「公平」不只有一個定義，而它們互相衝突。</p>
 <ul>
 <li><strong>校準公平</strong>：被標為高風險的人，不管什麼族群，真的再犯的比例應該差不多。→ Northpointe 用這個，系統通過。</li>
 <li><strong>誤判率均等</strong>：沒犯的人被誤抓的比率、犯了的人被漏放的比率，各族群應該差不多。→ ProPublica 用這個，系統不通過。</li>
 </ul>
-<p>後續的形式化研究證明：<strong>當兩個群體的基礎比率不同時，這兩種公平在數學上不可能同時滿足。</strong> 這不是誰算錯，是你必須選一個定義，而且選擇本身要被說明、被究責。</p>
+<p>後續的形式化研究證明：<strong>當兩個群體的基礎比率不同時，這兩種公平在數學上不可能同時滿足。</strong> 這裡的基礎比率就差很多——黑人被告兩年內再犯的比例 51.4%，白人 39.4%。</p>
+<p>這不是誰算錯，是你必須選一個定義，而且選擇本身要被說明、被究責。</p>
 <p>對主管的意義：以後有人拿一個總分跟你說「我們的系統很公平」，你要問的是——<strong>你用的是哪一個公平的定義？另一個定義下的數字是多少？</strong></p></div>
 <p>順帶一提：ProPublica 用 Cox 比例風險模型算出的一致性指標是 <strong>0.636</strong>（暴力再犯 0.651），低於 Northpointe 自己設的 0.70 門檻。暴力再犯量表的正預測值只有 <strong>0.20</strong>——被標為高暴力風險的人，五個裡只有一個真的發生。</p>
+</section>
+<section class="mod-sec sec-content"><h4>拉一次門檻，看四格一起動</h4>
+<p>模擬器裡前兩個情境就是上面這兩張表。請照順序做三件事：</p>
+<ol>
+<li>選「COMPAS 再犯風險（黑人被告）」，把四格記下來。</li>
+<li>切到「COMPAS 再犯風險（白人被告）」，比對四格怎麼變。</li>
+<li><strong>把兩組的門檻拉到同一個位置</strong>（例如都拉到 38），再看一次四格。</li>
+</ol>
+<p>第 3 步會看到：兩組的誤判率變得幾乎一樣，但「標高風險的人裡真的再犯的比例」分開了。<strong>你沒辦法同時把這兩件事弄成一樣</strong>——這就是上面那個不可能定理，用手拉出來的版本。</p>
 <div class="widget figzoom" id="cm-sim"><button type="button" class="figzoom-btn" title="全螢幕" aria-label="全螢幕"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>全螢幕</span></button>
 <style>
 #cm-sim { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
@@ -180,7 +234,7 @@ MathJax = {
   </div>
   <div class="row">
     <label>真陽性比率</label>
-    <input type="range" id="cm-prev" min="1" max="500" value="50">
+    <input type="range" id="cm-prev" min="1" max="600" value="50">
     <span class="pct" id="cm-prevv">5.0%</span>
   </div>
 
@@ -310,6 +364,18 @@ MathJax = {
   root.dataset.ready = "1";
 
   var SCEN = [
+    { key: "compas_b", name: "COMPAS 再犯風險（黑人被告）",
+      pos: "兩年內再犯", act: "標為高風險，進入保釋與量刑的參考",
+      n: 3700, prev: 514, d: 75, thr: 30,
+      cfn: 30, cfp: 30,
+      fnl: "FN 標了低風險，兩年內卻再犯", fpl: "FP 標了高風險，兩年內沒有再犯",
+      desc: "ProPublica 2016 年重建的佛州 Broward County 資料，黑人被告 3,696 人（滑桿以 3,700 近似），兩年內實際再犯 51.4%。<b>漏掉</b>＝一個會再犯的人被當成低風險；<b>誤抓</b>＝一個不會再犯的人被貼上高風險標籤，保釋金與刑期都可能因此變重。兩邊的代價預設設成一樣——<b>該不該一樣，就是這一節要吵的事</b>。" },
+    { key: "compas_w", name: "COMPAS 再犯風險（白人被告）",
+      pos: "兩年內再犯", act: "標為高風險，進入保釋與量刑的參考",
+      n: 2450, prev: 394, d: 75, thr: 46,
+      cfn: 30, cfp: 30,
+      fnl: "FN 標了低風險，兩年內卻再犯", fpl: "FP 標了高風險，兩年內沒有再犯",
+      desc: "同一套系統、同一段期間的白人被告 2,454 人（滑桿以 2,450 近似），兩年內實際再犯 39.4%。<b>先跟上一個情境比四格</b>：整體準確率差不多，但沒再犯卻被標高風險的比率只有黑人那組的一半。<b>再把兩組的門檻拉成一樣</b>，看哪些數字會合起來、哪些不會。" },
     { key: "fake", name: "假訊息偵測",
       pos: "假訊息", act: "下架送審",
       n: 10000, prev: 50, d: 180, thr: 50,
@@ -808,7 +874,10 @@ MathJax = {
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-6">資料來源</h3>
 <ul>
-<li>ProPublica 方法論說明文（2016-05-23）：<a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">[https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm](https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm)</a></li>
+<li><strong>原始報導</strong> Angwin, J., Larson, J., Mattu, S., &amp; Kirchner, L.（2016-05-23）。Machine Bias。ProPublica：&lt;<a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing</a>&gt;</li>
+<li><strong>方法論說明文</strong>（四格數字的出處，本節兩張表都從這裡來）：&lt;<a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm</a>&gt;</li>
+<li><strong>原始資料與程式碼</strong>（可自己重跑）：&lt;<a href="https://github.com/propublica/compas-analysis">https://github.com/propublica/compas-analysis</a>&gt;</li>
+<li><strong>Northpointe 的反駁</strong>：Dieterich, W., Mendoza, C., &amp; Brennan, T.（2016）。COMPAS Risk Scales: Demonstrating Accuracy Equity and Predictive Parity。</li>
 <li>完整筆記與數字：wiki <code>ProPublica如何檢驗COMPAS再犯演算法</code>、<code>準確率相同誤判卻落在不同族群</code>、<code>以逮捕紀錄當再犯的代理變項</code></li>
 <li>公平性判準衝突的形式化證明：Chouldechova (2017)；Kleinberg, Mullainathan &amp; Raghavan (2016)</li>
 </ul>
@@ -819,7 +888,7 @@ MathJax = {
 <li><a href="Case_-_%E6%95%97%E8%A1%80%E7%97%87%E9%A0%90%E6%B8%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%A3%E7%A8%B1%E8%88%87%E5%AF%A6%E6%B8%AC.html">敗血症預測模型的宣稱與實測</a>：廠商宣稱 AUC 0.76–0.83，外部驗證 0.63；每八次警示一次是真的</li>
 <li><a href="Case_-_Rite_Aid_%E4%BA%BA%E8%87%89%E8%BE%A8%E8%AD%98%E8%A2%AB%E7%A6%81%E7%94%A8%E4%BA%94%E5%B9%B4.html">Rite Aid 人臉辨識被禁用五年</a>：同一種偽陽性分布不均，但已進入監理處分階段</li>
 </ul></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 13:09</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-12 13:42</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
