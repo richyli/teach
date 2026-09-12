@@ -14,7 +14,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">河內塔只有三條規則，難的不是規則而是路線</a></li><li><a href="#sec-5">一邊搬，一邊看著搜尋空間亮起來</a></li><li><a href="#sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</a></li><li><a href="#sec-7">片數每多一片，最少步數就翻一倍</a></li><li><a href="#sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</a></li><li><a href="#sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享：估一次你自己的搜尋空間</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>搜尋空間與河內塔</h1></div><p>在本單元中，會介紹搜尋空間是什麼、為什麼問題大一點答案就多好幾個位數，以及這件事怎麼決定了一個問題該交給規則還是交給學來的直覺。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">🎯 學習目標</a></li><li><a href="#sec-2">🤖 課前 AI 互動</a></li><li><a href="#sec-3">🔤 關鍵詞</a></li><li><a href="#sec-4">河內塔只有三條規則，難的不是規則而是路線</a></li><li><a href="#sec-5">一邊搬，一邊看著搜尋空間亮起來</a></li><li><a href="#sec-6">有解與最佳解是兩件事，而工作上要的通常是後者</a></li><li><a href="#sec-7">片數每多一片，最少步數就翻一倍</a></li><li><a href="#sec-8">搜尋空間小的時候，問題會從「找不找得到」變成「你要的是哪一個」</a></li><li><a href="#sec-9">井字棋可以窮舉，圍棋不行，規則型系統的邊界就在這條線上</a></li><li><a href="#sec-10">⚠️ 迷思攔截</a></li><li><a href="#sec-11">先修與後續</a></li><li><a href="#sec-12">小結論</a></li><li><a href="#sec-13">💬 討論／分享／反思</a></li><li><a href="#sec-14">配對分享：要變成 AI 自動排版之前，先想清楚什麼</a></li><li><a href="#sec-15">個人反思</a></li><li><a href="#sec-16">小作業</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>搜尋空間與河內塔</h1></div><p>在本單元中，會介紹搜尋空間是什麼、為什麼問題大一點答案就多好幾個位數，以及這件事怎麼決定了一個問題該交給規則還是交給學來的直覺。</p>
 <section class="mod-sec sec-objectives"><h3 id="sec-1">🎯 學習目標</h3>
 <table>
 <thead>
@@ -103,90 +103,125 @@ MathJax = {
 </ul>
 <p>先用兩片跑一次。九個點旁邊都有標籤，前一個字母是大片在哪根柱子、後一個是小片，所以起點是 AA、終點是 CC，最短的走法是 AA → AB → CB → CC 三步。搬的時候注意右邊那個深藍色的點怎麼移動、藍線怎麼長出來。</p>
 <p>兩片跑完再換三片：點數從 9 變成 27，最少步數從 3 變成 7。按「show 最佳解」比對你的藍線跟紅線差在哪裡；再加到四片、五片，看整張圖怎麼爆炸。</p>
-<div class="widget" id="hss">
+<div class="widget hss-wrap">
 <style>
-#hss { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
+.hss-wrap { border: 1px solid #dcdcdc; border-radius: 10px; padding: 1rem 1.2rem 1.3rem;
       background: #fbfbfc; margin: 1.6rem 0; }
-#hss h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
-#hss .lede { color: #666; font-size: .88rem; margin: .2rem 0 .9rem; line-height: 1.7; }
-#hss .bar { margin: .2rem 0 .8rem; }
-#hss button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
+.hss-wrap h4 { margin: .2rem 0 .1rem; font-size: 1rem; }
+.hss-wrap .lede { color: #666; font-size: .88rem; margin: .2rem 0 1rem; line-height: 1.7; }
+.hss-wrap button { font: inherit; font-size: .82rem; padding: .32rem .8rem; margin: .18rem .3rem .18rem 0;
       border: 1px solid #c9d4e4; background: #fff; color: #24528f; border-radius: 999px; cursor: pointer; }
-#hss button:hover { background: #eef4fd; }
-#hss button.on { background: #24528f; color: #fff; border-color: #24528f; }
-#hss .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: .9rem; }
-#hss .panel { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: .7rem .9rem .9rem; }
-#hss .panel h5 { margin: .1rem 0 .6rem; font-size: .86rem; color: #24528f; }
-#hss .board { display: flex; gap: .6rem; align-items: flex-end; justify-content: center; padding-top: .4rem; }
-#hss .peg { flex: 1 1 0; position: relative; height: 158px; cursor: pointer;
+.hss-wrap button:hover { background: #eef4fd; }
+.hss-wrap button.on { background: #24528f; color: #fff; border-color: #24528f; }
+.hss-scene { background: #fff; border: 1px solid #e2e2e2; border-radius: 9px;
+      padding: .85rem 1rem 1rem; margin-bottom: 1rem; }
+.hss-title { margin: .1rem 0 .25rem; font-size: .94rem; color: #24528f; }
+.hss-sub { margin: 0 0 .7rem; font-size: .85rem; color: #666; line-height: 1.75; }
+.hss-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: .9rem; }
+.hss-panel { min-width: 0; }
+.hss-board { display: flex; gap: .6rem; align-items: flex-end; justify-content: center; padding-top: .3rem; }
+.hss-peg { flex: 1 1 0; position: relative; height: 150px; cursor: pointer;
       display: flex; flex-direction: column-reverse; align-items: center; gap: 3px;
       border-bottom: 6px solid #c8d2de; border-radius: 3px; padding-bottom: 2px; }
-#hss .peg::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 6px; height: 148px; background: #dde4ec; border-radius: 3px; }
-#hss .peg.sel { background: #eef4fd; }
-#hss .peg .lbl { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center;
+.hss-peg::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 140px; background: #dde4ec; border-radius: 3px; }
+.hss-peg.sel { background: #eef4fd; }
+.hss-lbl { position: absolute; bottom: -21px; left: 0; right: 0; text-align: center;
       font-size: .78rem; color: #7a8796; }
-#hss .disc { position: relative; height: 19px; border-radius: 4px; color: #fff;
+.hss-disc { position: relative; height: 19px; border-radius: 4px; color: #fff;
       font-size: .74rem; line-height: 19px; text-align: center; }
-#hss .disc.lift { outline: 2px dashed #24528f; outline-offset: 2px; }
-#hss svg { width: 100%; height: auto; display: block; }
-#hss .stat { margin-top: 1.6rem; font-size: .87rem; line-height: 1.9; }
-#hss .stat b { color: #24528f; }
-#hss .out { margin-top: .7rem; padding: .7rem .9rem; border-radius: 8px;
-      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .89rem; line-height: 1.85; }
-#hss .out.ok { background: #eef7f1; border-color: #a8d4bd; }
-#hss .key { font-size: .78rem; color: #7a8796; margin-top: .5rem; line-height: 1.8; }
-#hss .sw { display: inline-block; width: 22px; height: 3px; vertical-align: middle;
-      margin: 0 .25rem 0 .6rem; border-radius: 2px; }
-#hss .tbl { border-collapse: collapse; margin-top: .9rem; font-size: .83rem; width: 100%; }
-#hss .tbl th, #hss .tbl td { border: 1px solid #e2e2e2; padding: .3rem .5rem; text-align: right; }
-#hss .tbl th:first-child, #hss .tbl td:first-child { text-align: left; }
-#hss .tbl th { background: #f4f6f9; color: #33475b; font-weight: 700; }
+.hss-disc.lift { outline: 2px dashed #24528f; outline-offset: 2px; }
+.hss-bar { margin-top: 1.7rem; }
+.hss-svgbox svg { width: 100%; height: auto; display: block; }
+.hss-stat { margin-top: .5rem; font-size: .86rem; line-height: 1.9; }
+.hss-stat b { color: #24528f; }
+.hss-out { margin-top: .75rem; padding: .7rem .9rem; border-radius: 8px;
+      background: #eef4fd; border: 1px solid #c9d9ef; font-size: .88rem; line-height: 1.85; }
+.hss-out.ok { background: #eef7f1; border-color: #a8d4bd; }
+.hss-key { font-size: .77rem; color: #7a8796; margin-top: .45rem; line-height: 1.8; }
+.hss-sw { display: inline-block; width: 20px; height: 3px; vertical-align: middle;
+      margin: 0 .22rem 0 .5rem; border-radius: 2px; }
+.hss-tbl { border-collapse: collapse; margin-top: .2rem; font-size: .83rem; width: 100%; }
+.hss-tbl th, .hss-tbl td { border: 1px solid #e2e2e2; padding: .3rem .5rem; text-align: right; }
+.hss-tbl th:first-child, .hss-tbl td:first-child { text-align: left; }
+.hss-tbl th { background: #f4f6f9; color: #33475b; font-weight: 700; }
 </style>
 
 <h5>自己搬一次，右邊同步告訴你走到搜尋空間的哪一點</h5>
-<p class="lede">左邊每搬一片，右邊那張圖就跟著亮一個點。整張圖是這個題目所有可能的擺法，
-灰線是所有合法的搬動，紅線是最短的那一條，藍線是你實際走過的路。
-<b>先從兩片開始</b>——九個點、三步走完，整個搜尋空間可以一眼讀完，再往上加片數。</p>
+<p class="lede">兩個場景各自獨立，都可以動手搬。左邊每搬一片，右邊那張圖就跟著亮一個點：
+圖上每個點是一種擺法，每條線是一次合法的搬動。灰線是所有走得通的路，紅線是最短的那一條，
+藍線是你實際走過的。<b>先把上面的兩片搬完，再往下做三片</b>，比較兩張圖差多少。</p>
 
-<div class="bar">
-  <button data-n="2" class="on">2 片</button>
-  <button data-n="3">3 片</button>
-  <button data-n="4">4 片</button>
-  <button data-n="5">5 片</button>
-  <button id="hss-undo">退一步</button>
-  <button id="hss-reset">重來</button>
-  <button id="hss-solve">show 最佳解</button>
-</div>
-
-<div class="grid">
-  <div class="panel">
-    <h6>① 先點起點柱，再點目標柱</h6>
-    <div class="board">
-      <div class="peg" data-p="0"><span class="lbl">A 起點</span></div>
-      <div class="peg" data-p="1"><span class="lbl">B 中繼</span></div>
-      <div class="peg" data-p="2"><span class="lbl">C 終點</span></div>
+<section class="hss-scene" data-n="2" data-min="2" data-max="2">
+  <h6 class="hss-title">場景一 · 兩片：整張搜尋空間只有 9 個點</h6>
+  <p class="hss-sub">九個點都標了名字：前一個字母是大片在哪根柱子，後一個是小片。
+  起點 AA、終點 CC，最短走法是 AA → AB → CB → CC，三步。</p>
+  <div class="hss-grid">
+    <div class="hss-panel">
+      <div class="hss-board">
+        <div class="hss-peg"><span class="hss-lbl">A 起點</span></div>
+        <div class="hss-peg"><span class="hss-lbl">B 中繼</span></div>
+        <div class="hss-peg"><span class="hss-lbl">C 終點</span></div>
+      </div>
+      <div class="hss-bar">
+        <button class="hss-undo">退一步</button>
+        <button class="hss-reset">重來</button>
+        <button class="hss-solve">show 最佳解</button>
+      </div>
+      <div class="hss-stat">
+        你走了 <b class="hss-moves">0</b> 步　·　最少 <b class="hss-min">3</b> 步<br>
+        你踩過 <b class="hss-seen">1</b> 種擺法　·　全部共 <b class="hss-total">9</b> 種
+      </div>
     </div>
-    <div class="stat">
-      你走了 <b id="hss-moves">0</b> 步　·　最少 <b id="hss-min">3</b> 步<br>
-      你踩過 <b id="hss-seen">1</b> 種擺法　·　全部共 <b id="hss-total">9</b> 種
-    </div>
-  </div>
-  <div class="panel">
-    <h6>② 這個題目的搜尋空間</h6>
-    <div id="hss-svg"></div>
-    <div class="key">
-      <span class="sw" style="background:#d05070"></span>最少步數的那一條
-      <span class="sw" style="background:#24528f"></span>你走過的
-      <span class="sw" style="background:#dbe3ec"></span>其餘合法的搬動
-      <div id="hss-legend"></div>
+    <div class="hss-panel">
+      <div class="hss-svgbox"></div>
+      <div class="hss-key">
+        <span class="hss-sw" style="background:#d05070"></span>最短的那一條
+        <span class="hss-sw" style="background:#24528f"></span>你走過的
+        <span class="hss-sw" style="background:#dbe3ec"></span>其餘合法的搬動
+      </div>
     </div>
   </div>
-</div>
+  <div class="hss-out">先點起點柱，再點目標柱，把兩片搬到 C。</div>
+</section>
 
-<div class="out" id="hss-out">先用兩片試一次：整張圖只有 9 個點，一眼看得完。</div>
+<section class="hss-scene" data-n="3" data-min="3" data-max="5">
+  <h6 class="hss-title">場景二 · 三片：同樣一張圖，點變成 27 個</h6>
+  <p class="hss-sub">規則一個字都沒改，只多了一片，擺法就從 9 種變成 27 種、最少步數從 3 步變成 7 步。
+  搬完可以再切到四片、五片，看整張圖怎麼爆炸。</p>
+  <div class="hss-grid">
+    <div class="hss-panel">
+      <div class="hss-board">
+        <div class="hss-peg"><span class="hss-lbl">A 起點</span></div>
+        <div class="hss-peg"><span class="hss-lbl">B 中繼</span></div>
+        <div class="hss-peg"><span class="hss-lbl">C 終點</span></div>
+      </div>
+      <div class="hss-bar">
+        <button data-set="3" class="on">3 片</button>
+        <button data-set="4">4 片</button>
+        <button data-set="5">5 片</button>
+        <button class="hss-undo">退一步</button>
+        <button class="hss-reset">重來</button>
+        <button class="hss-solve">show 最佳解</button>
+      </div>
+      <div class="hss-stat">
+        你走了 <b class="hss-moves">0</b> 步　·　最少 <b class="hss-min">7</b> 步<br>
+        你踩過 <b class="hss-seen">1</b> 種擺法　·　全部共 <b class="hss-total">27</b> 種
+      </div>
+    </div>
+    <div class="hss-panel">
+      <div class="hss-svgbox"></div>
+      <div class="hss-key">
+        <span class="hss-sw" style="background:#d05070"></span>最短的那一條
+        <span class="hss-sw" style="background:#24528f"></span>你走過的
+        <span class="hss-sw" style="background:#dbe3ec"></span>其餘合法的搬動
+      </div>
+    </div>
+  </div>
+  <div class="hss-out">先點起點柱，再點目標柱，把三片搬到 C。</div>
+</section>
 
-<table class="tbl">
+<table class="hss-tbl">
   <tr><th>片數</th><th>擺法總數 3ⁿ</th><th>最少步數 2ⁿ−1</th><th>一秒一步要多久</th></tr>
   <tr><td>2</td><td>9</td><td>3</td><td>3 秒</td></tr>
   <tr><td>3</td><td>27</td><td>7</td><td>7 秒</td></tr>
@@ -198,17 +233,10 @@ MathJax = {
 
 <script>
 (function () {
-  var root = document.getElementById("hss");
-  var pegsEl = [].slice.call(root.querySelectorAll(".peg"));
-  var svgBox = root.querySelector("#hss-svg");
-  var out = root.querySelector("#hss-out");
   var COLORS = ["#24528f", "#2f7d6b", "#a8703a", "#8a4f7d", "#3b6ea5"];
-  var W = 480, H = 430;
+  var PEG = ["A", "B", "C"];
+  var W = 460, H = 400;
 
-  var n = 2, state = [], history = [], sel = null, seen = {},
-      nodes = {}, edges = [], best = [], showBest = false;
-
-  // ---- geometry: the Hanoi graph is a Sierpinski triangle -----------------
   function mid(p, q) { return [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; }
   function posOf(st, A, B, C) {
     if (!st.length) return [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3];
@@ -218,219 +246,230 @@ MathJax = {
     if (k === 1) return posOf(rest, AB, B, BC);
     return posOf(rest, AC, BC, C);
   }
-
   function key(st) { return st.join(""); }
-
   function movable(st) {
-    // returns list of [disc, targetPeg]
     var res = [];
     for (var d = 0; d < st.length; d++) {
       var blocked = false;
-      for (var s = 0; s < d; s++) if (st[s] === st[d]) { blocked = true; break; }
+      for (var s = 0; s < d; s++) { if (st[s] === st[d]) { blocked = true; break; } }
       if (blocked) continue;
       for (var t = 0; t < 3; t++) {
         if (t === st[d]) continue;
         var ok = true;
-        for (var s2 = 0; s2 < d; s2++) if (st[s2] === t) { ok = false; break; }
+        for (var u = 0; u < d; u++) { if (st[u] === t) { ok = false; break; } }
         if (ok) res.push([d, t]);
       }
     }
     return res;
   }
+  function edgeId(a, b) { return a < b ? a + "|" + b : b + "|" + a; }
 
-  function buildGraph() {
-    var A = [W / 2, 26], B = [26, H - 54], C = [W - 26, H - 54];
-    nodes = {}; edges = [];
-    var all = [[]];
-    for (var d = 0; d < n; d++) {
-      var next = [];
-      all.forEach(function (s) { for (var p = 0; p < 3; p++) next.push(s.concat([p])); });
-      all = next;
-    }
-    all.forEach(function (s) { nodes[key(s)] = posOf(s, A, B, C); });
-    var done = {};
-    all.forEach(function (s) {
-      movable(s).forEach(function (mv) {
-        var t = s.slice(); t[mv[0]] = mv[1];
-        var a = key(s), b = key(t), id = a < b ? a + "|" + b : b + "|" + a;
-        if (done[id]) return;
-        done[id] = 1; edges.push([a, b]);
-      });
-    });
-    // BFS for the shortest route from all-on-A to all-on-C
-    var start = new Array(n).fill(0), goal = key(new Array(n).fill(2));
-    var prev = {}, q = [start], vis = {}; vis[key(start)] = 1;
-    while (q.length) {
-      var cur = q.shift();
-      if (key(cur) === goal) break;
-      movable(cur).forEach(function (mv) {
-        var t = cur.slice(); t[mv[0]] = mv[1];
-        if (vis[key(t)]) return;
-        vis[key(t)] = 1; prev[key(t)] = key(cur); q.push(t);
-      });
-    }
-    best = [goal];
-    while (prev[best[0]]) best.unshift(prev[best[0]]);
-  }
+  function makeScene(host) {
+    var n = parseInt(host.dataset.n, 10);
+    var pegs = [].slice.call(host.querySelectorAll(".hss-peg"));
+    var svgBox = host.querySelector(".hss-svgbox");
+    var out = host.querySelector(".hss-out");
+    var elMoves = host.querySelector(".hss-moves");
+    var elMin = host.querySelector(".hss-min");
+    var elSeen = host.querySelector(".hss-seen");
+    var elTotal = host.querySelector(".hss-total");
+    var state = [], history = [], sel = null, seen = {},
+        nodes = {}, edges = [], best = [], showBest = false;
 
-  function drawGraph() {
-    var bestEdge = {}, mine = {};
-    for (var i = 0; i < best.length - 1; i++) {
-      var a = best[i], b = best[i + 1];
-      bestEdge[a < b ? a + "|" + b : b + "|" + a] = 1;
+    function buildGraph() {
+      var A = [W / 2, 24], B = [24, H - 46], C = [W - 24, H - 46];
+      nodes = {}; edges = [];
+      var all = [[]];
+      for (var d = 0; d < n; d++) {
+        var next = [];
+        all.forEach(function (s) {
+          for (var p = 0; p < 3; p++) next.push(s.concat([p]));
+        });
+        all = next;
+      }
+      all.forEach(function (s) { nodes[key(s)] = posOf(s, A, B, C); });
+      var done = {};
+      all.forEach(function (s) {
+        movable(s).forEach(function (mv) {
+          var t = s.slice(); t[mv[0]] = mv[1];
+          var id = edgeId(key(s), key(t));
+          if (done[id]) return;
+          done[id] = 1; edges.push([key(s), key(t)]);
+        });
+      });
+      var start = new Array(n).fill(0), goal = key(new Array(n).fill(2));
+      var prev = {}, q = [start], vis = {};
+      vis[key(start)] = 1;
+      while (q.length) {
+        var cur = q.shift();
+        if (key(cur) === goal) break;
+        movable(cur).forEach(function (mv) {
+          var t = cur.slice(); t[mv[0]] = mv[1];
+          if (vis[key(t)]) return;
+          vis[key(t)] = 1; prev[key(t)] = key(cur); q.push(t);
+        });
+      }
+      best = [goal];
+      while (prev[best[0]]) best.unshift(prev[best[0]]);
     }
-    var path = history.concat([state]);
-    for (var j = 0; j < path.length - 1; j++) {
-      var x = key(path[j]), y = key(path[j + 1]);
-      mine[x < y ? x + "|" + y : y + "|" + x] = 1;
-    }
-    var PEG = ["A", "B", "C"];
-    var r = n === 2 ? 8 : (n === 3 ? 5.5 : (n === 4 ? 4 : 2.8));
-    var s = ['<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="這個片數下所有可能的擺法，'
-      + '以及最短路徑與你走過的路徑">'];
-    edges.forEach(function (e) {
-      var id = e[0] < e[1] ? e[0] + "|" + e[1] : e[1] + "|" + e[0];
-      var col = mine[id] ? "#24528f" : (showBest && bestEdge[id] ? "#d05070" : "#dbe3ec");
-      var wd = mine[id] ? 2.6 : (showBest && bestEdge[id] ? 2.4 : 1);
-      var p = nodes[e[0]], q = nodes[e[1]];
-      s.push('<line x1="' + p[0].toFixed(1) + '" y1="' + p[1].toFixed(1)
-        + '" x2="' + q[0].toFixed(1) + '" y2="' + q[1].toFixed(1)
-        + '" stroke="' + col + '" stroke-width="' + wd + '"/>');
-    });
-    Object.keys(nodes).forEach(function (k) {
-      var p = nodes[k], cur = k === key(state);
-      var fill = cur ? "#24528f" : (seen[k] ? "#9db8dc" : "#ffffff");
-      s.push('<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1)
-        + '" r="' + (cur ? r + 3 : r) + '" fill="' + fill
-        + '" stroke="' + (cur ? "#16325c" : "#b9c6d6") + '" stroke-width="1.3"/>');
-    });
-    if (n === 2) {
+
+    function drawGraph() {
+      var bestEdge = {}, mine = {};
+      for (var i = 0; i < best.length - 1; i++) bestEdge[edgeId(best[i], best[i + 1])] = 1;
+      var walked = history.concat([state]);
+      for (var j = 0; j < walked.length - 1; j++) {
+        mine[edgeId(key(walked[j]), key(walked[j + 1]))] = 1;
+      }
+      var r = n === 2 ? 8 : (n === 3 ? 5.5 : (n === 4 ? 4 : 2.8));
+      var s = ['<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="這個片數下所有'
+        + '可能的擺法，以及最短路徑與你走過的路徑">'];
+      edges.forEach(function (e) {
+        var id = edgeId(e[0], e[1]);
+        var col = mine[id] ? "#24528f" : (showBest && bestEdge[id] ? "#d05070" : "#dbe3ec");
+        var wd = mine[id] ? 2.6 : (showBest && bestEdge[id] ? 2.4 : 1);
+        var p = nodes[e[0]], q2 = nodes[e[1]];
+        s.push('<line x1="' + p[0].toFixed(1) + '" y1="' + p[1].toFixed(1)
+          + '" x2="' + q2[0].toFixed(1) + '" y2="' + q2[1].toFixed(1)
+          + '" stroke="' + col + '" stroke-width="' + wd + '"/>');
+      });
       Object.keys(nodes).forEach(function (k) {
-        var p = nodes[k];
-        var lab = k.split("").reverse().map(function (c) { return PEG[+c]; }).join("");
-        s.push('<text x="' + p[0].toFixed(1) + '" y="' + (p[1] + 21).toFixed(1)
-          + '" font-size="12.5" fill="' + (k === key(state) ? "#16325c" : "#7a8796")
-          + '" font-weight="' + (k === key(state) ? "700" : "400")
-          + '" text-anchor="middle" font-family="system-ui,sans-serif">' + lab + "</text>");
+        var p = nodes[k], cur = k === key(state);
+        s.push('<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1)
+          + '" r="' + (cur ? r + 3 : r) + '" fill="'
+          + (cur ? "#24528f" : (seen[k] ? "#9db8dc" : "#ffffff"))
+          + '" stroke="' + (cur ? "#16325c" : "#b9c6d6") + '" stroke-width="1.3"/>');
       });
+      if (n === 2) {
+        Object.keys(nodes).forEach(function (k) {
+          var p = nodes[k], cur = k === key(state);
+          var lab = k.split("").reverse().map(function (c) { return PEG[+c]; }).join("");
+          s.push('<text x="' + p[0].toFixed(1) + '" y="' + (p[1] + 22).toFixed(1)
+            + '" font-size="12.5" fill="' + (cur ? "#16325c" : "#7a8796")
+            + '" font-weight="' + (cur ? "700" : "400")
+            + '" text-anchor="middle" font-family="system-ui,sans-serif">' + lab + "</text>");
+        });
+      }
+      var stN = nodes[key(new Array(n).fill(0))], glN = nodes[key(new Array(n).fill(2))];
+      s.push('<text x="' + stN[0] + '" y="' + (stN[1] - 14) + '" font-size="12" fill="#5b6b7c" '
+        + 'text-anchor="middle" font-family="system-ui,sans-serif">全部在 A</text>');
+      s.push('<text x="' + (glN[0] + 6) + '" y="' + (glN[1] + (n === 2 ? 40 : 24))
+        + '" font-size="12" fill="#a3324f" text-anchor="end" '
+        + 'font-family="system-ui,sans-serif">全部在 C</text>');
+      s.push("</svg>");
+      svgBox.innerHTML = s.join("");
     }
-    var st = nodes[key(new Array(n).fill(0))], gl = nodes[key(new Array(n).fill(2))];
-    s.push('<text x="' + st[0] + '" y="' + (st[1] - 16) + '" font-size="12" fill="#5b6b7c" '
-      + 'text-anchor="middle" font-family="system-ui,sans-serif">全部在 A</text>');
-    s.push('<text x="' + (gl[0] + 4) + '" y="' + (gl[1] + 40) + '" font-size="12" fill="#a3324f" '
-      + 'text-anchor="end" font-family="system-ui,sans-serif">全部在 C</text>');
-    s.push("</svg>");
-    svgBox.innerHTML = s.join("");
-  }
 
-  function drawBoard() {
-    pegsEl.forEach(function (peg, pi) {
-      [].slice.call(peg.querySelectorAll(".disc")).forEach(function (d) { d.remove(); });
-      peg.classList.toggle("sel", sel === pi);
-      var on = [];
-      for (var d = 0; d < n; d++) if (state[d] === pi) on.push(d);
-      on.sort(function (a, b) { return b - a; });
-      on.forEach(function (d, idx) {
-        var el = document.createElement("div");
-        el.className = "disc";
-        el.style.width = (28 + (d + 1) * (56 / n)) + "%";
-        el.style.background = COLORS[d % COLORS.length];
-        el.textContent = d + 1;
-        if (sel === pi && idx === on.length - 1) el.classList.add("lift");
-        peg.appendChild(el);
+    function drawBoard() {
+      pegs.forEach(function (peg, pi) {
+        [].slice.call(peg.querySelectorAll(".hss-disc")).forEach(function (d) { d.remove(); });
+        peg.classList.toggle("sel", sel === pi);
+        var on = [];
+        for (var d = 0; d < n; d++) if (state[d] === pi) on.push(d);
+        on.sort(function (a, b) { return b - a; });
+        on.forEach(function (d, idx) {
+          var el = document.createElement("div");
+          el.className = "hss-disc";
+          el.style.width = (28 + (d + 1) * (56 / n)) + "%";
+          el.style.background = COLORS[d % COLORS.length];
+          el.textContent = d + 1;
+          if (sel === pi && idx === on.length - 1) el.classList.add("lift");
+          peg.appendChild(el);
+        });
       });
-    });
-    root.querySelector("#hss-moves").textContent = history.length;
-    root.querySelector("#hss-seen").textContent = Object.keys(seen).length;
-  }
-
-  function topOf(pi) {
-    var t = -1;
-    for (var d = 0; d < n; d++) if (state[d] === pi && (t < 0 || d < t)) t = d;
-    return t;
-  }
-
-  function render() { drawBoard(); drawGraph(); }
-
-  function setup(k) {
-    n = k;
-    state = new Array(n).fill(0);
-    history = []; sel = null; seen = {}; showBest = false;
-    seen[key(state)] = 1;
-    buildGraph();
-    root.querySelector("#hss-min").textContent = (Math.pow(2, n) - 1).toLocaleString("en-US");
-    root.querySelector("#hss-total").textContent = Math.pow(3, n).toLocaleString("en-US");
-    out.className = "out";
-    out.textContent = "先把 " + n + " 片搬到 C。";
-    root.querySelector("#hss-legend").innerHTML = n === 2
-      ? "點旁邊的標籤：前一個字母是大片在哪根柱子，後一個是小片。AA＝兩片都在 A，CC＝兩片都在 C。"
-      : "";
-    render();
-  }
-
-  function click(pi) {
-    if (sel === null) { if (topOf(pi) >= 0) { sel = pi; render(); } return; }
-    if (sel === pi) { sel = null; render(); return; }
-    var d = topOf(sel), t = topOf(pi);
-    if (d < 0) { sel = null; render(); return; }
-    if (t >= 0 && t < d) {
-      out.className = "out";
-      out.innerHTML = "第 " + (d + 1) + " 片比第 " + (t + 1) + " 片大，不能疊上去。"
-        + "這條規則就是把搜尋空間切掉一大塊的東西——右邊那張圖之所以只有 "
-        + Math.pow(3, n) + " 個點而不是無限多個，靠的就是它。";
-      sel = null; render(); return;
+      elMoves.textContent = history.length;
+      elSeen.textContent = Object.keys(seen).length;
     }
-    history.push(state.slice());
-    state = state.slice(); state[d] = pi;
-    seen[key(state)] = 1;
-    sel = null;
-    render();
-    check();
-  }
 
-  function check() {
-    if (state.every(function (p) { return p === 2; })) {
+    function render() { drawBoard(); drawGraph(); }
+    function topOf(pi) {
+      var t = -1;
+      for (var d = 0; d < n; d++) if (state[d] === pi && (t < 0 || d < t)) t = d;
+      return t;
+    }
+
+    function reset(k) {
+      if (k) n = k;
+      state = new Array(n).fill(0);
+      history = []; sel = null; seen = {}; showBest = false;
+      seen[key(state)] = 1;
+      buildGraph();
+      elMin.textContent = (Math.pow(2, n) - 1).toLocaleString("en-US");
+      elTotal.textContent = Math.pow(3, n).toLocaleString("en-US");
+      out.className = "hss-out";
+      out.textContent = "先點起點柱，再點目標柱，把 " + n + " 片搬到 C。";
+      render();
+    }
+
+    function check() {
       var b = Math.pow(2, n) - 1;
-      out.className = "out ok";
-      out.innerHTML = history.length === b
-        ? "搬完了，正好 " + b + " 步，這就是最佳解。右邊那條藍線現在跟最短路徑重疊——"
-          + "整張圖上只有這一條這麼短。"
-        : "搬完了。你走了 " + history.length + " 步，最少 " + b + " 步，多走了 "
-          + (history.length - b) + " 步。按「show 最佳解」讓紅線出來，"
-          + "看你的藍線在哪裡繞出去了——那段繞路就是「有解」與「最佳解」的差別。";
-    } else {
-      out.className = "out";
-      out.innerHTML = "目前的擺法是右圖上那個深藍色的點。你已經踩過 "
-        + Object.keys(seen).length + " 種，全部有 " + Math.pow(3, n) + " 種。";
+      if (state.every(function (p) { return p === 2; })) {
+        out.className = "hss-out ok";
+        out.innerHTML = history.length === b
+          ? "搬完了，正好 " + b + " 步，這就是最佳解。右邊那條藍線現在跟最短路徑重疊——"
+            + "整張圖上只有這一條這麼短。"
+          : "搬完了。你走了 " + history.length + " 步，最少 " + b + " 步，多走了 "
+            + (history.length - b) + " 步。按「show 最佳解」讓紅線出來，"
+            + "看你的藍線在哪裡繞出去了——那段繞路就是「有解」與「最佳解」的差別。";
+      } else {
+        out.className = "hss-out";
+        out.innerHTML = "目前的擺法是右圖那個深藍色的點。你已經踩過 "
+          + Object.keys(seen).length + " 種，全部有 " + Math.pow(3, n) + " 種。";
+      }
     }
+
+    function click(pi) {
+      if (sel === null) { if (topOf(pi) >= 0) { sel = pi; render(); } return; }
+      if (sel === pi) { sel = null; render(); return; }
+      var d = topOf(sel), t = topOf(pi);
+      if (d < 0) { sel = null; render(); return; }
+      if (t >= 0 && t < d) {
+        out.className = "hss-out";
+        out.innerHTML = "第 " + (d + 1) + " 片比第 " + (t + 1) + " 片大，不能疊上去。"
+          + "這條規則就是把搜尋空間切掉一大塊的東西——右邊那張圖之所以只有 "
+          + Math.pow(3, n) + " 個點而不是無限多個，靠的就是它。";
+        sel = null; render(); return;
+      }
+      history.push(state.slice());
+      state = state.slice(); state[d] = pi;
+      seen[key(state)] = 1;
+      sel = null;
+      render(); check();
+    }
+
+    pegs.forEach(function (peg, pi) {
+      peg.addEventListener("click", function () { click(pi); });
+    });
+    host.querySelector(".hss-undo").addEventListener("click", function () {
+      if (!history.length) return;
+      state = history.pop(); sel = null; render(); check();
+    });
+    host.querySelector(".hss-reset").addEventListener("click", function () { reset(); });
+    host.querySelector(".hss-solve").addEventListener("click", function () {
+      showBest = !showBest;
+      drawGraph();
+      if (showBest) {
+        out.className = "hss-out";
+        out.innerHTML = "紅線是最短的那一條，共 " + (Math.pow(2, n) - 1)
+          + " 步，沿著三角形的一整條邊走。注意它一次也沒有拐進圖的中間——"
+          + "中間那些點全部走得通，只是比較遠。";
+      }
+    });
+    [].slice.call(host.querySelectorAll("button[data-set]")).forEach(function (b) {
+      b.addEventListener("click", function () {
+        [].slice.call(host.querySelectorAll("button[data-set]")).forEach(function (x) {
+          x.classList.remove("on");
+        });
+        b.classList.add("on");
+        reset(parseInt(b.dataset.set, 10));
+      });
+    });
+    reset(n);
   }
 
-  pegsEl.forEach(function (peg, pi) { peg.addEventListener("click", function () { click(pi); }); });
-  [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (b) {
-    b.addEventListener("click", function () {
-      [].slice.call(root.querySelectorAll("button[data-n]")).forEach(function (x) {
-        x.classList.remove("on");
-      });
-      b.classList.add("on");
-      setup(parseInt(b.dataset.n, 10));
-    });
-  });
-  root.querySelector("#hss-reset").addEventListener("click", function () { setup(n); });
-  root.querySelector("#hss-undo").addEventListener("click", function () {
-    if (!history.length) return;
-    state = history.pop(); sel = null; render(); check();
-  });
-  root.querySelector("#hss-solve").addEventListener("click", function () {
-    showBest = !showBest;
-    drawGraph();
-    if (showBest) {
-      out.className = "out";
-      out.innerHTML = "紅線是最短的那一條，共 " + (Math.pow(2, n) - 1)
-        + " 步，沿著三角形的一整條邊走。注意它一次也沒有拐進圖的中間——"
-        + "中間那些點全部走得通，只是比較遠。";
-    }
-  });
-  setup(2);
+  var scenes = document.currentScript
+    ? document.currentScript.parentNode.querySelectorAll(".hss-scene")
+    : document.querySelectorAll(".hss-wrap .hss-scene");
+  [].slice.call(scenes).forEach(makeScene);
 })();
 </script>
 </div>
@@ -608,6 +647,7 @@ MathJax = {
 <ul>
 <li><strong>後續</strong>：<a href="M_%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1%E7%9A%84%E4%B8%89%E5%80%8B%E5%85%83%E4%BB%B6.html">專家系統的三個元件</a>——專家系統就是用規則在這張圖裡砍路的機器</li>
 <li><strong>後續</strong>：<a href="M_%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86%E8%88%87%E5%8F%8D%E5%90%91%E6%8E%A8%E7%90%86.html">正向推理與反向推理</a>——兩種在搜尋空間裡走路的方向</li>
+<li><strong>後續</strong>：<a href="M_%E5%A4%96%E9%A1%AF%E7%9F%A5%E8%AD%98%E8%88%87%E5%85%A7%E9%9A%B1%E7%9F%A5%E8%AD%98.html">外顯知識與內隱知識</a>——寫不下來的那幾條規則為什麼寫不下來</li>
 <li><strong>平行相關</strong>：<a href="M_%E5%85%A9%E6%AC%A1_AI_%E5%AF%92%E5%86%AC%E8%88%87%E5%B0%88%E5%AE%B6%E7%B3%BB%E7%B5%B1.html">兩次 AI 寒冬與專家系統</a>——同一個技術的產業史版本，講它為什麼垮</li>
 <li><strong>平行相關</strong>：<a href="M_%E5%BE%9E%E8%A6%8F%E5%89%87%E5%88%B0%E6%A9%9F%E7%8E%87%E7%9A%84%E8%BD%89%E5%90%91.html">從規則到機率的轉向</a>——搜尋空間大到規則撐不住之後，路線怎麼換軌</li>
 </ul>
@@ -617,19 +657,22 @@ MathJax = {
 </section>
 <section class="mod-sec sec-discussion"><h3 id="sec-13">💬 討論／分享／反思</h3>
 </section>
-<section class="mod-sec sec-activity"><h3 id="sec-14">配對分享：估一次你自己的搜尋空間</h3>
+<section class="mod-sec sec-activity"><h3 id="sec-14">配對分享：要變成 AI 自動排版之前，先想清楚什麼</h3>
 <p><strong>情境</strong></p>
 <p>你是一家綜合型新聞網站的內容主管。首頁每天有 24 個推薦版位（6 排 × 4 格），自家編輯台一天產出約 180 則稿子，另外還有通訊社供稿約 400 則，也就是每天要從約 580 則裡面挑 24 則並決定順序。排版權限在你手上，總編輯可以否決任何一格，但實務上他只在出事之後才回頭看。每天下午 3 點要定隔天早上 7 點的版面，晚上 11 點還有一次調整機會。</p>
 <p>上週三出現一個狀況：值班編輯花了 70 分鐘才排完，平常是 25 分鐘；而且交出來的版面最後四格，是照前一天原樣複製貼上的。你問他，他說「後面實在看不完了」。</p>
-<p>請同學兩兩一組，依序做四件事：</p>
+<p>這位值班編輯資歷 12 年。你請他說明自己怎麼挑，他講了兩條就講不下去，最後說「看久了就知道哪一則會爆」。另外你知道兩件他從來沒寫下來的事：有法務疑慮或選舉相關的稿子，他一律不放第一排；同一個記者的稿子他不會連放兩格。目前週會上唯一在看的數字是首頁點擊率。</p>
+<p>上週五主管會議決定，要評估導入自動排版系統，由你提規格。</p>
+<p>請同學兩兩一組，依序做五件事：</p>
 <ol>
-<li>估算這個決定的搜尋空間大概有幾個位數，算式寫出來就好，不必算到精確。</li>
-<li>列出值班編輯實際上用了哪些規則把這個空間砍小，至少三條。</li>
-<li>判斷「最後四格照前一天複製貼上」是什麼的症狀，並說出如果不處理，下一次會出現在哪裡。</li>
-<li>每一條判斷後面，引用情境裡讓你這樣判斷的那一句話。</li>
+<li>先估這個決定的搜尋空間大概有幾個位數，算式寫出來就好。這個數字是要回答一個問題：為什麼這件事值得自動化。</li>
+<li>把值班編輯砍空間的規則寫成 if-then，至少三條。這幾條就是你要交給系統的知識庫。</li>
+<li>找出他寫不出來的那部分，指出它為什麼寫不出來——不願意公開、樣本太少、變數太多太雜、會隨時間變、還是他自己都沒察覺的習慣。</li>
+<li>定義這個系統要最大化什麼。點擊率是現成的數字，但先判斷照它最佳化會排出什麼樣的版面，再決定要不要用它。</li>
+<li>決定人留在哪裡：哪幾格不准自動決定、誰有否決權、在哪一個時點看。</li>
 </ol>
-<p>引不出句子的那一條，就是你自己補進去的假設，把它標出來。</p>
-<p>互相挑對方一點：對方砍空間的那幾條規則，有沒有哪一條其實是在砍掉他不想面對的稿子。</p>
+<p>每一條判斷後面，引用情境裡讓你這樣判斷的那一句話。引不出句子的那一條，就是你自己補進去的假設，把它標出來。</p>
+<p>互相挑對方一點：對方寫出來的那幾條 if-then，如果照著跑一個月，會出現什麼他沒預期到的版面。</p>
 <p>〔加碼選項：手上有自己部門真實的版位數與稿量的，換成自己的數字再跑一次。〕</p>
 </section>
 <section class="mod-sec sec-activity"><h3 id="sec-15">個人反思</h3>
@@ -638,8 +681,8 @@ MathJax = {
 </blockquote>
 </section>
 <section class="mod-sec sec-homework"><h3 id="sec-16">小作業</h3>
-<p>挑一個你每週都要做、而且選項多到看不完的決定，寫下三行：這個決定的搜尋空間大概有幾個位數、你實際上用哪三條規則把它砍到能處理的大小、這三條規則是誰定的。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-12 11:50</p></div></div></div><script>
+<p>挑一個你每週都要做、而且選項多到看不完的決定，寫下四行：這個決定的搜尋空間大概有幾個位數、你實際上用哪三條規則把它砍到能處理的大小、這三條規則是誰定的，以及如果要交給系統來做，哪一條你寫不出來。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 11:56</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
