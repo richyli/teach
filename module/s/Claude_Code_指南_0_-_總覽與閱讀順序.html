@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 0｜總覽與閱讀順序</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">這份指南假設你不會寫程式</a></li><li><a href="#sec-2">Agentic AI 跟你現在用的聊天框差在哪</a></li><li><a href="#sec-3">它比聊天框強的地方，是四個會一直長大的零件</a></li><li><a href="#sec-4">先判斷你這次的任務要不要用 Claude Code</a></li><li><a href="#sec-5">第一次上手照這個順序讀</a></li><li><a href="#sec-6">本週作業要交的東西，指南 3 做完就有了</a></li><li><a href="#sec-7">動手前先看懂這幾個字</a></li><li><a href="#sec-8">這份指南會過期的地方</a></li><li><a href="#sec-9">相關教材</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 0｜總覽與閱讀順序</h1></div><p>在本單元中，會介紹一個會動手做事的 AI agent 怎麼在你自己的電腦上跑起來，以及讓它變得「懂你單位」的四個零件：CLAUDE 專案守則、memory、skill、MCP。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">這份指南假設你不會寫程式</h3>
+<p>八份文件都是為了在職媒體主管寫的，不是為工程師寫的。你會被要求做的事只有三件：開資料夾、把話講清楚、看它做完之後驗收。所有出現的程式碼區塊都是「照著貼」的指令，不需要你看懂每一個字。</p>
+<p>裡面的每一個範例都來自真實在跑的工作流，包含逐字稿整理、一稿多版、法規逐條比對、週報彙整、政府資料查詢。虛構的示範不會出現在這裡。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">Agentic AI 跟你現在用的聊天框差在哪</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>對話式 AI（網頁版聊天框）</th>
+<th>Agentic AI（Claude Code）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>它做什麼</td>
+<td>回你一段文字</td>
+<td>讀檔、改檔、跑指令、接外部服務</td>
+</tr>
+<tr>
+<td>你做什麼</td>
+<td>複製、貼上、再複製</td>
+<td>看它做、必要時喊停</td>
+</tr>
+<tr>
+<td>出錯時</td>
+<td>你重貼一次</td>
+<td>它自己跑下一步修</td>
+</tr>
+<tr>
+<td>一個指令換來</td>
+<td>一段答案</td>
+<td>一連串動作加一份成品</td>
+</tr>
+</tbody>
+</table>
+<p>再往下分一層，你會看到三種東西常被混在一起講：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>會動你的檔案</th>
+<th>會臨場判斷</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chatbot</td>
+<td>✗</td>
+<td>✗（一問一答）</td>
+<td>一般對話框</td>
+</tr>
+<tr>
+<td>workflow</td>
+<td>✓（固定步驟）</td>
+<td>✗（照表操課）</td>
+<td>自動化腳本</td>
+</tr>
+<tr>
+<td>agent</td>
+<td>✓</td>
+<td>✓（規劃、執行、看結果再調整）</td>
+<td>Claude Code</td>
+</tr>
+</tbody>
+</table>
+<p>agent 強在會做事又會臨場判斷，代價是你更需要會驗收。這一句是整份指南的主軸。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">它比聊天框強的地方，是四個會一直長大的零件</h3>
+<table>
+<thead>
+<tr>
+<th>零件</th>
+<th>它回答什麼問題</th>
+<th>綁在哪</th>
+<th>看哪一份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLAUDE 專案守則</td>
+<td>這個資料夾裡的工作要遵守什麼規矩</td>
+<td>專案</td>
+<td><a href="Claude_Code_%E6%8C%87%E5%8D%97_4_-_CLAUDE_%E6%AA%94%EF%BC%9A%E5%B0%88%E6%A1%88%E5%AE%88%E5%89%87.html">指南 4</a></td>
+</tr>
+<tr>
+<td>memory</td>
+<td>你這個人的偏好與你糾正過的事</td>
+<td>你</td>
+<td><a href="Claude_Code_%E6%8C%87%E5%8D%97_5_-_memory%EF%BC%9A%E8%B7%A8%E5%B0%8D%E8%A9%B1%E7%9A%84%E8%A8%98%E6%86%B6.html">指南 5</a></td>
+</tr>
+<tr>
+<td>skill</td>
+<td>我固定會叫它做的那一串動作</td>
+<td>你或專案</td>
+<td><a href="Claude_Code_%E6%8C%87%E5%8D%97_6_-_skill%EF%BC%9A%E6%8A%8A%E9%87%8D%E8%A4%87%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%9B%BA%E5%8C%96.html">指南 6</a></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>它伸手拿得到哪些資料夾以外的料</td>
+<td>你或專案</td>
+<td><a href="Claude_Code_%E6%8C%87%E5%8D%97_7_-_MCP%EF%BC%9A%E6%8E%A5%E4%B8%8A%E5%A4%96%E9%83%A8%E8%B3%87%E6%96%99.html">指南 7</a></td>
+</tr>
+</tbody>
+</table>
+<p>一句話記法：CLAUDE 守則是這個專案的規矩，memory 是你這個人的習慣，skill 是你常下的那串指令，MCP 是它伸出去拿料的手。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">先判斷你這次的任務要不要用 Claude Code</h3>
+<p>不是每件事都值得開 Claude Code。純文字任務用免費網頁版就能做完，開 Claude Code 反而多一道手續。</p>
+<table>
+<thead>
+<tr>
+<th>你的任務</th>
+<th>用什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>擬一封信、改寫一段稿、整理一份逐字稿</td>
+<td>網頁版聊天框就夠</td>
+</tr>
+<tr>
+<td>同一件事你每週都要重做一次</td>
+<td>Claude Code，做成 skill</td>
+</tr>
+<tr>
+<td>要它讀你電腦裡一整批檔案</td>
+<td>Claude Code</td>
+</tr>
+<tr>
+<td>要它把結果寫回你的檔案、而且你要逐處核</td>
+<td>Claude Code（並排比對）</td>
+</tr>
+<tr>
+<td>要它去行事曆、試算表、政府資料庫拿料</td>
+<td>Claude Code 加 MCP</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">第一次上手照這個順序讀</h3>
+<p><strong>先做（約 60 分鐘，這一輪結束你就能交作業）</strong></p>
+<ol>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_1_-_%E5%AE%89%E8%A3%9D_VS_Code.html">指南 1｜安裝 VS Code</a></li>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_2_-_%E5%AE%89%E8%A3%9D_Claude_Code_%E4%B8%A6%E7%99%BB%E5%85%A5.html">指南 2｜安裝 Claude Code 並登入</a></li>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_3_-_%E4%BB%8B%E9%9D%A2%E3%80%81%E6%AC%8A%E9%99%90%E6%A8%A1%E5%BC%8F%E8%88%87%E7%AC%AC%E4%B8%80%E5%80%8B%E6%8C%87%E4%BB%A4.html">指南 3｜介面、權限模式與第一個指令</a></li>
+</ol>
+<p><strong>能用之後再讀（每份 15 分鐘，挑你用得到的）</strong></p>
+<ol>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_4_-_CLAUDE_%E6%AA%94%EF%BC%9A%E5%B0%88%E6%A1%88%E5%AE%88%E5%89%87.html">指南 4｜CLAUDE 檔：專案守則</a></li>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_5_-_memory%EF%BC%9A%E8%B7%A8%E5%B0%8D%E8%A9%B1%E7%9A%84%E8%A8%98%E6%86%B6.html">指南 5｜memory：跨對話的記憶</a></li>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_6_-_skill%EF%BC%9A%E6%8A%8A%E9%87%8D%E8%A4%87%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%9B%BA%E5%8C%96.html">指南 6｜skill：把重複的工作固化</a></li>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_7_-_MCP%EF%BC%9A%E6%8E%A5%E4%B8%8A%E5%A4%96%E9%83%A8%E8%B3%87%E6%96%99.html">指南 7｜MCP：接上外部資料</a></li>
+</ol>
+<p><strong>隨時可以翻</strong></p>
+<ol>
+<li><a href="Claude_Code_%E6%8C%87%E5%8D%97_8_-_%E5%8D%A1%E4%BD%8F%E4%BA%86%E6%80%8E%E9%BA%BC%E8%BE%A6%E8%88%87%E5%AE%89%E5%85%A8%E5%AE%88%E5%89%87.html">指南 8｜卡住了怎麼辦與安全守則</a></li>
+</ol>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">本週作業要交的東西，指南 3 做完就有了</h3>
+<p>W3 的小作業是：把一段真實工作用 Claude Code 處理，記錄它對的一處與錯的一處，並寫一句「下次我會怎麼改提示」。指南 3 的最後一節就是這件事的操作步驟，跑完把結果留著即可。</p>
+<p>W4 的作業是做出一個自己的 skill，指南 6 對應那一週。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-7">動手前先看懂這幾個字</h3>
+<table>
+<thead>
+<tr>
+<th>詞</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>終端機（terminal）</td>
+<td>那個黑底白字、用打字下指令的視窗。Windows 叫 PowerShell，Mac 叫終端機</td>
+</tr>
+<tr>
+<td>CLI</td>
+<td>用指令操作的程式，相對於用滑鼠點的圖形介面</td>
+</tr>
+<tr>
+<td>資料夾（專案）</td>
+<td>你啟動 Claude Code 時所在的那個資料夾。它只看得到這裡面的檔</td>
+</tr>
+<tr>
+<td>context</td>
+<td>這一輪對話它「看得到」的所有文字，包含你打的、它回的、它讀過的檔。有上限</td>
+</tr>
+<tr>
+<td>token</td>
+<td>模型處理文字的最小單位，也是計價單位。中文大約一個字一到兩個 token</td>
+</tr>
+<tr>
+<td>harness</td>
+<td>把模型接上你的檔案、權限、外部服務的那層工程。Claude Code 就是一種 harness</td>
+</tr>
+<tr>
+<td>diff</td>
+<td>改動前後的並排比對畫面，綠色是新增、紅色是刪除</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>讓 AI 跟外部服務對話的通用標準，可以想成轉接頭</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">這份指南會過期的地方</h3>
+<p>安裝指令與介面選項由 Anthropic 維護，改版速度很快。本指南依 2026 年 9 月的官方說明整理，若你照著做跟畫面對不上，以官方頁面為準：</p>
+<ul>
+<li>安裝與系統需求：&lt;<a href="https://code.claude.com/docs/zh-TW/setup">https://code.claude.com/docs/zh-TW/setup</a>&gt;</li>
+<li>VS Code 擴充套件：&lt;<a href="https://code.claude.com/docs/zh-TW/vs-code">https://code.claude.com/docs/zh-TW/vs-code</a>&gt;</li>
+<li>CLAUDE 檔與記憶：&lt;<a href="https://code.claude.com/docs/zh-TW/memory">https://code.claude.com/docs/zh-TW/memory</a>&gt;</li>
+<li>skills：&lt;<a href="https://code.claude.com/docs/zh-TW/skills">https://code.claude.com/docs/zh-TW/skills</a>&gt;</li>
+<li>MCP：&lt;<a href="https://code.claude.com/docs/zh-TW/mcp">https://code.claude.com/docs/zh-TW/mcp</a>&gt;</li>
+</ul>
+<p>概念的部分（agent 跟聊天框差在哪、什麼值得做成 skill、何時放手何時接手）不會因為改版而失效，那才是這門課要你帶走的。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">相關教材</h3>
+<ul>
+<li>課堂模組：<a href="M_Claude_Code_%E4%B8%8A%E6%89%8B.html">Claude Code 上手</a>、<a href="M_Claude_Code_%E4%B8%B2%E5%B7%A5%E4%BD%9C%E6%B5%81.html">Claude Code 串工作流</a></li>
+<li>自學包：SP Agentic AI 實作</li>
+<li>案例：<a href="Case_-_GTM_Engineering_at_Anthropic.html">GTM Engineering at Anthropic</a>（不會寫程式的銷售把自己的工作流產品化）</li>
+<li>課綱：2026 EMA AI Syllabus</li>
+</ul></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

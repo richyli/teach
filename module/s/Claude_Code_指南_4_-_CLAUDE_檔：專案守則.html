@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 4｜CLAUDE 檔：專案守則</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">一句話：這是這個資料夾的員工手冊</a></li><li><a href="#sec-2">什麼時候該往裡面加一條</a></li><li><a href="#sec-3">放哪一層，決定誰受它管</a></li><li><a href="#sec-4">怎麼建起來</a></li><li><a href="#sec-5">一條規則要具體到可以驗證，否則等於沒寫</a></li><li><a href="#sec-6">超過兩百行，遵守度會開始掉</a></li><li><a href="#sec-7">不要寫它讀檔案就知道的事</a></li><li><a href="#sec-8">兩條規則打架的時候，它會挑一條，你控制不了挑哪一條</a></li><li><a href="#sec-9">一份可以直接改用的編輯室守則</a></li><li><a href="#sec-10">帶回你的編輯室</a></li><li><a href="#sec-11">檢查清單</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 4｜CLAUDE 檔：專案守則</h1></div><p>在本單元中，會介紹 <code>CLAUDE.md</code> 這個檔案是什麼、放在哪一層各代表什麼範圍、該寫什麼不該寫什麼，以及一份可以直接改用的編輯室守則範例。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">一句話：這是這個資料夾的員工手冊</h3>
+<p><code>CLAUDE.md</code> 就是放在你專案資料夾裡的一個純文字檔。<strong>你每次在這個資料夾開啟對話，它的內容會自動被讀進去</strong>，不用你提醒、不用你貼。</p>
+<p>換成單位的語言：這是你單位的員工手冊。新人第一天要交代的那些事，寫進去就不必每次口頭講一遍。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">什麼時候該往裡面加一條</h3>
+<p>四個時機，任何一個出現就代表這條該寫下來：</p>
+<ul>
+<li>同一個錯它犯第二次</li>
+<li>你這個對話打的糾正，上個對話也打過</li>
+<li>新來的同事需要同一段背景才做得對</li>
+<li>你發現自己在解釋「我們這裡的做法是」</li>
+</ul>
+<p>判斷標準是：<strong>這件事是不是每次開對話都成立的事實或規矩。</strong> 是，寫進 CLAUDE 檔；只在某一類任務才用到的多步驟程序，那是 skill 的事，見<a href="Claude_Code_%E6%8C%87%E5%8D%97_6_-_skill%EF%BC%9A%E6%8A%8A%E9%87%8D%E8%A4%87%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%9B%BA%E5%8C%96.html">指南 6</a>。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">放哪一層，決定誰受它管</h3>
+<table>
+<thead>
+<tr>
+<th>範圍</th>
+<th>位置</th>
+<th>適合放什麼</th>
+<th>誰會受影響</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>機構層</td>
+<td>由資訊單位部署到系統目錄</td>
+<td>全機構的合規與安全原則</td>
+<td>機構裡每一台機器</td>
+</tr>
+<tr>
+<td>你個人</td>
+<td><code>~/.claude/CLAUDE.md</code></td>
+<td>你自己的偏好，跨所有專案</td>
+<td>只有你，但在你所有專案都生效</td>
+</tr>
+<tr>
+<td>專案</td>
+<td>專案資料夾裡的 <code>CLAUDE.md</code></td>
+<td>這個專案的規矩，可以給團隊共用</td>
+<td>開這個資料夾的所有人</td>
+</tr>
+<tr>
+<td>個人加在專案上</td>
+<td>專案資料夾裡的 <code>CLAUDE.local.md</code></td>
+<td>你自己在這個專案的偏好，不想給別人看到的</td>
+<td>只有你</td>
+</tr>
+</tbody>
+</table>
+<p>從你的工作資料夾往上，每一層的 CLAUDE 檔都會被讀進來，而且是相加不是覆蓋。越靠近你啟動位置的，越後被讀到。</p>
+<p>實務上你只需要記兩個：<strong>綁專案的寫在專案資料夾的 <code>CLAUDE.md</code>，綁你自己的寫在 <code>~/.claude/CLAUDE.md</code>。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼建起來</h3>
+<table>
+<thead>
+<tr>
+<th>做法</th>
+<th>怎麼做</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最省事</td>
+<td>在對話裡打 <code>/init</code>。它看一遍你的資料夾，草擬一份給你，你再改。已經有檔案的話它提建議，不會覆蓋你寫的</td>
+</tr>
+<tr>
+<td>最直接</td>
+<td>在資料夾裡新增一個叫 <code>CLAUDE.md</code> 的檔案，把規矩打進去。名字必須完全一樣，全大寫</td>
+</tr>
+<tr>
+<td>確認有被讀到</td>
+<td>打 <code>/context</code>，看 Memory files 那一區有沒有列出你的檔。沒列出來就是它沒看到</td>
+</tr>
+</tbody>
+</table>
+<p><code>/memory</code> 可以直接把這些檔叫出來編輯，不用自己去資料夾裡找。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">一條規則要具體到可以驗證，否則等於沒寫</h3>
+<table>
+<thead>
+<tr>
+<th>沒用的寫法</th>
+<th>有用的寫法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公文要寫得正式</td>
+<td>公文一律用「主旨、說明、辦法」三段，主旨一句話講完</td>
+</tr>
+<tr>
+<td>注意用字</td>
+<td>不要用「爰此」開頭，改用「有關」或直接切入事由</td>
+</tr>
+<tr>
+<td>小心處理已發布的內容</td>
+<td>不可更動 <code>已發布/</code> 資料夾內的任何檔案</td>
+</tr>
+</tbody>
+</table>
+<p>判斷法：這一條，第三個人讀了能不能判斷你有沒有照做？不能，就再寫具體一點。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">超過兩百行，遵守度會開始掉</h3>
+<p>這份檔每次對話都會佔掉 context，寫太長不但花錢，它照做的比例還會下降。太長就把用不到每次的部分搬去 skill。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">不要寫它讀檔案就知道的事</h3>
+<p>資料夾裡有什麼、檔名怎麼取，它自己讀得到，寫進去只是浪費空間。要寫的是讀檔案讀不出來的東西：慣例、禁區、為什麼這樣做。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">兩條規則打架的時候，它會挑一條，你控制不了挑哪一條</h3>
+<p>所以每隔一段時間要回頭看一次，刪掉過時的、合併重複的。守則跟員工手冊一樣會長出互相矛盾的條文，差別只在沒有人會來抱怨。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">一份可以直接改用的編輯室守則</h3>
+<p>把下面這段存成專案資料夾裡的 <code>CLAUDE.md</code>，把方括號的部分換成你單位的真實規矩：</p>
+<pre><code class="language-markdown"># 〔部門名稱〕AI 使用守則
+
+## 這個資料夾在做什麼
+這裡放〔部門〕的新聞稿、公告與逐字稿。原始素材在 `素材/`，
+成品在 `成品/`，已經對外發布的在 `已發布/`。
+
+## 絕對不可以做的事
+- 不可更動 `已發布/` 底下的任何檔案
+- 不可把 `素材/` 裡含受訪者個資的檔案內容複製到別的檔案
+- 不可自行編造數字、日期、職稱、法條；查不到就標〔待確認〕
+
+## 寫作慣例
+- 一律使用台灣繁體中文與台灣慣用詞
+- 數字用阿拉伯數字，年份用西元
+- 不使用破折號插入語，改用逗號或括號
+- 新聞稿採倒金字塔結構，第一段講完人事時地物
+
+## 每次產出都要附的東西
+- 產出文稿時，最後附一張查證清單，列出文中每個數字、日期、
+  金額、法條、人名職稱，並標出哪些還沒有來源
+
+## 需要先問我的動作
+- 刪除任何檔案
+- 一次改動三個以上的檔案
+- 把內容寫進 `成品/` 以外的資料夾
+</code></pre>
+<p>最後那一段值得特別講：<strong>你可以用守則要求它在做某些動作前先問你。</strong> 不過守則是「脈絡」不是「強制設定」，它會照著做，但沒有百分之百的保證。真正要擋死某個動作，要用 hook 這種機制，或者把權限模式維持在 Manual。這個差別在治理上很重要：<strong>守則塑造行為，設定才是強制執行。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">帶回你的編輯室</h3>
+<ul>
+<li>你單位的員工手冊，寫得出一份 CLAUDE 檔嗎？寫不出來，是手冊不清楚，還是規矩本身就沒講清楚？</li>
+<li>全機構共用一份守則，跟各部門各有一份，差別在哪？哪些條目非得放在最上層？</li>
+<li>「不可動已發布資料夾」這種條目，在你單位對應的是什麼？把它寫出來。</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">檢查清單</h3>
+<ul>
+<li>[ ] 你的專案資料夾裡有一個 <code>CLAUDE.md</code></li>
+<li>[ ] <code>/context</code> 看得到它被載入</li>
+<li>[ ] 裡面每一條都具體到可以驗證，不是「注意品質」這種話</li>
+<li>[ ] 有一條禁區、一條格式、一條需要先問你的動作</li>
+<li>[ ] 總長度沒有超過兩百行</li>
+</ul>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_5_-_memory%EF%BC%9A%E8%B7%A8%E5%B0%8D%E8%A9%B1%E7%9A%84%E8%A8%98%E6%86%B6.html">指南 5｜memory：跨對話的記憶</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

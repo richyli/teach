@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 7｜MCP：接上外部資料</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">沒有 MCP，它就被關在你的資料夾裡</a></li><li><a href="#sec-2">最快的一條路：在網頁點一次</a></li><li><a href="#sec-3">用指令接：claude mcp add</a></li><li><a href="#sec-4">接了之後誰用得到</a></li><li><a href="#sec-5">台灣場景可以接什麼</a></li><li><a href="#sec-6">每接一條線，都同時擴大了兩件事</a></li><li><a href="#sec-7">帶回你的編輯室</a></li><li><a href="#sec-8">檢查清單</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 7｜MCP：接上外部資料</h1></div><p>在本單元中，會介紹 MCP 是什麼、用網頁點一次就能接上的那條路怎麼走、用指令接的寫法，以及台灣場景可以接什麼。最後一節講每接一個就同時擴大了什麼風險。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">沒有 MCP，它就被關在你的資料夾裡</h3>
+<p>預設狀態下，它只看得到你啟動時所在的那個資料夾。你真正的工作卻散在別的地方：行事曆、試算表、CRM、政府資料庫、內部系統。</p>
+<p>MCP（Model Context Protocol）是讓 AI 跟外部服務對話的通用標準，2024 年由 Anthropic 提出，現在其他家也在用。把它想成轉接頭：<strong>插上去之前，它伸手碰不到你資料夾以外的世界；插上去之後，它自己去拿。</strong></p>
+<p>差別很具體：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>料從哪來</th>
+<th>你要做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>沒有 MCP</td>
+<td>只有你的資料夾</td>
+<td>每次自己把試算表複製貼上</td>
+</tr>
+<tr>
+<td>接上 MCP</td>
+<td>試算表、行事曆、開放資料</td>
+<td>喊一聲，它自己去讀</td>
+</tr>
+</tbody>
+</table>
+<p>沒接資料源的 skill，再漂亮也只是一個純文字模板。這是<a href="Claude_Code_%E6%8C%87%E5%8D%97_6_-_skill%EF%BC%9A%E6%8A%8A%E9%87%8D%E8%A4%87%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%9B%BA%E5%8C%96.html">指南 6</a> 那些 skill 的天花板，MCP 是把天花板打開的東西。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">最快的一條路：在網頁點一次</h3>
+<p>行事曆、雲端硬碟、信箱這類服務，走 claude.ai 的 Connectors 最快，不用裝任何東西，也不用打任何指令。</p>
+<ol>
+<li>開 &lt;<a href="https://claude.ai/customize/connectors">https://claude.ai/customize/connectors</a>&gt;，用你跑 Claude Code 的同一個帳號登入。</li>
+<li>找到你要的服務，點 Connect。</li>
+<li>跳出該服務的授權頁，選帳號、同意權限，跳回來之後狀態變成已連接。</li>
+<li>回到 VS Code 的 Claude 面板，直接用講的：「幫我看下週的行事曆。」</li>
+</ol>
+<p>它會自己判斷要呼叫哪個工具、跳出確認、你按下去就跑。<strong>你描述的是意圖不是步驟，這就是 agentic 的感覺。</strong></p>
+<p>兩個要注意的地方：網頁跟 Claude Code 必須是同一個帳號，否則抓不到；Team 與 Enterprise 方案通常只有管理員能新增。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">用指令接：<code>claude mcp add</code></h3>
+<p>不在 Connectors 清單上的服務，用指令接。在終端機打（不是在對話框裡）：</p>
+<pre><code class="language-bash">claude mcp add --transport http &lt;名稱&gt; &lt;網址&gt;
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-bash">claude mcp add --transport http notion [https://mcp.notion.com/mcp](https://mcp.notion.com/mcp)
+</code></pre>
+<p>需要帶金鑰的服務，多一個 header：</p>
+<pre><code class="language-bash">claude mcp add --transport http &lt;名稱&gt; &lt;網址&gt; --header &quot;Authorization: Bearer 你的token&quot;
+</code></pre>
+<p>有些服務不是網址而是跑在你電腦上的程式，那種要用 <code>--</code> 把後面的指令隔開：</p>
+<pre><code class="language-bash">claude mcp add --transport stdio &lt;名稱&gt; -- npx -y &lt;套件名稱&gt;
+</code></pre>
+<p>這些指令你不用背。<strong>要接什麼服務，把它的官方說明頁貼給 Claude Code，叫它幫你接。</strong> 它會判斷該用哪一種，該打什麼。</p>
+<p>接完之後，在對話框打 <code>/mcp</code> 會列出所有伺服器與狀態。要登入的服務在這裡完成授權；顯示失敗的也在這裡重試。VS Code 的面板裡打 <code>/mcp</code> 同樣可以新增、移除、管理。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">接了之後誰用得到</h3>
+<table>
+<thead>
+<tr>
+<th>範圍</th>
+<th>指令</th>
+<th>誰用得到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只有這個專案（預設）</td>
+<td>不用加</td>
+<td>你，而且只在這個專案</td>
+</tr>
+<tr>
+<td>專案共用</td>
+<td><code>--scope project</code></td>
+<td>設定寫進專案的 <code>.mcp.json</code>，團隊共用</td>
+</tr>
+<tr>
+<td>你所有專案</td>
+<td><code>--scope user</code></td>
+<td>你，在所有專案</td>
+</tr>
+</tbody>
+</table>
+<p>團隊共用那一種會在資料夾裡生出一個 <code>.mcp.json</code>，可以跟著版本控制走。第一次打開別人專案時，它會先問你要不要批准那些伺服器，<strong>不要無腦批准</strong>。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">台灣場景可以接什麼</h3>
+<p>國外的 MCP 多半解美國或全球的問題。台灣本地的查詢有一個集合叫 Twinkle MCP（&lt;<a href="https://hub.twinkleai.tw/">https://hub.twinkleai.tw/</a>&gt;），把政府開放資料、政府電子採購網、立法院資料包成 MCP。接上之後，下面這些都是直接用講的：</p>
+<ul>
+<li>「查某機關 2026 年以後的決標公告，按金額排序列前二十件」</li>
+<li>「用統編查這家公司的登記資料、董監事、分公司」</li>
+<li>「查第 11 屆立法院關於某個法案的議案與表決紀錄」</li>
+<li>「查某個路段 2024 年以後的實價登錄成交紀錄」</li>
+</ul>
+<p>對媒體來說，這幾類查詢分別對應到標案調查、廠商背景查核、法案追蹤、地產線的即時查證。過去要開四個網站慢慢翻，現在是一句話。查到的東西仍然要回原始資料核對一次，理由在下一節。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">每接一條線，都同時擴大了兩件事</h3>
+<p>這是這一份最重要的一段。</p>
+<p><strong>接上一個資料源，等於同時擴大了它能做的事、跟它能做錯的事。</strong>新增一個連接器不是技術上的方便而已，是一個決策：你決定了它現在可以碰什麼。</p>
+<p>三個要一起想的風險：</p>
+<p><strong>第一，它會把不存在的東西講得很篤定。</strong>接了法規資料庫不代表它引的條號一定對。它的角色是幫你快速定位該看哪幾條，不是替你做成決定。凡是要引為依據的，一律回原文核。</p>
+<p><strong>第二，讀外部內容的伺服器帶進提示注入風險。</strong>它去讀了一個網頁，網頁裡藏著寫給 AI 看的指令，它可能就照做了。所以連接前要確認你信任那個服務，以及那個服務會讀到什麼內容。</p>
+<p><strong>第三，權限是雙向的。</strong>接上信箱代表它讀得到信；接上雲端硬碟代表它讀得到檔。你單位的哪些資料可以讓它碰，這是編輯政策與資安政策，不是設定畫面上的一個開關。</p>
+<p>實務上的起手式：<strong>先接唯讀的、先接公開資料的、先接不痛的。</strong>行事曆跟政府開放資料是好的第一條線；內部人事系統不是。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">帶回你的編輯室</h3>
+<ul>
+<li>盤點一下：你單位現在用的雲端工具（CRM、ERP、HR、會計、雲端硬碟），哪些已經有 MCP 可以接？哪些還沒有？</li>
+<li>沒有 MCP 的服務，你會考慮換掉，還是請資訊單位自己搭一個？</li>
+<li>反過來想：你的機構<strong>對外</strong>提供得了 MCP 嗎？如果讀者或客戶的 AI 想直接讀你的內容目錄、查你的帳戶狀態，你準備好了嗎？</li>
+<li>這跟當年「要不要做 API」「要不要做 App」是同一類問題嗎？窗口期會多長？</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">檢查清單</h3>
+<ul>
+<li>[ ] 你知道不接 MCP 它只看得到你的資料夾</li>
+<li>[ ] 你至少接過一個服務，並在 <code>/mcp</code> 看到它顯示已連接</li>
+<li>[ ] 你用講的叫它去那個服務拿過一次料</li>
+<li>[ ] 你講得出這條線讓它多能做什麼、以及多能做錯什麼</li>
+<li>[ ] 你沒有把含機密或個資的系統當成第一條線</li>
+</ul>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_8_-_%E5%8D%A1%E4%BD%8F%E4%BA%86%E6%80%8E%E9%BA%BC%E8%BE%A6%E8%88%87%E5%AE%89%E5%85%A8%E5%AE%88%E5%89%87.html">指南 8｜卡住了怎麼辦與安全守則</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

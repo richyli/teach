@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 3｜介面、權限模式與第一個指令</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">面板上你只要認得五樣東西</a></li><li><a href="#sec-2">四種權限模式，決定它做事前要不要問你</a></li><li><a href="#sec-3">驗收有三個介面，不要只看最後結果</a></li><li><a href="#sec-4">第一個指令，挑一個不會壞事的</a></li><li><a href="#sec-5">三段式：背景、任務、格式</a></li><li><a href="#sec-6">帶檔案進來的兩種方法</a></li><li><a href="#sec-7">對話變長之後會發生什麼事</a></li><li><a href="#sec-8">模型跟思考深度，從便宜的開始</a></li><li><a href="#sec-9">動手：用你自己的一段真實工作跑一次</a></li><li><a href="#sec-10">大家第一次最常犯的四件事</a></li><li><a href="#sec-11">檢查清單</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 3｜介面、權限模式與第一個指令</h1></div><p>在本單元中，會介紹面板上每個東西是做什麼的、四種權限模式差在哪、三段式指令怎麼寫，以及怎麼用一段你自己的真實工作跑完第一輪並驗收。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">面板上你只要認得五樣東西</h3>
+<p>打開 Claude 面板，由下往上看：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>是什麼</th>
+<th>你什麼時候會動它</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>輸入框</td>
+<td>你打字的地方</td>
+<td>一直</td>
+</tr>
+<tr>
+<td>輸入框下方的模式字樣</td>
+<td>目前的權限模式</td>
+<td>每次任務開始前確認一次</td>
+</tr>
+<tr>
+<td>模式旁邊的模型名稱</td>
+<td>現在用哪個模型</td>
+<td>換複雜任務時</td>
+</tr>
+<tr>
+<td>輸入框上方的用量指示</td>
+<td>這一輪用掉多少 context</td>
+<td>對話變長時</td>
+</tr>
+<tr>
+<td>面板頂端的歷史紀錄</td>
+<td>過去的對話</td>
+<td>要接續昨天的工作時</td>
+</tr>
+</tbody>
+</table>
+<p>在輸入框打一個 <code>/</code> 會叫出命令選單，裡面有附加檔案、切換模型、管理 MCP、設定記憶等等。指令不用背，打 <code>/</code> 找就好。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">四種權限模式，決定它做事前要不要問你</h3>
+<p>這是整套工具裡唯一跟「風險」直接相關的設定。點輸入框下方的模式字樣可以切換。</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>行為</th>
+<th>什麼時候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manual（手動）</td>
+<td>改檔案、跑指令前都問你</td>
+<td>第一週，以及任何動到真實檔案的任務</td>
+</tr>
+<tr>
+<td>Plan（計畫）</td>
+<td>只規劃不執行，先給你一份計畫等你批准</td>
+<td>大範圍改動之前，例如整批改檔</td>
+</tr>
+<tr>
+<td>Edit automatically（自動編輯）</td>
+<td>檔案編輯不問，其他仍問</td>
+<td>你已經跑熟、而且動的是副本</td>
+</tr>
+<tr>
+<td>Auto（自動）</td>
+<td>多數動作由分類器檢查，不逐一問你</td>
+<td>熟悉之後的日常任務</td>
+</tr>
+</tbody>
+</table>
+<p>還有一個 bypass 模式是全部都不問，<strong>第一個月不要碰它</strong>。那個模式的用途是無人值守的排程作業，不是給你省事用的。</p>
+<p>在 Plan 模式下，VS Code 會把計畫當成一份完整文件打開，你可以在上面加註解再讓它開始。要改一整批檔案時，先用 Plan 看它打算怎麼動，比事後補救便宜得多。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">驗收有三個介面，不要只看最後結果</h3>
+<p><strong>第一個是它的計畫。</strong> 動手之前它會先說要做什麼。這段常常就看得出它誤會了你的意思，這時喊停最便宜。</p>
+<p><strong>第二個是並排比對。</strong> 它要改檔案時，左邊是原文、右邊是改動後，你可以直接在比對畫面上手動改，再按接受。你動過之後它會知道成品跟它的提案不同。</p>
+<p><strong>第三個是確認鍵。</strong> 那個要你按 Allow 或 Deny 的提示，就是人類的煞車。一路按 yes 等於把煞車拆了。</p>
+<p>一句話：<strong>你負責下指令跟驗收，它負責執行。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">第一個指令，挑一個不會壞事的</h3>
+<p>在面板打這一句，按 Enter：</p>
+<blockquote>
+<p>請用一句話說明我現在這個資料夾裡有什麼。不要修改任何檔案。</p>
+</blockquote>
+<p>你會注意到三件事：它先講它打算怎麼做；它會問你要不要授權它讀檔；同一句話不同人跑出來的結果不一樣。第三件事是接下來整段的重點。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">三段式：背景、任務、格式</h3>
+<p>好結果來自把話講死。一個能用的指令有三段：</p>
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>你要交代什麼</th>
+<th>常見的漏法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>背景</td>
+<td>你是誰、幫誰做、這是什麼文件</td>
+<td>最常漏這段，它只好自己想像你是誰</td>
+</tr>
+<tr>
+<td>任務</td>
+<td>要達成什麼、有哪些要件、分幾步</td>
+<td>只寫「整理一下」，結果一定發散</td>
+</tr>
+<tr>
+<td>格式</td>
+<td>輸出長什麼樣、多長、給誰看</td>
+<td>沒講就給你一大坨</td>
+</tr>
+</tbody>
+</table>
+<p><strong>每留白一處，它就替你自作主張一處。</strong></p>
+<p>一個可以直接改用的樣板：</p>
+<blockquote>
+<p>背景：我是一家電視台的新聞部主管，這是我昨天訪談某位受訪者的逐字稿。</p>
+<p>任務：幫我抓出三個主要論點，每個論點配一句逐字稿原文當佐證，並標出哪一段我引用前需要再回去確認。</p>
+<p>格式：條列，每點不超過兩行，最後附一張表列出需要確認的段落。</p>
+</blockquote>
+<p>結果不夠好的時候，先問自己改哪一段，而不是換一個模型。多數人第一次都是漏了背景，或沒講格式。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">帶檔案進來的兩種方法</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>怎麼做</th>
+<th>什麼時候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@</code> 帶檔</td>
+<td>在輸入框打 <code>@</code> 接檔名，它會模糊比對，打一部分就找得到。資料夾在名稱後加斜線，例如 <code>@逐字稿/</code></td>
+<td>要它處理一整份檔或一整個資料夾</td>
+</tr>
+<tr>
+<td>反白選取</td>
+<td>在編輯器裡反白一段文字，輸入框下方會顯示選了幾行。按 <code>Alt+K</code>（Mac 是 <code>Option+K</code>）可以把「這個檔的第幾行到第幾行」插進提示裡</td>
+<td>只要它看某一段，不要它讀整份</td>
+</tr>
+</tbody>
+</table>
+<p>大份的 PDF 可以叫它只讀特定頁數，例如「只讀第 3 到第 10 頁」，比整份丟進去省得多。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">對話變長之後會發生什麼事</h3>
+<p>它這一輪看得到的所有文字統稱 context，有上限。塞得越滿，回應越慢、越貴，判斷也越容易散掉。</p>
+<p>兩個處理方式：</p>
+<ul>
+<li><strong><code>/compact</code></strong>：叫它把目前的對話自己摘要成精簡版，帶著摘要繼續。簡單的任務夠用。</li>
+<li><strong>手動交棒</strong>：叫它寫一份「下一個對話的接手指南」，內容是什麼做完了、卡在哪、下一步做什麼，存成一個檔。然後開新對話，第一句叫它讀那份檔。複雜任務一律用這一招，<code>/compact</code> 會漏掉關鍵細節。</li>
+</ul>
+<p>另外，<strong>一個任務開一個新對話</strong>。不要在同一串對話裡先寫新聞稿再做法規比對，前面的內容會污染後面的判斷。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">模型跟思考深度，從便宜的開始</h3>
+<p>打 <code>/model</code> 會列出目前可用的模型，通常分成三個級距：最強的適合複雜推理與長文寫作，中階的適合日常九成任務，輕量的適合短問答與格式轉換。同一個選單裡通常還能調思考深度（effort）。</p>
+<p>選法很簡單：<strong>先用中階跑，跑壞了再換強的重做一次</strong>，通常比一開始就用最強的省。寫提案、設計 skill 這類需要判斷的事再往上調。</p>
+<p>不要記版本號，改版很快，看選單當下列了什麼就選什麼。</p>
+</section>
+<section class="mod-sec sec-activity"><h3 id="sec-9">動手：用你自己的一段真實工作跑一次</h3>
+<p>這一節做完，W3 的小作業就有東西交了。</p>
+<p>材料用你手上真的在處理的東西：一份訪談逐字稿、一份要彙整的報告、一封要回的長信都可以。手邊沒有的話，去你的信箱找一封這週最長的工作信，把內文貼進一個文字檔存起來，那就是材料。</p>
+<ol>
+<li><strong>放料</strong>：把那份檔案複製進你開啟的那個資料夾，確認左側清單看得到它。</li>
+<li><strong>確認模式</strong>：把權限模式切到 Manual。</li>
+<li><strong>下指令</strong>：用上面的三段式樣板改寫成你自己的版本，用 <code>@</code> 帶入那個檔。</li>
+<li><strong>先讀計畫再放行</strong>：它會先說它打算怎麼做，讀完再按允許。</li>
+<li><strong>看它動檔案</strong>：如果它要改檔，在並排比對畫面上一處一處看，不確定的按拒絕並告訴它為什麼。</li>
+<li><strong>立刻標記</strong>：結果出來，馬上寫下「它對的一處」與「它錯的一處」。過五分鐘你就想不起來了。</li>
+<li><strong>改一次提示再跑一次</strong>：把你剛剛發現的不足補進三段式，重跑。比較兩次的差別。</li>
+</ol>
+<p>要交的東西有三樣：對的一處、錯的一處、一句「下次我會怎麼改提示」。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">大家第一次最常犯的四件事</h3>
+<table>
+<thead>
+<tr>
+<th>錯誤</th>
+<th>會發生什麼</th>
+<th>怎麼修</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>開錯資料夾</td>
+<td>它說找不到檔案</td>
+<td>重新用「開啟資料夾」開對位置</td>
+</tr>
+<tr>
+<td>指令太籠統</td>
+<td>結果發散、不能用</td>
+<td>回去補背景與格式，把任務拆成編號步驟</td>
+</tr>
+<tr>
+<td>一路按 yes</td>
+<td>它改了你不想動的檔</td>
+<td>切回 Manual，逐處看比對畫面</td>
+</tr>
+<tr>
+<td>期待一次到位</td>
+<td>覺得這工具不過如此</td>
+<td>好結果是問三到五次問出來的，不是一次寫對</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">檢查清單</h3>
+<ul>
+<li>[ ] 你認得面板上的模式字樣，而且知道現在是哪個模式</li>
+<li>[ ] 你跑過一個不會改檔的暖身指令</li>
+<li>[ ] 你用三段式寫過一個指令，三段都有內容</li>
+<li>[ ] 你讀過它的計畫才放行，不是直接按到底</li>
+<li>[ ] 你手上有「對的一處」與「錯的一處」可以交作業</li>
+</ul>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_4_-_CLAUDE_%E6%AA%94%EF%BC%9A%E5%B0%88%E6%A1%88%E5%AE%88%E5%89%87.html">指南 4｜CLAUDE 檔：專案守則</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

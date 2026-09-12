@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 6｜skill：把重複的工作固化</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">skill 不是新東西，是你那串指令被存起來</a></li><li><a href="#sec-2">三條判準，缺一條就先別做</a></li><li><a href="#sec-3">一個 skill 就是一個資料夾加一個檔案</a></li><li><a href="#sec-4">一份可以直接改用的 skill</a></li><li><a href="#sec-5">另外兩個現成的場景</a></li><li><a href="#sec-6">兩種叫用方式，跟一個你會想關掉的行為</a></li><li><a href="#sec-7">讓 skill 吃參數</a></li><li><a href="#sec-8">需要算數或批次處理的時候，讓它寫腳本</a></li><li><a href="#sec-9">skill 是調出來的，不是寫出來的</a></li><li><a href="#sec-10">別人拿去跑才算做好</a></li><li><a href="#sec-11">你寫進去的不只是步驟，還有判斷</a></li><li><a href="#sec-12">有人的一天長什麼樣</a></li><li><a href="#sec-13">帶回你的編輯室</a></li><li><a href="#sec-14">檢查清單</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 6｜skill：把重複的工作固化</h1></div><p>在本單元中，會介紹什麼樣的工作值得做成 skill、一個 skill 的檔案長什麼樣、怎麼把你的三段式指令存成一個可以喊名字叫用的東西，以及為什麼別人拿去跑才算真的做好了。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">skill 不是新東西，是你那串指令被存起來</h3>
+<p>你每週五都在打同一段話：「把這週發的稿整理成主管週報，每篇三行，附連結。」打第五次的時候你就該把它存起來。</p>
+<p>存起來、給它一個名字，就叫 skill。下次打 <code>/週報彙整</code> 就跑。</p>
+<p>對不同背景的人有不同的說法：對用過 Office 的人，它像巨集；對工程師，它像函式；<strong>對你，它就是一份 SOP</strong>。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">三條判準，缺一條就先別做</h3>
+<table>
+<thead>
+<tr>
+<th>判準</th>
+<th>問自己</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>頻率高</td>
+<td>這件事我每週、每天都在做嗎？一次性的事固化了也用不到</td>
+</tr>
+<tr>
+<td>步驟固定</td>
+<td>流程大致一樣嗎？還是每次都長得不同</td>
+</tr>
+<tr>
+<td>輸入輸出講得清楚</td>
+<td>我說得出丟什麼進去、要吐什麼出來嗎</td>
+</tr>
+</tbody>
+</table>
+<p>反例校正：「幫我想一個 idea」不適合，步驟不固定、輸出也說不清。「把這週五篇稿子彙整成一頁主管週報，每篇三行、附連結」非常適合，三條都中。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">一個 skill 就是一個資料夾加一個檔案</h3>
+<pre><code>~/.claude/skills/週報彙整/
+└── SKILL.md
+</code></pre>
+<p>資料夾的名字就是你要打的指令名稱。<code>SKILL.md</code> 的上半部是設定，下半部是給它看的步驟，<strong>沒有程式碼</strong>。</p>
+<p>放的位置決定誰用得到：</p>
+<table>
+<thead>
+<tr>
+<th>放哪</th>
+<th>路徑</th>
+<th>誰用得到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>你自己</td>
+<td><code>~/.claude/skills/&lt;名稱&gt;/SKILL.md</code></td>
+<td>你這台機器上的所有專案</td>
+</tr>
+<tr>
+<td>這個專案</td>
+<td><code>專案資料夾/.claude/skills/&lt;名稱&gt;/SKILL.md</code></td>
+<td>打開這個資料夾的所有人，可以給團隊共用</td>
+</tr>
+</tbody>
+</table>
+<p>判斷法：指令裡寫死了某個專案路徑，放專案；是一個到哪裡都能用的工具，放你自己那一層。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">一份可以直接改用的 skill</h3>
+<p>把下面這段存成 <code>~/.claude/skills/週報彙整/SKILL.md</code>：</p>
+<pre><code class="language-markdown">---
+description: 把本週稿件清單整理成一頁主管週報。使用者說要做週報、
+  要彙整本週稿件、或提到週五週報時使用。
+---
+
+# 週報彙整
+
+## 你的角色
+你是我的編務助理。我每週五會給你這週發布的稿件清單。
+
+## 步驟
+1. 逐篇抓出一句話重點，不超過三十字
+2. 標出哪幾篇的數據表現最好，並說明是哪一個指標
+3. 彙整成一頁，每篇三行以內，附原文連結
+4. 最後給三句下週選題建議，每句要指得回上面某一篇
+
+## 輸出格式
+- Markdown，控制在一頁
+- 主管掃一眼就懂，不要有我需要再問一次的地方
+- 找不到連結的篇目標〔缺連結〕，不要自己編
+</code></pre>
+<p>上半部那幾行是設定，兩個 <code>---</code> 中間的部分。裡面最重要的是 <code>description</code>：<strong>它靠這一句決定要不要自己叫出這個 skill</strong>。寫得模糊，它就不會在該用的時候用。把使用者實際會說出口的說法寫進去，效果最好。</p>
+<p>下半部就是你原本要打的那串話，只是拆成了角色、步驟、格式。你有沒有發現，這三塊就是<a href="Claude_Code_%E6%8C%87%E5%8D%97_3_-_%E4%BB%8B%E9%9D%A2%E3%80%81%E6%AC%8A%E9%99%90%E6%A8%A1%E5%BC%8F%E8%88%87%E7%AC%AC%E4%B8%80%E5%80%8B%E6%8C%87%E4%BB%A4.html">指南 3</a> 的三段式。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">另外兩個現成的場景</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>選題評估</th>
+<th>查證清單</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>角色</td>
+<td>選題會的幕僚</td>
+<td>事實查核員</td>
+</tr>
+<tr>
+<td>步驟</td>
+<td>對每個提案打三個分（時效、獨家性、可執行性），各附一句理由，最後給排序</td>
+<td>把稿子裡每個可查證的事實列出來，標出哪些有附來源、哪些沒有</td>
+</tr>
+<tr>
+<td>格式</td>
+<td>表格，分數加一句話</td>
+<td>清單，沒來源的排最前面</td>
+</tr>
+</tbody>
+</table>
+<p>三個場景的共同點是：輸入是一份現成的東西，輸出是一張別人看得懂的表。這類工作最適合第一個拿來固化。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">兩種叫用方式，跟一個你會想關掉的行為</h3>
+<p>打 <code>/週報彙整</code> 是你主動叫它。另一種是它自己判斷相關就載入，靠的是那句 <code>description</code>。</p>
+<p>有些 skill 你不希望它自己決定要不要跑，例如會寄信、會發布、會覆蓋檔案的。在設定區加一行：</p>
+<pre><code>disable-model-invocation: true
+</code></pre>
+<p>加了之後，只有你打 <code>/名稱</code> 才會跑。<strong>任何有對外副作用的動作都該加這一行。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">讓 skill 吃參數</h3>
+<p>同一個 skill 想套用在不同對象上，用 <code>$ARGUMENTS</code>：</p>
+<pre><code class="language-markdown">---
+description: 把一份素材改寫成指定平台的版本
+---
+
+把我給你的素材改寫成 $ARGUMENTS 版本，符合該平台的語氣與長度限制。
+不確定的事實一律標〔待確認〕，不要自己補。
+</code></pre>
+<p>之後打 <code>/改寫 LINE 群組通知</code>，<code>$ARGUMENTS</code> 就會變成「LINE 群組通知」。</p>
+<p>這一招讓「一稿多版」從四個 skill 變成一個。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">需要算數或批次處理的時候，讓它寫腳本</h3>
+<p>文字、判斷、寫作這類事，直接寫在 <code>SKILL.md</code> 裡讓它自己做。碰到精確計算、一次處理上百個檔、呼叫別的系統，就該讓它寫一支腳本，<code>SKILL.md</code> 只負責叫那支腳本跑。</p>
+<p>理由有三個：純計算交給程式比較不會錯，跑起來快得多，而且你不開 Claude Code 也能直接跑那支腳本。</p>
+<p><strong>你不需要會寫 Python。</strong>描述你要什麼，它會寫、會除錯、會放好，再幫你把 <code>SKILL.md</code> 寫成叫它跑的樣子。你負責提需求、看結果、講哪裡錯了。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">skill 是調出來的，不是寫出來的</h3>
+<p>第一版一定給你很普通的東西。真正有用的版本是這樣長出來的：</p>
+<ol>
+<li>你叫它跑</li>
+<li>它做出九成對的東西</li>
+<li>你看出那一成不對，講「應該是 X 不是 Y」</li>
+<li>它修正當下的結果</li>
+<li><strong>你接著說：把這個規則寫進這個 skill</strong></li>
+<li>下次跑就對了</li>
+</ol>
+<p>第五步是最多人漏掉的。光糾正一次，下次還會犯。</p>
+<p>有一個內部案例可以當尺度感：某個要模仿特定主管文風的 skill，改了好幾百次系統提示才真的像本人。<strong>用第三版的表現去判斷一個 skill 值不值得留，不要用第一版。</strong>寫完一次就丟在那裡的 skill，只是一段多繞了幾步的提示。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">別人拿去跑才算做好</h3>
+<p>一個只有作者在旁邊才跑得動的 skill，還停在提示階段。</p>
+<p>檢驗方法很直接：<strong>把你的 skill 交給同事，讓他拿一份你沒看過的材料去跑。</strong>看他必須回頭問你什麼問題，那個問題就是你留在腦袋裡、沒寫進 skill 的部分。把他問的問題補進去，就是下一版。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">你寫進去的不只是步驟，還有判斷</h3>
+<p>上面那個週報 skill 裡，有人決定了：重點寫一句不是三句、每篇三行不是五行、下週建議要指得回某一篇。這些都是判斷，不是步驟。</p>
+<p>同事拿去用，等於在沒有討論過的情況下接受了這些判斷。這解釋了兩件事：一個團隊共用 skill 之後產出會開始長得像同一個人；一個沒被檢查過的共用 skill，會把一個人的盲點複製到所有人的產出上。</p>
+<p>這對主管的意義是：<strong>哪些判斷可以寫進共用 skill、哪些必須留給個人，是編輯政策問題，不是技術問題。</strong></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-12">有人的一天長什麼樣</h3>
+<p>給一個累積之後的尺度感。有人每天早上跑一個指令，接下來自動完成：讀完資料夾裡新進的論文 PDF 並寫成筆記、掃各國媒體整理成一份分類新聞簡報、抓穿戴裝置資料寫成睡眠分析、把任務清單依期限重排並同步到看板。整個過程沒有打字，就一個指令，沖咖啡的時間跑完。</p>
+<p>那不是一次做出來的，是一個一個 skill 累積兩年的結果。你這週要做的只是第一個。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-13">帶回你的編輯室</h3>
+<ul>
+<li>你單位哪些固定產出（週業務簡報、月競品動態、日客服摘要）可以先變成 skill？</li>
+<li>這些報告現在誰在做？時間還給他之後，他該做什麼更值錢的事？</li>
+<li>資深同事的判斷力要怎麼合法地蒸餾成 skill？他願意嗎？該怎麼算他的貢獻？</li>
+<li>skill 就是一個文字檔，同事複製走明天就能在別家用。這是你要防的重點嗎？還是防不住之後，你該重新盤點的是別的東西？</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-14">檢查清單</h3>
+<ul>
+<li>[ ] 你挑的那件事三條判準都中</li>
+<li>[ ] <code>SKILL.md</code> 裡有角色、步驟、格式三塊</li>
+<li>[ ] <code>description</code> 寫了你自己會說出口的觸發說法</li>
+<li>[ ] 有副作用的 skill 加了 <code>disable-model-invocation: true</code></li>
+<li>[ ] 你跑過至少兩次，第二版比第一版好</li>
+<li>[ ] 你交給另一個人跑過，並把他問的問題補進去了</li>
+</ul>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_7_-_MCP%EF%BC%9A%E6%8E%A5%E4%B8%8A%E5%A4%96%E9%83%A8%E8%B3%87%E6%96%99.html">指南 7｜MCP：接上外部資料</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

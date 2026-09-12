@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 2｜安裝 Claude Code 並登入</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">先確認帳號，否則裝好也登不進去</a></li><li><a href="#sec-2">兩條路線，第一次選擴充套件</a></li><li><a href="#sec-3">路線 A：安裝 VS Code 擴充套件</a></li><li><a href="#sec-4">路線 B：安裝 CLI</a></li><li><a href="#sec-5">Windows 使用者順便裝 Git for Windows 會少一些麻煩</a></li><li><a href="#sec-6">裝好之後怎麼啟動</a></li><li><a href="#sec-7">確認它真的裝好了</a></li><li><a href="#sec-8">更新怎麼處理</a></li><li><a href="#sec-9">完全不想碰終端機的話，還有桌面應用程式</a></li><li><a href="#sec-10">檢查清單</a></li><li><a href="#sec-11">卡住的話</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 2｜安裝 Claude Code 並登入</h1></div><p>在本單元中，會介紹兩條安裝路線該怎麼選、帳號要哪一種、Windows 與 macOS 各自的指令怎麼打，以及裝完怎麼確認它真的活著。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">先確認帳號，否則裝好也登不進去</h3>
+<p>Claude Code 需要付費帳號：Pro、Max、Team、Enterprise 訂閱，或 Claude Console 帳號。<strong>免費的 claude.ai 方案不包含 Claude Code。</strong></p>
+<p>如果你還沒付費，先用網頁版把純文字的任務做起來（見<a href="Claude_Code_%E6%8C%87%E5%8D%97_0_-_%E7%B8%BD%E8%A6%BD%E8%88%87%E9%96%B1%E8%AE%80%E9%A0%86%E5%BA%8F.html">指南 0</a> 的任務對照表），課堂上的示範看懂就好，回去再決定要不要開通。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">兩條路線，第一次選擴充套件</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>擴充套件（圖形面板）</th>
+<th>CLI（終端機）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>長什麼樣</td>
+<td>VS Code 裡的對話面板，像聊天視窗</td>
+<td>黑底白字的終端機</td>
+</tr>
+<tr>
+<td>適合誰</td>
+<td>第一次上手、不想碰終端機</td>
+<td>想跑排程、跑批次、用完整功能</td>
+</tr>
+<tr>
+<td>並排比對</td>
+<td>有</td>
+<td>有（會叫 VS Code 開）</td>
+</tr>
+<tr>
+<td>功能完整度</td>
+<td>大部分，少數指令只有 CLI 有</td>
+<td>完整</td>
+</tr>
+</tbody>
+</table>
+<p>先裝擴充套件，之後有需要再補裝 CLI。<strong>兩者共用同一份對話紀錄與設定</strong>，不會各記各的。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">路線 A：安裝 VS Code 擴充套件</h3>
+<ol>
+<li>在 VS Code 按 <code>Ctrl+Shift+X</code>（Mac 是 <code>Cmd+Shift+X</code>）打開擴充套件。</li>
+<li>搜尋 <code>Claude Code</code>，認明發行者是 Anthropic，套件識別名稱是 <code>anthropic.claude-code</code>。</li>
+<li>按「安裝」。</li>
+<li>裝好之後，開啟任何一個檔案，編輯器右上角會出現一個星形（Spark）圖示，點它就開啟 Claude 面板。左側活動列也會有同一個圖示。</li>
+<li>第一次開面板會出現登入畫面，按「登入」，瀏覽器會跳出授權頁，用你的付費帳號完成授權後跳回 VS Code。</li>
+</ol>
+<p>裝好沒出現圖示的話，按 <code>Ctrl+Shift+P</code> 打「Developer: Reload Window」重新載入視窗，通常就會出現。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">路線 B：安裝 CLI</h3>
+<p>擴充套件自己帶了一份 CLI 給對話面板用，但<strong>你在終端機裡打 <code>claude</code> 需要另外裝一次</strong>。要跑排程、要用完整指令集的人才需要這一段。</p>
+<p><strong>Windows（PowerShell）</strong></p>
+<p>先確認你在 PowerShell 而不是 CMD：提示字元開頭有 <code>PS</code> 就是 PowerShell。</p>
+<pre><code class="language-powershell">irm [https://claude.ai/install.ps1](https://claude.ai/install.ps1) | iex
+</code></pre>
+<p>如果被擋，出現無法載入指令碼的訊息，先跑這一行再重來：</p>
+<pre><code class="language-powershell">Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+</code></pre>
+<p>機構網路擋掉下載的話，改用這個：</p>
+<pre><code class="language-powershell">winget install Anthropic.ClaudeCode
+</code></pre>
+<p><strong>macOS、Linux</strong></p>
+<pre><code class="language-bash">curl -fsSL [https://claude.ai/install.sh](https://claude.ai/install.sh) | bash
+</code></pre>
+<p>用 Homebrew 也可以：</p>
+<pre><code class="language-bash">brew install --cask claude-code
+</code></pre>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">Windows 使用者順便裝 Git for Windows 會少一些麻煩</h3>
+<p>到 &lt;<a href="https://git-scm.com/downloads/win">https://git-scm.com/downloads/win</a>&gt; 裝一次就好。裝了它，Claude Code 可以用 Bash 執行指令；沒裝的話它改用 PowerShell，多數情況一樣能用，但有些現成的腳本會挑環境。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">裝好之後怎麼啟動</h3>
+<p>在 VS Code 的整合終端機（<code>Ctrl+`</code>）打 <code>claude</code> 就會啟動，而且它會自動偵測到自己在 VS Code 裡、接上編輯器。如果你用的是 VS Code 以外的終端機，在 Claude Code 裡打 <code>/ide</code> 手動連上。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">確認它真的裝好了</h3>
+<p>在終端機打這兩行（只裝擴充套件的人可以跳過這一節）：</p>
+<pre><code class="language-bash">claude --version
+</code></pre>
+<p>正常會印出版本號，像 <code>2.1.211 (Claude Code)</code>。</p>
+<pre><code class="language-bash">claude doctor
+</code></pre>
+<p>這一行會印出安裝與設定的健康檢查，包含設定檔有沒有錯、自動更新是否正常。它只讀不寫，不會動到任何東西，卡住的時候第一個跑它。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">更新怎麼處理</h3>
+<p>用官方安裝指令裝的版本會自己在背景更新，你不用管。用 winget 或 Homebrew 裝的不會自動更新，要自己跑：</p>
+<pre><code class="language-powershell">winget upgrade Anthropic.ClaudeCode
+</code></pre>
+<pre><code class="language-bash">brew upgrade claude-code
+</code></pre>
+<p>想立刻更新到最新版，任何安裝方式都可以跑 <code>claude update</code>。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">完全不想碰終端機的話，還有桌面應用程式</h3>
+<p>Anthropic 另外出了 Claude Code 桌面應用程式，是純圖形介面，不需要終端機。下載頁在 &lt;<a href="https://claude.com/download">https://claude.com/download</a>&gt;。這門課的示範以 VS Code 為主，因為並排比對與 <code>@</code> 帶檔的操作在 VS Code 裡最清楚，不過桌面版的概念完全一樣，四個零件也都在。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-10">檢查清單</h3>
+<ul>
+<li>[ ] 確認你的帳號是付費方案（Pro、Max、Team、Enterprise 或 Console）</li>
+<li>[ ] 擴充套件裝好，看得到星形圖示</li>
+<li>[ ] 已完成瀏覽器授權，面板不再顯示未登入</li>
+<li>[ ] （選配）終端機打 <code>claude --version</code> 印得出版本號</li>
+<li>[ ] （選配）<code>claude doctor</code> 沒有紅字</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-11">卡住的話</h3>
+<table>
+<thead>
+<tr>
+<th>症狀</th>
+<th>原因</th>
+<th>處理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command not found</code> 或 <code>'claude' 不是內部或外部命令</code></td>
+<td>系統還不認得這個字，安裝沒完成或 PATH 沒設好</td>
+<td>關掉終端機重開；仍不行就重跑一次安裝指令</td>
+</tr>
+<tr>
+<td>出現 <code>The token '&amp;&amp;' is not a valid statement separator</code></td>
+<td>你在 PowerShell 卻貼了 CMD 的指令</td>
+<td>改貼 PowerShell 那一行</td>
+</tr>
+<tr>
+<td>出現 <code>'irm' is not recognized</code></td>
+<td>你在 CMD 卻貼了 PowerShell 的指令</td>
+<td>開 PowerShell 再貼</td>
+</tr>
+<tr>
+<td>裝了擴充套件但沒有圖示</td>
+<td>視窗沒重載，或沒開啟任何檔案</td>
+<td><code>Ctrl+Shift+P</code> → Developer: Reload Window；並先開一個檔案</td>
+</tr>
+<tr>
+<td>面板一直顯示未登入</td>
+<td>授權沒完成，或瀏覽器跳轉失敗</td>
+<td>從命令選擇區重新登入；換一個瀏覽器再試</td>
+</tr>
+<tr>
+<td>下載中途失敗</td>
+<td>機構網路阻擋</td>
+<td>換網路，或改用 winget／Homebrew</td>
+</tr>
+</tbody>
+</table>
+<p>更多症狀在 <a href="Claude_Code_%E6%8C%87%E5%8D%97_8_-_%E5%8D%A1%E4%BD%8F%E4%BA%86%E6%80%8E%E9%BA%BC%E8%BE%A6%E8%88%87%E5%AE%89%E5%85%A8%E5%AE%88%E5%89%87.html">指南 8｜卡住了怎麼辦與安全守則</a>。</p>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_3_-_%E4%BB%8B%E9%9D%A2%E3%80%81%E6%AC%8A%E9%99%90%E6%A8%A1%E5%BC%8F%E8%88%87%E7%AC%AC%E4%B8%80%E5%80%8B%E6%8C%87%E4%BB%A4.html">指南 3｜介面、權限模式與第一個指令</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

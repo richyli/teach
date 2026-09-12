@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 5｜memory：跨對話的記憶</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">兩套記憶並存，差別在誰寫的</a></li><li><a href="#sec-2">記憶檔在哪、長什麼樣</a></li><li><a href="#sec-3">讓它記住的兩種方法</a></li><li><a href="#sec-4">一條記憶要寫成什麼樣子</a></li><li><a href="#sec-5">規則該寫在哪一層</a></li><li><a href="#sec-6">換一台電腦它就失憶</a></li><li><a href="#sec-7">這件事就是「訓練 AI」的真相</a></li><li><a href="#sec-8">帶回你的編輯室</a></li><li><a href="#sec-9">檢查清單</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 5｜memory：跨對話的記憶</h1></div><p>在本單元中，會介紹 memory 跟 CLAUDE 守則差在哪、記憶檔實際長什麼樣、怎麼讓它把一條規則記下來，以及一條記憶要寫成什麼樣子才不會被死板套用。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">兩套記憶並存，差別在誰寫的</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CLAUDE 守則</th>
+<th>memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>誰寫</td>
+<td>你</td>
+<td>它自己寫</td>
+</tr>
+<tr>
+<td>內容</td>
+<td>規則與指令</td>
+<td>你的偏好、你糾正過的事、它從對話學到的脈絡</td>
+</tr>
+<tr>
+<td>綁在哪</td>
+<td>專案（或你的所有專案）</td>
+<td>這台機器上的這個專案</td>
+</tr>
+<tr>
+<td>何時載入</td>
+<td>每次對話</td>
+<td>每次對話載入索引</td>
+</tr>
+</tbody>
+</table>
+<p>兩套都在對話一開始就進來。你要規定它怎麼做，寫 CLAUDE 守則；你糾正它一次、希望它以後自己記得，那是 memory。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">記憶檔在哪、長什麼樣</h3>
+<p>每個專案有自己的記憶資料夾，位置是：</p>
+<pre><code>~/.claude/projects/&lt;專案&gt;/memory/
+├── MEMORY.md            ← 索引，一則記憶一行，每次對話都會載入
+├── user_role.md         ← 一則記憶一個檔
+├── feedback_用字.md
+└── ...
+</code></pre>
+<p><code>MEMORY.md</code> 是目錄，只放一行一則的摘要；細節在各自的主題檔裡，它需要的時候才去讀。這樣設計的理由是省 context：索引只載入前兩百行或 25KB，塞爆了超出的部分就不會被讀到。</p>
+<p>它存的記憶分四類，會標在檔案開頭：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>存什麼</th>
+<th>你單位的例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>你是誰、你的專業與偏好</td>
+<td>我是新聞部主管，負責晚間時段</td>
+</tr>
+<tr>
+<td>feedback</td>
+<td>你給過的糾正、你確認過的做法</td>
+<td>公文不要用「爰此」開頭</td>
+</tr>
+<tr>
+<td>project</td>
+<td>進行中的工作、期限、決策</td>
+<td>十月底前要交出編輯室 AI 守則 v1</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>資料在哪裡</td>
+<td>收視率報表在某個共用資料夾</td>
+</tr>
+</tbody>
+</table>
+<p>它會自動跳過兩種東西：看檔案就知道的事，以及 CLAUDE 守則裡已經寫過的事。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">讓它記住的兩種方法</h3>
+<p><strong>第一種，你直接說。</strong> 糾正完之後補一句：</p>
+<blockquote>
+<p>把這個規則記下來，以後自動套用。</p>
+</blockquote>
+<p><strong>第二種，它自己觀察。</strong> 自動記憶預設開著，你反覆糾正同一件事，它會主動寫進去。畫面上出現「已儲存 N 則記憶」就是它在寫。</p>
+<p><strong>第一種比較可靠。</strong>光糾正一次而沒有明說要記下來，下次它很可能照犯。這一句是整份指南裡投資報酬率最高的一句話。</p>
+<p>要看它到底記了什麼，在對話裡打 <code>/memory</code>，選記憶資料夾就能瀏覽。全部是純文字，你可以自己改、自己刪。<strong>記錯的就刪掉</strong>，不會有任何副作用。</p>
+<p>不想讓它自動記的話，<code>/memory</code> 裡有開關可以關掉。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">一條記憶要寫成什麼樣子</h3>
+<p>差的寫法：</p>
+<pre><code>中文不要用破折號
+</code></pre>
+<p>好的寫法：</p>
+<pre><code>中文寫作禁止用破折號當插入語。
+  Why: 台灣中文書寫慣例不用夾注式破折號，改稿時編輯會改掉。
+  How to apply: 出現「——X——」的插入語，一律改成「，例如 X 等，」
+                或用括號，或重組句子讓語意直接。
+</code></pre>
+<p>差別在後面兩行。<strong>加上為什麼跟怎麼套用，遇到邊角情況它才判斷得出該不該套。</strong>只寫結論的規則會被死板套用，然後在不該套的地方出包。</p>
+<p>這一點跟你帶人一模一樣：只交代「不要這樣做」的新人會在沒交代過的情境裡犯錯，知道理由的新人不會。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">規則該寫在哪一層</h3>
+<p>同一條糾正，可以寫進三個地方，選錯層級會讓它在不該生效的地方生效：</p>
+<table>
+<thead>
+<tr>
+<th>這條規則的適用範圍</th>
+<th>寫在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只跟某一個固定流程有關</td>
+<td>那個 skill 的 <code>SKILL.md</code></td>
+</tr>
+<tr>
+<td>這個資料夾的所有工作都要遵守</td>
+<td>專案的 <code>CLAUDE.md</code></td>
+</tr>
+<tr>
+<td>關於你這個人的偏好，換專案也成立</td>
+<td>memory</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">換一台電腦它就失憶</h3>
+<p>記憶存在你這台機器上，不會跟著帳號跑。你在辦公室訓練了三個月，回家開筆電是一張白紙。這是很多人第一次踩到的坑。</p>
+<p>要跨機器共用，把 <code>.claude</code> 資料夾放進雲端同步資料夾再做連結，設定方式因系統而異。<strong>這件事本身就可以叫它幫你做</strong>：描述你的情況（幾台電腦、用哪個雲端硬碟、哪個作業系統），讓它規劃步驟。你不需要自己去查。</p>
+<p>要注意的是<strong>兩台電腦不要同時開同一個對話</strong>，雲端同步處理不了同時寫入。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">這件事就是「訓練 AI」的真相</h3>
+<p>沒有 GPU、沒有資料集、沒有微調。就是「做一次、糾正、記下來」重複幾十次。</p>
+<p>真實的例子：有人累積了六十幾條自己寫作風格的記憶，從「動詞要口語」到「結尾不要寫『療癒了疲憊的旅人』」都有。之後叫它寫同類型的短文，初稿就是本人的口吻，不是雜誌文案腔。這些規則不是一次寫好的，是一篇一篇對照出來的。</p>
+<p>這種做法比微調模型好的地方有四個：不用準備資料、規則你看得懂也改得動、複製給同事他立刻有同一套、寫錯了刪掉那一行就好。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">帶回你的編輯室</h3>
+<p>memory 在機構裡會變成一個棘手的題目，值得先想清楚：</p>
+<ul>
+<li>員工花一年訓練出來的 memory，裡面有客戶偏好、業務判斷、審稿心法。那是公司資產還是個人資產？</li>
+<li>員工離職時應該帶走嗎？不能帶走的話，公司要付什麼？</li>
+<li>公司要不要在新人到職時給一份起手記憶包，省他從零摸索？</li>
+<li>「這個月我把 AI 教會了什麼」如果變成月報的一欄，會比現在的月報有用嗎？</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-9">檢查清單</h3>
+<ul>
+<li>[ ] 你知道 <code>/memory</code> 怎麼打開，也看過裡面有什麼</li>
+<li>[ ] 你至少讓它記過一條你自己的用語規則</li>
+<li>[ ] 那條規則有寫為什麼，不是只有結論</li>
+<li>[ ] 你判斷得出一條規則該進 skill、CLAUDE 守則、還是 memory</li>
+<li>[ ] 你知道換電腦會失憶</li>
+</ul>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_6_-_skill%EF%BC%9A%E6%8A%8A%E9%87%8D%E8%A4%87%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%9B%BA%E5%8C%96.html">指南 6｜skill：把重複的工作固化</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

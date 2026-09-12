@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 1｜安裝 VS Code</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">VS Code 是工作台，不是寫程式的門檻</a></li><li><a href="#sec-2">下載與安裝</a></li><li><a href="#sec-3">第一次開啟先做三件事</a></li><li><a href="#sec-4">開哪個資料夾，決定它看得到什麼</a></li><li><a href="#sec-5">資料夾怎麼分，之後就決定守則怎麼寫</a></li><li><a href="#sec-6">檢查清單</a></li><li><a href="#sec-7">卡住的話</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 1｜安裝 VS Code</h1></div><p>在本單元中，會介紹怎麼裝好 VS Code、怎麼用它開一個資料夾，以及為什麼「你開哪個資料夾」是接下來所有操作裡最關鍵的一步。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">VS Code 是工作台，不是寫程式的門檻</h3>
+<p>VS Code 是微軟出的免費編輯器，本質上是一個「能打開一整個資料夾、同時編輯很多檔案」的工具。它是程式設計師的主力工具，但你用它的理由跟他們不同：你需要一個地方，可以同時看到你的檔案、看到 AI 打算怎麼改、然後一處一處點頭。</p>
+<p>Claude Code 不裝 VS Code 也能跑，直接在 PowerShell 或終端機打指令就行。但在 VS Code 裡跑多三件事，而這三件都跟「驗收」有關：</p>
+<table>
+<thead>
+<tr>
+<th>多出來的東西</th>
+<th>它讓你做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>並排比對</td>
+<td>它要改你的檔案時左右對照顯示，你點核准才生效。法規比對、公文修訂這類工作會用爆這個畫面</td>
+</tr>
+<tr>
+<td>選取即上下文</td>
+<td>你在編輯器裡反白一段文字，它就看得到你在講哪一段</td>
+</tr>
+<tr>
+<td><code>@</code> 帶入檔案</td>
+<td>在輸入框打 <code>@</code> 接檔名，那份檔就進入這次對話</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">下載與安裝</h3>
+<p><strong>Windows</strong></p>
+<ol>
+<li>開 &lt;<a href="https://code.visualstudio.com">https://code.visualstudio.com</a>&gt;，點藍色的下載鍵，它會自動偵測你的系統。</li>
+<li>執行下載回來的安裝檔。</li>
+<li>安裝選項頁面，把這兩項勾起來：</li>
+<li>加入 PATH（Add to PATH）</li>
+<li>將「以 Code 開啟」加入檔案總管的右鍵選單</li>
+<li>其餘保持預設，按下一步到完成。</li>
+</ol>
+<p><strong>macOS</strong></p>
+<ol>
+<li>開 &lt;<a href="https://code.visualstudio.com">https://code.visualstudio.com</a>&gt; 下載 macOS 版，解壓縮後得到 Visual Studio Code 這個 app。</li>
+<li>把它拖進「應用程式」資料夾再開啟，不要直接從下載資料夾開。</li>
+<li>開啟後按 <code>Cmd+Shift+P</code>，輸入 <code>shell command</code>，選「Install 'code' command in PATH」。</li>
+</ol>
+<p>版本要求是 1.94.0 以上，2026 年之後下載的版本都符合。要確認的話，Windows 走「說明 → 關於」，Mac 走「Code → 關於 Visual Studio Code」。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">第一次開啟先做三件事</h3>
+<ol>
+<li><strong>介面語言換成中文</strong>：按 <code>Ctrl+Shift+X</code>（Mac 是 <code>Cmd+Shift+X</code>）打開擴充套件，搜尋 <code>Chinese</code>，安裝「Chinese (Traditional) Language Pack」，然後重新啟動。</li>
+<li><strong>字放大</strong>：<code>Ctrl+,</code> 開設定，搜尋 <code>font size</code>，把編輯器字體調到 16 以上。等一下要盯著畫面比對改動，小字很傷眼。</li>
+<li><strong>認得整合終端機</strong>：按 <code>Ctrl+`</code>（那個在 Esc 下面、數字 1 左邊的鍵）會從下方叫出一個黑色區塊，那就是終端機。指南 2 會用到它。</li>
+</ol>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">開哪個資料夾，決定它看得到什麼</h3>
+<p>這是全套操作裡最容易出錯、後果也最直接的一件事：<strong>Claude Code 只看得到你開啟的那個資料夾底下的東西</strong>。你開了桌面，它就看得到整個桌面；你開了某個專案資料夾，它就只看得到那個專案。</p>
+<p>所以請先替這門課建一個乾淨的資料夾，不要一上來就對著整個「文件」或整顆 D 槽動手。</p>
+<ol>
+<li>在你習慣的位置建一個資料夾，例如 <code>D:\AI練習</code> 或 <code>~/AI練習</code>。</li>
+<li>回到 VS Code，選「檔案 → 開啟資料夾」，選這個資料夾。</li>
+<li>左側會出現這個資料夾的檔案清單，這就是它的視野範圍。</li>
+<li>把你這週要處理的那份真實工作檔（逐字稿、報告、一封長信）複製一份進來。</li>
+</ol>
+<p><strong>用複製進來的檔，不要直接開原始檔案所在的資料夾。</strong>第一週你還在建立信任，用副本操作，改壞了也不痛。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">資料夾怎麼分，之後就決定守則怎麼寫</h3>
+<p>先想一下你之後真正要用的樣子。一個部門常見的分法是：</p>
+<pre><code>編輯室AI/
+├── 逐字稿/
+├── 新聞稿/
+├── 法規比對/
+└── 已發布/        ← 之後會在守則裡寫明：不可更動
+</code></pre>
+<p>分好資料夾的價值在指南 4 會兌現：你可以在守則裡寫「不可動 <code>已發布/</code> 資料夾」，這種規則只有在資料夾本身分得清楚時才寫得出來。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">檢查清單</h3>
+<p>做完這份，你應該可以打勾：</p>
+<ul>
+<li>[ ] VS Code 裝好，開得起來</li>
+<li>[ ] 用 <code>Ctrl+`</code> 叫得出終端機</li>
+<li>[ ] 已經用「開啟資料夾」開了一個乾淨的練習資料夾</li>
+<li>[ ] 左側檔案清單看得到你複製進去的那份真實工作檔</li>
+<li>[ ] 你講得出「它只看得到我開的那個資料夾」這句話</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">卡住的話</h3>
+<table>
+<thead>
+<tr>
+<th>症狀</th>
+<th>處理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下載被機構網路擋住</td>
+<td>換手機熱點下載，或請資訊單位放行 <code>code.visualstudio.com</code></td>
+</tr>
+<tr>
+<td>沒有安裝權限</td>
+<td>Windows 版有使用者安裝版（User Installer），不需要系統管理員</td>
+</tr>
+<tr>
+<td>開啟資料夾後左側是空的</td>
+<td>那個資料夾本來就是空的，把檔案複製進去，或改開別的資料夾</td>
+</tr>
+<tr>
+<td>按 <code>Ctrl+`</code> 沒反應</td>
+<td>走「檢視 → 終端機」選單叫出來</td>
+</tr>
+</tbody>
+</table>
+<p>下一步：<a href="Claude_Code_%E6%8C%87%E5%8D%97_2_-_%E5%AE%89%E8%A3%9D_Claude_Code_%E4%B8%A6%E7%99%BB%E5%85%A5.html">指南 2｜安裝 Claude Code 並登入</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

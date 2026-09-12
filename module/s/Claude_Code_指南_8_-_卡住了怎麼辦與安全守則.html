@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 指南 8｜卡住了怎麼辦與安全守則</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">卡住是正常的，先查這張表</a></li><li><a href="#sec-2">三個內建的檢查指令</a></li><li><a href="#sec-3">讓它修它自己</a></li><li><a href="#sec-4">它最會胡說的地方，剛好是你最需要的地方</a></li><li><a href="#sec-5">新聞工作者不能跨過的幾條線</a></li><li><a href="#sec-6">給主管的四個問題</a></li><li><a href="#sec-7">回頭看你這一週做了什麼</a></li><li><a href="#sec-8">回到</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>Claude Code 指南 8｜卡住了怎麼辦與安全守則</h1></div><p>在本單元中，會介紹常見症狀的對照表、怎麼讓 AI 幫你修它自己的問題、三個內建的檢查指令，以及新聞工作者在用這類工具時不能跨過的幾條線。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">卡住是正常的，先查這張表</h3>
+<table>
+<thead>
+<tr>
+<th>症狀</th>
+<th>多半是什麼原因</th>
+<th>怎麼修</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command not found</code></td>
+<td>系統還不認得這個字</td>
+<td>關掉終端機重開；仍不行重跑安裝指令</td>
+</tr>
+<tr>
+<td>裝了擴充套件沒看到圖示</td>
+<td>視窗沒重載，或沒開啟任何檔案</td>
+<td><code>Ctrl+Shift+P</code> → Developer: Reload Window，並先開一個檔</td>
+</tr>
+<tr>
+<td>一直顯示未登入</td>
+<td>瀏覽器授權沒完成</td>
+<td>重新登入；換個瀏覽器；確認帳號是付費方案</td>
+</tr>
+<tr>
+<td>它說找不到我的檔案</td>
+<td>你開的資料夾不對</td>
+<td>「開啟資料夾」重開對的位置；用 <code>@</code> 確認檔名</td>
+</tr>
+<tr>
+<td>它改了我不想動的檔</td>
+<td>權限模式太鬆，或你一路按了允許</td>
+<td>切回 Manual；用 <code>/rewind</code> 或版本控制還原</td>
+</tr>
+<tr>
+<td>回應變慢、開始忘記前面講過的事</td>
+<td>context 快滿了</td>
+<td>跑 <code>/compact</code>，或叫它寫接手指南再開新對話</td>
+</tr>
+<tr>
+<td>結果一團亂</td>
+<td>指令太籠統</td>
+<td>回去補三段式裡漏掉的那一段</td>
+</tr>
+<tr>
+<td><code>/mcp</code> 顯示某個伺服器要驗證</td>
+<td>授權過期或沒完成</td>
+<td>在 <code>/mcp</code> 面板重新登入該伺服器</td>
+</tr>
+<tr>
+<td>跑到一半停住很久</td>
+<td>它在等一個很慢的動作</td>
+<td>按 Esc 中斷，把任務切小再跑</td>
+</tr>
+<tr>
+<td>同一個錯反覆出現</td>
+<td>你糾正過但沒叫它記下來</td>
+<td>補一句「把這個規則記下來」（見<a href="Claude_Code_%E6%8C%87%E5%8D%97_5_-_memory%EF%BC%9A%E8%B7%A8%E5%B0%8D%E8%A9%B1%E7%9A%84%E8%A8%98%E6%86%B6.html">指南 5</a>）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">三個內建的檢查指令</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>在哪打</th>
+<th>告訴你什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude doctor</code></td>
+<td>終端機</td>
+<td>安裝與設定的健康檢查，有問題會附建議</td>
+</tr>
+<tr>
+<td><code>/context</code></td>
+<td>對話框</td>
+<td>這一輪載入了哪些守則與記憶檔，context 用掉多少</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>對話框</td>
+<td>你現在用哪個帳號、哪種登入方式</td>
+</tr>
+</tbody>
+</table>
+<p>規則沒被遵守的時候，<strong>第一件事是打 <code>/context</code> 確認那個檔真的被載入了</strong>。很多「它不聽話」其實是「它根本沒看到」。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">讓它修它自己</h3>
+<p>這是最省事的一招：卡住的時候，把狀況原封不動描述給它聽。三句可以直接複製的：</p>
+<blockquote>
+<p>我在〔你的作業系統〕上安裝 Claude Code，跑到〔哪一步〕出現〔錯誤訊息〕。請一步一步告訴我最可能的原因跟修法，先問我兩個釐清問題再給解法。</p>
+<p>我下了這個指令：〔貼指令〕，結果是〔貼結果〕，但我要的是〔你要的〕。請指出我的背景、任務、格式三段裡哪一段沒寫清楚，並幫我改寫一版。</p>
+<p>我有三台電腦，都有裝這個工具，想讓記憶與 skill 共用。我用的是〔哪個雲端硬碟〕、〔哪個作業系統〕。請幫我規劃步驟，不確定的地方先問我。</p>
+</blockquote>
+<p>多機同步、環境設定、路徑問題這類事，不要自己上網找答案，<strong>直接描述狀況讓它規劃</strong>。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">它最會胡說的地方，剛好是你最需要的地方</h3>
+<p>這類新工具的<strong>具體操作細節</strong>是它最容易編造的區塊：某個指令的確切語法、某個設定檔在哪、某個功能叫什麼名字。它會講得非常篤定，而且是錯的。</p>
+<p>所以：操作步驟層級的回答，以官方文件與你當場實測為準。指南 0 的最後一節有官方頁面清單。</p>
+<p>同樣的問題換到新聞工作上更嚴重：<strong>它會把不存在的條號、不存在的數字、不存在的引述講得很有把握。</strong>這不是偶發的失誤，是這類系統的性質。</p>
+<p>實務上的解法不是「更相信它」或「更不相信它」，而是<strong>把「看起來對」跟「真的查證過」分開</strong>：叫它把文中每個可查證的事實拉成一張清單，標出哪些沒有來源，你照著清單回去核。它最有價值的角色是查證清單產生器，不是查證者本身。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">新聞工作者不能跨過的幾條線</h3>
+<p><strong>個資與未公開素材不要往公用免費服務丟。</strong>免費網頁版的內容可能被用於改善模型，付費方案與 Claude Code 的政策不同（Anthropic 說明其不使用你的內容訓練模型），但<strong>你單位的規定才是最終依據</strong>。真的要用外部工具處理，先去識別化：姓名、身分證、電話、學號一律換成方括號。</p>
+<p><strong>消息來源保護沒有例外。</strong>含消息來源身分的逐字稿、聯絡方式、未公開的採訪筆記，不要放進任何雲端工具，也不要放進你會同步到雲端的資料夾。這一條比效率重要。</p>
+<p><strong>不要一路按允許。</strong>那個確認鍵就是人在迴圈的實作。無腦放行等於把編輯台的把關拆掉，然後你會在錯誤發出去之後才知道發生了什麼。</p>
+<p><strong>全自動模式留給無人值守的批次作業。</strong>不要因為確認很煩就打開它。</p>
+<p><strong>金鑰與授權碼不要貼進群組。</strong>那是鑰匙。</p>
+<p><strong>責任不會因為交給 AI 就消失。</strong>擬稿的是它，具名的是你；核稿、用印、對外發布這些動作要留給人。誰在什麼環節按下那個鍵，是你單位要先寫清楚的事，不是出事之後再討論的事。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">給主管的四個問題</h3>
+<p>這四題在第 11 週草擬編輯室守則時會再用一次，先自己想一輪：</p>
+<ul>
+<li>如果它真的像一個跟你三年的資深同事，你會授權它做哪些事？哪些打死要自己來？</li>
+<li>它擬的東西出錯，責任歸誰？擬稿人、核稿人、還是採購這個工具的人？</li>
+<li>你單位的「新人怎麼帶」目前是師徒制口耳相傳嗎？那套規矩寫得出一份給 AI 的守則嗎？</li>
+<li>揭露要做到什麼程度？哪些產出要標示 AI 參與、標在哪裡、用多長？</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">回頭看你這一週做了什麼</h3>
+<ul>
+<li>你把一個會動手做事的 agent 跑起來了，而且用的是你自己真實的工作</li>
+<li>你知道它跟聊天框差在哪：會動檔案、會臨場判斷，所以你更需要會驗收</li>
+<li>你知道讓它變懂你單位的四個零件：專案守則、memory、skill、MCP</li>
+<li>你知道它最會出錯的地方在哪，也知道怎麼把那些地方變成查證清單</li>
+</ul>
+<p>接下來的事只有一件：挑一件你每週都在重複做的事，把它變成第一個 skill。那是 W4 的作業，也是這整套工具真正開始省你時間的起點。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">回到</h3>
+<p><a href="Claude_Code_%E6%8C%87%E5%8D%97_0_-_%E7%B8%BD%E8%A6%BD%E8%88%87%E9%96%B1%E8%AE%80%E9%A0%86%E5%BA%8F.html">指南 0｜總覽與閱讀順序</a></p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-12 16:36</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>
