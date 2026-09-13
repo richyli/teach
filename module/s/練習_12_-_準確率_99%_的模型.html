@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 12 - 準確率 99% 的模型</h1></div><p>在本單元中，會介紹第 12 題「數據組做的訂閱轉換預測準確率 99%，上線前你要說清楚它憑什麼這麼準」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
-<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 12 - 準確率 99% 的模型</h1></div><p>在本單元中，會介紹第 12 題「數據組做的訂閱轉換預測準確率 99%，上線前你要說清楚它憑什麼這麼準」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
+<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
 <p>有人會這樣問你：數據組說他們做了一個模型，可以預測一則內容會不會帶來十筆以上訂閱，準確率 99%，下個月想拿它來排產製的優先順序。這東西可以信嗎？我要知道它到底學到了什麼。</p>
 <table>
@@ -38,11 +38,17 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<p>主管最常遇到的，是別人交來一個「很準的模型」。拿它排產製優先順序之前，要能問出它憑什麼準、比一行常識規則好多少，才不會為一個抄答案的模型付錢。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<p>這一題練的是模型評估與基準線（baseline）。準確率要跟最簡單的規則比才有意義；每一個特徵都要檢查取得的時點，找出洩漏；也要知道不同模型對洩漏的敏感度不一樣，線性模型看不出來不代表沒有。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
 <p>標籤是 conversion_cnt 是否大於等於 10。動手前先把每個欄位分三堆：發布那一刻就知道的（content 與 dim_section 整張表）、要等月底才知道的（content_monthly 的流量欄位）、事後回填的（total_pv_lifetime，資料字典的 available_at 寫的是 post_hoc）。模型用隨機森林（RandomForestClassifier，500 棵樹、random_state=42），測試集切 30%（分層抽樣、random_state=42）。然後跑四個對照：(A) 數據組版，content_monthly 的欄位全丟進去；(B) 只拿掉 total_pv_lifetime；(C) 只用發布當下的欄位；(D) 完全不用模型的一條規則「是付費牆內容就猜會」。語言用 Python，因為這四個版本只差在欄位清單，同一段 sklearn 程式改一個 list 就跑完，準確率能並排比較。</p>
 </section>
 <section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
 <pre><code class="language-python">from _kmg import *
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -52,7 +58,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-r = R(12, &quot;數據組做的訂閱轉換預測準確率 99%，上線前你要說清楚它憑什麼這麼準&quot;)
 ct = l2(&quot;content.csv&quot;)
 cm = l2(&quot;content_monthly.csv&quot;, parse_dates=[&quot;ingest_ts&quot;])
 ds = l2(&quot;dim_section.csv&quot;)
@@ -90,42 +95,36 @@ rf = {k: fit(v) for k, v in SETS.items()}
 lr = {k: fit(v, &quot;lr&quot;) for k, v in SETS.items()}
 idx = rf[&quot;C&quot;][2]
 accD = float((df.loc[idx, &quot;is_paywalled&quot;].astype(int) == y.loc[idx]).mean())
-r.chk(&quot;A 數據組版 準確率&quot;, 0.988, rf[&quot;A&quot;][0], tol=0.003)
-r.chk(&quot;A AUC 接近 1&quot;, True, rf[&quot;A&quot;][1] &gt; 0.995)
-r.chk(&quot;B 只拿掉回填欄 準確率&quot;, 0.993, rf[&quot;B&quot;][0], tol=0.003)
-r.chk(&quot;C 只用發布當下 準確率&quot;, 0.947, rf[&quot;C&quot;][0], tol=0.003)
-r.chk(&quot;C AUC&quot;, 0.98, rf[&quot;C&quot;][1], tol=0.006)
-r.chk(&quot;D 一行規則 準確率（同一個測試集）&quot;, 0.940, accD, tol=0.003)
-r.chk(&quot;C 只贏一行規則（百分點）&quot;, 0.7, (rf[&quot;C&quot;][0] - accD) * 100, tol=0.1)
-r.chk(&quot;C 加回 total_pv_lifetime 準確率&quot;, 0.979, rf[&quot;C＋回填&quot;][0], tol=0.003)
-r.chk(&quot;一個欄位換來的準確率（百分點）&quot;, 3.2, (rf[&quot;C＋回填&quot;][0] - rf[&quot;C&quot;][0]) * 100, tol=0.1)
-r.chk(&quot;邏輯斯迴歸 C 準確率&quot;, 0.940, lr[&quot;C&quot;][0], tol=0.003)
-r.chk(&quot;邏輯斯迴歸 C 加回 total_pv_lifetime 準確率&quot;, 0.956, lr[&quot;C＋回填&quot;][0], tol=0.003)
-r.chk(&quot;paywall_hit_cnt 與 conversion_cnt 相關&quot;, 0.98, float(df[&quot;paywall_hit_cnt&quot;].corr(df[&quot;conversion_cnt&quot;])), tol=0.005)
+print(&quot;A 數據組版 準確率&quot;, rf[&quot;A&quot;][0])
+print(&quot;A AUC 接近 1&quot;, rf[&quot;A&quot;][1] &gt; 0.995)
+print(&quot;B 只拿掉回填欄 準確率&quot;, rf[&quot;B&quot;][0])
+print(&quot;C 只用發布當下 準確率&quot;, rf[&quot;C&quot;][0])
+print(&quot;C AUC&quot;, rf[&quot;C&quot;][1])
+print(&quot;D 一行規則 準確率（同一個測試集）&quot;, accD)
+print(&quot;C 只贏一行規則（百分點）&quot;, (rf[&quot;C&quot;][0] - accD) * 100)
+print(&quot;C 加回 total_pv_lifetime 準確率&quot;, rf[&quot;C＋回填&quot;][0])
+print(&quot;一個欄位換來的準確率（百分點）&quot;, (rf[&quot;C＋回填&quot;][0] - rf[&quot;C&quot;][0]) * 100)
+print(&quot;邏輯斯迴歸 C 準確率&quot;, lr[&quot;C&quot;][0])
+print(&quot;邏輯斯迴歸 C 加回 total_pv_lifetime 準確率&quot;, lr[&quot;C＋回填&quot;][0])
+print(&quot;paywall_hit_cnt 與 conversion_cnt 相關&quot;, float(df[&quot;paywall_hit_cnt&quot;].corr(df[&quot;conversion_cnt&quot;])))
 share = y.groupby(df[&quot;is_paywalled&quot;]).mean()
-r.chk(&quot;付費牆內容十筆以上轉換的比例&quot;, 0.83, float(share[True]), tol=0.01)
-r.chk(&quot;非付費牆內容十筆以上轉換的比例&quot;, 0.017, float(share[False]), tol=0.003)
-r.note(&quot;隨機森林準確率：&quot; + &quot;、&quot;.join(&quot;%s %.1f%%&quot; % (k, v[0] * 100) for k, v in rf.items())
-       + &quot;；邏輯斯迴歸：&quot; + &quot;、&quot;.join(&quot;%s %.1f%%&quot; % (k, v[0] * 100) for k, v in lr.items()))
+print(&quot;付費牆內容十筆以上轉換的比例&quot;, float(share[True]))
+print(&quot;非付費牆內容十筆以上轉換的比例&quot;, float(share[False]))
+print(&quot;隨機森林準確率：&quot; + &quot;、&quot;.join(&quot;%s %.1f%%&quot; % (k, v[0] * 100) for k, v in rf.items()) + &quot;；邏輯斯迴歸：&quot; + &quot;、&quot;.join(&quot;%s %.1f%%&quot; % (k, v[0] * 100) for k, v in lr.items()))
 
 # 課堂概念：一行規則在全部資料上的 confusion matrix，以及 is_paywalled 帶走多少不確定性
 pw = df[&quot;is_paywalled&quot;].astype(bool)
 yy = y.astype(bool)
 cmat = [int((pw &amp; yy).sum()), int((pw &amp; ~yy).sum()), int((~pw &amp; yy).sum()), int((~pw &amp; ~yy).sum())]
-r.chk(&quot;一行規則 全資料 confusion matrix（TP/FP/FN/TN）&quot;, [252, 51, 19, 1116], cmat)
-r.chk(&quot;一行規則 全資料準確率&quot;, 0.951, (cmat[0] + cmat[3]) / len(df), tol=0.002)
-r.chk(&quot;正例比例&quot;, 0.188, float(y.mean()), tol=0.002)
+print(&quot;一行規則 全資料 confusion matrix（TP/FP/FN/TN）&quot;, cmat)
+print(&quot;一行規則 全資料準確率&quot;, (cmat[0] + cmat[3]) / len(df))
+print(&quot;正例比例&quot;, float(y.mean()))
 H = entropy_bits([y.mean(), 1 - y.mean()])
 Hc = sum(float(m.mean()) * entropy_bits([y[m].mean(), 1 - y[m].mean()]) for m in (pw, ~pw))
-r.chk(&quot;標籤 entropy（bits）&quot;, 0.698, H, tol=0.003)
-r.chk(&quot;知道是否付費牆後剩的 entropy（bits）&quot;, 0.235, Hc, tol=0.003)
-r.chk(&quot;互資訊（bits）&quot;, 0.464, H - Hc, tol=0.003)
-r.chk(&quot;帶走的比例&quot;, 0.66, (H - Hc) / H, tol=0.005)
-
-r.pit(rf[&quot;C＋回填&quot;][0] - rf[&quot;C&quot;][0] &gt; 0.02, &quot;隨機森林：乾淨版加回 total_pv_lifetime，準確率 %.1f%% → %.1f%%；邏輯斯迴歸只從 %.1f%% 到 %.1f%%&quot; % (
-    rf[&quot;C&quot;][0] * 100, rf[&quot;C＋回填&quot;][0] * 100, lr[&quot;C&quot;][0] * 100, lr[&quot;C＋回填&quot;][0] * 100))
-r.sc(rf[&quot;C&quot;][0] - accD &lt; 0.01, &quot;乾淨版只贏一行規則 %.1f 個百分點，照自驗那句話，這個模型沒有上線的理由&quot; % (
-    (rf[&quot;C&quot;][0] - accD) * 100))
+print(&quot;標籤 entropy（bits）&quot;, H)
+print(&quot;知道是否付費牆後剩的 entropy（bits）&quot;, Hc)
+print(&quot;互資訊（bits）&quot;, H - Hc)
+print(&quot;帶走的比例&quot;, (H - Hc) / H)
 
 labels = [&quot;A 數據組版&quot;, &quot;B 拿掉回填欄&quot;, &quot;C 只用發布當下&quot;, &quot;C＋回填欄&quot;, &quot;D 一行規則&quot;]
 rv = [rf[&quot;A&quot;][0], rf[&quot;B&quot;][0], rf[&quot;C&quot;][0], rf[&quot;C＋回填&quot;][0], accD]
@@ -143,21 +142,18 @@ ax.set_ylabel(&quot;測試集準確率（%）&quot;)
 ax.set_title(&quot;回填欄讓隨機森林多 3.2 個百分點，邏輯斯迴歸只多 1.6；兩者都只比一行規則好一點&quot;)
 ax.legend()
 save_fig(fig, &quot;ex12_leakage.png&quot;)
-r.save()
 </code></pre>
-<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
 <p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
 <p>(A) 準確率 98.8%、AUC 接近 1.00。拆開來看，paywall_hit_cnt 根本是這個標籤的分母（跟 conversion_cnt 的相關係數 0.98），等於拿答案的一半去猜答案；total_pv_lifetime 更誇張，它是「到今天為止的累積瀏覽量」，內容發布那天這個數字還不存在。(B) 只拿掉回填欄，準確率還是 99.3%——因為真正的洩漏是那個分母，它還留著。(C) 乾淨版掉到 94.7%、AUC 0.98，看起來還是很好；但 (D) 那條一行規則在同一個測試集上的準確率是 94.0%，模型只贏它 0.7 個百分點。最後把 total_pv_lifetime 單獨加回乾淨版，準確率立刻從 94.7% 跳到 97.9%——一個欄位換來 3.2 個百分點，這就是洩漏的指紋。同一件事換成邏輯斯迴歸做，只會從 94.0% 升到 95.6%：線性模型吃不太到這個洩漏，不代表沒有洩漏。真正的發現是：付費牆內容有 83% 會超過十筆轉換、非付費牆只有 1.7%，所謂的模型其實是把 is_paywalled 那一欄抄了一遍。</p>
 </section>
-<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
-<p>下表每一列都是程式實際算出來的值，21 項全部跟上面那段文字對得起來。</p>
+<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>實跑結果</th>
+<th>結果</th>
 </tr>
 </thead>
 <tbody>
@@ -253,17 +249,9 @@ r.save()
 <li>隨機森林準確率：A 98.8%、B 99.3%、C 94.7%、C＋回填 97.9%；邏輯斯迴歸：A 98.6%、B 98.8%、C 94.0%、C＋回填 95.6%</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
 <p><img alt="第 12 題的圖" src="../../img/ex12_leakage.png" /></p>
 <p>五種做法在同一個測試集上的準確率，藍色是隨機森林、綠色是邏輯斯迴歸，D 是一行規則所以兩色一樣。縱軸從 90% 開始，差距看起來大，其實都在幾個百分點之內。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
-<p>回填欄 total_pv_lifetime。它包含了統計月份之後才發生的事，拿它當特徵，模型在測試集上會好得不像話，上線後拿不到這個數字就原形畢露。同一類的坑還有 paywall_hit_cnt：它是標籤的分母，用分母去預測分子，準的不是模型而是算術。</p>
-<p>實際跑的結果：隨機森林：乾淨版加回 total_pv_lifetime，準確率 94.7% → 97.9%；邏輯斯迴歸只從 94.0% 到 95.6%。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
-<p>對每一個丟進模型的欄位問一句「這則內容剛發布的那一秒，我拿得到這個數字嗎」，答不出「拿得到」的就刪掉重跑；刪完準確率往下掉是正常的，沒掉才要擔心。另外一定要加跑那條一行規則當對照——模型贏不過一句話的規則，就沒有上線的理由。</p>
-<p>實際跑的結果：乾淨版只贏一行規則 0.7 個百分點，照自驗那句話，這個模型沒有上線的理由。</p>
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
 </section>
@@ -275,7 +263,7 @@ r.save()
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_11_-_%E5%8A%A0%E6%8E%A8%E5%90%8D%E5%96%AE%E7%9A%84%E9%96%80%E6%AA%BB.html">練習 11 - 加推名單的門檻</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_13_-_%E5%81%9C%E6%8A%95%E7%89%88%E4%BD%8D%E6%B8%85%E5%96%AE.html">練習 13 - 停投版位清單</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

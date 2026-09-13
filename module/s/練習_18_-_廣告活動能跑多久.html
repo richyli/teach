@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 18 - 廣告活動能跑多久</h1></div><p>在本單元中，會介紹第 18 題「業務要排下一季的版位庫存，問你一檔廣告活動平均能跑多久」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
-<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 18 - 廣告活動能跑多久</h1></div><p>在本單元中，會介紹第 18 題「業務要排下一季的版位庫存，問你一檔廣告活動平均能跑多久」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
+<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
 <p>有人會這樣問你：我們手上一檔廣告活動大概會投多久才結束？我要用這個數字估下一季同一時間會有幾檔在跑、版位夠不夠賣。</p>
 <table>
@@ -38,26 +38,21 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<p>排版位庫存，要知道一檔活動平均會佔版面多久。把還沒結束的活動當成已經結束，會低估檔期長度、高估下一季的空位，排出賣不完或不夠賣的庫存。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<p>這是存活分析（survival analysis），專門處理「事情還沒發生完」的資料。右設限的觀察不能丟掉，也不能當成已經結束；Kaplan-Meier 在每個時間點只用還在觀察中的樣本估計存活比例。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
 <p>以 campaign_id 分組，取每檔活動出現的第一天與最後一天，算出「已經觀察到的投放天數」。最後一天不是 10/31 的視為已經結束（event = 1）；最後一天正好落在 10/31 的，代表資料被切斷、我們只知道它至少投了這麼久，標成右設限（event = 0）。在 R 裡用 survival 套件跑 Surv(天數, event) 與 survfit()，畫 Kaplan-Meier 曲線、讀中位存活天數與信賴區間，再跟「把全部活動都當成已結束」的平均值並排比較。用 R 的理由：survival 的 survfit() 只要「時間」跟「有沒有結束」兩個欄位，就直接把設限算進去並給出中位數與信賴區間，不必自己推公式或另外裝套件。</p>
 </section>
 <section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題的分析用 R 跑，整支程式如下。R 的程式要從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2。</p>
+<p>這一題的分析用 R，整支程式如下。從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2；cat 那幾行會把算出來的關鍵數字印出來。</p>
 <pre><code class="language-r"># ex18 一檔廣告活動平均能跑多久：右設限與 Kaplan-Meier（R：survival）
-# 檢查項目名稱用英文，理由同 ex07。
 suppressMessages(library(survival))
 res_dir &lt;- &quot;teacher/exercise_runs/results&quot;
 dir.create(res_dir, showWarnings = FALSE, recursive = TRUE)
-out &lt;- data.frame(name = character(), expected = character(), actual = character(), ok = logical(),
-                  stringsAsFactors = FALSE)
-chk &lt;- function(name, expected, actual, tol) {
-  a &lt;- as.numeric(actual)
-  out[nrow(out) + 1, ] &lt;&lt;- list(name, as.character(expected), as.character(round(a, 4)),
-                               isTRUE(abs(a - as.numeric(expected)) &lt;= tol))
-}
-flag &lt;- function(name, ok, detail) {
-  out[nrow(out) + 1, ] &lt;&lt;- list(name, &quot;&quot;, detail, isTRUE(ok))
-}
 
 a &lt;- read.csv(&quot;dist/L1/ad_daily_2024_10.csv&quot;, fileEncoding = &quot;UTF-8-BOM&quot;, stringsAsFactors = FALSE)
 dn &lt;- as.numeric(as.Date(a$stat_date))
@@ -67,39 +62,30 @@ present &lt;- tapply(dn, a$campaign_id, function(x) length(unique(x)))
 dur &lt;- as.numeric(last - first + 1)
 event &lt;- ifelse(last == as.numeric(as.Date(&quot;2024-10-31&quot;)), 0, 1)
 
-chk(&quot;n_campaigns&quot;, 42, length(dur), 0)
-chk(&quot;n_right_censored&quot;, 10, sum(event == 0), 0)
-chk(&quot;naive_mean_days&quot;, 13.0, mean(dur), 0.06)
+cat(&quot;n_campaigns&quot;, length(dur), &quot;\n&quot;)
+cat(&quot;n_right_censored&quot;, sum(event == 0), &quot;\n&quot;)
+cat(&quot;naive_mean_days&quot;, mean(dur), &quot;\n&quot;)
 fit &lt;- survfit(Surv(dur, event) ~ 1)
 s14 &lt;- summary(fit, times = 14)$surv
-chk(&quot;km_survival_at_day14&quot;, 0.52, s14, 0.01)
+cat(&quot;km_survival_at_day14&quot;, s14, &quot;\n&quot;)
 med &lt;- as.numeric(summary(fit)$table[&quot;median&quot;])
-chk(&quot;km_median_days&quot;, 15, med, 0)
-chk(&quot;ended_mean_days&quot;, 12.8, mean(dur[event == 1]), 0.06)
-chk(&quot;censored_observed_mean_days&quot;, 13.7, mean(dur[event == 0]), 0.06)
+cat(&quot;km_median_days&quot;, med, &quot;\n&quot;)
+cat(&quot;ended_mean_days&quot;, mean(dur[event == 1]), &quot;\n&quot;)
+cat(&quot;censored_observed_mean_days&quot;, mean(dur[event == 0]), &quot;\n&quot;)
 ci &lt;- summary(fit)$table[c(&quot;0.95LCL&quot;, &quot;0.95UCL&quot;)]
-chk(&quot;km_median_ci_lower&quot;, 12, ci[1], 0)
-chk(&quot;km_median_ci_upper&quot;, 17, ci[2], 0)
-flag(&quot;KM_CI&quot;, TRUE, sprintf(&quot;median %.1f, 95%% CI %s to %s&quot;, med, ci[1], ci[2]))
+cat(&quot;km_median_ci_lower&quot;, ci[1], &quot;\n&quot;)
+cat(&quot;km_median_ci_upper&quot;, ci[2], &quot;\n&quot;)
 
-flag(&quot;PITFALL&quot;, med &gt; mean(dur), sprintf(&quot;KM median %.1f vs naive mean treating all as ended %.2f&quot;, med, mean(dur)))
 fit1 &lt;- survfit(Surv(dur, rep(1, length(dur))) ~ 1)
 med1 &lt;- as.numeric(summary(fit1)$table[&quot;median&quot;])
 no_gaps &lt;- all(present == dur)
-flag(&quot;SELFCHECK&quot;, no_gaps &amp;&amp; (med1 != med),
-     sprintf(&quot;no gaps in any campaign: %s; median with censoring %.1f vs all events %.1f&quot;, no_gaps, med, med1))
-
-write.table(out, file.path(res_dir, &quot;ex18.tsv&quot;), sep = &quot;\t&quot;, row.names = FALSE, fileEncoding = &quot;UTF-8&quot;)
-print(out)
 </code></pre>
-<p>out 那張表是對照檢查：每一列把入口頁寫的數字跟實際算出來的放在一起比，PITFALL 與 SELFCHECK 兩列記錄坑有沒有出現、自己驗那一步有沒有效。</p>
 </section>
 <section class="mod-sec sec-content"><h4>畫圖的程式</h4>
-<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義重算一次，順便確認跟 R 算出來的一樣。</p>
+<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義再算一次，順便確認和 R 的結果一樣。</p>
 <pre><code class="language-python">&quot;&quot;&quot;第 18 題的圖（R 那支用 survival 算數字，這支用同一套定義手算 Kaplan-Meier 再畫中文圖）。&quot;&quot;&quot;
 from _kmg import *
 
-r = R(18, &quot;業務要排下一季的版位庫存，問你一檔廣告活動平均能跑多久&quot;, suffix=&quot;_py&quot;)
 a = ad()
 g = a.groupby(&quot;campaign_id&quot;)[&quot;stat_date&quot;].agg([&quot;min&quot;, &quot;max&quot;])
 dur = ((g[&quot;max&quot;] - g[&quot;min&quot;]).dt.days + 1).values
@@ -123,10 +109,9 @@ def median(c):
 def surv_at(c, x):
     return [s for t, s in c if t &lt;= x][-1]
 
-r.chk(&quot;Python 重算 第 14 天仍在投的比例&quot;, 0.52, surv_at(curve, 14), tol=0.01)
-r.chk(&quot;Python 重算 全部當成已結束的平均天數&quot;, 13.0, float(dur.mean()), tol=0.06)
-r.note(&quot;Kaplan-Meier 曲線第一次降到 0.5 以下是第 %d 天；把 10 檔仍在投的當成已結束，是第 %d 天&quot; % (
-    median(curve), median(naive)))
+print(&quot;Python 重算 第 14 天仍在投的比例&quot;, surv_at(curve, 14))
+print(&quot;Python 重算 全部當成已結束的平均天數&quot;, float(dur.mean()))
+print(&quot;Kaplan-Meier 曲線第一次降到 0.5 以下是第 %d 天；把 10 檔仍在投的當成已結束，是第 %d 天&quot; % ( median(curve), median(naive)))
 
 fig, ax = plt.subplots(figsize=(8, 4.5))
 ax.step([t for t, _ in curve], [s for _, s in curve], where=&quot;post&quot;, color=&quot;#4f81bd&quot;, lw=2,
@@ -143,20 +128,18 @@ ax.set_ylabel(&quot;仍在投的比例&quot;)
 ax.set_title(&quot;42 檔活動能跑多久：直線刻度是 10/31 還在投、資料被切斷的活動&quot;)
 ax.legend(loc=&quot;lower left&quot;)
 save_fig(fig, &quot;ex18_survival.png&quot;)
-r.save()
 </code></pre>
 <p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
 <p>全月 42 檔活動，其中 10 檔在 10/31 當天還在投放，也就是大約四分之一是右設限。把全部都當成已結束算平均是 13.0 天；但 KM 曲線顯示投到第 14 天時還有 52% 的活動活著，中位存活天數是 15 天（95% 信賴區間 12 到 17 天），比天真平均多兩天。已結束的那 32 檔平均 12.8 天，還在跑的那 10 檔「已經投了」平均 13.7 天，而它們真正的長度一定比 13.7 天更長。</p>
 </section>
-<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
-<p>下表每一列都是程式實際算出來的值，11 項全部跟上面那段文字對得起來。</p>
+<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>實跑結果</th>
+<th>結果</th>
 </tr>
 </thead>
 <tbody>
@@ -197,11 +180,11 @@ r.save()
 <td>17</td>
 </tr>
 <tr>
-<td>Python 重算 第 14 天仍在投的比例</td>
+<td>第 14 天仍在投的比例</td>
 <td>0.5228</td>
 </tr>
 <tr>
-<td>Python 重算 全部當成已結束的平均天數</td>
+<td>全部當成已結束的平均天數</td>
 <td>13.0476</td>
 </tr>
 </tbody>
@@ -213,21 +196,13 @@ r.save()
 <li>Kaplan-Meier 曲線第一次降到 0.5 以下是第 15 天；把 10 檔仍在投的當成已結束，是第 13 天</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
 <p><img alt="第 18 題的圖" src="../../img/ex18_survival.png" /></p>
 <p>藍色階梯是 Kaplan-Meier 曲線，上面的短直線是 10/31 還在投、資料被切斷的活動；紅色虛線是把它們也當成已經結束。灰色直線是把全部活動當成已結束算出的平均 13.0 天。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
-<p>把右設限當成已經結束，這是存活分析最典型的誤用。資料只到 10/31，當天還在跑的活動被硬生生切斷，直接拿最後一天減第一天去平均，一定會低估檔期，而且低估的方向永遠一致（愈長的活動愈容易被切到）。另一個要順手看一眼的是活動中間有沒有斷檔：只要有幾天沒出現，用頭尾相減就會高估它實際投放的天數。</p>
-<p>實際跑的結果：Kaplan-Meier 的中位存活是 15.0 天，把全部活動當成已結束算出的平均是 13.05 天。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
-<p>先算每檔活動「出現過的日期數」跟「最後一天減第一天加一」是否相等，這份資料應該 42 檔全部相等，代表沒有斷檔；再把 event 欄全部改成 1 重跑一次 survfit()，如果中位數完全沒變，代表你的設限旗標根本沒被吃進去。</p>
-<p>實際跑的結果：每一檔活動從第一天到最後一天都沒有中斷；考慮右設限的中位數 15.0 天，把仍在投的也當成已結束是 13.0 天。</p>
-</section>
 <section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_17_-_%E6%89%BE%E5%87%BA%E7%82%8E%E4%B8%8A%E7%9A%84%E7%95%99%E8%A8%80%E5%8D%80.html">練習 17 - 找出炎上的留言區</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_19_-_%E6%9C%88%E4%B8%AD%E5%A0%B1%E8%A1%A8%E8%88%87%E5%B9%B4%E5%BA%95%E5%A0%B1%E8%A1%A8%E5%B0%8D%E4%B8%8D%E8%B5%B7%E4%BE%86.html">練習 19 - 月中報表與年底報表對不起來</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

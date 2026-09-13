@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 01 - 月會上的則數對不對</h1></div><p>在本單元中，會介紹第 1 題「月會投影片上的「十月發了 1,444 則」，幫我查一下這個數字對不對」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
-<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 01 - 月會上的則數對不對</h1></div><p>在本單元中，會介紹第 1 題「月會投影片上的「十月發了 1,444 則」，幫我查一下這個數字對不對」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
+<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
 <p>有人會這樣問你：總編輯明天月會要說「十月我們發了 1,444 則報導、拿到 92 萬次瀏覽」，這兩個數字可以直接上投影片嗎？</p>
 <table>
@@ -38,37 +38,37 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<p>月會投影片上的數字，會變成部門的績效，也會變成下個月人力與預算的依據。這次只差 6 則，看起來無傷，但「一列就是一則」這句話一旦不成立，之後按記者、按版面拆的每一張報表都會跟著錯，被懷疑的是整個數據團隊的可信度。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<p>這是資料分析的第一步：資料盤點（data profiling）。動手算任何數字之前，先確認這張表的分析單位是什麼、主鍵是哪幾欄、主鍵是不是真的唯一。分析的價值來自可信度，而可信度從「這張表的一列代表什麼」開始。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
 <p>先讀資料字典，把這張表的主鍵找出來（content_id ＋ stat_month），再用 pandas 的 duplicated() 檢查主鍵是不是真的唯一；發現不唯一就照 ingest_ts（入庫時間）取最新那一列，然後重新算則數與瀏覽量總和。用 Python，因為「檢查主鍵有沒有重複」＋「按指定欄位去重」在 pandas 只要兩行，同一件事在 Excel 要一路拉公式比對才看得出來是哪幾列重覆。</p>
 </section>
 <section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
 <pre><code class="language-python">from _kmg import *
 
-r = R(1, &quot;月會投影片上的「十月發了 1,444 則」，幫我查一下這個數字對不對&quot;)
 df = flat()
-r.chk(&quot;列數&quot;, 1444, len(df))
-r.chk(&quot;不重複 content_id&quot;, 1438, df[&quot;content_id&quot;].nunique())
+print(&quot;列數&quot;, len(df))
+print(&quot;不重複 content_id&quot;, df[&quot;content_id&quot;].nunique())
 dup_before = int(df.duplicated([&quot;content_id&quot;, &quot;stat_month&quot;]).sum())
-r.chk(&quot;主鍵重複列數&quot;, 6, dup_before)
+print(&quot;主鍵重複列數&quot;, dup_before)
 
 dd = dedupe(df)
 removed = df.loc[~df.index.isin(dd.index)]
-r.chk(&quot;去重後則數&quot;, 1438, len(dd))
-r.chk(&quot;去重後總瀏覽量&quot;, 918470, int(dd[&quot;pv&quot;].sum()))
-r.chk(&quot;被多算的瀏覽量&quot;, 2266, int(df[&quot;pv&quot;].sum() - dd[&quot;pv&quot;].sum()))
+print(&quot;去重後則數&quot;, len(dd))
+print(&quot;去重後總瀏覽量&quot;, int(dd[&quot;pv&quot;].sum()))
+print(&quot;被多算的瀏覽量&quot;, int(df[&quot;pv&quot;].sum() - dd[&quot;pv&quot;].sum()))
 pair = df[df.duplicated([&quot;content_id&quot;, &quot;stat_month&quot;], keep=False)].drop(columns=&quot;ingest_ts&quot;)
-r.chk(&quot;重複列除 ingest_ts 外完全相同（列數）&quot;, 12, int(pair.duplicated(keep=False).sum()))
+print(&quot;重複列除 ingest_ts 外完全相同（列數）&quot;, int(pair.duplicated(keep=False).sum()))
 
 naive = df.drop_duplicates()
-r.pit(len(naive) == len(df), &quot;整列 drop_duplicates() 一列都沒刪掉（刪掉 %d 列），因為重送的兩列 ingest_ts 不一樣&quot; % (
-    len(df) - len(naive)))
 
 dup_after = int(dd.duplicated([&quot;content_id&quot;, &quot;stat_month&quot;]).sum())
 gap = int(df[&quot;pv&quot;].sum() - dd[&quot;pv&quot;].sum())
-r.sc(dup_before == 6 and dup_after == 0 and gap == int(removed[&quot;pv&quot;].sum()),
-     &quot;主鍵重複從 %d 列變成 %d 列；總瀏覽量少了 %d，剛好等於被刪掉那幾列的瀏覽量加總 %d&quot; % (
-         dup_before, dup_after, gap, int(removed[&quot;pv&quot;].sum())))
 
 rm = removed.sort_values(&quot;pv&quot;)
 fig, ax = plt.subplots(figsize=(7, 3.6))
@@ -78,12 +78,10 @@ for y, v in enumerate(rm[&quot;pv&quot;]):
 ax.set_xlabel(&quot;被重複計入的瀏覽量&quot;)
 ax.set_title(&quot;重送的 6 則內容：各自的瀏覽量被算了兩次，合計多算 %s 次&quot; % format(gap, &quot;,&quot;))
 save_fig(fig, &quot;ex01_duplicates.png&quot;)
-r.save()
 </code></pre>
-<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
 </section>
 <section class="mod-sec sec-content"><h4>共用的讀檔函式</h4>
-<p>每一支 Python 程式開頭的 from _kmg import * 載入的是下面這一支：讀檔、去重、換幣別、算 entropy、存圖，以及記錄對照檢查的 R 類別。</p>
+<p>每一支 Python 程式開頭的 from _kmg import * 載入的是下面這一支：讀檔、依主鍵去重、換幣別、算 entropy、存圖。</p>
 <pre><code class="language-python">&quot;&quot;&quot;練習實跑的共用載入與記錄工具。每一題的腳本都 from _kmg import *。&quot;&quot;&quot;
 import json
 from pathlib import Path
@@ -134,62 +132,17 @@ def save_fig(fig, name):
     fig.tight_layout()
     fig.savefig(RES / name, dpi=130)
     plt.close(fig)
-
-def _py(o):
-    return o.item() if hasattr(o, &quot;item&quot;) else str(o)
-
-class R:
-    &quot;&quot;&quot;一題的結果：數字比對、坑有沒有出現、自驗有沒有用。
-
-    suffix 給 R 題的 Python 補充腳本用（畫圖與課堂概念的數字），存成 exNN_py.json，
-    不會蓋掉 R 自己輸出的 exNN.tsv。
-    &quot;&quot;&quot;
-
-    def __init__(self, no, title, suffix=&quot;&quot;):
-        self.suffix = suffix
-        self.d = {&quot;no&quot;: no, &quot;title&quot;: title, &quot;checks&quot;: [], &quot;pitfall&quot;: None, &quot;selfcheck&quot;: None, &quot;notes&quot;: []}
-
-    def chk(self, name, expected, actual, tol=None, rel=None):
-        if tol is None and rel is None:
-            ok = expected == actual
-        elif rel is not None:
-            ok = abs(float(actual) - float(expected)) &lt;= abs(float(expected)) * rel
-        else:
-            ok = abs(float(actual) - float(expected)) &lt;= tol
-        if isinstance(actual, float):
-            actual = round(actual, 4)
-        self.d[&quot;checks&quot;].append({&quot;name&quot;: name, &quot;expected&quot;: expected, &quot;actual&quot;: actual, &quot;ok&quot;: bool(ok)})
-
-    def pit(self, observed, detail):
-        self.d[&quot;pitfall&quot;] = {&quot;observed&quot;: bool(observed), &quot;detail&quot;: detail}
-
-    def sc(self, works, detail):
-        self.d[&quot;selfcheck&quot;] = {&quot;works&quot;: bool(works), &quot;detail&quot;: detail}
-
-    def note(self, text):
-        self.d[&quot;notes&quot;].append(text)
-
-    def save(self):
-        path = RES / (&quot;ex%02d%s.json&quot; % (self.d[&quot;no&quot;], self.suffix))
-        path.write_text(json.dumps(self.d, ensure_ascii=False, indent=1, default=_py), encoding=&quot;utf-8&quot;)
-        bad = [c[&quot;name&quot;] for c in self.d[&quot;checks&quot;] if not c[&quot;ok&quot;]]
-        p = self.d[&quot;pitfall&quot;] and self.d[&quot;pitfall&quot;][&quot;observed&quot;]
-        s = self.d[&quot;selfcheck&quot;] and self.d[&quot;selfcheck&quot;][&quot;works&quot;]
-        print(&quot;ex%02d%s  數字 %d/%d 相符 | 坑出現 %s | 自驗有效 %s | 不符：%s&quot; % (
-            self.d[&quot;no&quot;], self.suffix, len(self.d[&quot;checks&quot;]) - len(bad), len(self.d[&quot;checks&quot;]), p, s,
-            &quot;；&quot;.join(bad) or &quot;無&quot;))
 </code></pre>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
 <p>表裡有 1,444 列，但只有 1,438 個不同的 content_id——有 6 則內容因為報表重送各出現兩次，兩列除了 ingest_ts 以外一模一樣。去重後正確答案是 1,438 則、918,470 次瀏覽；被多算掉的 2,266 次瀏覽，剛好等於那 6 列的 pv 加總。誤差只有 0.25% 看似無傷，但「一列就是一則」這句話是錯的，之後任何按記者、按版面算則數的報表都會跟著錯。</p>
 </section>
-<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
-<p>下表每一列都是程式實際算出來的值，7 項全部跟上面那段文字對得起來。</p>
+<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>實跑結果</th>
+<th>結果</th>
 </tr>
 </thead>
 <tbody>
@@ -224,21 +177,13 @@ class R:
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
 <p><img alt="第 1 題的圖" src="../../img/ex01_duplicates.png" /></p>
 <p>每一條是一則被重送的內容，長度是它的瀏覽量。這六則各被算了兩次，加起來就是總瀏覽量多出來的 2,266 次。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
-<p>對應 KMG 埋的「重複列」陷阱。最容易踩的不是忘記去重，而是直接用 df.drop_duplicates()——它比對的是整列，而重覆的那兩列 ingest_ts 不一樣，所以一列都刪不掉，程式不會報錯也不會有警告，你會得到「這張表沒有重複」的錯誤結論。要寫成 drop_duplicates(subset=['content_id','stat_month']) 才有用。</p>
-<p>實際跑的結果：整列 drop_duplicates() 一列都沒刪掉（刪掉 0 列），因為重送的兩列 ingest_ts 不一樣。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
-<p>去重前後各跑一次 df.duplicated(subset=['content_id','stat_month']).sum()，數字要從 6 變成 0；再確認總瀏覽量的差額剛好等於被刪掉那幾列的 pv 加總（2,266），對不起來就代表刪錯列了。</p>
-<p>實際跑的結果：主鍵重複從 6 列變成 0 列；總瀏覽量少了 2266，剛好等於被刪掉那幾列的瀏覽量加總 2266。</p>
-</section>
 <section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
 <p>下一題 <a href="%E7%B7%B4%E7%BF%92_02_-_%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%B9%B3%E5%8F%B0%E8%A9%B2%E4%B8%8D%E8%A9%B2%E5%81%9C.html">練習 02 - 程序化平台該不該停</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

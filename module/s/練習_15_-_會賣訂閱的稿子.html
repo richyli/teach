@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 15 - 會賣訂閱的稿子</h1></div><p>在本單元中，會介紹第 15 題「內容策略會要的一頁結論：哪一種稿最容易落進「會賣訂閱」那一群，而且下個月還算數」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
-<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 15 - 會賣訂閱的稿子</h1></div><p>在本單元中，會介紹第 15 題「內容策略會要的一頁結論：哪一種稿最容易落進「會賣訂閱」那一群，而且下個月還算數」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
+<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
 <p>有人會這樣問你：分群跟我說有一群內容特別會帶訂閱，那我下個月到底要叫記者做什麼樣的稿？給我一句可以直接寫進製作規範的話，順便告訴我這句話有多可靠、什麼情況下會不成立。</p>
 <table>
@@ -38,17 +38,22 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<p>製作規範會影響整個編輯部下個月做什麼稿，所以需要一句可以執行、而且下個月還成立的話，同時要清楚它只是關聯，不是「多寫就多賣」。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<p>這一題練的是關聯規則（association rules）與穩定性檢驗。用 support、confidence、lift 找出哪些屬性組合容易落進高轉換群，再用多次切半驗證確認規則不是單一批資料的偶然。候選規則越多，越需要這一步。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
 <p>兩段接起來。第一段用行為比率（停留、跳出、分享、留言、撞牆率、撞牆後轉換率）做 K-means，找出撞牆後轉換率最高的那一群當標籤。第二段只拿「稿子還沒發就已經決定的屬性」二元化成品項：content_type、section_name、is_paywalled、has_number_in_headline、字數分三段，用關聯規則找哪些屬性組合落進那一群的 lift 最高。第三段做穩定性檢驗：資料隨機切一半，A 半重跑分群，B 半用 A 的中心點指派標籤，看規則的 lift 還在不在；切法至少換 20 種（例如 np.random.default_rng(0) 到 default_rng(19)），只切一次看不出穩不穩。用 Python 的理由：同一套流程要重跑三、四次，寫成函式再迴圈最省事，靠複製貼上會讓你自己都搞不清楚跑的是哪一版。</p>
 </section>
 <section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
 <pre><code class="language-python">from _kmg import *
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score
 from sklearn.preprocessing import StandardScaler
 
-r = R(15, &quot;內容策略會要的一頁結論：哪一種稿最容易落進「會賣訂閱」那一群，而且下個月還算數&quot;)
 f = dedupe(flat()).reset_index(drop=True)
 
 def feats(d, leak=False):
@@ -104,17 +109,16 @@ def rules(I, y, min_support=0.03):
 
 model = fit_clusters(f)
 y = high(f, model)
-r.chk(&quot;高轉換群基準比例&quot;, 0.147, float(y.mean()), tol=0.005)
+print(&quot;高轉換群基準比例&quot;, float(y.mean()))
 I = items(f)
 Rf = rules(I, y).sort_values(&quot;lift&quot;, ascending=False)
-r.note(&quot;lift 前五：&quot; + &quot;；&quot;.join(&quot;%s（confidence %.2f、lift %.2f）&quot; % (k, v[&quot;confidence&quot;], v[&quot;lift&quot;])
-                                for k, v in Rf.head(5).iterrows()))
+print(&quot;lift 前五：&quot; + &quot;；&quot;.join(&quot;%s（confidence %.2f、lift %.2f）&quot; % (k, v[&quot;confidence&quot;], v[&quot;lift&quot;]) for k, v in Rf.head(5).iterrows()))
 KEY = [&quot;type=feature &amp; no_number_in_headline&quot;, &quot;paywalled &amp; words&gt;=2000&quot;, &quot;type=feature&quot;]
-r.chk(&quot;最強規則&quot;, KEY[0], Rf.index[0])
-r.chk(&quot;深度報導且標題無數字 confidence&quot;, 0.83, float(Rf.loc[KEY[0], &quot;confidence&quot;]), tol=0.005)
-r.chk(&quot;深度報導且標題無數字 lift&quot;, 5.66, float(Rf.loc[KEY[0], &quot;lift&quot;]), tol=0.005)
-r.chk(&quot;付費牆且兩千字以上 lift&quot;, 5.57, float(Rf.loc[KEY[1], &quot;lift&quot;]), tol=0.005)
-r.chk(&quot;深度報導 lift&quot;, 5.36, float(Rf.loc[KEY[2], &quot;lift&quot;]), tol=0.005)
+print(&quot;最強規則&quot;, Rf.index[0])
+print(&quot;深度報導且標題無數字 confidence&quot;, float(Rf.loc[KEY[0], &quot;confidence&quot;]))
+print(&quot;深度報導且標題無數字 lift&quot;, float(Rf.loc[KEY[0], &quot;lift&quot;]))
+print(&quot;付費牆且兩千字以上 lift&quot;, float(Rf.loc[KEY[1], &quot;lift&quot;]))
+print(&quot;深度報導 lift&quot;, float(Rf.loc[KEY[2], &quot;lift&quot;]))
 
 # 穩定性：20 種切法，A 半分群、B 半套 A 的中心點，看「深度報導」這條規則
 rows = []
@@ -128,41 +132,37 @@ for s in range(20):
     rows.append({&quot;seed&quot;: s, &quot;lift&quot;: lift, &quot;feature_share&quot;: share})
 S = pd.DataFrame(rows)
 held, fell = S[S[&quot;lift&quot;] &gt;= 3], S[S[&quot;lift&quot;] &lt; 3]
-r.note(&quot;20 種切法的「深度報導」lift：&quot; + &quot;、&quot;.join(&quot;%d→%.2f&quot; % (a, b) for a, b in zip(S[&quot;seed&quot;], S[&quot;lift&quot;])))
-r.chk(&quot;lift 還站得住（≥ 3）的切法數&quot;, 11, len(held))
-r.chk(&quot;站得住的 lift 最低&quot;, 4.8, float(held[&quot;lift&quot;].min()), tol=0.05)
-r.chk(&quot;站得住的 lift 最高&quot;, 6.5, float(held[&quot;lift&quot;].max()), tol=0.05)
-r.chk(&quot;掉下去的 lift 最低&quot;, 1.7, float(fell[&quot;lift&quot;].min()), tol=0.05)
-r.chk(&quot;掉下去的 lift 最高&quot;, 2.7, float(fell[&quot;lift&quot;].max()), tol=0.05)
-r.chk(&quot;掉下去時 高轉換群裡深度報導佔比 最低&quot;, 0.25, float(fell[&quot;feature_share&quot;].min()), tol=0.005)
-r.chk(&quot;掉下去時 高轉換群裡深度報導佔比 最高&quot;, 0.41, float(fell[&quot;feature_share&quot;].max()), tol=0.005)
-r.chk(&quot;站得住時 高轉換群裡深度報導佔比 最低&quot;, 0.72, float(held[&quot;feature_share&quot;].min()), tol=0.005)
-r.chk(&quot;站得住時 高轉換群裡深度報導佔比 最高&quot;, 0.84, float(held[&quot;feature_share&quot;].max()), tol=0.005)
-r.chk(&quot;lift 與深度報導佔比的相關&quot;, 0.98, float(S[&quot;lift&quot;].corr(S[&quot;feature_share&quot;])), tol=0.01)
+print(&quot;20 種切法的「深度報導」lift：&quot; + &quot;、&quot;.join(&quot;%d→%.2f&quot; % (a, b) for a, b in zip(S[&quot;seed&quot;], S[&quot;lift&quot;])))
+print(&quot;lift 還站得住（≥ 3）的切法數&quot;, len(held))
+print(&quot;站得住的 lift 最低&quot;, float(held[&quot;lift&quot;].min()))
+print(&quot;站得住的 lift 最高&quot;, float(held[&quot;lift&quot;].max()))
+print(&quot;掉下去的 lift 最低&quot;, float(fell[&quot;lift&quot;].min()))
+print(&quot;掉下去的 lift 最高&quot;, float(fell[&quot;lift&quot;].max()))
+print(&quot;掉下去時 高轉換群裡深度報導佔比 最低&quot;, float(fell[&quot;feature_share&quot;].min()))
+print(&quot;掉下去時 高轉換群裡深度報導佔比 最高&quot;, float(fell[&quot;feature_share&quot;].max()))
+print(&quot;站得住時 高轉換群裡深度報導佔比 最低&quot;, float(held[&quot;feature_share&quot;].min()))
+print(&quot;站得住時 高轉換群裡深度報導佔比 最高&quot;, float(held[&quot;feature_share&quot;].max()))
+print(&quot;lift 與深度報導佔比的相關&quot;, float(S[&quot;lift&quot;].corr(S[&quot;feature_share&quot;])))
 
 # 課堂概念：搜尋空間與 PMI。候選規則有幾條、打亂標籤後最高 lift 能到多少
 n_items = I.shape[1]
-r.chk(&quot;品項數&quot;, 29, n_items)
-r.chk(&quot;候選規則（單項＋兩兩組合）&quot;, 435, n_items + n_items * (n_items - 1) // 2)
-r.chk(&quot;過了最低支持度 0.03 的規則&quot;, 118, len(Rf))
-r.chk(&quot;最強規則的 PMI（bits）&quot;, 2.50, float(np.log2(Rf[&quot;lift&quot;].iloc[0])), tol=0.005)
+print(&quot;品項數&quot;, n_items)
+print(&quot;候選規則（單項＋兩兩組合）&quot;, n_items + n_items * (n_items - 1) // 2)
+print(&quot;過了最低支持度 0.03 的規則&quot;, len(Rf))
+print(&quot;最強規則的 PMI（bits）&quot;, float(np.log2(Rf[&quot;lift&quot;].iloc[0])))
 shuffled = []
 for s in range(20):
     ys = pd.Series(np.random.default_rng(100 + s).permutation(y.values), index=y.index)
     shuffled.append(float(rules(I, ys)[&quot;lift&quot;].max()))
-r.note(&quot;標籤打亂 20 次，每次挑到的最高 lift：&quot; + &quot;、&quot;.join(&quot;%.2f&quot; % v for v in shuffled))
-r.chk(&quot;打亂標籤後最高 lift 的最小值&quot;, 1.5, min(shuffled), tol=0.05)
-r.chk(&quot;打亂標籤後最高 lift 的最大值&quot;, 2.2, max(shuffled), tol=0.05)
+print(&quot;標籤打亂 20 次，每次挑到的最高 lift：&quot; + &quot;、&quot;.join(&quot;%.2f&quot; % v for v in shuffled))
+print(&quot;打亂標籤後最高 lift 的最小值&quot;, min(shuffled))
+print(&quot;打亂標籤後最高 lift 的最大值&quot;, max(shuffled))
 
 leak_model = fit_clusters(f, leak=True)
 lab_clean = model[1].predict(model[0].transform(feats(f)))
 Zl = leak_model[0].transform(feats(f, True))
 lab_leak = leak_model[1].predict(Zl)
 z_leak = pd.Series(Zl[:, -1]).groupby(lab_leak).mean()
-r.pit(bool(z_leak.abs().max() &gt; 0.8),
-      &quot;把 total_pv_lifetime 放進分群，跟原本分群的一致度只剩 ARI %.2f；有一群在回填欄上的標準分數平均 %.2f，是被回填欄撐起來的一群&quot; % (
-          adjusted_rand_score(lab_clean, lab_leak), float(z_leak.loc[z_leak.abs().idxmax()])))
-r.sc(len(fell) &gt; 0, &quot;拿掉回填欄、換 20 種切法，有 %d 次 lift 掉到 3 以下，自驗那句話會攔下這條規則&quot; % len(fell))
 
 fig, ax = plt.subplots(1, 2, figsize=(11, 4.2))
 col = np.where(S[&quot;lift&quot;] &gt;= 3, &quot;#4f81bd&quot;, &quot;#c0504d&quot;)
@@ -180,21 +180,18 @@ ax[1].set_xlabel(&quot;A 半邊挑到的高轉換群裡，深度報導的比例&
 ax[1].set_ylabel(&quot;lift&quot;)
 ax[1].set_title(&quot;掉下去的原因：分群那一步挑到別的群&quot;)
 save_fig(fig, &quot;ex15_stability.png&quot;)
-r.save()
 </code></pre>
-<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
 <p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
 <p>高轉換群的基準比例約 14.7%。跑出來最強的規則是「內容型態＝深度報導 且 標題沒有數字」→ 落進高轉換群的 confidence 0.83、lift 5.66；「有設付費牆 且 2000 字以上」lift 5.57；光看「內容型態＝深度報導」lift 就有 5.36。但切半重跑就不穩了：20 種切法裡，有 11 次「深度報導」的 lift 還在 4.8 到 6.5，另外 9 次掉到 1.7 到 2.7。掉下去的那幾次，A 半邊的 K-means 挑到的「高轉換群」根本不是深度報導群——那一群裡深度報導只佔 25% 到 41%，站得住的那 11 次是 72% 到 84%。所以這條規則下個月還算不算數，取決於分群那一步挑到哪一群，不是規則本身有多強。但真正該交出去的那句話是反面的：這些規則的前項（深度、長文）跟分群用的特徵（停留時間、轉換率）講的根本是同一件事，規則只是把分群結果翻譯回可以下指令的欄位，它不是新發現，更不是「多寫深度報導就會多賣訂閱」的因果證據——深度報導本來就寫給已經想訂的人看。</p>
 </section>
-<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
-<p>下表每一列都是程式實際算出來的值，22 項全部跟上面那段文字對得起來。</p>
+<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>實跑結果</th>
+<th>結果</th>
 </tr>
 </thead>
 <tbody>
@@ -296,17 +293,9 @@ r.save()
 <li>標籤打亂 20 次，每次挑到的最高 lift：1.62、1.94、1.59、2.21、2.02、1.67、1.80、1.86、1.94、1.88、1.66、1.48、1.61、1.50、1.90、1.57、1.72、1.49、1.96、1.80</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
 <p><img alt="第 15 題的圖" src="../../img/ex15_stability.png" /></p>
 <p>左圖是 20 種切法下，B 半邊「深度報導」這條規則的 lift：藍色站得住、紅色掉到 3 以下，灰色點線是把標籤打亂時能挑到的最高 lift。右圖說明掉下去的原因：A 半邊挑到的高轉換群裡深度報導越少，lift 就越低。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
-<p>兩個坑疊在一起。一是 KMG 的「回填欄」：把 total_pv_lifetime 放進分群特徵，會分出一群很漂亮的「長青內容」，但那個標籤在稿子發出的當下根本不存在，拿它去指導下個月的製作規範，就是用未來的資訊做今天的決定。二是循環論證，這個更難發現：用同一批資料先分群、再用同一批資料解釋分群，怎麼做都會「顯著」，因為標籤就是從這批資料長出來的，那不是檢定，只是把同一件事講了兩遍。</p>
-<p>實際跑的結果：把 total_pv_lifetime 放進分群，跟原本分群的一致度只剩 ARI 0.51；有一群在回填欄上的標準分數平均 -0.96，是被回填欄撐起來的一群。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
-<p>把放進分群的每一個欄位列出來，逐欄問「這個欄位在稿子按下發布的那一秒就知道嗎」，答不出來的（total_pv_lifetime）拿掉重跑，再用 20 種切法做切半驗證；只要有幾次 lift 掉到 3 以下，或高轉換群裡深度報導不到一半，就代表原本那群是被未來資訊或單一批資料撐起來的，不能直接寫進製作規範。門檻放在 3 不放在 2，是因為把標籤隨機打亂 20 次，每次挑出來的最高 lift 在 1.5 到 2.2 之間。</p>
-<p>實際跑的結果：拿掉回填欄、換 20 種切法，有 9 次 lift 掉到 3 以下，自驗那句話會攔下這條規則。</p>
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
 </section>
@@ -315,7 +304,7 @@ r.save()
 </section>
 <section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_14_-_%E8%AE%80%E8%80%85%E7%9C%BC%E4%B8%AD%E6%9C%89%E5%B9%BE%E7%A8%AE%E5%85%A7%E5%AE%B9.html">練習 14 - 讀者眼中有幾種內容</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_16_-_%E6%9C%88%E5%BA%95%E5%BB%A3%E5%91%8A%E7%87%9F%E6%94%B6%E4%B8%8B%E6%BB%91.html">練習 16 - 月底廣告營收下滑</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

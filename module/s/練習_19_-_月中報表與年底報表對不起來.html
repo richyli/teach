@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../style.e6c66ae5.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 19 - 月中報表與年底報表對不起來</h1></div><p>在本單元中，會介紹第 19 題「主管問月中檢討會上報的數字，為什麼跟年底重拉的報表對不起來」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
-<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 19 - 月中報表與年底報表對不起來</h1></div><p>在本單元中，會介紹第 19 題「主管問月中檢討會上報的數字，為什麼跟年底重拉的報表對不起來」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
+<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
 <section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
 <p>有人會這樣問你：11 月 20 日那場月中檢討會，我們報出 10 月深度報導帶了多少訂閱；12 月再拉一次同一份報表，數字整個變了。哪一次才是對的？以後開會前我要怎麼知道手上的資料夠不夠？</p>
 <table>
@@ -38,14 +38,19 @@
 </tbody>
 </table>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<p>經營會議上的數字，常常在不同時間拉的報表之間打架。先弄清楚一份報表是「哪一天看到的資料」，才知道哪些結論（總量）會變、哪些結論（比率）可以放心引用。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<p>這一題練的是資料時點（as-of）與資料治理：同一個查詢在不同截止日會得到不同答案，所以分析要記錄資料版本。累積量指標和比率指標對資料晚到的敏感度不一樣，引用之前要先分清楚。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
 <p>用 ingest_ts 把報表倒帶：只留 ingest_ts ≤ 2024-11-20 的列，重建那天倉儲裡真正看得到的版本。同一套計算分別跑「11/20 版」與「完整版」，比兩類指標：一是總量型（總瀏覽量、總轉換數），二是比率型（各型態的 conversion_cnt ÷ paywall_hit_cnt，以及深度報導對即時新聞的 log-odds 差）。最後做一次反面示範：把資料字典標成「事後回填」的 total_pv_lifetime 丟進一個預測 pv 的模型，看準確度會變得多好看。用 Python 的理由：這題要拿不同的截止日反覆切出不同版本再跑同一套計算，把它寫成一個吃「截止日」參數的函式最省事，pandas 一行就能做時間篩選。</p>
 </section>
 <section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
 <pre><code class="language-python">from _kmg import *
 
-r = R(19, &quot;主管問月中檢討會上報的數字，為什麼跟年底重拉的報表對不起來&quot;)
 raw = flat()
 
 def version(cut):
@@ -64,39 +69,32 @@ cands = {&quot;00:00&quot;: &quot;2024-11-20 00:00:00&quot;, &quot;23:59&quot;: 
 vers = {k: metrics(version(v)) for k, v in cands.items()}
 pick = min(vers, key=lambda k: abs(vers[k][&quot;n&quot;] - 673))
 m20 = vers[pick]
-r.note(&quot;「ingest_ts ≤ 2024-11-20」有兩種讀法：當天 00:00 得 %d 則、當天 23:59 得 %d 則；這裡用 %s&quot; % (
-    vers[&quot;00:00&quot;][&quot;n&quot;], vers[&quot;23:59&quot;][&quot;n&quot;], pick))
-r.chk(&quot;11/20 版則數&quot;, 673, m20[&quot;n&quot;])
-r.chk(&quot;11/20 版佔全部比例&quot;, 0.468, m20[&quot;n&quot;] / full[&quot;n&quot;], tol=0.002)
+print(&quot;「ingest_ts ≤ 2024-11-20」有兩種讀法：當天 00:00 得 %d 則、當天 23:59 得 %d 則；這裡用 %s&quot; % ( vers[&quot;00:00&quot;][&quot;n&quot;], vers[&quot;23:59&quot;][&quot;n&quot;], pick))
+print(&quot;11/20 版則數&quot;, m20[&quot;n&quot;])
+print(&quot;11/20 版佔全部比例&quot;, m20[&quot;n&quot;] / full[&quot;n&quot;])
 d20 = version(cands[pick])
-r.chk(&quot;11/20 版最晚發布日在 10/16 以前&quot;, True, bool(d20[&quot;publish_at&quot;].max() &lt; pd.Timestamp(&quot;2024-10-17&quot;)))
+print(&quot;11/20 版最晚發布日在 10/16 以前&quot;, bool(d20[&quot;publish_at&quot;].max() &lt; pd.Timestamp(&quot;2024-10-17&quot;)))
 lag = (raw[&quot;ingest_ts&quot;] - raw[&quot;publish_at&quot;]).dt.days
-r.chk(&quot;入庫時間是發布後 35 天&quot;, True, bool(lag.between(34, 35).mean() &gt; 0.99))
-r.chk(&quot;11/20 版總瀏覽量（萬）&quot;, 41.8, m20[&quot;pv&quot;] / 1e4, tol=0.06)
-r.chk(&quot;完整版總瀏覽量（萬）&quot;, 91.8, full[&quot;pv&quot;] / 1e4, tol=0.06)
-r.chk(&quot;11/20 版總轉換&quot;, 6260, m20[&quot;conv&quot;])
-r.chk(&quot;完整版總轉換&quot;, 14463, full[&quot;conv&quot;])
-r.chk(&quot;深度報導撞牆轉換率 11/20 版&quot;, 0.290, m20[&quot;cr_feature&quot;], tol=0.002)
-r.chk(&quot;深度報導撞牆轉換率 完整版&quot;, 0.290, full[&quot;cr_feature&quot;], tol=0.002)
-r.chk(&quot;即時新聞撞牆轉換率 11/20 版&quot;, 0.198, m20[&quot;cr_news&quot;], tol=0.002)
-r.chk(&quot;即時新聞撞牆轉換率 完整版&quot;, 0.198, full[&quot;cr_news&quot;], tol=0.002)
-r.chk(&quot;log-odds 差 11/20 版&quot;, 0.50, m20[&quot;logodds&quot;], tol=0.03)
-r.chk(&quot;log-odds 差 完整版&quot;, 0.50, full[&quot;logodds&quot;], tol=0.03)
+print(&quot;入庫時間是發布後 35 天&quot;, bool(lag.between(34, 35).mean() &gt; 0.99))
+print(&quot;11/20 版總瀏覽量（萬）&quot;, m20[&quot;pv&quot;] / 1e4)
+print(&quot;完整版總瀏覽量（萬）&quot;, full[&quot;pv&quot;] / 1e4)
+print(&quot;11/20 版總轉換&quot;, m20[&quot;conv&quot;])
+print(&quot;完整版總轉換&quot;, full[&quot;conv&quot;])
+print(&quot;深度報導撞牆轉換率 11/20 版&quot;, m20[&quot;cr_feature&quot;])
+print(&quot;深度報導撞牆轉換率 完整版&quot;, full[&quot;cr_feature&quot;])
+print(&quot;即時新聞撞牆轉換率 11/20 版&quot;, m20[&quot;cr_news&quot;])
+print(&quot;即時新聞撞牆轉換率 完整版&quot;, full[&quot;cr_news&quot;])
+print(&quot;log-odds 差 11/20 版&quot;, m20[&quot;logodds&quot;])
+print(&quot;log-odds 差 完整版&quot;, full[&quot;logodds&quot;])
 f = dedupe(raw)
-r.chk(&quot;log(total_pv_lifetime) 與 log(pv) 相關&quot;, 0.99,
-      float(np.corrcoef(np.log(f[&quot;total_pv_lifetime&quot;]), np.log(f[&quot;pv&quot;]))[0, 1]), tol=0.01)
+print(&quot;log(total_pv_lifetime) 與 log(pv) 相關&quot;, float(np.corrcoef(np.log(f[&quot;total_pv_lifetime&quot;]), np.log(f[&quot;pv&quot;]))[0, 1]))
 
-r.pit(m20[&quot;pv&quot;] &lt; full[&quot;pv&quot;] * 0.6 and abs(m20[&quot;cr_feature&quot;] - full[&quot;cr_feature&quot;]) &lt; 0.01,
-      &quot;總瀏覽量腰斬（%s 對 %s），深度報導的撞牆轉換率幾乎不動（%.3f 對 %.3f）&quot; % (
-          format(m20[&quot;pv&quot;], &quot;,&quot;), format(full[&quot;pv&quot;], &quot;,&quot;), m20[&quot;cr_feature&quot;], full[&quot;cr_feature&quot;]))
 suffix = &quot; 00:00:00&quot; if pick == &quot;00:00&quot; else &quot; 23:59:59&quot;
 cuts = [&quot;2024-11-13&quot;, &quot;2024-11-20&quot;, &quot;2024-11-27&quot;]
 week = {c: metrics(version(c + suffix)) for c in cuts}
 pvs = [week[c][&quot;pv&quot;] for c in cuts]
 crs = [round(week[c][&quot;cr_feature&quot;], 3) for c in cuts]
 mono, flat_ = pvs == sorted(pvs), max(crs) - min(crs) &lt; 0.02
-r.sc(mono and flat_, &quot;截止日 11/13、11/20、11/27 的總瀏覽量 %s 一路變大；深度報導撞牆轉換率 %s 幾乎不動&quot; % (
-    &quot;、&quot;.join(format(v, &quot;,&quot;) for v in pvs), &quot;、&quot;.join(&quot;%.3f&quot; % v for v in crs)))
 
 labels = [&quot;11/13 版&quot;, &quot;11/20 版&quot;, &quot;11/27 版&quot;, &quot;年底完整版&quot;]
 seq = [week[c] for c in cuts] + [full]
@@ -113,21 +111,18 @@ ax[1].set_ylabel(&quot;撞牆後轉換率&quot;)
 ax[1].set_title(&quot;比率不管哪一天拉都差不多&quot;)
 ax[1].legend()
 save_fig(fig, &quot;ex19_asof.png&quot;)
-r.save()
 </code></pre>
-<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
 <p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
 <p>11/20 那天倉儲裡只有 673 則（46.8%），而且缺的完全不是隨機的——入庫時間是發布後 35 天，所以 10/16 以後發的稿一則都還沒進來。總量型指標整個腰斬（總瀏覽量 41.8 萬對 91.8 萬、總轉換 6,260 對 14,463），但比率型指標幾乎不動（深度報導的撞牆轉換率 0.290 對 0.290、即時新聞 0.198 對 0.198，log-odds 差兩次都是 0.50）。另一邊，加了 total_pv_lifetime 的模型會把 pv 預測得好得不像話（兩者取對數後相關係數 0.99），因為那一欄是事後回填、裡面包含了統計月份之後才發生的事。</p>
 </section>
-<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
-<p>下表每一列都是程式實際算出來的值，15 項全部跟上面那段文字對得起來。</p>
+<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>實跑結果</th>
+<th>結果</th>
 </tr>
 </thead>
 <tbody>
@@ -199,21 +194,13 @@ r.save()
 <li>「ingest_ts ≤ 2024-11-20」有兩種讀法：當天 00:00 得 673 則、當天 23:59 得 728 則；這裡用 00:00</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
 <p><img alt="第 19 題的圖" src="../../img/ex19_asof.png" /></p>
 <p>左圖是在不同日期拉同一份十月報表得到的總瀏覽量，右圖是同一批報表算出的撞牆後轉換率。總量隨拉報表的日期一路變大，比率幾乎不動。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
-<p>前視偏誤（KMG 埋的第四個陷阱：回填欄），以及它的鏡像——拿今天的完整資料去回答「當時該不該這樣決定」。最容易犯的兩個錯：第一，把 total_pv_lifetime 當特徵，做出一個正式上線那天就會壞掉的模型；第二，看到「比率沒變」就以為右設限無所謂。這次無所謂只是因為入庫慢跟文章表現無關，哪天系統改成熱門文先入庫，比率型指標一樣會壞，所以要把這個前提寫出來，不能當成通則。</p>
-<p>實際跑的結果：總瀏覽量腰斬（418,080 對 918,470），深度報導的撞牆轉換率幾乎不動（0.290 對 0.290）。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
-<p>把截止日從 11/20 往前後各挪一週（11/13、11/27）各跑一次：總量應該隨截止日單調變大，比率那幾條線應該接近水平；再把模型用到的每一個欄位對照資料字典的「什麼時候才知道」那一欄，只要有一欄寫著「事後回填」就拿掉重跑，如果準確度大幅下滑，就是你剛剛親手抓到自己的前視偏誤。</p>
-<p>實際跑的結果：截止日 11/13、11/20、11/27 的總瀏覽量 210,305、418,080、636,861 一路變大；深度報導撞牆轉換率 0.290、0.290、0.290 幾乎不動。</p>
-</section>
 <section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_18_-_%E5%BB%A3%E5%91%8A%E6%B4%BB%E5%8B%95%E8%83%BD%E8%B7%91%E5%A4%9A%E4%B9%85.html">練習 18 - 廣告活動能跑多久</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
