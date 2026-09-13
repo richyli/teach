@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 08 - 自助平台點擊率真的比較高嗎</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 08 - 自助平台點擊率真的比較高嗎</h1></div><p>在本單元中，會介紹第 8 題「業務部要我證明自助下單平台的廣告比直客業務賣得好」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：「業務主管說自助下單平台的點擊率比我們直客業務高四成，要我們把好版位多留給自助平台。這個差距是真的嗎？大到值得改版位分配嗎？」</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 3 組：這個差異是真的嗎</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>ad_daily（L1 檔名 ad_daily_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>從描述到推論 這個差異是真的嗎</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>(1) 四個平台各自把 click_cnt 與 impression_cnt 先加總、再相除，得到整月 CTR（不是把每一列的 CTR 拿去平均）。(2) 對 kmg_selfserve 與 kmg_direct 做兩組比例的 z 檢定，報差值與 p。(3) 同一組比較，按 placement 拆成四個版位各做一次。(4) 想換算成錢的話，revenue 這一欄混了 TWD 與 USD，兩個程序化平台記的是美金，要先乘匯率 31.5 才能加。語言用 Python：這題只需要加總與一個 z 檢定，statsmodels.stats.proportion.proportions_ztest 直接吃「點擊數、曝光數」兩個數字，不必把上千萬次曝光展開成一列一個 0 或 1。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+from statsmodels.stats.proportion import proportions_ztest
+
+r = R(8, &quot;業務部要我證明自助下單平台的廣告比直客業務賣得好&quot;)
+a = ad()
+a[&quot;twd&quot;] = twd(a)
+g = a.groupby(&quot;platform&quot;).agg(c=(&quot;click_cnt&quot;, &quot;sum&quot;), i=(&quot;impression_cnt&quot;, &quot;sum&quot;), t=(&quot;twd&quot;, &quot;sum&quot;))
+ctr = g[&quot;c&quot;] / g[&quot;i&quot;]
+r.chk(&quot;整月 CTR 自助（%）&quot;, 0.507, float(ctr[&quot;kmg_selfserve&quot;] * 100), tol=0.0015)
+r.chk(&quot;整月 CTR 直客（%）&quot;, 0.358, float(ctr[&quot;kmg_direct&quot;] * 100), tol=0.0015)
+r.chk(&quot;差距（百分點）&quot;, 0.149, float((ctr[&quot;kmg_selfserve&quot;] - ctr[&quot;kmg_direct&quot;]) * 100), tol=0.0015)
+z, p = proportions_ztest([g.loc[&quot;kmg_selfserve&quot;, &quot;c&quot;], g.loc[&quot;kmg_direct&quot;, &quot;c&quot;]],
+                         [g.loc[&quot;kmg_selfserve&quot;, &quot;i&quot;], g.loc[&quot;kmg_direct&quot;, &quot;i&quot;]])
+r.chk(&quot;z&quot;, 58, float(z), tol=2)
+r.chk(&quot;p 小到接近 0&quot;, True, bool(p &lt; 1e-100))
+
+two = a[a[&quot;platform&quot;].isin([&quot;kmg_selfserve&quot;, &quot;kmg_direct&quot;])]
+gp = two.groupby([&quot;placement&quot;, &quot;platform&quot;]).agg(c=(&quot;click_cnt&quot;, &quot;sum&quot;), i=(&quot;impression_cnt&quot;, &quot;sum&quot;))
+cp = (gp[&quot;c&quot;] / gp[&quot;i&quot;] * 100).unstack()
+for pl, es, ed in [(&quot;top_banner&quot;, 0.201, 0.185), (&quot;in_article&quot;, 0.422, 0.402),
+                   (&quot;sidebar&quot;, 0.111, 0.110), (&quot;video_preroll&quot;, 0.829, 0.859)]:
+    r.chk(&quot;%s 自助（%%）&quot; % pl, es, float(cp.loc[pl, &quot;kmg_selfserve&quot;]), tol=0.0015)
+    r.chk(&quot;%s 直客（%%）&quot; % pl, ed, float(cp.loc[pl, &quot;kmg_direct&quot;]), tol=0.0015)
+mix = two.groupby([&quot;platform&quot;, &quot;placement&quot;])[&quot;impression_cnt&quot;].sum().unstack()
+share = mix.div(mix.sum(axis=1), axis=0)
+r.chk(&quot;自助曝光落在 video_preroll 的比例&quot;, 0.49, float(share.loc[&quot;kmg_selfserve&quot;, &quot;video_preroll&quot;]), tol=0.01)
+r.chk(&quot;直客曝光落在 video_preroll 的比例&quot;, 0.18, float(share.loc[&quot;kmg_direct&quot;, &quot;video_preroll&quot;]), tol=0.01)
+rpc = g[&quot;t&quot;] / g[&quot;c&quot;]
+r.chk(&quot;每次點擊收入 最低平台&quot;, 16.6, float(rpc.min()), tol=0.06)
+r.chk(&quot;每次點擊收入 最高平台&quot;, 17.3, float(rpc.max()), tol=0.06)
+r.chk(&quot;直客整月曝光（萬）&quot;, 1769, float(g.loc[&quot;kmg_direct&quot;, &quot;i&quot;] / 1e4), tol=1)
+extra = float(g.loc[&quot;kmg_direct&quot;, &quot;i&quot;] * (ctr[&quot;kmg_selfserve&quot;] - ctr[&quot;kmg_direct&quot;]))
+r.chk(&quot;直客補到自助水準多出的點擊（萬）&quot;, 2.6, extra / 1e4, tol=0.06)
+
+# 課堂概念：entropy。版位組成越集中，entropy 越低（四個版位平均分是 2 bits）
+r.chk(&quot;版位組成 entropy 自助（bits）&quot;, 1.73, entropy_bits(share.loc[&quot;kmg_selfserve&quot;]), tol=0.005)
+r.chk(&quot;版位組成 entropy 直客（bits）&quot;, 1.96, entropy_bits(share.loc[&quot;kmg_direct&quot;]), tol=0.005)
+
+reversed_vp = bool(cp.loc[&quot;video_preroll&quot;, &quot;kmg_direct&quot;] &gt; cp.loc[&quot;video_preroll&quot;, &quot;kmg_selfserve&quot;])
+r.pit(p &lt; 1e-100 and reversed_vp, &quot;整月比較 p 值小到接近 0，拆到 video_preroll 卻是直客比較高（%.3f%% 對 %.3f%%）&quot; % (
+    cp.loc[&quot;video_preroll&quot;, &quot;kmg_direct&quot;], cp.loc[&quot;video_preroll&quot;, &quot;kmg_selfserve&quot;]))
+diffs = (cp[&quot;kmg_selfserve&quot;] - cp[&quot;kmg_direct&quot;]).abs()
+r.sc(bool(diffs.max() &lt;= 0.149 / 5) or reversed_vp,
+     &quot;拆到版位後，兩個平台最大只差 %.3f 個百分點（整月差距的五分之一是 0.030），而且有一個版位方向相反&quot; % float(diffs.max()))
+
+order = [&quot;video_preroll&quot;, &quot;in_article&quot;, &quot;top_banner&quot;, &quot;sidebar&quot;]
+fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+x = np.arange(4)
+ax[0].bar(x - 0.2, cp.loc[order, &quot;kmg_selfserve&quot;], 0.4, label=&quot;自助平台&quot;, color=&quot;#4f81bd&quot;)
+ax[0].bar(x + 0.2, cp.loc[order, &quot;kmg_direct&quot;], 0.4, label=&quot;直客業務&quot;, color=&quot;#f79646&quot;)
+ax[0].set_xticks(x, order, rotation=15)
+ax[0].set_ylabel(&quot;點擊率（%）&quot;)
+ax[0].set_title(&quot;同一個版位裡，兩個平台幾乎一樣&quot;)
+ax[0].legend()
+left = np.zeros(2)
+for pl in order:
+    vals = share.loc[[&quot;kmg_selfserve&quot;, &quot;kmg_direct&quot;], pl].values
+    ax[1].barh([&quot;自助平台&quot;, &quot;直客業務&quot;], vals, left=left, label=pl)
+    left += vals
+ax[1].set_xlabel(&quot;曝光落在各版位的比例&quot;)
+ax[1].set_title(&quot;差別在版位組成：自助有一半曝光在 video_preroll&quot;)
+ax[1].legend(fontsize=8, loc=&quot;upper left&quot;, bbox_to_anchor=(1.0, 1.0))
+save_fig(fig, &quot;ex08_ctr_by_placement.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>整月 CTR 自助 0.507%、直客 0.358%，差 0.149 個百分點，z 大約 58，p 小到印出來就是 0。但拆到版位就散掉了：top_banner 0.201% 對 0.185%、in_article 0.422% 對 0.402%、sidebar 0.111% 對 0.110%，而 video_preroll 反過來是直客比較高（0.859% 對 0.829%）。真正的差別在版位組成：自助平台有 49% 的曝光落在 CTR 最高的 video_preroll，直客只有 18%。再把每次點擊帶進的收入算出來，四個平台是 16.6 到 17.3 元，幾乎一樣——因為這門生意是照曝光計價的。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，21 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整月 CTR 自助（%）</td>
+<td>0.5068</td>
+</tr>
+<tr>
+<td>整月 CTR 直客（%）</td>
+<td>0.3583</td>
+</tr>
+<tr>
+<td>差距（百分點）</td>
+<td>0.1485</td>
+</tr>
+<tr>
+<td>z</td>
+<td>57.9577</td>
+</tr>
+<tr>
+<td>p 小到接近 0</td>
+<td>是</td>
+</tr>
+<tr>
+<td>top_banner 自助（%）</td>
+<td>0.2012</td>
+</tr>
+<tr>
+<td>top_banner 直客（%）</td>
+<td>0.185</td>
+</tr>
+<tr>
+<td>in_article 自助（%）</td>
+<td>0.4222</td>
+</tr>
+<tr>
+<td>in_article 直客（%）</td>
+<td>0.4018</td>
+</tr>
+<tr>
+<td>sidebar 自助（%）</td>
+<td>0.1107</td>
+</tr>
+<tr>
+<td>sidebar 直客（%）</td>
+<td>0.1104</td>
+</tr>
+<tr>
+<td>video_preroll 自助（%）</td>
+<td>0.829</td>
+</tr>
+<tr>
+<td>video_preroll 直客（%）</td>
+<td>0.8589</td>
+</tr>
+<tr>
+<td>自助曝光落在 video_preroll 的比例</td>
+<td>0.4915</td>
+</tr>
+<tr>
+<td>直客曝光落在 video_preroll 的比例</td>
+<td>0.183</td>
+</tr>
+<tr>
+<td>每次點擊收入 最低平台</td>
+<td>16.6345</td>
+</tr>
+<tr>
+<td>每次點擊收入 最高平台</td>
+<td>17.274</td>
+</tr>
+<tr>
+<td>直客整月曝光（萬）</td>
+<td>1769.0502</td>
+</tr>
+<tr>
+<td>直客補到自助水準多出的點擊（萬）</td>
+<td>2.6279</td>
+</tr>
+<tr>
+<td>版位組成 entropy 自助（bits）</td>
+<td>1.7337</td>
+</tr>
+<tr>
+<td>版位組成 entropy 直客（bits）</td>
+<td>1.9643</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 8 題的圖" src="../../img/ex08_ctr_by_placement.png" /></p>
+<p>左圖是同一個版位裡兩個平台的點擊率，四個版位都很接近，video_preroll 還是直客比較高。右圖是兩個平台的曝光落在各版位的比例，自助平台一半的曝光在點擊率最高的 video_preroll。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>顯著不等於重要。曝光數以千萬計，任何 0.01 個百分點的差距都會拿到接近 0 的 p 值；p 在這裡只證明「這個差距不是抽樣抽出來的」，完全沒回答「這個差距值不值錢」。而差距的來源又是分母結構不同（兩個平台的版位組成不一樣），不拆版位就是拿版位差異當平台差異。</p>
+<p>實際跑的結果：整月比較 p 值小到接近 0，拆到 video_preroll 卻是直客比較高（0.859% 對 0.829%）。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>把「差 0.149 個百分點」換算成一句有東西的話：直客整月 1769 萬次曝光，CTR 補到自助的水準也只多出約 2.6 萬次點擊，而收入是照曝光算的、一次點擊也不會多賺。然後把四個平台的 CTR 按版位拆開再看一次，如果差距縮到五分之一以下甚至反向，原本的結論就是版位組成造成的，不是平台好壞。</p>
+<p>實際跑的結果：拆到版位後，兩個平台最大只差 0.030 個百分點（整月差距的五分之一是 0.030），而且有一個版位方向相反。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
+</section>
+<section class="mod-sec sec-content"><h4>entropy</h4>
+<p>四個版位平均分配是 2.00 bits；自助平台的曝光組成只有 1.73 bits，直客是 1.96 bits。自助平台的曝光比較集中，集中在點閱率最高的 video_preroll，這個組成差異才是整月點閱率差距的來源。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_07_-_%E8%A8%82%E9%96%B1%E5%8A%9F%E5%8B%9E%E8%A9%B2%E7%AE%97%E8%AA%B0%E7%9A%84.html">練習 07 - 訂閱功勞該算誰的</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_09_-_%E4%BB%98%E8%B2%BB%E7%89%86%E8%AE%93%E6%B5%81%E9%87%8F%E6%8E%89%E5%B9%BE%E6%88%90.html">練習 09 - 付費牆讓流量掉幾成</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

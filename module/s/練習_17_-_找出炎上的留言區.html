@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 17 - 找出炎上的留言區</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 17 - 找出炎上的留言區</h1></div><p>在本單元中，會介紹第 17 題「社群小編說有幾篇的留言區在炎上，要你從報表裡把它們找出來」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：上個月哪幾篇讀者討論最熱烈？我要挑三篇出來在社群回應，順便看看哪個版面最會引起討論。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 6 組：時間、存活與回頭看的陷阱</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1 的 content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>把留言變成可以算的東西（接到 情緒分類跑一次 再看它錯在哪）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>第一步先確認 content_id 是不是唯一、有重複就去重。第二步用 comment_cnt 直接排一次序，當作待會要推翻的對照組。第三步明講分母：算「每千名不重複使用者的留言數」＝ comment_cnt ÷ uv × 1000，並設一個最低 uv 門檻（例如 500）再排序。第四步依 section_name 與 content_type 分組比留言率，並算 comment_cnt 與 pv 的相關係數；版面之間的差距要不要當真，用一個以 uv 為曝露量的 Poisson 迴歸檢定一次。用 Python 的理由：一張 CSV、加一個欄位、排個序，pandas 從讀檔到出榜不到十行。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from scipy import stats
+
+r = R(17, &quot;社群小編說有幾篇的留言區在炎上，要你從報表裡把它們找出來&quot;)
+raw = flat()
+f = dedupe(raw)
+r.chk(&quot;列數&quot;, 1444, len(raw))
+r.chk(&quot;不重複內容&quot;, 1438, len(f))
+r.chk(&quot;留言數與瀏覽量的相關係數&quot;, 0.87, float(f[&quot;comment_cnt&quot;].corr(f[&quot;pv&quot;])), tol=0.005)
+r.chk(&quot;留言最多的一篇&quot;, 12, int(f[&quot;comment_cnt&quot;].max()))
+
+top_c = f.sort_values([&quot;comment_cnt&quot;, &quot;pv&quot;], ascending=False).head(10)
+top_pv = f.sort_values(&quot;pv&quot;, ascending=False).head(10)
+overlap = len(set(top_c[&quot;content_id&quot;]) &amp; set(top_pv[&quot;content_id&quot;]))
+r.chk(&quot;按留言數排的前十 與流量前十重疊&quot;, 4, overlap)
+
+f = f.assign(rate=f[&quot;comment_cnt&quot;] / f[&quot;uv&quot;] * 1000)
+top_rate = f[f[&quot;uv&quot;] &gt;= 500].sort_values(&quot;rate&quot;, ascending=False).head(10)
+rate_pv = len(set(top_rate[&quot;content_id&quot;]) &amp; set(top_pv[&quot;content_id&quot;]))
+r.chk(&quot;留言率前十 與按留言數排的前十重疊&quot;, 0, len(set(top_rate[&quot;content_id&quot;]) &amp; set(top_c[&quot;content_id&quot;])))
+r.chk(&quot;留言率前十 與流量前十重疊&quot;, 0, rate_pv)
+
+def grp(col):
+    g = f.groupby(col).agg(c=(&quot;comment_cnt&quot;, &quot;sum&quot;), u=(&quot;uv&quot;, &quot;sum&quot;))
+    g[&quot;r&quot;] = g[&quot;c&quot;] / g[&quot;u&quot;] * 1000
+    return g
+
+gs, gt = grp(&quot;section_name&quot;), grp(&quot;content_type&quot;)
+r.chk(&quot;各型態留言率 最低（每千人）&quot;, 2.1, float(gt[&quot;r&quot;].min()), tol=0.05)
+r.chk(&quot;各型態留言率 最高（每千人）&quot;, 2.5, float(gt[&quot;r&quot;].max()), tol=0.05)
+r.chk(&quot;各版面留言率 最低（每千人）&quot;, 1.5, float(gs[&quot;r&quot;].min()), tol=0.05)
+r.chk(&quot;各版面留言率 最高（每千人）&quot;, 2.7, float(gs[&quot;r&quot;].max()), tol=0.05)
+r.chk(&quot;單一版面一個月的留言 最少&quot;, 14, int(gs[&quot;c&quot;].min()))
+r.chk(&quot;單一版面一個月的留言 最多&quot;, 362, int(gs[&quot;c&quot;].max()))
+m0 = smf.glm(&quot;comment_cnt ~ 1&quot;, data=f, family=sm.families.Poisson(), offset=np.log(f[&quot;uv&quot;])).fit()
+pvals = {}
+for col in (&quot;section_name&quot;, &quot;content_type&quot;):
+    m1 = smf.glm(&quot;comment_cnt ~ C(%s)&quot; % col, data=f, family=sm.families.Poisson(), offset=np.log(f[&quot;uv&quot;])).fit()
+    pvals[col] = float(stats.chi2.sf(2 * (m1.llf - m0.llf), m1.df_model))
+r.chk(&quot;版面差異檢定 p 值&quot;, 0.40, pvals[&quot;section_name&quot;], tol=0.005)
+r.chk(&quot;型態差異檢定 p 值&quot;, 0.44, pvals[&quot;content_type&quot;], tol=0.005)
+
+nothr = f.sort_values(&quot;rate&quot;, ascending=False).iloc[0]
+r.chk(&quot;不設門檻時榜首的讀者數&quot;, 130, int(nothr[&quot;uv&quot;]))
+r.chk(&quot;不設門檻時榜首的留言數&quot;, 1, int(nothr[&quot;comment_cnt&quot;]))
+r.chk(&quot;不設門檻時榜首的留言率&quot;, 7.7, float(nothr[&quot;rate&quot;]), tol=0.05)
+r.pit(int(nothr[&quot;uv&quot;]) &lt; 200, &quot;不設 uv 門檻，留言率榜首是一則只有 %d 位讀者、%d 則留言的稿子&quot; % (nothr[&quot;uv&quot;], nothr[&quot;comment_cnt&quot;]))
+
+top_rate100 = f[f[&quot;uv&quot;] &gt;= 100].sort_values(&quot;rate&quot;, ascending=False).head(10)
+kept = len(set(top_rate100[&quot;content_id&quot;]) &amp; set(top_rate[&quot;content_id&quot;]))
+r.chk(&quot;門檻 500 改成 100 後，前十名留下幾則&quot;, 0, kept)
+r.sc(rate_pv &lt; overlap and kept &lt; 5,
+     &quot;按留言數排跟流量榜重疊 %d 則、按留言率排重疊 %d 則；門檻從 500 改成 100，前十名只留下 %d 則&quot; % (overlap, rate_pv, kept))
+
+fig, ax = plt.subplots(1, 2, figsize=(11, 4.5))
+ax[0].scatter(f[&quot;pv&quot;], f[&quot;comment_cnt&quot;] + np.random.default_rng(0).uniform(-0.25, 0.25, len(f)), s=5, alpha=0.3,
+              color=&quot;#999999&quot;)
+ax[0].scatter(top_pv[&quot;pv&quot;], top_pv[&quot;comment_cnt&quot;], s=40, facecolors=&quot;none&quot;, edgecolors=&quot;#4f81bd&quot;, label=&quot;流量前十&quot;)
+ax[0].scatter(top_c[&quot;pv&quot;], top_c[&quot;comment_cnt&quot;], s=14, color=&quot;#c0504d&quot;, label=&quot;留言數前十&quot;)
+ax[0].set_xlabel(&quot;瀏覽量&quot;)
+ax[0].set_ylabel(&quot;留言數（加了一點抖動避免重疊）&quot;)
+ax[0].set_title(&quot;相關 0.87，但兩張前十名只重疊 4 則&quot;)
+ax[0].legend()
+gs = gs.sort_values(&quot;r&quot;)
+err = 1.96 * np.sqrt(gs[&quot;c&quot;]) / gs[&quot;u&quot;] * 1000
+ax[1].errorbar(gs[&quot;r&quot;], range(len(gs)), xerr=err, fmt=&quot;o&quot;, color=&quot;#4f81bd&quot;, ecolor=&quot;#bbbbbb&quot;)
+ax[1].set_yticks(range(len(gs)), gs.index, fontsize=8)
+ax[1].set_xlabel(&quot;每千名讀者的留言數（橫線是 95% 區間）&quot;)
+ax[1].set_title(&quot;版面之間差快兩倍，區間卻幾乎全部重疊（p=0.40）&quot;)
+save_fig(fig, &quot;ex17_comments.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>1,444 列裡只有 1,438 則不重複內容，有 6 則因為重送而出現兩列。留言數跟瀏覽量高度相關（相關係數 0.87），但按 comment_cnt 排出來的前十名，跟流量前十名只重疊 4 則——相關係數講的是整體趨勢，不保證排行榜的頭部一樣；而且留言最多的一篇也才 12 則。改成留言率之後，前十名跟按留言數排的前十名、跟流量前十名都完全沒有重疊。各型態的留言率落在每千名使用者 2.1 到 2.5 則，各版面落在 1.5 到 2.7 則；版面之間看起來差了快兩倍，但每個版面一個月只有十幾到三百多則留言，檢定版面差異 p=0.40、型態差異 p=0.44，說不出哪個版面比較會引起討論。誠實的結論是：這張表看不出炎上，因為它只留下留言的則數，沒有留言的內容。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，19 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列數</td>
+<td>1444</td>
+</tr>
+<tr>
+<td>不重複內容</td>
+<td>1438</td>
+</tr>
+<tr>
+<td>留言數與瀏覽量的相關係數</td>
+<td>0.8682</td>
+</tr>
+<tr>
+<td>留言最多的一篇</td>
+<td>12</td>
+</tr>
+<tr>
+<td>按留言數排的前十 與流量前十重疊</td>
+<td>4</td>
+</tr>
+<tr>
+<td>留言率前十 與按留言數排的前十重疊</td>
+<td>0</td>
+</tr>
+<tr>
+<td>留言率前十 與流量前十重疊</td>
+<td>0</td>
+</tr>
+<tr>
+<td>各型態留言率 最低（每千人）</td>
+<td>2.1062</td>
+</tr>
+<tr>
+<td>各型態留言率 最高（每千人）</td>
+<td>2.4808</td>
+</tr>
+<tr>
+<td>各版面留言率 最低（每千人）</td>
+<td>1.4804</td>
+</tr>
+<tr>
+<td>各版面留言率 最高（每千人）</td>
+<td>2.6759</td>
+</tr>
+<tr>
+<td>單一版面一個月的留言 最少</td>
+<td>14</td>
+</tr>
+<tr>
+<td>單一版面一個月的留言 最多</td>
+<td>362</td>
+</tr>
+<tr>
+<td>版面差異檢定 p 值</td>
+<td>0.4022</td>
+</tr>
+<tr>
+<td>型態差異檢定 p 值</td>
+<td>0.4425</td>
+</tr>
+<tr>
+<td>不設門檻時榜首的讀者數</td>
+<td>130</td>
+</tr>
+<tr>
+<td>不設門檻時榜首的留言數</td>
+<td>1</td>
+</tr>
+<tr>
+<td>不設門檻時榜首的留言率</td>
+<td>7.6923</td>
+</tr>
+<tr>
+<td>門檻 500 改成 100 後，前十名留下幾則</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 17 題的圖" src="../../img/ex17_comments.png" /></p>
+<p>左圖是每則內容的瀏覽量與留言數，藍圈是流量前十、紅點是留言數前十，重疊的只有 4 則。右圖是各版面每千名讀者的留言數與 95% 區間，區間幾乎全部互相重疊。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>分母混淆（KMG 埋的第三個陷阱）加上小分母洗榜。用 pv、uv 還是 sessions 當分母，會得到三份不一樣的排行榜；而且不設 uv 門檻的話，榜首會是一則只有 130 個讀者、拿到 1 則留言的稿子（每千人 7.7 則），那純粹是分母太小的運氣。還有一個更該講出來的限制：要判斷留言是正面還是負面，必須有留言原文，這份資料沒有原文，所以不可以把「留言多」寫成「炎上」。</p>
+<p>實際跑的結果：不設 uv 門檻，留言率榜首是一則只有 130 位讀者、1 則留言的稿子。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>把你的排行榜跟「純粹按 pv 排」的排行榜並排放，數一數重疊幾則：按留言數排會跟流量榜重疊 4 則，按留言率排是 0 則，重疊越多，代表你排的越像流量而不是討論；再把最低 uv 門檻從 500 改成 100 重跑一次，如果榜單整個換人，代表你的名次是被小分母決定的，不是被讀者決定的。</p>
+<p>實際跑的結果：按留言數排跟流量榜重疊 4 則、按留言率排重疊 0 則；門檻從 500 改成 100，前十名只留下 0 則。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_16_-_%E6%9C%88%E5%BA%95%E5%BB%A3%E5%91%8A%E7%87%9F%E6%94%B6%E4%B8%8B%E6%BB%91.html">練習 16 - 月底廣告營收下滑</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_18_-_%E5%BB%A3%E5%91%8A%E6%B4%BB%E5%8B%95%E8%83%BD%E8%B7%91%E5%A4%9A%E4%B9%85.html">練習 18 - 廣告活動能跑多久</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

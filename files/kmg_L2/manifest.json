@@ -1,0 +1,36 @@
+{
+  "release": "L2",
+  "master_seed": 20260912,
+  "files": [
+    {
+      "name": "ad_daily_2024_10.csv",
+      "bytes": 70852,
+      "sha256": "ae821bc8a889024640a779615ddce1bf334d2fdd2e2417b15ea132d9894f4f2a"
+    },
+    {
+      "name": "content.csv",
+      "bytes": 124339,
+      "sha256": "0adc33118a53086b2b99bfdc63b2aa67fe4e569b4af80d6de8b7dcf3eda2015a"
+    },
+    {
+      "name": "content_monthly.csv",
+      "bytes": 117208,
+      "sha256": "9599a1a476d20bcb0a1f8ee287b037911f20425d0f1514bdc36c2b404e51b15a"
+    },
+    {
+      "name": "DATA_DICTIONARY.md",
+      "bytes": 5844,
+      "sha256": "c2d4183b92e2a78149aa2d7bf1967f210c470dc4391e7e1368d2164d2c4da2a2"
+    },
+    {
+      "name": "dim_section.csv",
+      "bytes": 789,
+      "sha256": "1b197bb325d1b968efa2f11de8efc2b36ab1465149269615a6ef2a7eb55c239a"
+    },
+    {
+      "name": "staff.csv",
+      "bytes": 15042,
+      "sha256": "480de71f679e6c624700ec0de998442dcd2db2f991e422fc252a467c5589f695"
+    }
+  ]
+}

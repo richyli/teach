@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 03 - 最佳報導獎發給誰</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 03 - 最佳報導獎發給誰</h1></div><p>在本單元中，會介紹第 3 題「本月最佳報導獎要發給誰——請給我十月瀏覽量最高的記者」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：內容處要發本月流量獎，月報表按記者姓名排出來第一名是楊心怡，獎金可以直接發給她嗎？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>進階</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 1 組：先把一張表讀對</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1）、content_monthly（L2）、content（L2）、staff（L2）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>兩張表接起來才有意義</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>先在月報表去重，按 staff_name 做一份排行榜；再把 content_monthly 接 content（靠 content_id）、content 接 staff（靠 author_primary_id 對 staff_id），改成按記者代碼 staff_id 做第二份排行榜，兩份並排比較。用 Python，因為 pandas 的 merge 可以在接表前後直接比對列數有沒有變（1,444 接完還是 1,444），接壞了、接出重覆列，當場就看得出來。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+
+r = R(3, &quot;本月最佳報導獎要發給誰——請給我十月瀏覽量最高的記者&quot;)
+f = dedupe(flat())
+by_name = f.groupby(&quot;staff_name&quot;).agg(n=(&quot;content_id&quot;, &quot;count&quot;), pv=(&quot;pv&quot;, &quot;sum&quot;)).sort_values(&quot;pv&quot;, ascending=False)
+top_name = by_name.index[0]
+r.chk(&quot;按姓名第一名&quot;, &quot;楊心怡&quot;, top_name)
+r.chk(&quot;按姓名第一名則數&quot;, 26, int(by_name.iloc[0][&quot;n&quot;]))
+r.chk(&quot;按姓名第一名瀏覽量&quot;, 17726, int(by_name.iloc[0][&quot;pv&quot;]))
+
+cm = l2(&quot;content_monthly.csv&quot;, parse_dates=[&quot;ingest_ts&quot;])
+ct, st = l2(&quot;content.csv&quot;), l2(&quot;staff.csv&quot;)
+m1 = cm.merge(ct, on=&quot;content_id&quot;, how=&quot;left&quot;)
+r.chk(&quot;接 content 後列數不變&quot;, len(cm), len(m1))
+m2 = m1.merge(st, left_on=&quot;author_primary_id&quot;, right_on=&quot;staff_id&quot;, how=&quot;left&quot;)
+r.chk(&quot;接 staff 後列數不變&quot;, len(cm), len(m2))
+m2 = m2.sort_values(&quot;ingest_ts&quot;).drop_duplicates([&quot;content_id&quot;, &quot;stat_month&quot;], keep=&quot;last&quot;)
+by_id = m2.groupby([&quot;staff_id&quot;, &quot;staff_name&quot;]).agg(n=(&quot;content_id&quot;, &quot;count&quot;), pv=(&quot;pv&quot;, &quot;sum&quot;)).sort_values(&quot;pv&quot;, ascending=False)
+(sid, sname), top = by_id.index[0], by_id.iloc[0]
+r.chk(&quot;按代碼第一名代碼&quot;, &quot;stf_0062&quot;, sid)
+r.chk(&quot;按代碼第一名姓名&quot;, &quot;王淑芬&quot;, sname)
+r.chk(&quot;按代碼第一名則數&quot;, 16, int(top[&quot;n&quot;]))
+r.chk(&quot;按代碼第一名瀏覽量&quot;, 17389, int(top[&quot;pv&quot;]))
+
+yang_all = sorted(st.loc[st[&quot;staff_name&quot;] == &quot;楊心怡&quot;, &quot;staff_id&quot;])
+r.chk(&quot;staff 表裡叫楊心怡的人數&quot;, 5, len(yang_all))
+ylist = by_id.reset_index()
+yang = ylist[ylist[&quot;staff_name&quot;] == &quot;楊心怡&quot;].set_index(&quot;staff_id&quot;)
+r.chk(&quot;十月有發稿的楊心怡&quot;, [&quot;stf_0025&quot;, &quot;stf_0088&quot;, &quot;stf_0166&quot;, &quot;stf_0311&quot;], sorted(yang.index))
+r.chk(&quot;楊心怡中瀏覽量最高者&quot;, &quot;stf_0025&quot;, yang[&quot;pv&quot;].idxmax())
+r.chk(&quot;瀏覽量最高那位的則數&quot;, 6, int(yang.loc[&quot;stf_0025&quot;, &quot;n&quot;]))
+r.chk(&quot;瀏覽量最高那位的瀏覽量&quot;, 8944, int(yang.loc[&quot;stf_0025&quot;, &quot;pv&quot;]))
+r.chk(&quot;楊心怡中發最多則者&quot;, &quot;stf_0088&quot;, yang[&quot;n&quot;].idxmax())
+r.chk(&quot;發最多則那位的則數&quot;, 11, int(yang.loc[&quot;stf_0088&quot;, &quot;n&quot;]))
+r.chk(&quot;發最多則那位的瀏覽量&quot;, 6079, int(yang.loc[&quot;stf_0088&quot;, &quot;pv&quot;]))
+r.chk(&quot;staff_id 不重複數&quot;, 480, int(st[&quot;staff_id&quot;].nunique()))
+r.chk(&quot;staff_name 不重複數&quot;, 279, int(st[&quot;staff_name&quot;].nunique()))
+shared = set(st.groupby(&quot;staff_name&quot;)[&quot;staff_id&quot;].nunique().loc[lambda s: s &gt; 1].index)
+r.chk(&quot;作者姓名被別人共用的則數&quot;, 989, int(f[&quot;staff_name&quot;].isin(shared).sum()))
+
+# 課堂概念：entropy。480 個代碼平均分，要幾 bits 才分得開；只知道姓名，平均還剩多少
+cnt = st.groupby(&quot;staff_name&quot;)[&quot;staff_id&quot;].nunique()
+r.chk(&quot;分開 480 個代碼需要的 bits&quot;, 8.91, float(np.log2(st[&quot;staff_id&quot;].nunique())), tol=0.005)
+r.chk(&quot;知道姓名後平均還剩的 bits&quot;, 0.96, float((cnt / cnt.sum() * np.log2(cnt)).sum()), tol=0.005)
+r.chk(&quot;同名最多幾人&quot;, 5, int(cnt.max()))
+
+r.pit(top_name != sname, &quot;按姓名排的第一名是%s（其實是四個人加起來），按代碼排的第一名是%s，不是同一個人&quot; % (top_name, sname))
+top10_name = list(by_name.index[:10])
+top10_id = list(ylist[&quot;staff_name&quot;][:10])
+gap = int(st[&quot;staff_id&quot;].nunique() - st[&quot;staff_name&quot;].nunique())
+r.sc(gap == 201 and top10_name != top10_id, &quot;記者代碼比姓名多 %d 個；按姓名與按代碼的前十名不一樣：%s&quot; % (
+    gap, &quot;是&quot; if top10_name != top10_id else &quot;否&quot;))
+
+fig, ax = plt.subplots(1, 2, figsize=(10, 4.2))
+bn = by_name.head(10).iloc[::-1]
+ax[0].barh(bn.index, bn[&quot;pv&quot;], color=[&quot;#c0504d&quot; if n == &quot;楊心怡&quot; else &quot;#bbbbbb&quot; for n in bn.index])
+ax[0].set_title(&quot;按姓名排：楊心怡第一&quot;)
+ax[0].set_xlabel(&quot;十月瀏覽量&quot;)
+bi = ylist.head(10).iloc[::-1]
+labels = [&quot;%s（%s）&quot; % (n, s) for s, n in zip(bi[&quot;staff_id&quot;], bi[&quot;staff_name&quot;])]
+ax[1].barh(labels, bi[&quot;pv&quot;], color=[&quot;#4f81bd&quot; if s == &quot;stf_0062&quot; else &quot;#bbbbbb&quot; for s in bi[&quot;staff_id&quot;]])
+ax[1].set_title(&quot;按記者代碼排：王淑芬第一，楊心怡不在前十&quot;)
+ax[1].set_xlabel(&quot;十月瀏覽量&quot;)
+save_fig(fig, &quot;ex03_rank_name_vs_id.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>兩份排行榜的第一名不是同一個人。月報表只給記者姓名，按姓名排出來是「楊心怡 26 則、17,726 次瀏覽」；但 staff 表裡 480 個記者代碼只對應到 279 個不同姓名，staff 表裡叫楊心怡的有五個人，十月有發稿的是其中四個（stf_0025、stf_0088、stf_0166、stf_0311）；四個人裡瀏覽量最高的 stf_0025 只有 6 則、8,944 次，發最多則的 stf_0088 也只有 11 則、6,079 次。真正的第一名是代碼 stf_0062 的王淑芬，16 則、17,389 次瀏覽。全部 1,438 則裡有 989 則（將近七成）的作者姓名被別人共用，所以這不是剛好撞名的偶發狀況。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，23 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>按姓名第一名</td>
+<td>楊心怡</td>
+</tr>
+<tr>
+<td>按姓名第一名則數</td>
+<td>26</td>
+</tr>
+<tr>
+<td>按姓名第一名瀏覽量</td>
+<td>17726</td>
+</tr>
+<tr>
+<td>接 content 後列數不變</td>
+<td>1444</td>
+</tr>
+<tr>
+<td>接 staff 後列數不變</td>
+<td>1444</td>
+</tr>
+<tr>
+<td>按代碼第一名代碼</td>
+<td>stf_0062</td>
+</tr>
+<tr>
+<td>按代碼第一名姓名</td>
+<td>王淑芬</td>
+</tr>
+<tr>
+<td>按代碼第一名則數</td>
+<td>16</td>
+</tr>
+<tr>
+<td>按代碼第一名瀏覽量</td>
+<td>17389</td>
+</tr>
+<tr>
+<td>staff 表裡叫楊心怡的人數</td>
+<td>5</td>
+</tr>
+<tr>
+<td>十月有發稿的楊心怡</td>
+<td>stf_0025、stf_0088、stf_0166、stf_0311</td>
+</tr>
+<tr>
+<td>楊心怡中瀏覽量最高者</td>
+<td>stf_0025</td>
+</tr>
+<tr>
+<td>瀏覽量最高那位的則數</td>
+<td>6</td>
+</tr>
+<tr>
+<td>瀏覽量最高那位的瀏覽量</td>
+<td>8944</td>
+</tr>
+<tr>
+<td>楊心怡中發最多則者</td>
+<td>stf_0088</td>
+</tr>
+<tr>
+<td>發最多則那位的則數</td>
+<td>11</td>
+</tr>
+<tr>
+<td>發最多則那位的瀏覽量</td>
+<td>6079</td>
+</tr>
+<tr>
+<td>staff_id 不重複數</td>
+<td>480</td>
+</tr>
+<tr>
+<td>staff_name 不重複數</td>
+<td>279</td>
+</tr>
+<tr>
+<td>作者姓名被別人共用的則數</td>
+<td>989</td>
+</tr>
+<tr>
+<td>分開 480 個代碼需要的 bits</td>
+<td>8.9069</td>
+</tr>
+<tr>
+<td>知道姓名後平均還剩的 bits</td>
+<td>0.9618</td>
+</tr>
+<tr>
+<td>同名最多幾人</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 3 題的圖" src="../../img/ex03_rank_name_vs_id.png" /></p>
+<p>同一份資料排兩次。左邊按姓名加總，四個叫楊心怡的人被加成一個；右邊按記者代碼加總，第一名換人，四個楊心怡都不在前十。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>拿姓名當識別碼。月報表看起來「一張表就夠用了」，姓名也很像唯一值，但人名會重複、識別碼才不會；接第二張表不是為了讓報表變漂亮，是因為第一張表根本沒有能認出是哪一個人的欄位。另外別忘了先做去重，否則那 6 則重送會讓某幾位記者白白多一則。</p>
+<p>實際跑的結果：按姓名排的第一名是楊心怡（其實是四個人加起來），按代碼排的第一名是王淑芬，不是同一個人。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>比對 staff 表的 staff_id.nunique()（480）與 staff_name.nunique()（279），差了 201 就代表姓名不能當識別碼；再把按姓名與按代碼的兩份前十名並排，只要名次有換人，就以按代碼的那一份為準。</p>
+<p>實際跑的結果：記者代碼比姓名多 201 個；按姓名與按代碼的前十名不一樣：是。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
+</section>
+<section class="mod-sec sec-content"><h4>entropy</h4>
+<p>480 個記者代碼要 8.91 bits 才分得開；只知道姓名的話，平均還剩 0.96 bits 的不確定性，等於還要在大約兩個人裡面猜。「姓名不能當識別碼」用數字講就是這一句。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_02_-_%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%B9%B3%E5%8F%B0%E8%A9%B2%E4%B8%8D%E8%A9%B2%E5%81%9C.html">練習 02 - 程序化平台該不該停</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_04_-_%E6%B7%B1%E5%BA%A6%E5%A0%B1%E5%B0%8E%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E5%81%9A.html">練習 04 - 深度報導值不值得做</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

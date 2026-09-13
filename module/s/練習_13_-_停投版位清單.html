@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 13 - 停投版位清單</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 13 - 停投版位清單</h1></div><p>在本單元中，會介紹第 13 題「業務部要一份建議停投的版位清單，但上次照數字砍完反而少了一塊收入」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：這個月廣告有八百多筆投放紀錄，我要知道哪些「活動×版位×日」是賠本的，下個月直接停掉。但上次照數字砍完，營收反而掉了一塊，這次要你確定砍對人。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>挑戰</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 4 組：預測、門檻與代價</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>ad_daily（L1 釋出的 ad_daily_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>模型看起來太準 就是出事了（同時練 預測會不會退訂 的成本門檻）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>先算每一列的千次曝光收入（revenue ÷ impression_cnt × 1000）當效益指標，低於全體第 25 百分位就貼上「建議停投」的標籤，再用 placement、platform、advertiser_industry 跑一個簡單分類（glm 或決策樹）看是什麼在決定這個標籤。關鍵不在模型在標籤：revenue 旁邊有 currency 欄，adx_prog 與 openx_prog 記的是美金，要先乘 31.5 換成台幣。整套做兩次——不換算一次、換算一次——把兩份停投名單逐列對照，看有幾列翻面。最後用誤判成本定門檻（停錯一個賺錢版位等於少收真實收入，留著一個低效版位只是版面被佔住），並檢查 viewability_rate 的缺失是不是隨機的。語言用 R，因為這題七成的工是清理跟分群彙總，dplyr 一條管線從換幣別、算 eCPM、貼標籤到出成本表就寫完，yardstick 直接給混淆矩陣，也接得上後面同樣用 R 的存活分析模組。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題的分析用 R 跑，整支程式如下。R 的程式要從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2。</p>
+<pre><code class="language-r"># ex13 建議停投的版位清單：標籤錯，模型越準錯得越徹底（R：dplyr＋yardstick）
+# 檢查項目名稱用英文，理由同 ex07。
+lib &lt;- Sys.getenv(&quot;R_LIBS_USER&quot;)
+.libPaths(c(lib, .libPaths()))
+suppressMessages({ library(dplyr); library(yardstick) })
+res_dir &lt;- &quot;teacher/exercise_runs/results&quot;
+dir.create(res_dir, showWarnings = FALSE, recursive = TRUE)
+out &lt;- data.frame(name = character(), expected = character(), actual = character(), ok = logical(),
+                  stringsAsFactors = FALSE)
+chk &lt;- function(name, expected, actual, tol) {
+  a &lt;- as.numeric(actual)
+  out[nrow(out) + 1, ] &lt;&lt;- list(name, as.character(expected), as.character(round(a, 4)),
+                               isTRUE(abs(a - as.numeric(expected)) &lt;= tol))
+}
+flag &lt;- function(name, ok, detail) {
+  out[nrow(out) + 1, ] &lt;&lt;- list(name, &quot;&quot;, detail, isTRUE(ok))
+}
+getv &lt;- function(df, key, col) dfcol[dfnames(df)[1] == key]
+
+RATE &lt;- 31.5
+a &lt;- read.csv(&quot;dist/L1/ad_daily_2024_10.csv&quot;, fileEncoding = &quot;UTF-8-BOM&quot;, stringsAsFactors = FALSE) %&gt;%
+  mutate(twd = ifelse(currency == &quot;USD&quot;, revenue * RATE, revenue),
+         ecpm_naive = revenue / impression_cnt * 1000,
+         ecpm = twd / impression_cnt * 1000)
+chk(&quot;n_currency&quot;, 2, n_distinct(a$currency), 0)
+chk(&quot;naive_total&quot;, 1947799, sum(a$revenue), 2)
+chk(&quot;converted_total&quot;, 2975076, sum(a$twd), 2)
+
+a &lt;- a %&gt;% mutate(stop_naive = ecpm_naive &lt; quantile(ecpm_naive, 0.25),
+                  stop_conv = ecpm &lt; quantile(ecpm, 0.25))
+rn &lt;- a %&gt;% group_by(platform) %&gt;% summarise(r = mean(stop_naive), .groups = &quot;drop&quot;)
+rc &lt;- a %&gt;% group_by(platform) %&gt;% summarise(r = mean(stop_conv), .groups = &quot;drop&quot;)
+chk(&quot;naive_flag_adx_prog&quot;, 0.74, getv(rn, &quot;adx_prog&quot;, &quot;r&quot;), 0.01)
+chk(&quot;naive_flag_openx_prog&quot;, 0.77, getv(rn, &quot;openx_prog&quot;, &quot;r&quot;), 0.01)
+chk(&quot;naive_flag_kmg_direct&quot;, 0, getv(rn, &quot;kmg_direct&quot;, &quot;r&quot;), 0)
+chk(&quot;naive_flag_kmg_selfserve&quot;, 0, getv(rn, &quot;kmg_selfserve&quot;, &quot;r&quot;), 0)
+chk(&quot;converted_flag_min&quot;, 0.16, min(rc$r), 0.01)
+chk(&quot;converted_flag_max&quot;, 0.33, max(rc$r), 0.01)
+flips &lt;- sum(a$stop_naive != a$stop_conv)
+chk(&quot;flipped_rows&quot;, 290, flips, 0)
+chk(&quot;flipped_share&quot;, 0.34, flips / nrow(a), 0.005)
+
+mp &lt;- a %&gt;% group_by(platform) %&gt;% summarise(m = median(ecpm), .groups = &quot;drop&quot;)
+chk(&quot;median_ecpm_adx_prog&quot;, 44.5, getv(mp, &quot;adx_prog&quot;, &quot;m&quot;), 0.1)
+chk(&quot;median_ecpm_openx_prog&quot;, 48.6, getv(mp, &quot;openx_prog&quot;, &quot;m&quot;), 0.1)
+chk(&quot;median_ecpm_kmg_direct&quot;, 46.9, getv(mp, &quot;kmg_direct&quot;, &quot;m&quot;), 0.1)
+ml &lt;- a %&gt;% group_by(placement) %&gt;% summarise(m = median(ecpm), .groups = &quot;drop&quot;)
+chk(&quot;median_ecpm_sidebar&quot;, 22.2, getv(ml, &quot;sidebar&quot;, &quot;m&quot;), 0.1)
+chk(&quot;median_ecpm_video_preroll&quot;, 143.6, getv(ml, &quot;video_preroll&quot;, &quot;m&quot;), 0.1)
+
+chk(&quot;viewability_missing_share&quot;, 0.128, mean(is.na(a$viewability_rate)), 0.002)
+mb &lt;- a %&gt;% group_by(platform) %&gt;% summarise(m = mean(is.na(viewability_rate)), .groups = &quot;drop&quot;)
+chk(&quot;missing_zero_on_own_platforms&quot;, 1,
+    as.numeric(all(mb$m[!mb$platform %in% c(&quot;adx_prog&quot;, &quot;openx_prog&quot;)] == 0)), 0)
+chk(&quot;viewability_mean_dropna&quot;, 0.613, mean(a$viewability_rate, na.rm = TRUE), 0.002)
+chk(&quot;viewability_mean_own&quot;, 0.610,
+    mean(a$viewability_rate[a$platform %in% c(&quot;kmg_direct&quot;, &quot;kmg_selfserve&quot;)], na.rm = TRUE), 0.002)
+
+a$truth <- factor(ifelse(a$stop_conv, &quot;stop&quot;, &quot;keep&quot;), levels = c(&quot;stop&quot;, &quot;keep&quot;))
+m &lt;- glm(stop_conv ~ placement + platform + advertiser_industry, data = a, family = binomial)
+a$est &lt;- factor(ifelse(predict(m, type = &quot;response&quot;) &gt; 0.5, &quot;stop&quot;, &quot;keep&quot;), levels = c(&quot;stop&quot;, &quot;keep&quot;))
+acc &lt;- accuracy(a, truth = truth, estimate = est)$.estimate
+cmat &lt;- conf_mat(a, truth = truth, estimate = est)
+flag(&quot;MODEL&quot;, TRUE, sprintf(&quot;glm on converted labels: accuracy %.3f; confusion (stop-stop/keep-stop/stop-keep/keep-keep) %s&quot;,
+                            acc, paste(as.vector(cmat$table), collapse = &quot;/&quot;)))
+
+flag(&quot;PITFALL&quot;, getv(rn, &quot;kmg_direct&quot;, &quot;r&quot;) == 0 &amp;&amp; getv(rn, &quot;kmg_selfserve&quot;, &quot;r&quot;) == 0 &amp;&amp;
+       getv(rn, &quot;adx_prog&quot;, &quot;r&quot;) &gt; 0.6,
+     sprintf(&quot;naive labels: adx %.2f, openx %.2f, direct %.2f, selfserve %.2f&quot;,
+             getv(rn, &quot;adx_prog&quot;, &quot;r&quot;), getv(rn, &quot;openx_prog&quot;, &quot;r&quot;), getv(rn, &quot;kmg_direct&quot;, &quot;r&quot;), getv(rn, &quot;kmg_selfserve&quot;, &quot;r&quot;)))
+flag(&quot;SELFCHECK&quot;, n_distinct(a$currency) &gt;= 2 &amp;&amp; flips / nrow(a) &gt; 0.3,
+     sprintf(&quot;currencies %d; flipped share %.3f&quot;, n_distinct(a$currency), flips / nrow(a)))
+
+write.table(out, file.path(res_dir, &quot;ex13.tsv&quot;), sep = &quot;\t&quot;, row.names = FALSE, fileEncoding = &quot;UTF-8&quot;)
+print(out)
+</code></pre>
+<p>out 那張表是對照檢查：每一列把入口頁寫的數字跟實際算出來的放在一起比，PITFALL 與 SELFCHECK 兩列記錄坑有沒有出現、自己驗那一步有沒有效。</p>
+</section>
+<section class="mod-sec sec-content"><h4>畫圖的程式</h4>
+<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義重算一次，順便確認跟 R 算出來的一樣。</p>
+<pre><code class="language-python">&quot;&quot;&quot;第 13 題的圖與 confusion matrix（R 那支負責主要數字，這支重算停投名單並畫中文圖）。&quot;&quot;&quot;
+from _kmg import *
+
+r = R(13, &quot;業務部要一份建議停投的版位清單，但上次照數字砍完反而少了一塊收入&quot;, suffix=&quot;_py&quot;)
+a = ad()
+a[&quot;twd&quot;] = twd(a)
+a[&quot;ecpm_naive&quot;] = a[&quot;revenue&quot;] / a[&quot;impression_cnt&quot;] * 1000
+a[&quot;ecpm&quot;] = a[&quot;twd&quot;] / a[&quot;impression_cnt&quot;] * 1000
+a[&quot;stop_naive&quot;] = a[&quot;ecpm_naive&quot;] &lt; a[&quot;ecpm_naive&quot;].quantile(0.25)
+a[&quot;stop_conv&quot;] = a[&quot;ecpm&quot;] &lt; a[&quot;ecpm&quot;].quantile(0.25)
+r.chk(&quot;Python 重算 標籤翻面列數&quot;, 290, int((a[&quot;stop_naive&quot;] != a[&quot;stop_conv&quot;]).sum()))
+
+# 課堂概念：把換算後的標籤當正確答案，未換算的名單就是一個「預測」
+t, p = a[&quot;stop_conv&quot;], a[&quot;stop_naive&quot;]
+cm = {&quot;TP&quot;: int((p &amp; t).sum()), &quot;FP&quot;: int((p &amp; ~t).sum()), &quot;FN&quot;: int((~p &amp; t).sum()), &quot;TN&quot;: int((~p &amp; ~t).sum())}
+r.chk(&quot;未換算名單的 confusion matrix（TP/FP/FN/TN）&quot;, [68, 145, 145, 494], [cm[k] for k in (&quot;TP&quot;, &quot;FP&quot;, &quot;FN&quot;, &quot;TN&quot;)])
+wrong = float(a.loc[p &amp; ~t, &quot;twd&quot;].sum())
+r.chk(&quot;被冤枉停投的列換算後收入（元）&quot;, 412564, round(wrong), tol=2)
+
+order = [&quot;kmg_direct&quot;, &quot;kmg_selfserve&quot;, &quot;openx_prog&quot;, &quot;adx_prog&quot;]
+rn = a.groupby(&quot;platform&quot;)[&quot;stop_naive&quot;].mean()
+rc = a.groupby(&quot;platform&quot;)[&quot;stop_conv&quot;].mean()
+fig, ax = plt.subplots(1, 2, figsize=(10, 4.2), gridspec_kw={&quot;width_ratios&quot;: [3, 2]})
+x = np.arange(4)
+ax[0].bar(x - 0.2, rn[order], 0.4, label=&quot;沒換幣別就貼標籤&quot;, color=&quot;#c0504d&quot;)
+ax[0].bar(x + 0.2, rc[order], 0.4, label=&quot;換成台幣再貼標籤&quot;, color=&quot;#4f81bd&quot;)
+ax[0].set_xticks(x, order, rotation=15)
+ax[0].set_ylabel(&quot;被標成「建議停投」的列比例&quot;)
+ax[0].set_title(&quot;沒換算的名單等於「砍掉兩個程序化平台」&quot;)
+ax[0].legend()
+mat = np.array([[cm[&quot;TP&quot;], cm[&quot;FN&quot;]], [cm[&quot;FP&quot;], cm[&quot;TN&quot;]]])
+ax[1].imshow(mat, cmap=&quot;Oranges&quot;)
+for i in range(2):
+    for j in range(2):
+        ax[1].text(j, i, str(mat[i, j]), ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=14, color=&quot;white&quot; if mat[i, j] &gt; 300 else &quot;black&quot;)
+ax[1].set_xticks([0, 1], [&quot;未換算：停投&quot;, &quot;未換算：保留&quot;])
+ax[1].set_yticks([0, 1], [&quot;換算後：該停&quot;, &quot;換算後：該留&quot;])
+ax[1].set_title(&quot;冤枉停投 145 列，換算後月收入 %s 元&quot; % format(round(wrong), &quot;,&quot;))
+save_fig(fig, &quot;ex13_stop_list.png&quot;)
+r.save()
+</code></pre>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>不換幣別，852 筆的總收入會算成 194.8 萬，真值是 297.5 萬，少算三分之一。停投名單會變成：adx_prog 有 74%、openx_prog 有 77% 被標成賠本，自家直客與自助平台一筆都沒有——整份名單其實在說「把兩個程序化平台全砍掉」，而那正是上次砍完營收掉一塊的原因。換算之後名單完全變樣：四個平台的標記比例落在 16% 到 33% 之間，852 列裡有 290 列（34%）標籤翻面。換算後再看，程序化平台的 eCPM 中位數（44.5 與 48.6）跟自家直客（46.9）根本差不多，真正低效的是版位不是平台——sidebar 中位數只有 22.2，video_preroll 有 143.6。另外 viewability_rate 缺了 12.8%，而且全部缺在兩個程序化平台（各缺約四成）；這裡會推翻一個直覺：直接 dropna 之後平均可視率是 0.613，跟自家平台的 0.610 幾乎一樣，所以被扭曲的不是平均值，而是「誰還留在資料裡」——程序化的列少了四成，後面任何以列為單位的統計都會被自家平台主導。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，23 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>幣別種類</td>
+<td>2</td>
+</tr>
+<tr>
+<td>直接加總</td>
+<td>1947798.96</td>
+</tr>
+<tr>
+<td>換算後總額</td>
+<td>2975076.475</td>
+</tr>
+<tr>
+<td>未換算 停投比例 adx_prog</td>
+<td>0.7407</td>
+</tr>
+<tr>
+<td>未換算 停投比例 openx_prog</td>
+<td>0.7687</td>
+</tr>
+<tr>
+<td>未換算 停投比例 kmg_direct</td>
+<td>0</td>
+</tr>
+<tr>
+<td>未換算 停投比例 kmg_selfserve</td>
+<td>0</td>
+</tr>
+<tr>
+<td>換算後 停投比例 最低平台</td>
+<td>0.1633</td>
+</tr>
+<tr>
+<td>換算後 停投比例 最高平台</td>
+<td>0.3259</td>
+</tr>
+<tr>
+<td>標籤翻面列數</td>
+<td>290</td>
+</tr>
+<tr>
+<td>標籤翻面比例</td>
+<td>0.3404</td>
+</tr>
+<tr>
+<td>換算後 eCPM 中位數 adx_prog</td>
+<td>44.5484</td>
+</tr>
+<tr>
+<td>換算後 eCPM 中位數 openx_prog</td>
+<td>48.5507</td>
+</tr>
+<tr>
+<td>換算後 eCPM 中位數 kmg_direct</td>
+<td>46.9251</td>
+</tr>
+<tr>
+<td>換算後 eCPM 中位數 sidebar</td>
+<td>22.2354</td>
+</tr>
+<tr>
+<td>換算後 eCPM 中位數 video_preroll</td>
+<td>143.5696</td>
+</tr>
+<tr>
+<td>可視率缺失比例</td>
+<td>0.1279</td>
+</tr>
+<tr>
+<td>自家平台可視率沒有缺失</td>
+<td>1</td>
+</tr>
+<tr>
+<td>dropna 後平均可視率</td>
+<td>0.6134</td>
+</tr>
+<tr>
+<td>自家平台平均可視率</td>
+<td>0.6098</td>
+</tr>
+<tr>
+<td>Python 重算 標籤翻面列數</td>
+<td>290</td>
+</tr>
+<tr>
+<td>未換算名單的 confusion matrix（TP/FP/FN/TN）</td>
+<td>68、145、145、494</td>
+</tr>
+<tr>
+<td>被冤枉停投的列換算後收入（元）</td>
+<td>412564</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>用換算後的標籤跑邏輯斯迴歸（版位、平台、廣告主產業），準確率 97.4%</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 13 題的圖" src="../../img/ex13_stop_list.png" /></p>
+<p>左圖是各平台被標成「建議停投」的比例，紅色是沒換幣別就貼標籤，藍色是換算後再貼。右圖把換算後的標籤當正確答案，看沒換算那份名單錯在哪：145 列被冤枉停投、145 列該停沒停。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>幣別混用。這題的坑不在模型在標籤：revenue 欄混了台幣與美金，沒換算就貼標籤，等於先把答案寫錯再拿去訓練。模型會很聽話地學會「程序化平台就是該停投」，而且分數很漂亮，因為它忠實重現了你標錯的那份答案——標籤錯的時候，模型越準，錯得越徹底。</p>
+<p>實際跑的結果：沒換幣別就貼標籤：adx_prog 有 74%、openx_prog 有 77% 被標成停投，自家直客 0%、自助平台 0%。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>算任何總和之前先跑一次 count(currency)，只要出現兩種以上幣別就不准直接加 revenue；接著把換算前與換算後的兩份停投名單逐列比對，算出翻面的比例，翻面超過三成就代表前一份名單一定冤枉了人。</p>
+<p>實際跑的結果：資料裡有 2 種幣別，換算前後兩份名單有 34% 的列翻面。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
+</section>
+<section class="mod-sec sec-content"><h4>confusion matrix</h4>
+<p>把換算幣別後的標籤當正確答案，未換算那份停投名單是 TP 68、FP 145（冤枉停投）、FN 145（該停沒停）、TN 494。FP 和 FN 剛好一樣多，是因為兩份名單都切在第 25 百分位；但代價不一樣：被冤枉停投的那 145 列，換算後一個月有 41 萬元收入。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_12_-_%E6%BA%96%E7%A2%BA%E7%8E%87_99%25_%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 12 - 準確率 99% 的模型</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_14_-_%E8%AE%80%E8%80%85%E7%9C%BC%E4%B8%AD%E6%9C%89%E5%B9%BE%E7%A8%AE%E5%85%A7%E5%AE%B9.html">練習 14 - 讀者眼中有幾種內容</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

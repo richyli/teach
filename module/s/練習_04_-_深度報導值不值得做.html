@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 04 - 深度報導值不值得做</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 04 - 深度報導值不值得做</h1></div><p>在本單元中，會介紹第 4 題「總編輯問「深度報導到底值不值得做」，一週內給他一頁答案」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：編前會上總編輯說：「一則深度報導要三個記者做兩週，即時新聞一天出五十則。深度報導到底值不值得繼續做？」</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 2 組：把經營問題拆成算得出來的東西</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1：content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>商業分析的四個問題</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>先做「四個問題」的拆解：把這一句話改寫成描述（10 月四種內容各產出幾則、被看多少、帶進多少訂閱）、診斷（深度報導的轉換為什麼不一樣）、預測（多做 20 則會怎樣）、處方（人力要不要調），然後只回答手上資料真的答得出來的前兩個，其餘標成「這份資料答不了，要有什麼資料才答得了」。實作就是一句 groupby('content_type')，一次把則數、pv、uv、工作階段、撞牆次數、轉換數，以及四個不同分母下的轉換率全部算出來。用 Python，因為同一份彙總要換四個分母各算一次，pandas 改一行就重算完，用 Excel 樞紐分析表要重做四遍還容易對錯欄位。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+
+r = R(4, &quot;總編輯問「深度報導到底值不值得做」，一週內給他一頁答案&quot;)
+f = dedupe(flat())
+g = f.groupby(&quot;content_type&quot;).agg(n=(&quot;content_id&quot;, &quot;count&quot;), pv=(&quot;pv&quot;, &quot;sum&quot;), uv=(&quot;uv&quot;, &quot;sum&quot;),
+                                  s=(&quot;sessions&quot;, &quot;sum&quot;), hit=(&quot;paywall_hit_cnt&quot;, &quot;sum&quot;), conv=(&quot;conversion_cnt&quot;, &quot;sum&quot;))
+T = g.sum()
+r.chk(&quot;深度報導則數佔比&quot;, 0.149, float(g.loc[&quot;feature&quot;, &quot;n&quot;] / T[&quot;n&quot;]), tol=0.002)
+r.chk(&quot;深度報導瀏覽量佔比&quot;, 0.113, float(g.loc[&quot;feature&quot;, &quot;pv&quot;] / T[&quot;pv&quot;]), tol=0.002)
+r.chk(&quot;深度報導訂閱佔比&quot;, 0.329, float(g.loc[&quot;feature&quot;, &quot;conv&quot;] / T[&quot;conv&quot;]), tol=0.002)
+per = g[&quot;conv&quot;] / g[&quot;n&quot;]
+for t, e in [(&quot;feature&quot;, 22.3), (&quot;news&quot;, 10.4), (&quot;podcast&quot;, 2.6), (&quot;video&quot;, 1.2)]:
+    r.chk(&quot;每則平均訂閱 &quot; + t, e, float(per[t]), tol=0.06)
+hr = g[&quot;conv&quot;] / g[&quot;hit&quot;]
+r.chk(&quot;撞牆後轉換率 feature&quot;, 0.2897, float(hr[&quot;feature&quot;]), tol=0.0006)
+r.chk(&quot;撞牆後轉換率 news&quot;, 0.1977, float(hr[&quot;news&quot;]), tol=0.0006)
+r.chk(&quot;撞牆後轉換率 podcast&quot;, 0.1976, float(hr[&quot;podcast&quot;]), tol=0.0006)
+r.chk(&quot;全站 轉換÷瀏覽量&quot;, 0.0157, float(T[&quot;conv&quot;] / T[&quot;pv&quot;]), tol=0.0006)
+r.chk(&quot;全站 轉換÷工作階段&quot;, 0.0185, float(T[&quot;conv&quot;] / T[&quot;s&quot;]), tol=0.0006)
+r.chk(&quot;全站 轉換÷撞牆次數&quot;, 0.219, float(T[&quot;conv&quot;] / T[&quot;hit&quot;]), tol=0.0006)
+
+DEN = {&quot;pv&quot;: &quot;瀏覽量&quot;, &quot;uv&quot;: &quot;不重複使用者&quot;, &quot;s&quot;: &quot;工作階段&quot;, &quot;hit&quot;: &quot;撞牆次數&quot;}
+rate = pd.DataFrame({k: g[&quot;conv&quot;] / g[k] for k in DEN})
+ranks = {k: list(rate[k].sort_values(ascending=False).index) for k in DEN}
+same_rank = len({tuple(v) for v in ranks.values()}) == 1
+np_ratio = rate.loc[&quot;news&quot;] / rate.loc[&quot;podcast&quot;]
+fv_ratio = rate.loc[&quot;feature&quot;] / rate.loc[&quot;video&quot;]
+r.chk(&quot;四個分母下名次都一樣&quot;, True, same_rank)
+r.chk(&quot;即時新聞對聲音 每次瀏覽（倍）&quot;, 4.5, float(np_ratio[&quot;pv&quot;]), tol=0.1)
+r.chk(&quot;即時新聞對聲音 撞牆後（倍）&quot;, 1.0, float(np_ratio[&quot;hit&quot;]), tol=0.01)
+r.chk(&quot;深度報導對影音 每次瀏覽（倍）&quot;, 18, float(fv_ratio[&quot;pv&quot;]), tol=0.5)
+r.chk(&quot;深度報導對影音 撞牆後（倍）&quot;, 2, float(fv_ratio[&quot;hit&quot;]), tol=0.1)
+
+r.pit(same_rank and np_ratio[&quot;pv&quot;] / np_ratio[&quot;hit&quot;] &gt; 3,
+      &quot;四個分母下名次都是 %s，只看名次會以為分母不重要；但即時新聞對聲音從 %.1f 倍變成 %.2f 倍&quot; % (
+          &quot;＞&quot;.join(ranks[&quot;pv&quot;]), np_ratio[&quot;pv&quot;], np_ratio[&quot;hit&quot;]))
+r.sc(float(np_ratio.max() / np_ratio.min()) &gt; 3,
+     &quot;倍數表：即時新聞對聲音 &quot; + &quot;、&quot;.join(&quot;%s %.2f 倍&quot; % (DEN[k], v) for k, v in np_ratio.items())
+     + &quot;；深度報導對影音 &quot; + &quot;、&quot;.join(&quot;%s %.1f 倍&quot; % (DEN[k], v) for k, v in fv_ratio.items()))
+
+rel = rate / rate.loc[&quot;video&quot;]
+NAME = {&quot;feature&quot;: &quot;深度報導&quot;, &quot;news&quot;: &quot;即時新聞&quot;, &quot;podcast&quot;: &quot;聲音&quot;, &quot;video&quot;: &quot;影音&quot;}
+fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+x = np.arange(len(DEN))
+for t in [&quot;feature&quot;, &quot;news&quot;, &quot;podcast&quot;, &quot;video&quot;]:
+    ax[0].plot(x, rel.loc[t], marker=&quot;o&quot;, label=NAME[t])
+ax[0].set_yscale(&quot;log&quot;)
+ax[0].set_xticks(x, list(DEN.values()))
+ax[0].set_ylabel(&quot;轉換率，以影音為 1 倍（對數尺度）&quot;)
+ax[0].set_title(&quot;名次沒變，差距在撞牆次數這個分母下崩掉&quot;)
+ax[0].legend()
+w = 0.2
+for i, t in enumerate([&quot;feature&quot;, &quot;news&quot;, &quot;podcast&quot;, &quot;video&quot;]):
+    ax[1].bar(np.arange(4) + (i - 1.5) * w, [rate.loc[t, k] / rate[k].max() for k in DEN], w, label=NAME[t])
+ax[1].set_xticks(np.arange(4), list(DEN.values()))
+ax[1].set_ylabel(&quot;轉換率，以每個分母下的最高者為 1&quot;)
+ax[1].set_title(&quot;同一個分子，四種分母&quot;)
+save_fig(fig, &quot;ex04_denominators.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>深度報導只佔 10 月 1,438 則內容的 14.9%、瀏覽量的 11.3%，卻拿下 32.9% 的新訂閱；每則平均帶進 22.3 個訂閱，即時新聞 10.4 個、聲音 2.6 個、影音 1.2 個。改用「撞到付費牆之後有沒有訂閱」當分母，深度報導 28.97%、即時新聞 19.77%，這個差距是這份資料裡最穩的一件事。同時你會親眼看到「值不值得」這句話本身沒有答案：資料裡沒有人力成本，所以最後一哩一定要自己補一個假設，並把它寫出來。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，18 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>深度報導則數佔比</td>
+<td>0.1488</td>
+</tr>
+<tr>
+<td>深度報導瀏覽量佔比</td>
+<td>0.1126</td>
+</tr>
+<tr>
+<td>深度報導訂閱佔比</td>
+<td>0.3293</td>
+</tr>
+<tr>
+<td>每則平均訂閱 feature</td>
+<td>22.257</td>
+</tr>
+<tr>
+<td>每則平均訂閱 news</td>
+<td>10.3673</td>
+</tr>
+<tr>
+<td>每則平均訂閱 podcast</td>
+<td>2.5975</td>
+</tr>
+<tr>
+<td>每則平均訂閱 video</td>
+<td>1.1832</td>
+</tr>
+<tr>
+<td>撞牆後轉換率 feature</td>
+<td>0.2897</td>
+</tr>
+<tr>
+<td>撞牆後轉換率 news</td>
+<td>0.1977</td>
+</tr>
+<tr>
+<td>撞牆後轉換率 podcast</td>
+<td>0.1976</td>
+</tr>
+<tr>
+<td>全站 轉換÷瀏覽量</td>
+<td>0.0157</td>
+</tr>
+<tr>
+<td>全站 轉換÷工作階段</td>
+<td>0.0185</td>
+</tr>
+<tr>
+<td>全站 轉換÷撞牆次數</td>
+<td>0.2195</td>
+</tr>
+<tr>
+<td>四個分母下名次都一樣</td>
+<td>是</td>
+</tr>
+<tr>
+<td>即時新聞對聲音 每次瀏覽（倍）</td>
+<td>4.5436</td>
+</tr>
+<tr>
+<td>即時新聞對聲音 撞牆後（倍）</td>
+<td>1.0004</td>
+</tr>
+<tr>
+<td>深度報導對影音 每次瀏覽（倍）</td>
+<td>18.2945</td>
+</tr>
+<tr>
+<td>深度報導對影音 撞牆後（倍）</td>
+<td>1.9679</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 4 題的圖" src="../../img/ex04_denominators.png" /></p>
+<p>左圖把四種內容的轉換率換算成影音的幾倍（對數尺度）：前三個分母下幾乎一樣，換成撞牆次數之後差距大幅縮小，但名次沒有換。右圖是同一件事的長條版，每個分母下的最高者算 1。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>分母混淆。同一個分子（轉換數）除以瀏覽量是 1.57%、除以工作階段是 1.85%、除以撞牆次數是 21.9%，三個都是對的，講的卻是三件不同的事。最常見的錯是挑一個最好看的貼進報告，卻沒說那是誰除以誰。這份資料裡四種內容的名次在四個分母下都一樣，只看名次會以為分母不重要；真正變的是差距——即時新聞的每次瀏覽轉換率是聲音的 4.5 倍，換成撞牆後的轉換率兩者幾乎一樣（19.77% 對 19.76%）；深度報導對影音從 18 倍縮成 2 倍。</p>
+<p>實際跑的結果：四個分母下名次都是 feature＞news＞podcast＞video，只看名次會以為分母不重要；但即時新聞對聲音從 4.5 倍變成 1.00 倍。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>把轉換數除以 pv、uv、sessions、paywall_hit_cnt 各算一次，四個數字並排寫下來，再用一句話說明你選的那個分母對應到哪一個經營決策。然後不要只看名次，把兩兩之間的倍數也在四個分母下各算一次：即時新聞對聲音從 4.5 倍變成 1.0 倍，代表「即時新聞比聲音會賣訂閱」只在拿瀏覽量當分母時成立，結論要改寫成帶著分母的句子，而不是換一個分母讓它繼續成立。</p>
+<p>實際跑的結果：倍數表：即時新聞對聲音 瀏覽量 4.54 倍、不重複使用者 4.52 倍、工作階段 4.52 倍、撞牆次數 1.00 倍；深度報導對影音 瀏覽量 18.3 倍、不重複使用者 18.4 倍、工作階段 18.4 倍、撞牆次數 2.0 倍。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_03_-_%E6%9C%80%E4%BD%B3%E5%A0%B1%E5%B0%8E%E7%8D%8E%E7%99%BC%E7%B5%A6%E8%AA%B0.html">練習 03 - 最佳報導獎發給誰</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_05_-_%E5%A4%9A%E4%B8%89%E7%99%BE%E5%80%8B%E8%A8%82%E9%96%B1%E6%8E%A8%E5%93%AA%E4%B8%80%E7%92%B0.html">練習 05 - 多三百個訂閱推哪一環</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 14 - 讀者眼中有幾種內容</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 14 - 讀者眼中有幾種內容</h1></div><p>在本單元中，會介紹第 14 題「總編要一張表：這個月一千多則內容，讀者眼中到底是幾種？」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：我們每個月發一千多則，後台只分新聞、深度、影音、Podcast 四種。但那是我們自己編的分類，讀者的行為真的也分成四種嗎？其中哪一群是真的在幫我們賣訂閱的？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 5 組：沒有標籤的時候怎麼看出結構</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1 的 content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>沒有標籤的時候怎麼分群</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>K-means 分群。不要拿 pv、uv、sessions 這種量體欄位直接分，改用每一則自己的比率當特徵：每次瀏覽的平均停留秒數（dwell_sec_total / pv）、跳出率（bounce_sessions / sessions）、每千次瀏覽的分享數與留言數、撞牆率（paywall_hit_cnt / sessions）、撞牆後的轉換率（conversion_cnt / paywall_hit_cnt）。六個特徵先做標準化，再跑 k = 2 到 6（KMeans 的 n_init=10、random_state=42），把每個 k 的 silhouette 都印出來，再決定要幾群。用 Python 的理由：標準化、KMeans、silhouette 在 scikit-learn 裡各一行就有，你的力氣可以全花在挑特徵跟解釋分群上。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from math import lgamma, log
+
+from _kmg import *
+from sklearn.cluster import KMeans
+from sklearn.metrics import adjusted_rand_score, silhouette_score
+from sklearn.preprocessing import StandardScaler
+
+r = R(14, &quot;總編要一張表：這個月一千多則內容，讀者眼中到底是幾種？&quot;)
+f = dedupe(flat()).reset_index(drop=True)
+F = pd.DataFrame({
+    &quot;dwell_per_pv&quot;: f[&quot;dwell_sec_total&quot;] / f[&quot;pv&quot;],
+    &quot;bounce&quot;: f[&quot;bounce_sessions&quot;] / f[&quot;sessions&quot;],
+    &quot;share_k&quot;: f[&quot;share_cnt&quot;] / f[&quot;pv&quot;] * 1000,
+    &quot;comment_k&quot;: f[&quot;comment_cnt&quot;] / f[&quot;pv&quot;] * 1000,
+    &quot;hit_rate&quot;: f[&quot;paywall_hit_cnt&quot;] / f[&quot;sessions&quot;],
+    &quot;conv_hit&quot;: (f[&quot;conversion_cnt&quot;] / f[&quot;paywall_hit_cnt&quot;]).fillna(0),
+}).replace([np.inf, -np.inf], 0).fillna(0)
+Z = StandardScaler().fit_transform(F)
+sil = {}
+for k in range(2, 7):
+    km = KMeans(n_clusters=k, n_init=10, random_state=42).fit(Z)
+    sil[k] = float(silhouette_score(Z, km.labels_))
+r.note(&quot;各 k 的 silhouette：&quot; + &quot;、&quot;.join(&quot;k=%d %.3f&quot; % kv for kv in sil.items()))
+r.chk(&quot;silhouette（k=4）&quot;, 0.24, sil[4], tol=0.005)
+r.chk(&quot;silhouette 最高的 k&quot;, 2, max(sil, key=sil.get))
+r.chk(&quot;silhouette 最高值&quot;, 0.27, max(sil.values()), tol=0.005)
+r.chk(&quot;k=2 到 6 的 silhouette 最低值&quot;, 0.24, min(sil.values()), tol=0.005)
+
+km = KMeans(n_clusters=4, n_init=10, random_state=42).fit(Z)
+f[&quot;cl&quot;] = km.labels_
+prof = F.assign(pv=f[&quot;pv&quot;], cl=f[&quot;cl&quot;]).groupby(&quot;cl&quot;).agg(
+    dwell=(&quot;dwell_per_pv&quot;, &quot;mean&quot;), hit=(&quot;hit_rate&quot;, &quot;mean&quot;), bounce=(&quot;bounce&quot;, &quot;mean&quot;),
+    conv=(&quot;conv_hit&quot;, &quot;mean&quot;), pvmed=(&quot;pv&quot;, &quot;median&quot;), n=(&quot;pv&quot;, &quot;size&quot;))
+paywalled = f.groupby(&quot;cl&quot;)[&quot;is_paywalled&quot;].mean()
+av, nw, hi, deep = prof[&quot;dwell&quot;].idxmax(), prof[&quot;dwell&quot;].idxmin(), prof[&quot;hit&quot;].idxmax(), prof[&quot;pvmed&quot;].idxmin()
+r.chk(&quot;四種性格各落在不同群&quot;, 4, len({av, nw, hi, deep}))
+r.chk(&quot;影音群每次瀏覽停留（秒）&quot;, 135, float(prof.loc[av, &quot;dwell&quot;]), tol=0.5)
+r.chk(&quot;影音群付費牆比例&quot;, 0.0, float(paywalled[av]), tol=0.01)
+r.chk(&quot;即時新聞群每次瀏覽停留（秒）&quot;, 23, float(prof.loc[nw, &quot;dwell&quot;]), tol=0.5)
+r.chk(&quot;付費新聞群撞牆率&quot;, 0.35, float(prof.loc[hi, &quot;hit&quot;]), tol=0.005)
+r.chk(&quot;影音群撞牆率&quot;, 0.02, float(prof.loc[av, &quot;hit&quot;]), tol=0.005)
+r.chk(&quot;即時新聞群撞牆率&quot;, 0.02, float(prof.loc[nw, &quot;hit&quot;]), tol=0.005)
+r.chk(&quot;深度群撞牆率&quot;, 0.16, float(prof.loc[deep, &quot;hit&quot;]), tol=0.005)
+r.chk(&quot;深度群瀏覽量中位數&quot;, 229, float(prof.loc[deep, &quot;pvmed&quot;]), tol=1)
+others = prof.drop(deep)
+r.chk(&quot;其他三群瀏覽量中位數 最低&quot;, 448, float(others[&quot;pvmed&quot;].min()), tol=1)
+r.chk(&quot;其他三群瀏覽量中位數 最高&quot;, 493, float(others[&quot;pvmed&quot;].max()), tol=1)
+r.chk(&quot;深度群跳出率&quot;, 0.46, float(prof.loc[deep, &quot;bounce&quot;]), tol=0.005)
+r.chk(&quot;深度群撞牆轉換率&quot;, 0.345, float(prof.loc[deep, &quot;conv&quot;]), tol=0.003)
+r.chk(&quot;其他三群撞牆轉換率 最低&quot;, 0.16, float(others[&quot;conv&quot;].min()), tol=0.005)
+r.chk(&quot;其他三群撞牆轉換率 最高&quot;, 0.21, float(others[&quot;conv&quot;].max()), tol=0.005)
+r.chk(&quot;深度群跳出率是四群最低&quot;, True, bool(prof[&quot;bounce&quot;].idxmin() == deep))
+r.chk(&quot;深度群撞牆轉換率是四群最高&quot;, True, bool(prof[&quot;conv&quot;].idxmax() == deep))
+
+# 課堂概念：搜尋空間。1,438 則分成 4 群的分法約 4^n / 4!；只起跑一次會停在哪裡
+n = len(f)
+log10_ways = (n * log(4) - lgamma(5)) / log(10)
+r.chk(&quot;分成 4 群的分法（10 的幾次方）&quot;, 864, int(log10_ways))
+runs = [KMeans(n_clusters=4, n_init=1, random_state=s).fit(Z) for s in range(20)]
+ari = [adjusted_rand_score(km.labels_, m.labels_) for m in runs]
+inertia = [m.inertia_ for m in runs]
+r.chk(&quot;只起跑一次 20 個種子 inertia 最低&quot;, 5345, float(min(inertia)), tol=1)
+r.chk(&quot;只起跑一次 20 個種子 inertia 最高&quot;, 5642, float(max(inertia)), tol=1)
+r.chk(&quot;跟最佳解的一致度 ARI 最低&quot;, 0.43, float(min(ari)), tol=0.005)
+r.chk(&quot;跟最佳解分群完全相同的次數&quot;, 0, int(sum(a == 1.0 for a in ari)))
+r.note(&quot;只起跑一次時，20 個種子跟最佳解的 ARI 最高是 %.4f&quot; % max(ari))
+
+# 課堂概念：entropy。知道群別之後，內容型態還剩多少不確定性
+H = entropy_bits(f[&quot;content_type&quot;].value_counts())
+per = {int(c): entropy_bits(g.value_counts()) for c, g in f.groupby(&quot;cl&quot;)[&quot;content_type&quot;]}
+Hc = sum(float((f[&quot;cl&quot;] == c).mean()) * h for c, h in per.items())
+r.chk(&quot;內容型態 entropy（bits）&quot;, 1.58, H, tol=0.005)
+r.chk(&quot;知道群別後剩的 entropy（bits）&quot;, 0.63, Hc, tol=0.005)
+r.chk(&quot;分群帶走的比例&quot;, 0.60, (H - Hc) / H, tol=0.005)
+r.chk(&quot;最純那一群的 entropy（bits）&quot;, 0.27, min(per.values()), tol=0.005)
+r.chk(&quot;最混那一群的 entropy（bits）&quot;, 1.28, max(per.values()), tol=0.005)
+
+Fr = F.assign(dwell_total=f[&quot;dwell_sec_total&quot;], conv_raw=f[&quot;conversion_cnt&quot;])
+lab_raw = KMeans(n_clusters=4, n_init=10, random_state=42).fit_predict(Fr)
+x = f[&quot;dwell_sec_total&quot;]
+eta2 = 1 - ((x - x.groupby(lab_raw).transform(&quot;mean&quot;)) ** 2).sum() / ((x - x.mean()) ** 2).sum()
+r.pit(eta2 &gt; 0.8, &quot;不標準化又放進停留總秒數時，分出來的四群可以解釋停留總秒數差異的 %.0f%%，分到的是量體不是性格&quot; % (eta2 * 100))
+NAME = {av: &quot;影音群&quot;, nw: &quot;即時新聞群&quot;, hi: &quot;付費新聞群&quot;, deep: &quot;深度報導群&quot;}
+ctab = pd.crosstab(f[&quot;cl&quot;].map(NAME), f[&quot;content_type&quot;])
+r.sc(len(set(NAME.values())) == 4, &quot;四群都命名得出來；交叉表：&quot; + &quot;；&quot;.join(
+    &quot;%s %s&quot; % (k, &quot;、&quot;.join(&quot;%s %d&quot; % (c, v) for c, v in row.items() if v)) for k, row in ctab.iterrows()))
+
+LAB = {&quot;dwell_per_pv&quot;: &quot;每次瀏覽停留&quot;, &quot;bounce&quot;: &quot;跳出率&quot;, &quot;share_k&quot;: &quot;每千次分享&quot;, &quot;comment_k&quot;: &quot;每千次留言&quot;,
+       &quot;hit_rate&quot;: &quot;撞牆率&quot;, &quot;conv_hit&quot;: &quot;撞牆後轉換率&quot;}
+centers = pd.DataFrame(km.cluster_centers_, columns=[LAB[c] for c in F.columns]).rename(index=NAME)
+centers = centers.loc&quot;影音群&quot;, &quot;即時新聞群&quot;, &quot;付費新聞群&quot;, &quot;深度報導群&quot;
+fig, ax = plt.subplots(1, 2, figsize=(11, 4), gridspec_kw={&quot;width_ratios&quot;: [3, 2]})
+im = ax[0].imshow(centers.values, cmap=&quot;RdBu_r&quot;, vmin=-2, vmax=2)
+for i in range(centers.shape[0]):
+    for j in range(centers.shape[1]):
+        ax[0].text(j, i, &quot;%.1f&quot; % centers.values[i, j], ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=9)
+ax[0].set_xticks(range(6), centers.columns, rotation=30)
+ax[0].set_yticks(range(4), [&quot;%s（%d 則）&quot; % (nm, (f[&quot;cl&quot;].map(NAME) == nm).sum()) for nm in centers.index])
+ax[0].set_title(&quot;四群的輪廓（標準化後的群中心，0＝全站平均）&quot;)
+fig.colorbar(im, ax=ax[0], shrink=0.8)
+ax[1].plot(list(sil), list(sil.values()), marker=&quot;o&quot;)
+ax[1].set_xlabel(&quot;群數 k&quot;)
+ax[1].set_ylabel(&quot;silhouette&quot;)
+ax[1].set_ylim(0.2, 0.3)
+ax[1].set_title(&quot;silhouette 挑不出 k=4，k=2 到 6 都差不多&quot;)
+save_fig(fig, &quot;ex14_clusters.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>k=4 會分出四群，而且四群都講得出一句話：一群平均每次瀏覽停留 135 秒、完全不在付費牆後（影音與 Podcast）；一群只停留 23 秒（即時新聞）；一群撞牆率 0.35（付費牆裡的新聞），影音群與即時新聞群都只有 0.02；最後一群瀏覽量中位數只有 229（其他三群在 448 到 493），撞牆率 0.16，跳出率卻最低（0.46）、撞牆後轉換率最高（0.345，其他三群 0.16 到 0.21）——那就是深度報導群，它不紅，但它是賣訂閱的那一群，這就是回答總編那句問話的答案。一併要注意 k=4 的 silhouette 只有 0.24，最高的反而是 k=2（0.27），k=2 到 6 全部擠在 0.24 到 0.27 之間：選四群是因為四群都講得出一句話，不是指標替你挑的。這四群是好用的標籤，不是資料裡天然存在的界線。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，31 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>silhouette（k=4）</td>
+<td>0.2413</td>
+</tr>
+<tr>
+<td>silhouette 最高的 k</td>
+<td>2</td>
+</tr>
+<tr>
+<td>silhouette 最高值</td>
+<td>0.2662</td>
+</tr>
+<tr>
+<td>k=2 到 6 的 silhouette 最低值</td>
+<td>0.2371</td>
+</tr>
+<tr>
+<td>四種性格各落在不同群</td>
+<td>4</td>
+</tr>
+<tr>
+<td>影音群每次瀏覽停留（秒）</td>
+<td>135.3494</td>
+</tr>
+<tr>
+<td>影音群付費牆比例</td>
+<td>0</td>
+</tr>
+<tr>
+<td>即時新聞群每次瀏覽停留（秒）</td>
+<td>22.8246</td>
+</tr>
+<tr>
+<td>付費新聞群撞牆率</td>
+<td>0.3476</td>
+</tr>
+<tr>
+<td>影音群撞牆率</td>
+<td>0.0201</td>
+</tr>
+<tr>
+<td>即時新聞群撞牆率</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>深度群撞牆率</td>
+<td>0.1637</td>
+</tr>
+<tr>
+<td>深度群瀏覽量中位數</td>
+<td>229.5</td>
+</tr>
+<tr>
+<td>其他三群瀏覽量中位數 最低</td>
+<td>448</td>
+</tr>
+<tr>
+<td>其他三群瀏覽量中位數 最高</td>
+<td>493</td>
+</tr>
+<tr>
+<td>深度群跳出率</td>
+<td>0.4613</td>
+</tr>
+<tr>
+<td>深度群撞牆轉換率</td>
+<td>0.3449</td>
+</tr>
+<tr>
+<td>其他三群撞牆轉換率 最低</td>
+<td>0.1582</td>
+</tr>
+<tr>
+<td>其他三群撞牆轉換率 最高</td>
+<td>0.2075</td>
+</tr>
+<tr>
+<td>深度群跳出率是四群最低</td>
+<td>是</td>
+</tr>
+<tr>
+<td>深度群撞牆轉換率是四群最高</td>
+<td>是</td>
+</tr>
+<tr>
+<td>分成 4 群的分法（10 的幾次方）</td>
+<td>864</td>
+</tr>
+<tr>
+<td>只起跑一次 20 個種子 inertia 最低</td>
+<td>5345.1168</td>
+</tr>
+<tr>
+<td>只起跑一次 20 個種子 inertia 最高</td>
+<td>5641.6109</td>
+</tr>
+<tr>
+<td>跟最佳解的一致度 ARI 最低</td>
+<td>0.4333</td>
+</tr>
+<tr>
+<td>跟最佳解分群完全相同的次數</td>
+<td>0</td>
+</tr>
+<tr>
+<td>內容型態 entropy（bits）</td>
+<td>1.5837</td>
+</tr>
+<tr>
+<td>知道群別後剩的 entropy（bits）</td>
+<td>0.6321</td>
+</tr>
+<tr>
+<td>分群帶走的比例</td>
+<td>0.6009</td>
+</tr>
+<tr>
+<td>最純那一群的 entropy（bits）</td>
+<td>0.2655</td>
+</tr>
+<tr>
+<td>最混那一群的 entropy（bits）</td>
+<td>1.278</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>各 k 的 silhouette：k=2 0.266、k=3 0.237、k=4 0.241、k=5 0.245、k=6 0.260</li>
+<li>只起跑一次時，20 個種子跟最佳解的 ARI 最高是 0.9978</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 14 題的圖" src="../../img/ex14_clusters.png" /></p>
+<p>左圖是四群的群中心，數字是標準化後離全站平均幾個標準差，紅色高於平均、藍色低於平均。右圖是 k=2 到 6 的 silhouette，最高的是 k=2，不是 k=4。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>KMG 埋的「分母混淆」陷阱：pv、uv、sessions、paywall_hit 是四個不同的分母，講的是四件事，又彼此高度相關。如果原封不動一起丟進 K-means 而且沒做標準化，dwell_sec_total 動輒十萬、conversion_cnt 只有個位數，兩點之間的距離幾乎完全由停留秒數決定，跑出來的四群其實只是「大則、中則、小則」。還有一個小坑：content_monthly_flat 有 1444 列但只有 1438 則內容，有 6 列是重送的（同一個 content_id，只有 ingest_ts 不一樣），沒先去重那幾則會被算兩次。</p>
+<p>實際跑的結果：不標準化又放進停留總秒數時，分出來的四群可以解釋停留總秒數差異的 87%，分到的是量體不是性格。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>把分群結果跟 content_type、is_paywalled 拉一張交叉表，然後強迫自己用一句不含數字的中文替每一群命名（例如「靠停留時間換廣告的影音群」）；只要有一群你只講得出「這群數字比較大」，就是分到量體不是分到性格，回頭檢查有沒有標準化。</p>
+<p>實際跑的結果：四群都命名得出來；交叉表：付費新聞群 feature 21、news 187；即時新聞群 feature 3、news 660、video 25；影音群 feature 21、podcast 156、video 153；深度報導群 feature 169、news 27、podcast 3、video 13。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
+</section>
+<section class="mod-sec sec-content"><h4>entropy</h4>
+<p>內容型態本身有 1.58 bits 的不確定性，知道一則內容落在哪一群之後剩 0.63 bits，分群帶走了 60%。四群裡最純的一群只剩 0.27 bits，最混的一群還有 1.28 bits，交叉表要先看那一群。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_13_-_%E5%81%9C%E6%8A%95%E7%89%88%E4%BD%8D%E6%B8%85%E5%96%AE.html">練習 13 - 停投版位清單</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_15_-_%E6%9C%83%E8%B3%A3%E8%A8%82%E9%96%B1%E7%9A%84%E7%A8%BF%E5%AD%90.html">練習 15 - 會賣訂閱的稿子</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

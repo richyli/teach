@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 05 - 多三百個訂閱推哪一環</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 05 - 多三百個訂閱推哪一環</h1></div><p>在本單元中，會介紹第 5 題「訂閱長官要「下個月多 300 個新訂閱」，先算出該推哪一環」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：讀者事業處主管說：「下個月要多 300 個新訂閱。到底是要衝流量、把更多稿子放進付費牆，還是想辦法讓撞到牆的人更願意付錢？」</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 2 組：把經營問題拆成算得出來的東西</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1：content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>指標樹 把營收拆成可以動的東西</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>畫一棵指標樹並且真的算出來：新訂閱數 = 工作階段數 × 撞牆率（paywall_hit_cnt ÷ sessions）× 撞牆轉換率（conversion_cnt ÷ paywall_hit_cnt）。先用主鍵去重，整站算一次當基準，再按版面（section_name）與是否付費（is_paywalled）各拆一次，看三個乘數分別差幾倍；最後回推「其他兩環不動，這一環要動幾個百分點才生得出 300 個訂閱」。用 Python，因為指標樹是一層接一層往下拆、最後還要把三個乘數乘回去驗算，pandas 一路 assign 接著寫最省事也最好檢查。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+
+r = R(5, &quot;訂閱長官要「下個月多 300 個新訂閱」，先算出該推哪一環&quot;)
+raw = flat()
+f = dedupe(raw)
+S, H, C = int(f[&quot;sessions&quot;].sum()), int(f[&quot;paywall_hit_cnt&quot;].sum()), int(f[&quot;conversion_cnt&quot;].sum())
+r.chk(&quot;工作階段&quot;, 780431, S)
+r.chk(&quot;撞牆次數&quot;, 65900, H)
+r.chk(&quot;新訂閱&quot;, 14463, C)
+r.chk(&quot;撞牆率&quot;, 0.084, H / S, tol=0.0006)
+r.chk(&quot;撞牆轉換率&quot;, 0.219, C / H, tol=0.0006)
+r.chk(&quot;三個乘數乘回去&quot;, C, round(S * (H / S) * (C / H)))
+
+g = f.groupby(&quot;section_name&quot;).agg(s=(&quot;sessions&quot;, &quot;sum&quot;), h=(&quot;paywall_hit_cnt&quot;, &quot;sum&quot;), c=(&quot;conversion_cnt&quot;, &quot;sum&quot;))
+g[&quot;hr&quot;], g[&quot;cr&quot;] = g[&quot;h&quot;] / g[&quot;s&quot;], g[&quot;c&quot;] / g[&quot;h&quot;]
+for sec, e in [(&quot;科技&quot;, 0.360), (&quot;深度調查&quot;, 0.347), (&quot;影音專題&quot;, 0.021), (&quot;島上會議&quot;, 0.027)]:
+    r.chk(&quot;撞牆率 &quot; + sec, e, float(g.loc[sec, &quot;hr&quot;]), tol=0.0006)
+r.chk(&quot;撞牆率最大÷最小（倍）&quot;, 17, float(g[&quot;hr&quot;].max() / g[&quot;hr&quot;].min()), tol=0.6)
+r.chk(&quot;撞牆轉換率 最低版面&quot;, 0.168, float(g[&quot;cr&quot;].min()), tol=0.0006)
+r.chk(&quot;撞牆轉換率 最高版面&quot;, 0.266, float(g[&quot;cr&quot;].max()), tol=0.0006)
+r.chk(&quot;撞牆率那一環要增加（百分點）&quot;, 0.2, 300 / (S * (C / H)) * 100, tol=0.06)
+r.chk(&quot;撞牆轉換率那一環要拉到&quot;, 0.224, (C + 300) / H, tol=0.0006)
+
+top4 = g.sort_values(&quot;hr&quot;, ascending=False).head(4)
+rest = g.drop(top4.index)
+r.chk(&quot;撞牆率前四版面的撞牆轉換率（合併計算）&quot;, 0.21, float(top4[&quot;c&quot;].sum() / top4[&quot;h&quot;].sum()), tol=0.01)
+r.chk(&quot;其餘版面的撞牆轉換率（合併計算）&quot;, 0.25, float(rest[&quot;c&quot;].sum() / rest[&quot;h&quot;].sum()), tol=0.015)
+r.note(&quot;撞牆率最高的四個版面是%s；各版面撞牆轉換率的平均，前四個 %.3f、其餘 %.3f&quot; % (
+    &quot;、&quot;.join(top4.index), top4[&quot;cr&quot;].mean(), rest[&quot;cr&quot;].mean()))
+
+over = int(raw[&quot;conversion_cnt&quot;].sum()) - C
+r.chk(&quot;不去重多算的訂閱&quot;, 40, over)
+r.pit(over &gt; 0, &quot;沒有先去重，新訂閱會多算 %d 筆&quot; % over)
+keys = len(raw&quot;content_id&quot;, &quot;stat_month&quot;.drop_duplicates())
+r.sc(len(raw) == 1444 and keys == 1438 and round(S * (H / S) * (C / H)) == C,
+     &quot;表有 %d 列、主鍵只有 %d 組，一比就知道要先去重；三個乘數乘回去是 %s，等於新訂閱總數&quot; % (
+         len(raw), keys, format(round(S * (H / S) * (C / H)), &quot;,&quot;)))
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.scatter(g[&quot;hr&quot;], g[&quot;cr&quot;], s=g[&quot;s&quot;] / 400, alpha=0.6, color=&quot;#4f81bd&quot;)
+high4 = g.sort_values(&quot;hr&quot;, ascending=False).head(4)
+for sec in [&quot;影音專題&quot;, &quot;島上會議&quot;, &quot;社會&quot;, &quot;教育&quot;]:
+    ax.annotate(sec, (g.loc[sec, &quot;hr&quot;], g.loc[sec, &quot;cr&quot;]), fontsize=9, xytext=(6, -3), textcoords=&quot;offset points&quot;)
+ax.annotate(&quot;、&quot;.join(high4.index), (high4[&quot;hr&quot;].mean(), high4[&quot;cr&quot;].max()), fontsize=9, xytext=(0, 12),
+            textcoords=&quot;offset points&quot;, ha=&quot;center&quot;)
+ax.annotate(&quot;其餘版面擠在這一團&quot;, (0.045, 0.255), fontsize=9, xytext=(40, -30), textcoords=&quot;offset points&quot;,
+            arrowprops={&quot;arrowstyle&quot;: &quot;-&gt;&quot;, &quot;color&quot;: &quot;#888888&quot;}, color=&quot;#666666&quot;)
+ax.axhline(C / H, color=&quot;#999999&quot;, lw=0.8, ls=&quot;--&quot;)
+ax.axvline(H / S, color=&quot;#999999&quot;, lw=0.8, ls=&quot;--&quot;)
+ax.set_xlabel(&quot;撞牆率（撞牆次數 ÷ 工作階段）&quot;)
+ax.set_ylabel(&quot;撞牆後轉換率（新訂閱 ÷ 撞牆次數）&quot;)
+ax.set_title(&quot;撞牆率在版面之間差 17 倍，撞牆後轉換率只在 17% 到 27% 之間（圓圈大小＝工作階段）&quot;)
+save_fig(fig, &quot;ex05_metric_tree.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>全站 780,431 段工作階段 → 65,900 次撞牆（8.4%）→ 14,463 個新訂閱（21.9%），三個數乘回去要剛好回到 14,463。拆開看，撞牆率在版面之間差 17 倍（科技 36.0%、深度調查 34.7%，對照影音專題 2.1%、島上會議 2.7%），撞牆後的轉換率卻全部擠在 16.8% 到 26.6% 之間。要多 300 個訂閱，撞牆率那一環只要動 0.2 個百分點，轉換率那一環卻要從 21.9% 拉到 22.4%——前者明顯比較好動。但資料也給了反面訊號：撞牆率最高的那四個版面，撞牆後的轉換率反而略低（約 21%，其他版面在 25% 上下），代表「多擋人」會邊際遞減，不能一路推到底。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，18 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作階段</td>
+<td>780431</td>
+</tr>
+<tr>
+<td>撞牆次數</td>
+<td>65900</td>
+</tr>
+<tr>
+<td>新訂閱</td>
+<td>14463</td>
+</tr>
+<tr>
+<td>撞牆率</td>
+<td>0.0844</td>
+</tr>
+<tr>
+<td>撞牆轉換率</td>
+<td>0.2195</td>
+</tr>
+<tr>
+<td>三個乘數乘回去</td>
+<td>14463</td>
+</tr>
+<tr>
+<td>撞牆率 科技</td>
+<td>0.3595</td>
+</tr>
+<tr>
+<td>撞牆率 深度調查</td>
+<td>0.3471</td>
+</tr>
+<tr>
+<td>撞牆率 影音專題</td>
+<td>0.0211</td>
+</tr>
+<tr>
+<td>撞牆率 島上會議</td>
+<td>0.0266</td>
+</tr>
+<tr>
+<td>撞牆率最大÷最小（倍）</td>
+<td>17.0473</td>
+</tr>
+<tr>
+<td>撞牆轉換率 最低版面</td>
+<td>0.1678</td>
+</tr>
+<tr>
+<td>撞牆轉換率 最高版面</td>
+<td>0.2658</td>
+</tr>
+<tr>
+<td>撞牆率那一環要增加（百分點）</td>
+<td>0.1752</td>
+</tr>
+<tr>
+<td>撞牆轉換率那一環要拉到</td>
+<td>0.224</td>
+</tr>
+<tr>
+<td>撞牆率前四版面的撞牆轉換率（合併計算）</td>
+<td>0.2085</td>
+</tr>
+<tr>
+<td>其餘版面的撞牆轉換率（合併計算）</td>
+<td>0.2397</td>
+</tr>
+<tr>
+<td>不去重多算的訂閱</td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>撞牆率最高的四個版面是科技、深度調查、環境、財經；各版面撞牆轉換率的平均，前四個 0.209、其餘 0.240</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 5 題的圖" src="../../img/ex05_metric_tree.png" /></p>
+<p>每一個圓是一個版面，橫軸是撞牆率，縱軸是撞牆後轉換率，圓越大工作階段越多。版面左右拉得很開、上下擠得很緊；右下角撞牆率最高的四個版面，撞牆後轉換率反而略低。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>重複列。這份月報表有 1,444 列，卻只有 1,438 則內容，六則因為重送而有兩列，只有 ingest_ts 不一樣。不去重總訂閱會多算 40 筆，任何「每則平均」都被稀釋。這次只差 0.3%，看起來無所謂，但你事前不會知道下一份資料差多少，所以「主鍵唯一」要當成動手前的第一個檢查，不是出事才回來補。</p>
+<p>實際跑的結果：沒有先去重，新訂閱會多算 40 筆。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>先確認 len(df) 和 df.drop_duplicates(subset=['content_id','stat_month']) 的列數一樣（跑出 1,444 對 1,438 就是還沒去重），再把 工作階段數 × 撞牆率 × 撞牆轉換率 乘回去，必須等於你自己算的 14,463；對不上就是中間某一層用錯了分母。</p>
+<p>實際跑的結果：表有 1444 列、主鍵只有 1438 組，一比就知道要先去重；三個乘數乘回去是 14,463，等於新訂閱總數。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_04_-_%E6%B7%B1%E5%BA%A6%E5%A0%B1%E5%B0%8E%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E5%81%9A.html">練習 04 - 深度報導值不值得做</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_06_-_banner_%E8%B3%A3%E5%BB%A3%E5%91%8A%E9%82%84%E6%98%AF%E6%8E%A8%E8%A8%82%E9%96%B1.html">練習 06 - banner 賣廣告還是推訂閱</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

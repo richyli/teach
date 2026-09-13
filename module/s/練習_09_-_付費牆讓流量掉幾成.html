@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 09 - 付費牆讓流量掉幾成</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 09 - 付費牆讓流量掉幾成</h1></div><p>在本單元中，會介紹第 9 題「總經理要一個數字：一篇稿子關進付費牆，流量會掉幾成」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：「讀者事業處想再把三百篇稿子推進付費牆。給我一個數字：一篇稿子關進去，瀏覽量大概掉幾成？掉的量換到的訂閱划不划算？」</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>進階</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 3 組：這個差異是真的嗎</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1 檔名 content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>為什麼這篇會紅 用迴歸找關聯</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>三條逐步加控制的 OLS 迴歸，依變數都是 log(pv)——瀏覽量右偏得很厲害（中位數 446、最大 5869），取對數以後係數可以直接讀成百分比。A：只放 is_paywalled。B：加 content_type、log(word_cnt)、has_number_in_headline。C：再加 section_name 當版面的固定效果。把三條的 is_paywalled 係數、p 值、R 平方並排看。語言用 Python：statsmodels 的 formula 寫法，C(section_name) 一個字就把 18 個版面展開成虛擬變數，不必自己動手做 18 欄，改規格只要改字串。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from itertools import combinations
+
+from _kmg import *
+import statsmodels.formula.api as smf
+
+r = R(9, &quot;總經理要一個數字：一篇稿子關進付費牆，流量會掉幾成&quot;)
+f = dedupe(flat()).copy()
+f[&quot;lpv&quot;] = np.log(f[&quot;pv&quot;])
+f[&quot;lwc&quot;] = np.log(f[&quot;word_cnt&quot;])
+f[&quot;pw&quot;] = f[&quot;is_paywalled&quot;].astype(int)
+f[&quot;hn&quot;] = f[&quot;has_number_in_headline&quot;].astype(int)
+r.chk(&quot;pv 中位數&quot;, 446, float(f[&quot;pv&quot;].median()), tol=0.5)
+r.chk(&quot;pv 最大值&quot;, 5869, int(f[&quot;pv&quot;].max()))
+
+specs = {&quot;A&quot;: &quot;lpv ~ pw&quot;,
+         &quot;B&quot;: &quot;lpv ~ pw + C(content_type) + lwc + hn&quot;,
+         &quot;C&quot;: &quot;lpv ~ pw + C(content_type) + lwc + hn + C(section_name)&quot;}
+exp = {&quot;A&quot;: (-0.214, 0.0001, 0.010), &quot;B&quot;: (-0.103, 0.083, 0.070), &quot;C&quot;: (-0.291, 0.0014, 0.490)}
+res = {}
+for k, fm in specs.items():
+    m = smf.ols(fm, data=f).fit()
+    res[k] = m
+    b, pv, r2 = exp[k]
+    r.chk(&quot;%s 付費牆係數&quot; % k, b, float(m.params[&quot;pw&quot;]), tol=0.002)
+    r.chk(&quot;%s p 值&quot; % k, pv, float(m.pvalues[&quot;pw&quot;]), tol=max(pv * 0.5, 0.0005))
+    r.chk(&quot;%s R 平方&quot; % k, r2, float(m.rsquared), tol=0.002)
+r.chk(&quot;C 規格換算成流量變化&quot;, -0.25, float(np.exp(res[&quot;C&quot;].params[&quot;pw&quot;]) - 1), tol=0.005)
+
+rate = f.groupby(&quot;section_name&quot;)[&quot;pw&quot;].mean()
+full = sorted(rate[rate == 1].index)
+r.chk(&quot;100% 進付費牆的版面&quot;, sorted([&quot;財經&quot;, &quot;科技&quot;, &quot;環境&quot;, &quot;深度調查&quot;]), full)
+others = rate.drop(full)
+r.chk(&quot;其他版面多半在 15% 以下&quot;, True, bool((others &lt; 0.15).mean() &gt;= 0.5))
+r.note(&quot;其他版面的付費比率：&quot; + &quot;、&quot;.join(&quot;%s %.0f%%&quot; % (k, v * 100) for k, v in others.sort_values().items()))
+
+# 課堂概念：搜尋空間。四組控制變數各自放或不放，一共 16 條規格
+CTRL = {&quot;內容型態&quot;: &quot;C(content_type)&quot;, &quot;字數&quot;: &quot;lwc&quot;, &quot;標題數字&quot;: &quot;hn&quot;, &quot;版面&quot;: &quot;C(section_name)&quot;}
+curve = []
+for k in range(5):
+    for combo in combinations(CTRL, k):
+        m = smf.ols(&quot;lpv ~ pw&quot; + &quot;&quot;.join(&quot; + &quot; + CTRL[c] for c in combo), data=f).fit()
+        lo, hi = m.conf_int().loc[&quot;pw&quot;]
+        curve.append({&quot;spec&quot;: &quot;、&quot;.join(combo) or &quot;不控制&quot;, &quot;b&quot;: float(m.params[&quot;pw&quot;]), &quot;lo&quot;: float(lo),
+                      &quot;hi&quot;: float(hi), &quot;p&quot;: float(m.pvalues[&quot;pw&quot;])})
+curve = pd.DataFrame(curve).sort_values(&quot;b&quot;).reset_index(drop=True)
+r.chk(&quot;可以跑的規格數&quot;, 16, len(curve))
+r.chk(&quot;付費牆係數 最小&quot;, -0.481, float(curve[&quot;b&quot;].min()), tol=0.002)
+r.chk(&quot;付費牆係數 最大&quot;, -0.100, float(curve[&quot;b&quot;].max()), tol=0.002)
+r.chk(&quot;在 0.05 下顯著的規格數&quot;, 12, int((curve[&quot;p&quot;] &lt; 0.05).sum()))
+
+sig = [bool(res[k].pvalues[&quot;pw&quot;] &lt; 0.05) for k in &quot;ABC&quot;]
+r.pit(sig == [True, False, True], &quot;三條規格在 0.05 下顯著與否：A %s、B %s、C %s，多加一組控制就翻面&quot; % tuple(
+    &quot;顯著&quot; if s else &quot;不顯著&quot; for s in sig))
+r.sc(bool((rate == 0).any() or (rate == 1).any()), &quot;交叉表裡有版面是 100%% 進付費牆：%s&quot; % &quot;、&quot;.join(full))
+
+fig, ax = plt.subplots(figsize=(9, 5))
+colors = [&quot;#4f81bd&quot; if p &lt; 0.05 else &quot;#bbbbbb&quot; for p in curve[&quot;p&quot;]]
+ax.errorbar(curve.index, curve[&quot;b&quot;], yerr=[curve[&quot;b&quot;] - curve[&quot;lo&quot;], curve[&quot;hi&quot;] - curve[&quot;b&quot;]],
+            fmt=&quot;none&quot;, ecolor=&quot;#999999&quot;, lw=1)
+ax.scatter(curve.index, curve[&quot;b&quot;], c=colors, zorder=3)
+ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+ax.set_xticks(curve.index, curve[&quot;spec&quot;], rotation=70, fontsize=8)
+ax.set_ylabel(&quot;付費牆係數（log 瀏覽量）與 95% 信賴區間&quot;)
+ax.set_title(&quot;同一個問題，16 條規格：係數從 -0.48 到 -0.10（藍點＝p &lt; 0.05）&quot;)
+save_fig(fig, &quot;ex09_spec_curve.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>同一個問題，三條線給出三個答案。A：係數 -0.214、p=0.0001、R 平方 0.010。B：係數 -0.103、p=0.083，照慣例就是「不顯著」，R 平方 0.070。C：係數 -0.291、p=0.0014、R 平方 0.490。只交 B 會寫成「付費牆對流量沒有顯著影響」，只交 C 會寫成「有牆的稿子平均少掉約四分之一的瀏覽量」（exp(-0.291)-1 ≈ -25%）。差別在於付費牆不是抽籤決定的：財經、科技、環境、深度調查這四個版面 100% 進付費牆，其他版面多半在 15% 以下，不控制版面，你估到的其實是「財經跟娛樂的流量差多少」。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，18 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pv 中位數</td>
+<td>446.5</td>
+</tr>
+<tr>
+<td>pv 最大值</td>
+<td>5869</td>
+</tr>
+<tr>
+<td>A 付費牆係數</td>
+<td>-0.2144</td>
+</tr>
+<tr>
+<td>A p 值</td>
+<td>0.0001</td>
+</tr>
+<tr>
+<td>A R 平方</td>
+<td>0.0101</td>
+</tr>
+<tr>
+<td>B 付費牆係數</td>
+<td>-0.1035</td>
+</tr>
+<tr>
+<td>B p 值</td>
+<td>0.0825</td>
+</tr>
+<tr>
+<td>B R 平方</td>
+<td>0.0704</td>
+</tr>
+<tr>
+<td>C 付費牆係數</td>
+<td>-0.2914</td>
+</tr>
+<tr>
+<td>C p 值</td>
+<td>0.0014</td>
+</tr>
+<tr>
+<td>C R 平方</td>
+<td>0.4904</td>
+</tr>
+<tr>
+<td>C 規格換算成流量變化</td>
+<td>-0.2528</td>
+</tr>
+<tr>
+<td>100% 進付費牆的版面</td>
+<td>深度調查、環境、科技、財經</td>
+</tr>
+<tr>
+<td>其他版面多半在 15% 以下</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可以跑的規格數</td>
+<td>16</td>
+</tr>
+<tr>
+<td>付費牆係數 最小</td>
+<td>-0.4811</td>
+</tr>
+<tr>
+<td>付費牆係數 最大</td>
+<td>-0.1004</td>
+</tr>
+<tr>
+<td>在 0.05 下顯著的規格數</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>其他版面的付費比率：影音專題 1%、島上會議 2%、社會 4%、活動 6%、評論 7%、體育 7%、短影音 8%、國際 8%、政治 9%、生活 9%、娛樂 11%、選物誌 13%、教育 14%、品牌內容 16%</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 9 題的圖" src="../../img/ex09_spec_curve.png" /></p>
+<p>16 條規格各跑一次付費牆係數，照係數大小排好。藍點是 p &lt; 0.05、灰點不顯著，直線是 95% 信賴區間。係數從 -0.48 到 -0.10，有沒有控制版面決定你站在哪一端。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>係數不等於因果。這題連「係數等於哪一個數字」都還沒站穩——多加一個控制變數就從不顯著變成 -0.29。付費牆是編輯政策按版面決定的，所以這條迴歸最多只能講「同一個版面、同一種型態、字數差不多的兩篇稿子，有牆的那篇平均少掉多少瀏覽量」，不能講「把這篇關進付費牆就會掉 25%」。這兩句話在會議上聽起來一樣，決策後果差很多。</p>
+<p>實際跑的結果：三條規格在 0.05 下顯著與否：A 顯著、B 不顯著、C 顯著，多加一組控制就翻面。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>先印一張「每個版面的付費比率」交叉表。只要看到有版面是 0% 或 100%，就代表這個變數幾乎被版面決定，係數一定要控制版面之後才能報。然後問自己一句：「我的結論會不會多加一個控制變數就翻掉？」答案是會，那三條規格都要寫進報告，不能只挑好看的那一條交出去。</p>
+<p>實際跑的結果：交叉表裡有版面是 100% 進付費牆：深度調查、環境、科技、財經。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_08_-_%E8%87%AA%E5%8A%A9%E5%B9%B3%E5%8F%B0%E9%BB%9E%E6%93%8A%E7%8E%87%E7%9C%9F%E7%9A%84%E6%AF%94%E8%BC%83%E9%AB%98%E5%97%8E.html">練習 08 - 自助平台點擊率真的比較高嗎</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_10_-_%E7%99%BC%E7%A8%BF%E5%89%8D%E9%A0%90%E4%BC%B0%E6%B5%81%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 10 - 發稿前預估流量的模型</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

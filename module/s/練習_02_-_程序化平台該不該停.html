@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 02 - 程序化平台該不該停</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 02 - 程序化平台該不該停</h1></div><p>在本單元中，會介紹第 2 題「兩家程序化廣告平台十月只收三萬多，業務主管問要不要停掉」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：十月廣告收入 195 萬，openx 跟 adx 兩家程序化平台加起來才三萬出頭，是不是該把它們關掉，版位全部留給自家業務？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 1 組：先把一張表讀對</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>ad_daily（L1／L2 的 ad_daily_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>讓 AI 算的數字對不對</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>先問資料字典一個問題：revenue 旁邊為什麼要多一欄 currency。按 currency 分組各自加總，把 USD 的列乘上匯率換成台幣再合併（匯率不在資料裡，要自己定一個並在報告裡標明來源，例如 1 USD = 31.5 TWD），最後算每千次曝光收入（收入 ÷ 曝光數 × 1000）比較四個平台。用 Python，因為 pandas 可以用一行條件式依 currency 逐列換算再 groupby，852 列不會有任何一列被漏掉。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+
+r = R(2, &quot;兩家程序化廣告平台十月只收三萬多，業務主管問要不要停掉&quot;)
+a = ad()
+a[&quot;twd&quot;] = twd(a)
+naive, conv = float(a[&quot;revenue&quot;].sum()), float(a[&quot;twd&quot;].sum())
+r.chk(&quot;直接加總（元）&quot;, 1947799, round(naive), tol=2)
+r.chk(&quot;換算後總額（元）&quot;, 2975076, round(conv), tol=2)
+r.chk(&quot;直接加總少報的比例&quot;, 0.345, 1 - naive / conv, tol=0.01)
+
+cur = a.groupby(&quot;platform&quot;)[&quot;currency&quot;].unique().apply(lambda x: &quot;,&quot;.join(sorted(x))).to_dict()
+r.chk(&quot;各平台幣別&quot;, {&quot;adx_prog&quot;: &quot;USD&quot;, &quot;kmg_direct&quot;: &quot;TWD&quot;, &quot;kmg_selfserve&quot;: &quot;TWD&quot;, &quot;openx_prog&quot;: &quot;USD&quot;}, cur)
+prog = a[&quot;platform&quot;].isin([&quot;openx_prog&quot;, &quot;adx_prog&quot;])
+r.chk(&quot;程序化換算後收入（元）&quot;, 1060959, round(float(a.loc[prog, &quot;twd&quot;].sum())), rel=0.01)
+r.chk(&quot;程序化佔全站廣告收入&quot;, 0.357, float(a.loc[prog, &quot;twd&quot;].sum()) / conv, tol=0.005)
+
+g = a.groupby(&quot;platform&quot;).agg(t=(&quot;twd&quot;, &quot;sum&quot;), rv=(&quot;revenue&quot;, &quot;sum&quot;), i=(&quot;impression_cnt&quot;, &quot;sum&quot;))
+ecpm = g[&quot;t&quot;] / g[&quot;i&quot;] * 1000
+r.chk(&quot;adx_prog 每千次曝光收入&quot;, 74, float(ecpm[&quot;adx_prog&quot;]), tol=1.5)
+r.chk(&quot;openx_prog 每千次曝光收入&quot;, 73, float(ecpm[&quot;openx_prog&quot;]), tol=1.5)
+r.chk(&quot;kmg_direct 每千次曝光收入&quot;, 61, float(ecpm[&quot;kmg_direct&quot;]), tol=1.5)
+r.chk(&quot;kmg_selfserve 每千次曝光收入&quot;, 88, float(ecpm[&quot;kmg_selfserve&quot;]), tol=1.5)
+r.chk(&quot;收益率最高的平台&quot;, &quot;kmg_selfserve&quot;, ecpm.idxmax())
+r.note(&quot;四個平台換算後的每千次曝光收入：&quot; + &quot;、&quot;.join(&quot;%s %.1f 元&quot; % kv for kv in ecpm.items()))
+
+naive_prog = float(a.loc[prog, &quot;revenue&quot;].sum())
+r.pit(naive_prog &lt; 40000, &quot;直接加總時，兩家程序化平台合計只有 %s 元，看起來真的只收三萬多&quot; % format(round(naive_prog), &quot;,&quot;))
+med = a.groupby(&quot;currency&quot;)[&quot;revenue&quot;].median()
+ratio = float(med[&quot;TWD&quot;] / med[&quot;USD&quot;])
+r.sc(10 &lt;= ratio &lt;= 100 and conv &gt; naive,
+     &quot;台幣列的收入中位數是美金列的 %.1f 倍，差一到兩個數量級；換算後總額 %s 元大於直接加總 %s 元&quot; % (
+         ratio, format(round(conv), &quot;,&quot;), format(round(naive), &quot;,&quot;)))
+
+order = [&quot;kmg_direct&quot;, &quot;kmg_selfserve&quot;, &quot;openx_prog&quot;, &quot;adx_prog&quot;]
+fig, ax = plt.subplots(1, 2, figsize=(9, 3.8))
+x = np.arange(len(order))
+ax[0].bar(x - 0.2, g.loc[order, &quot;rv&quot;] / 1e4, 0.4, label=&quot;直接加總&quot;, color=&quot;#bbbbbb&quot;)
+ax[0].bar(x + 0.2, g.loc[order, &quot;t&quot;] / 1e4, 0.4, label=&quot;換算成台幣&quot;, color=&quot;#4f81bd&quot;)
+ax[0].set_xticks(x, order, rotation=20)
+ax[0].set_ylabel(&quot;十月收入（萬元）&quot;)
+ax[0].set_title(&quot;程序化平台的收入被低估了 31.5 倍&quot;)
+ax[0].legend()
+ax[1].bar(x, ecpm[order], color=&quot;#4f81bd&quot;)
+for i, v in enumerate(ecpm[order]):
+    ax[1].text(i, v, &quot;%.0f&quot; % v, ha=&quot;center&quot;, va=&quot;bottom&quot;)
+ax[1].set_xticks(x, order, rotation=20)
+ax[1].set_ylabel(&quot;每千次曝光收入（元）&quot;)
+ax[1].set_title(&quot;換算後，程序化平台比直客還高，只輸自助平台&quot;)
+save_fig(fig, &quot;ex02_platform_revenue.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>revenue 欄混了兩種幣別：kmg_direct 與 kmg_selfserve 記台幣，openx_prog 與 adx_prog 記美金。直接加總得到 194.8 萬，換算後其實是 297.5 萬，原本的算法少報了約三分之一。兩家程序化平台不是只收 3 萬，是收了約 106 萬，超過全站廣告收入的三分之一；每千次曝光收入 adx_prog 74 元、openx_prog 73 元，比自家直客的 61 元還高，只輸給自助平台的 88 元——原本要被關掉的，其實是收益率排第二、第三的通路。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，11 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接加總（元）</td>
+<td>1947799</td>
+</tr>
+<tr>
+<td>換算後總額（元）</td>
+<td>2975076</td>
+</tr>
+<tr>
+<td>直接加總少報的比例</td>
+<td>0.3453</td>
+</tr>
+<tr>
+<td>各平台幣別</td>
+<td>adx_prog USD、kmg_direct TWD、kmg_selfserve TWD、openx_prog USD</td>
+</tr>
+<tr>
+<td>程序化換算後收入（元）</td>
+<td>1060959</td>
+</tr>
+<tr>
+<td>程序化佔全站廣告收入</td>
+<td>0.3566</td>
+</tr>
+<tr>
+<td>adx_prog 每千次曝光收入</td>
+<td>74.1451</td>
+</tr>
+<tr>
+<td>openx_prog 每千次曝光收入</td>
+<td>73.0295</td>
+</tr>
+<tr>
+<td>kmg_direct 每千次曝光收入</td>
+<td>60.682</td>
+</tr>
+<tr>
+<td>kmg_selfserve 每千次曝光收入</td>
+<td>87.5492</td>
+</tr>
+<tr>
+<td>收益率最高的平台</td>
+<td>kmg_selfserve</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>四個平台換算後的每千次曝光收入：adx_prog 74.1 元、kmg_direct 60.7 元、kmg_selfserve 87.5 元、openx_prog 73.0 元</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 2 題的圖" src="../../img/ex02_platform_revenue.png" /></p>
+<p>左圖灰色是直接加總、藍色是換成台幣後的十月收入，兩個程序化平台的灰色長條幾乎看不見。右圖是換算後的每千次曝光收入，程序化平台比自家直客高，只輸給自助平台。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>對應 KMG 埋的「幣別混用」陷阱。sum(revenue) 不會跳任何錯誤訊息，加出來的 194.8 萬也像個合理數字，所以沒有人會回頭懷疑。記住這條通則：表裡只要出現 currency 這種「單位欄」，就代表旁邊那個金額欄的單位不是固定的，不可以直接加。</p>
+<p>實際跑的結果：直接加總時，兩家程序化平台合計只有 33,681 元，看起來真的只收三萬多。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>先跑 groupby('currency')['revenue'].median()，USD 那一群的中位數會比 TWD 小一到兩個數量級，看到這種量級差就知道不能混加；換算完的總額一定要比原本直接加總的大，如果算完反而變小，就是匯率乘錯邊了。</p>
+<p>實際跑的結果：台幣列的收入中位數是美金列的 32.5 倍，差一到兩個數量級；換算後總額 2,975,076 元大於直接加總 1,947,799 元。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_03_-_%E6%9C%80%E4%BD%B3%E5%A0%B1%E5%B0%8E%E7%8D%8E%E7%99%BC%E7%B5%A6%E8%AA%B0.html">練習 03 - 最佳報導獎發給誰</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

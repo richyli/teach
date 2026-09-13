@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 07 - 訂閱功勞該算誰的</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 07 - 訂閱功勞該算誰的</h1></div><p>在本單元中，會介紹第 7 題「影音處貢獻一半流量卻只拿兩成訂閱功勞，年終獎金該怎麼分」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：年度檢討會上，影音與聲音處主管說：「我們做了全站快一半的流量，訂閱的功勞卻都算在新聞內容處頭上。」這句話對嗎？這筆訂閱到底該算誰的？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>挑戰</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 2 組：把經營問題拆成算得出來的東西</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1：content_monthly_2024_10.csv）、content（L2：content.csv）、content_monthly（L2：content_monthly.csv）、dim_section（L2：dim_section.csv）、staff（L2：staff.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>歸因 這筆訂閱該算誰的（穩健性檢查接 世代分析 為什麼要看同一批人）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>第一步先讀懂 conversion_cnt 的定義——「從這則內容進來而完成訂閱的人數」，它已經替你做了一個歸因選擇：功勞全給撞牆的最後那一則（last-touch）。第二步做一套對照歸因：把全站 14,463 個訂閱按各事業處的工作階段比例重新分配（流量加權，當作 first-touch 的粗略代理），比較兩套下的部門排名。第三步做穩健性檢查：只留 10 月上旬發布的內容重跑一次，看結論會不會變——不同時間發的稿混在一起算，差異可能只是反映那幾天發了什麼稿，這正是世代分析要擋的東西。最後寫清楚要有什麼資料才真的解得了這題（讀者層級的接觸路徑），以及在沒有它之前這個結論的效力到哪裡。用 R，因為最後要用一張斜線圖把「流量比例」和「訂閱功勞比例」兩端連起來，一眼看出誰掉下去，ggplot2 畫這種圖最短。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題的分析用 R 跑，整支程式如下。R 的程式要從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2。</p>
+<pre><code class="language-r"># ex07 年終獎金該怎麼分：last-touch 與流量加權歸因（R）
+# 檢查項目名稱刻意用英文：Windows 上 Rscript 讀原始碼的中文會亂碼，比對中文字串會靜默失敗。
+suppressMessages(library(ggplot2))
+res_dir &lt;- &quot;teacher/exercise_runs/results&quot;
+dir.create(res_dir, showWarnings = FALSE, recursive = TRUE)
+out &lt;- data.frame(name = character(), expected = character(), actual = character(), ok = logical(),
+                  stringsAsFactors = FALSE)
+chk &lt;- function(name, expected, actual, tol) {
+  a &lt;- as.numeric(actual)
+  out[nrow(out) + 1, ] &lt;&lt;- list(name, as.character(expected), as.character(round(a, 4)),
+                               isTRUE(abs(a - as.numeric(expected)) &lt;= tol))
+}
+flag &lt;- function(name, ok, detail) {
+  out[nrow(out) + 1, ] &lt;&lt;- list(name, &quot;&quot;, detail, isTRUE(ok))
+}
+
+f &lt;- read.csv(&quot;dist/L1/content_monthly_2024_10.csv&quot;, fileEncoding = &quot;UTF-8-BOM&quot;, stringsAsFactors = FALSE)
+f &lt;- f[order(f$ingest_ts), ]
+f &lt;- f[!duplicated(f[, c(&quot;content_id&quot;, &quot;stat_month&quot;)], fromLast = TRUE), ]
+divs &lt;- unique(f$division)
+news &lt;- divs[grepl(intToUtf8(c(26032, 32862)), divs)]   # 新聞內容處
+av &lt;- divs[grepl(intToUtf8(c(24433, 38899)), divs)]     # 影音與聲音處
+
+S &lt;- tapply(f$sessions, f$division, sum)
+C &lt;- tapply(f$conversion_cnt, f$division, sum)
+ss &lt;- S / sum(S)
+cs &lt;- C / sum(C)
+chk(&quot;av_session_share&quot;, 0.462, ss[av], 0.002)
+chk(&quot;av_lasttouch_credit&quot;, 0.174, cs[av], 0.002)
+chk(&quot;news_session_share&quot;, 0.457, ss[news], 0.002)
+chk(&quot;news_lasttouch_credit&quot;, 0.787, cs[news], 0.002)
+chk(&quot;news_gap_pp&quot;, 33, (cs[news] - ss[news]) * 100, 0.6)
+chk(&quot;traffic_weighted_av&quot;, 0.46, ss[av], 0.01)
+chk(&quot;traffic_weighted_news&quot;, 0.46, ss[news], 0.01)
+
+day &lt;- as.integer(substr(f$publish_at, 9, 10))
+coh &lt;- ifelse(day &lt;= 10, 1, ifelse(day &lt;= 20, 2, 3))
+exp_coh &lt;- c(0.716, 0.866, 0.769)
+coh_vals &lt;- c()
+for (k in 1:3) {
+  g &lt;- f[coh == k, ]
+  cc &lt;- tapply(g$conversion_cnt, g$division, sum)
+  v &lt;- cc[news] / sum(cc)
+  coh_vals &lt;- c(coh_vals, v)
+  chk(paste0(&quot;cohort&quot;, k, &quot;_news_credit&quot;), exp_coh[k], v, 0.002)
+}
+chk(&quot;cohort_spread_pp&quot;, 15, (max(coh_vals) - min(coh_vals)) * 100, 1)
+
+d &lt;- data.frame(division = rep(names(ss), 2),
+                side = factor(rep(c(&quot;traffic&quot;, &quot;credit&quot;), each = length(ss)), levels = c(&quot;traffic&quot;, &quot;credit&quot;)),
+                share = c(as.numeric(ss), as.numeric(cs[names(ss)])))
+p &lt;- ggplot(d, aes(side, share, group = division)) + geom_line() + geom_point()
+ggsave(file.path(res_dir, &quot;ex07_slope.png&quot;), p, width = 5, height = 4, dpi = 110)
+
+flag(&quot;PITFALL&quot;, (cs[news] - ss[news]) &gt; 0.3 &amp;&amp; (ss[av] - cs[av]) &gt; 0.2,
+     sprintf(&quot;news credit %.3f vs traffic %.3f; av credit %.3f vs traffic %.3f&quot;, cs[news], ss[news], cs[av], ss[av]))
+early &lt;- f[day &lt;= 10, ]
+es &lt;- tapply(early$sessions, early$division, sum)
+ec &lt;- tapply(early$conversion_cnt, early$division, sum)
+flag(&quot;SELFCHECK&quot;, (es[av] / sum(es)) &gt; (ec[av] / sum(ec)),
+     sprintf(&quot;Oct 1-10 only: av traffic %.3f vs credit %.3f&quot;, es[av] / sum(es), ec[av] / sum(ec)))
+
+write.table(out, file.path(res_dir, &quot;ex07.tsv&quot;), sep = &quot;\t&quot;, row.names = FALSE, fileEncoding = &quot;UTF-8&quot;)
+print(out)
+</code></pre>
+<p>out 那張表是對照檢查：每一列把入口頁寫的數字跟實際算出來的放在一起比，PITFALL 與 SELFCHECK 兩列記錄坑有沒有出現、自己驗那一步有沒有效。</p>
+</section>
+<section class="mod-sec sec-content"><h4>畫圖的程式</h4>
+<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義重算一次，順便確認跟 R 算出來的一樣。</p>
+<pre><code class="language-python">&quot;&quot;&quot;第 7 題的圖（R 那支負責數字，這支用同一套算法重算一次再畫中文圖）。&quot;&quot;&quot;
+from _kmg import *
+
+r = R(7, &quot;影音處貢獻一半流量卻只拿兩成訂閱功勞，年終獎金該怎麼分&quot;, suffix=&quot;_py&quot;)
+f = dedupe(flat())
+S = f.groupby(&quot;division&quot;)[&quot;sessions&quot;].sum()
+C = f.groupby(&quot;division&quot;)[&quot;conversion_cnt&quot;].sum()
+ss, cs = S / S.sum(), C / C.sum()
+news = [d for d in ss.index if &quot;新聞&quot; in d][0]
+av = [d for d in ss.index if &quot;影音&quot; in d][0]
+r.chk(&quot;Python 重算 影音與聲音處 工作階段佔比&quot;, 0.462, float(ss[av]), tol=0.002)
+r.chk(&quot;Python 重算 影音與聲音處 last-touch 功勞&quot;, 0.174, float(cs[av]), tol=0.002)
+r.chk(&quot;Python 重算 新聞內容處 last-touch 功勞&quot;, 0.787, float(cs[news]), tol=0.002)
+day = f[&quot;publish_at&quot;].dt.day
+coh = pd.cut(day, [0, 10, 20, 31], labels=[&quot;上旬&quot;, &quot;中旬&quot;, &quot;下旬&quot;])
+cc = f.groupby([coh, &quot;division&quot;], observed=True)[&quot;conversion_cnt&quot;].sum().unstack(fill_value=0)
+cc = cc.div(cc.sum(axis=1), axis=0)
+
+fig, ax = plt.subplots(1, 2, figsize=(11, 4.4))
+COL = {news: &quot;#2ca02c&quot;, av: &quot;#ff7f0e&quot;}
+for d in ss.index:
+    ax[0].plot([0, 1], [ss[d], cs[d]], marker=&quot;o&quot;, lw=2.4 if d in COL else 1, color=COL.get(d, &quot;#bbbbbb&quot;))
+for d, dy in ((news, -9), (av, 9)):
+    ax[0].annotate(&quot;%s %.1f%%&quot; % (d, ss[d] * 100), (0, ss[d]), xytext=(-8, dy), textcoords=&quot;offset points&quot;,
+                   ha=&quot;right&quot;, va=&quot;center&quot;, fontsize=9, color=COL[d])
+    ax[0].annotate(&quot;%s %.1f%%&quot; % (d, cs[d] * 100), (1, cs[d]), xytext=(8, 0), textcoords=&quot;offset points&quot;,
+                   va=&quot;center&quot;, fontsize=9, color=COL[d])
+small = [d for d in ss.index if d not in COL]
+ax[0].annotate(&quot;其他兩個處合計 %.1f%% → %.1f%%&quot; % (ss[small].sum() * 100, cs[small].sum() * 100), (0.5, 0.06),
+               ha=&quot;center&quot;, fontsize=8, color=&quot;#888888&quot;)
+ax[0].set_xticks([0, 1], [&quot;工作階段佔比&quot;, &quot;last-touch 訂閱功勞&quot;])
+ax[0].set_xlim(-0.9, 1.8)
+ax[0].set_ylabel(&quot;佔全站比例&quot;)
+ax[0].set_title(&quot;同一份資料，兩種分功勞的算法&quot;)
+cc.plot(kind=&quot;bar&quot;, stacked=True, ax=ax[1], rot=0, colormap=&quot;Paired&quot;)
+ax[1].set_ylabel(&quot;訂閱功勞佔比（last-touch）&quot;)
+ax[1].set_xlabel(&quot;發布世代&quot;)
+ax[1].set_title(&quot;三個發布世代：方向一樣，數值晃將近 15 個百分點&quot;)
+ax[1].legend(fontsize=8, loc=&quot;upper left&quot;, bbox_to_anchor=(1.0, 1.0))
+save_fig(fig, &quot;ex07_attribution.png&quot;)
+r.save()
+</code></pre>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>主管說的方向是對的，但幅度要講清楚：影音與聲音處佔全站工作階段 46.2%，在 last-touch 下只拿到 17.4% 的訂閱功勞；新聞內容處佔 45.7% 的工作階段卻拿到 78.7%。換成流量加權，兩個處都變成大約 46%——整整 33 個百分點的落差完全由歸因規則造成，不是誰做得比較好。上、中、下三個發布世代分開看，方向都一樣（新聞內容處 71.6%、86.6%、76.9%），但數值會晃將近 15 個百分點，所以你只能說「方向穩定」，不能說「就是 78.7%」。真正的答案是兩套都不對：免費影音永遠不會出現在撞牆的那一刻，last-touch 結構上就拿不到功勞；而流量加權假設每一段造訪對訂閱的貢獻都一樣，同樣是硬套上去的假設。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，14 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>影音與聲音處 工作階段佔比</td>
+<td>0.4619</td>
+</tr>
+<tr>
+<td>影音與聲音處 last-touch 訂閱功勞</td>
+<td>0.1736</td>
+</tr>
+<tr>
+<td>新聞內容處 工作階段佔比</td>
+<td>0.4571</td>
+</tr>
+<tr>
+<td>新聞內容處 last-touch 訂閱功勞</td>
+<td>0.7868</td>
+</tr>
+<tr>
+<td>新聞內容處 兩套歸因落差（百分點）</td>
+<td>32.9637</td>
+</tr>
+<tr>
+<td>流量加權 影音與聲音處</td>
+<td>0.4619</td>
+</tr>
+<tr>
+<td>流量加權 新聞內容處</td>
+<td>0.4571</td>
+</tr>
+<tr>
+<td>上旬世代 新聞內容處功勞</td>
+<td>0.716</td>
+</tr>
+<tr>
+<td>中旬世代 新聞內容處功勞</td>
+<td>0.8656</td>
+</tr>
+<tr>
+<td>下旬世代 新聞內容處功勞</td>
+<td>0.7692</td>
+</tr>
+<tr>
+<td>三個世代的晃動幅度（百分點）</td>
+<td>14.9644</td>
+</tr>
+<tr>
+<td>Python 重算 影音與聲音處 工作階段佔比</td>
+<td>0.4619</td>
+</tr>
+<tr>
+<td>Python 重算 影音與聲音處 last-touch 功勞</td>
+<td>0.1736</td>
+</tr>
+<tr>
+<td>Python 重算 新聞內容處 last-touch 功勞</td>
+<td>0.7868</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 7 題的圖" src="../../img/ex07_attribution.png" /></p>
+<p>左圖是兩種分功勞算法的對照：新聞內容處與影音與聲音處的工作階段幾乎一樣多，last-touch 功勞卻一個 78.7%、一個 17.4%。右圖把內容按發布日期分成上中下旬三個世代各算一次，方向一樣，數值會晃。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>把 conversion_cnt 直接當成「這則內容造成的訂閱」。它是資料庫已經替你選好的 last-touch 歸因，不是因果；拿它排部門功勞，等於把獎金綁在「誰的稿被放到付費牆後面」這個編輯決定上，而不是誰真的說服了讀者。這裡同時也是分母混淆的另一種長相：功勞的分母是訂閱數、貢獻的分母是工作階段，兩邊不先換算就直接比，任何一個部門都能證明自己被虧待。</p>
+<p>實際跑的結果：新聞內容處拿到 78.7% 的訂閱功勞，工作階段只佔 45.7%；影音與聲音處功勞 17.4%，工作階段卻佔 46.2%。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>只留 publish_at 在 10 月 1 日至 10 日的內容，把整套重跑一次；如果「影音處流量高、功勞低」這個方向不見了，代表你看到的是世代組成不是歸因規則。另外把 conversion_cnt 的欄位定義原句抄進報告，旁邊寫一句「這句話幫我做了什麼假設」。</p>
+<p>實際跑的結果：只留 10 月 1 日至 10 日發布的內容，影音與聲音處的流量佔比 49.4%、功勞佔比 23.2%，方向沒有變。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_06_-_banner_%E8%B3%A3%E5%BB%A3%E5%91%8A%E9%82%84%E6%98%AF%E6%8E%A8%E8%A8%82%E9%96%B1.html">練習 06 - banner 賣廣告還是推訂閱</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_08_-_%E8%87%AA%E5%8A%A9%E5%B9%B3%E5%8F%B0%E9%BB%9E%E6%93%8A%E7%8E%87%E7%9C%9F%E7%9A%84%E6%AF%94%E8%BC%83%E9%AB%98%E5%97%8E.html">練習 08 - 自助平台點擊率真的比較高嗎</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

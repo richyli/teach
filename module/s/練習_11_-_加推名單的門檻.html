@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 11 - 加推名單的門檻</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 11 - 加推名單的門檻</h1></div><p>在本單元中，會介紹第 11 題「總編要一份「這批稿要不要加推首頁與電子報」的名單，人力有上限」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：編輯台一個月最多只能再加推兩百則左右，超過就做不完。哪些稿子最可能衝到當月流量前段？漏掉一則爆紅的很可惜，硬推一則沒人看的也不過浪費編輯一小時，你幫我排一份名單出來。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 4 組：預測、門檻與代價</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>content_monthly_flat（L1 釋出的 content_monthly_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>預測會不會退訂（門檻不是統計決定的，是成本決定的）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>標籤定成「這則內容的 pv 有沒有落在當月前 10%」（切點是 1,390 次）。特徵只准用發布那一刻就知道的欄位：content_type、section_name、is_paywalled、word_cnt、headline_len、has_number_in_headline——pv 以外的 uv、sessions、dwell_sec_total 都是同一個月的結果，不能當特徵。資料切 30% 當測試集（分層抽樣、random_state=0），類別欄做 one-hot、數值欄標準化，跑預設設定的邏輯斯迴歸，拿到每一則的機率之後，把門檻從 0.5 一路往下掃到 0.1，每個門檻記一列「名單幾則／抓到幾則／誤抓幾則」，最後用一句成本敘述（漏掉一則爆紅約等於少掉一整天的流量，誤推一則約等於編輯多花一小時）挑門檻。語言用 Python，因為 predict_proba 給的是機率不是是非題，換門檻只要改一個數字，不必重跑模型。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, log_loss, roc_auc_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+SEED = 0   # 案例指定：切測試集用 random_state=0
+
+r = R(11, &quot;總編要一份「這批稿要不要加推首頁與電子報」的名單，人力有上限&quot;)
+f = dedupe(flat()).reset_index(drop=True)
+cut = f[&quot;pv&quot;].quantile(0.9)
+r.chk(&quot;前 10% 的切點&quot;, 1390, float(cut), tol=5)
+y = (f[&quot;pv&quot;] &gt;= cut).astype(int)
+X = f&quot;content_type&quot;, &quot;section_name&quot;, &quot;is_paywalled&quot;, &quot;word_cnt&quot;, &quot;headline_len&quot;, &quot;has_number_in_headline&quot;.copy()
+X[&quot;is_paywalled&quot;] = X[&quot;is_paywalled&quot;].astype(int)
+X[&quot;has_number_in_headline&quot;] = X[&quot;has_number_in_headline&quot;].astype(int)
+
+def run(seed):
+    pre = ColumnTransformer([(&quot;c&quot;, OneHotEncoder(handle_unknown=&quot;ignore&quot;), [&quot;content_type&quot;, &quot;section_name&quot;]),
+                             (&quot;n&quot;, StandardScaler(), [&quot;word_cnt&quot;, &quot;headline_len&quot;, &quot;is_paywalled&quot;, &quot;has_number_in_headline&quot;])])
+    Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=seed, stratify=y)
+    m = make_pipeline(pre, LogisticRegression(max_iter=2000)).fit(Xtr, ytr)
+    return ytr.values, yte.values, m.predict_proba(Xte)[:, 1]
+
+def cm(yte, p, t):
+    pred = p &gt;= t
+    return {&quot;TP&quot;: int((pred &amp; (yte == 1)).sum()), &quot;FP&quot;: int((pred &amp; (yte == 0)).sum()),
+            &quot;FN&quot;: int((~pred &amp; (yte == 1)).sum()), &quot;TN&quot;: int((~pred &amp; (yte == 0)).sum())}
+
+ytr, yte, p = run(SEED)
+c5, c2, c1 = cm(yte, p, 0.5), cm(yte, p, 0.2), cm(yte, p, 0.1)
+r.chk(&quot;測試集則數&quot;, 432, len(yte))
+r.chk(&quot;測試集正例&quot;, 43, int(yte.sum()))
+r.chk(&quot;門檻 0.5 名單則數&quot;, 3, c5[&quot;TP&quot;] + c5[&quot;FP&quot;])
+r.chk(&quot;門檻 0.5 抓到&quot;, 2, c5[&quot;TP&quot;])
+r.chk(&quot;門檻 0.5 準確率&quot;, 0.903, float(accuracy_score(yte, p &gt;= 0.5)), tol=0.003)
+r.chk(&quot;門檻 0.2 名單則數&quot;, 61, c2[&quot;TP&quot;] + c2[&quot;FP&quot;])
+r.chk(&quot;門檻 0.2 抓到&quot;, 26, c2[&quot;TP&quot;])
+r.chk(&quot;門檻 0.2 誤推&quot;, 35, c2[&quot;FP&quot;])
+r.chk(&quot;門檻 0.1 名單則數&quot;, 114, c1[&quot;TP&quot;] + c1[&quot;FP&quot;])
+r.chk(&quot;門檻 0.1 抓到&quot;, 35, c1[&quot;TP&quot;])
+r.chk(&quot;門檻 0.1 recall&quot;, 0.81, c1[&quot;TP&quot;] / 43, tol=0.005)
+r.chk(&quot;AUC&quot;, 0.88, float(roc_auc_score(yte, p)), tol=0.01)
+r.chk(&quot;門檻 0.2 名單換算成全月則數&quot;, 203, (c2[&quot;TP&quot;] + c2[&quot;FP&quot;]) / len(yte) * len(f), tol=1)
+
+lists = {}
+for s in (0, 1, 7, 42, 2024):
+    _, yt, ps = run(s)
+    lists[s] = int((ps &gt;= 0.2).sum())
+r.note(&quot;換 random_state 重切，門檻 0.2 的名單則數：&quot; + &quot;、&quot;.join(&quot;%d → %d 則&quot; % kv for kv in lists.items()))
+r.chk(&quot;換種子後 門檻 0.2 名單最少&quot;, 61, min(lists.values()))
+r.chk(&quot;換種子後 門檻 0.2 名單最多&quot;, 81, max(lists.values()))
+
+# 課堂概念：confusion matrix 與交叉熵
+r.chk(&quot;門檻 0.5 confusion matrix（TP/FP/FN/TN）&quot;, [2, 1, 41, 388], [c5[k] for k in (&quot;TP&quot;, &quot;FP&quot;, &quot;FN&quot;, &quot;TN&quot;)])
+r.chk(&quot;門檻 0.2 confusion matrix（TP/FP/FN/TN）&quot;, [26, 35, 17, 354], [c2[k] for k in (&quot;TP&quot;, &quot;FP&quot;, &quot;FN&quot;, &quot;TN&quot;)])
+r.chk(&quot;門檻 0.2 precision&quot;, 0.43, c2[&quot;TP&quot;] / (c2[&quot;TP&quot;] + c2[&quot;FP&quot;]), tol=0.005)
+r.chk(&quot;門檻 0.2 準確率&quot;, 0.880, (c2[&quot;TP&quot;] + c2[&quot;TN&quot;]) / len(yte), tol=0.002)
+r.chk(&quot;模型的交叉熵（log loss）&quot;, 0.232, float(log_loss(yte, p)), tol=0.002)
+r.chk(&quot;全部猜基準比例的交叉熵&quot;, 0.324, float(log_loss(yte, np.full(len(yte), ytr.mean()))), tol=0.002)
+r.chk(&quot;標籤本身的 entropy（bits）&quot;, 0.470, entropy_bits([yte.mean(), 1 - yte.mean()]), tol=0.003)
+
+recall05 = c5[&quot;TP&quot;] / 43
+acc05 = accuracy_score(yte, p &gt;= 0.5)
+r.pit(recall05 &lt; 0.2 and acc05 &gt; 0.85, &quot;預設門檻 0.5：只抓到 43 則裡的 %d 則（recall %.0f%%），準確率卻有 %.1f%%&quot; % (
+    c5[&quot;TP&quot;], recall05 * 100, acc05 * 100))
+r.sc(c2[&quot;TP&quot;] &gt; c5[&quot;TP&quot;], &quot;門檻表每一列都算得出來：0.2 抓到 %d 則、0.5 只抓到 %d 則&quot; % (c2[&quot;TP&quot;], c5[&quot;TP&quot;]))
+
+ts = np.round(np.arange(0.05, 0.61, 0.05), 2)
+tab = pd.DataFrame([cm(yte, p, t) for t in ts], index=ts)
+tab[&quot;名單&quot;] = tab[&quot;TP&quot;] + tab[&quot;FP&quot;]
+fig, ax = plt.subplots(1, 3, figsize=(12, 4), gridspec_kw={&quot;width_ratios&quot;: [2, 1, 1]})
+ax[0].plot(ts, tab[&quot;TP&quot;] / 43, marker=&quot;o&quot;, label=&quot;recall（抓到 ÷ 43）&quot;)
+ax[0].plot(ts, tab[&quot;TP&quot;] / tab[&quot;名單&quot;].where(tab[&quot;名單&quot;] &gt; 0), marker=&quot;o&quot;, label=&quot;precision（抓到 ÷ 名單）&quot;)
+ax2 = ax[0].twinx()
+ax2.bar(ts, tab[&quot;名單&quot;], width=0.03, alpha=0.25, color=&quot;#999999&quot;)
+ax2.set_ylabel(&quot;名單則數（灰色長條）&quot;)
+ax[0].set_xlabel(&quot;門檻&quot;)
+ax[0].set_title(&quot;門檻往下掃：抓得到的變多，名單也變長&quot;)
+ax[0].legend(loc=&quot;upper right&quot;)
+for k, (t, c) in enumerate([(0.5, c5), (0.2, c2)]):
+    a = ax[k + 1]
+    mat = np.array([[c[&quot;TP&quot;], c[&quot;FN&quot;]], [c[&quot;FP&quot;], c[&quot;TN&quot;]]])
+    a.imshow(mat, cmap=&quot;Blues&quot;)
+    for i in range(2):
+        for j in range(2):
+            a.text(j, i, str(mat[i, j]), ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=13,
+                   color=&quot;white&quot; if mat[i, j] &gt; 200 else &quot;black&quot;)
+    a.set_xticks([0, 1], [&quot;推&quot;, &quot;不推&quot;])
+    a.set_yticks([0, 1], [&quot;真的衝進前 10%&quot;, &quot;沒有&quot;])
+    a.set_title(&quot;門檻 %.1f&quot; % t)
+save_fig(fig, &quot;ex11_threshold.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>測試集 432 則裡有 43 則屬於前 10%。用預設門檻 0.5，模型只點名 3 則、抓到 2 則，recall 只有 5%，可是準確率有 90.3%——它靠「幾乎什麼都不推」拿到這個分數。把門檻降到 0.2，名單變成 61 則、抓到 26 則，recall 從 5% 跳到 60%，代價是誤推 35 則；再降到 0.1 會抓到 35 則（recall 81%），但名單膨脹到 114 則，換算回整個月超過編輯台的人力上限。AUC 0.88 表示模型的排序本身是有用的，壞掉的只是那個預設門檻。0.2 附近的名單約等於全月 203 則，剛好卡在兩百則的上限，這才是能執行的答案。換一個 random_state 重切，門檻 0.2 的名單會在 61 到 81 則之間變動，數字會晃，但「0.5 幾乎不推、0.2 附近才抓得到」這個結論不變。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，23 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前 10% 的切點</td>
+<td>1389.6</td>
+</tr>
+<tr>
+<td>測試集則數</td>
+<td>432</td>
+</tr>
+<tr>
+<td>測試集正例</td>
+<td>43</td>
+</tr>
+<tr>
+<td>門檻 0.5 名單則數</td>
+<td>3</td>
+</tr>
+<tr>
+<td>門檻 0.5 抓到</td>
+<td>2</td>
+</tr>
+<tr>
+<td>門檻 0.5 準確率</td>
+<td>0.9028</td>
+</tr>
+<tr>
+<td>門檻 0.2 名單則數</td>
+<td>61</td>
+</tr>
+<tr>
+<td>門檻 0.2 抓到</td>
+<td>26</td>
+</tr>
+<tr>
+<td>門檻 0.2 誤推</td>
+<td>35</td>
+</tr>
+<tr>
+<td>門檻 0.1 名單則數</td>
+<td>114</td>
+</tr>
+<tr>
+<td>門檻 0.1 抓到</td>
+<td>35</td>
+</tr>
+<tr>
+<td>門檻 0.1 recall</td>
+<td>0.814</td>
+</tr>
+<tr>
+<td>AUC</td>
+<td>0.8812</td>
+</tr>
+<tr>
+<td>門檻 0.2 名單換算成全月則數</td>
+<td>203.0509</td>
+</tr>
+<tr>
+<td>換種子後 門檻 0.2 名單最少</td>
+<td>61</td>
+</tr>
+<tr>
+<td>換種子後 門檻 0.2 名單最多</td>
+<td>81</td>
+</tr>
+<tr>
+<td>門檻 0.5 confusion matrix（TP/FP/FN/TN）</td>
+<td>2、1、41、388</td>
+</tr>
+<tr>
+<td>門檻 0.2 confusion matrix（TP/FP/FN/TN）</td>
+<td>26、35、17、354</td>
+</tr>
+<tr>
+<td>門檻 0.2 precision</td>
+<td>0.4262</td>
+</tr>
+<tr>
+<td>門檻 0.2 準確率</td>
+<td>0.8796</td>
+</tr>
+<tr>
+<td>模型的交叉熵（log loss）</td>
+<td>0.2315</td>
+</tr>
+<tr>
+<td>全部猜基準比例的交叉熵</td>
+<td>0.3241</td>
+</tr>
+<tr>
+<td>標籤本身的 entropy（bits）</td>
+<td>0.4675</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>換 random_state 重切，門檻 0.2 的名單則數：0 → 61 則、1 → 81 則、7 → 72 則、42 → 70 則、2024 → 81 則</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 11 題的圖" src="../../img/ex11_threshold.png" /></p>
+<p>左圖把門檻從 0.6 往下掃到 0.05：藍線是抓到的比例（recall），橙線是名單裡真的衝進前 10% 的比例（precision），灰色長條是名單則數。右邊兩張是門檻 0.5 與 0.2 的 confusion matrix。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>直接用 model.predict() 的結果交件。predict() 內建門檻就是 0.5，而 0.5 是統計上的預設值，不是編輯台的成本；正例只有一成的時候，0.5 幾乎等於「都不要推」。門檻該由「漏掉一則的代價除以誤推一則的代價」決定，不是由套件的預設值決定。</p>
+<p>實際跑的結果：預設門檻 0.5：只抓到 43 則裡的 2 則（recall 5%），準確率卻有 90.3%。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>做一張表，每一列是一個門檻，欄位是名單則數、抓到幾則、誤抓幾則，並在表格下面寫一句「我選 0.2，是因為漏掉一則的代價大約是誤推一則的 N 倍」；如果那個 N 寫不出來，代表門檻是亂挑的。</p>
+<p>實際跑的結果：門檻表每一列都算得出來：0.2 抓到 26 則、0.5 只抓到 2 則。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
+</section>
+<section class="mod-sec sec-content"><h4>confusion matrix</h4>
+<p>門檻表的每一列就是一張 confusion matrix。門檻 0.5 時 TP 2、FP 1、FN 41、TN 388，準確率 0.903，卻漏掉 43 則裡的 41 則；門檻降到 0.2，抓到的從 2 則變 26 則，召回率從 5% 升到 60%。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
+</section>
+<section class="mod-sec sec-content"><h4>entropy</h4>
+<p>邏輯斯迴歸訓練時在壓低的是交叉熵（log loss）。這個模型在測試集上是 0.232，全部都猜基準比例是 0.324，差距就是模型真的學到的東西。見 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a></p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_10_-_%E7%99%BC%E7%A8%BF%E5%89%8D%E9%A0%90%E4%BC%B0%E6%B5%81%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 10 - 發稿前預估流量的模型</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_12_-_%E6%BA%96%E7%A2%BA%E7%8E%87_99%25_%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 12 - 準確率 99% 的模型</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>練習 16 - 月底廣告營收下滑</title>
+<link rel="stylesheet" href="../../style.e6c66ae5.css">
+</head>
+<body>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">方法</a></li><li><a href="#sec-3">結果</a></li><li><a href="#sec-4">圖表</a></li><li><a href="#sec-5">這題的坑，實際跑的時候有沒有出現</a></li><li><a href="#sec-6">自己驗那一步抓不抓得到錯</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 16 - 月底廣告營收下滑</h1></div><p>在本單元中，會介紹第 16 題「10 月下旬廣告營收一路往下掉，業務主管要你在會前說清楚是不是出事了」從頭到尾實際跑一次的方法、跑出來的數字，以及畫出來的圖。</p>
+<p>這一頁是做完之後對答案用的。還沒動手的話，先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 找到這一題，照「怎麼做」那一欄自己跑一次再回來。</p>
+<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
+<p>有人會這樣問你：這個月廣告收入從 10 月 23 日以後一路往下掉，月底只剩高峰的四分之一。是市場冷掉了，還是我們自己出了什麼問題？</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>難度</td>
+<td>入門</td>
+</tr>
+<tr>
+<td>組別</td>
+<td>第 6 組：時間、存活與回頭看的陷阱</td>
+</tr>
+<tr>
+<td>用哪張表</td>
+<td>ad_daily（L1 的 ad_daily_2024_10.csv）</td>
+</tr>
+<tr>
+<td>對應單元</td>
+<td>時間序列 明天的流量會怎樣</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-2">方法</h3>
+<p>先看 currency 欄，把記成 USD 的列乘 31.5 換成台幣，再依 stat_date 加總成 31 天的日營收序列；同一天再算兩個東西：當天在跑的活動數（campaign_id 去重計數）與總曝光數，然後算每千次曝光營收（台幣營收 ÷ 曝光數 × 1000）。三條線畫在一起看。用 Python 的理由：853 列資料用 pandas 的 groupby 三行就變成日序列，算完直接畫圖，不必把資料搬到別的工具。</p>
+</section>
+<section class="mod-sec sec-content"><h4>程式</h4>
+<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾。</p>
+<pre><code class="language-python">from _kmg import *
+
+r = R(16, &quot;10 月下旬廣告營收一路往下掉，業務主管要你在會前說清楚是不是出事了&quot;)
+a = ad()
+a[&quot;twd&quot;] = twd(a)
+r.chk(&quot;換算後全月營收&quot;, 2975076, round(float(a[&quot;twd&quot;].sum())), tol=2)
+r.chk(&quot;直接加總&quot;, 1947799, round(float(a[&quot;revenue&quot;].sum())), tol=2)
+
+d = a.groupby(&quot;stat_date&quot;).agg(rev=(&quot;twd&quot;, &quot;sum&quot;), raw=(&quot;revenue&quot;, &quot;sum&quot;),
+                               camps=(&quot;campaign_id&quot;, &quot;nunique&quot;), imp=(&quot;impression_cnt&quot;, &quot;sum&quot;))
+d[&quot;ecpm&quot;] = d[&quot;rev&quot;] / d[&quot;imp&quot;] * 1000
+
+def day(n):
+    return pd.Timestamp(&quot;2024-10-%02d&quot; % n)
+
+r.chk(&quot;10/1 日營收（萬）&quot;, 1.3, d.loc[day(1), &quot;rev&quot;] / 1e4, tol=0.06)
+r.chk(&quot;10/23 日營收（萬）&quot;, 18.6, d.loc[day(23), &quot;rev&quot;] / 1e4, tol=0.06)
+r.chk(&quot;10/31 日營收（萬）&quot;, 4.8, d.loc[day(31), &quot;rev&quot;] / 1e4, tol=0.06)
+r.chk(&quot;營收高點在 10/23&quot;, True, bool(d[&quot;rev&quot;].idxmax() == day(23)))
+r.chk(&quot;10/1 在跑的活動數&quot;, 2, int(d.loc[day(1), &quot;camps&quot;]))
+r.chk(&quot;在跑活動數高點&quot;, 30, int(d[&quot;camps&quot;].max()))
+r.chk(&quot;10/31 在跑的活動數&quot;, 10, int(d.loc[day(31), &quot;camps&quot;]))
+r.chk(&quot;每千次曝光營收 最低&quot;, 50, float(d[&quot;ecpm&quot;].min()), tol=1)
+r.chk(&quot;每千次曝光營收 最高&quot;, 116, float(d[&quot;ecpm&quot;].max()), tol=1)
+slope = float(np.polyfit(np.arange(len(d)), d[&quot;ecpm&quot;].values, 1)[0])
+r.chk(&quot;每千次曝光營收沒有走低（日斜率 ≥ -0.5 元）&quot;, True, slope &gt;= -0.5)
+r.note(&quot;每千次曝光營收的日斜率 %.2f 元／天，一個月下來不到 15 元，相對於 50 到 116 元的日間震盪看不出趨勢&quot; % slope)
+
+first = a.groupby(&quot;platform&quot;)[&quot;stat_date&quot;].min()
+r.chk(&quot;10/1–10/2 只有程序化平台在投&quot;, True,
+      bool(a.loc[a[&quot;stat_date&quot;] &lt;= day(2), &quot;platform&quot;].isin([&quot;openx_prog&quot;, &quot;adx_prog&quot;]).all()))
+r.chk(&quot;自助平台進場日&quot;, &quot;2024-10-03&quot;, str(first[&quot;kmg_selfserve&quot;].date()))
+r.chk(&quot;直客平台進場日&quot;, &quot;2024-10-04&quot;, str(first[&quot;kmg_direct&quot;].date()))
+r.chk(&quot;10/1 未換算營收（元）&quot;, 406, float(d.loc[day(1), &quot;raw&quot;]), tol=1)
+r.chk(&quot;10/2 未換算營收（元）&quot;, 1528, float(d.loc[day(2), &quot;raw&quot;]), tol=1)
+g_raw = float(d.loc[day(7), &quot;raw&quot;] / d.loc[day(1), &quot;raw&quot;])
+g_conv = float(d.loc[day(7), &quot;rev&quot;] / d.loc[day(1), &quot;rev&quot;])
+r.chk(&quot;10/1 到 10/7 未換算漲幾倍&quot;, 100, g_raw, tol=2)
+r.chk(&quot;10/1 到 10/7 換算後漲幾倍&quot;, 6.5, g_conv, tol=0.05)
+r.chk(&quot;10/3 未換算 比前一天（倍）&quot;, 1.6, float(d.loc[day(3), &quot;raw&quot;] / d.loc[day(2), &quot;raw&quot;]), tol=0.05)
+r.chk(&quot;10/3 換算後 比前一天（倍）&quot;, 0.26, float(d.loc[day(3), &quot;rev&quot;] / d.loc[day(2), &quot;rev&quot;]), tol=0.005)
+r.chk(&quot;10/4 未換算 比前一天（倍）&quot;, 4.8, float(d.loc[day(4), &quot;raw&quot;] / d.loc[day(3), &quot;raw&quot;]), tol=0.05)
+r.chk(&quot;10/4 換算後 比前一天（倍）&quot;, 1.7, float(d.loc[day(4), &quot;rev&quot;] / d.loc[day(3), &quot;rev&quot;]), tol=0.05)
+
+r.pit(g_raw &gt; 50 and g_conv &lt; 10, &quot;月初第一週，沒換算的日營收漲了 %.0f 倍，換算後只漲 %.1f 倍&quot; % (g_raw, g_conv))
+by_cur = a.groupby([&quot;stat_date&quot;, &quot;currency&quot;])[&quot;twd&quot;].sum().unstack(fill_value=0)
+flip = (d.loc[day(3), &quot;raw&quot;] &gt; d.loc[day(2), &quot;raw&quot;]) and (d.loc[day(3), &quot;rev&quot;] &lt; d.loc[day(2), &quot;rev&quot;])
+r.sc(bool(np.allclose(by_cur.sum(axis=1).values, d[&quot;rev&quot;].values)) and flip,
+     &quot;兩種幣別分開畫再相加，剛好等於總營收線；10/3 沒換算是上漲、換算後是下跌，方向都相反&quot;)
+
+fig, ax = plt.subplots(4, 1, figsize=(8, 9), sharex=True)
+ax[0].plot(d.index, d[&quot;raw&quot;] / 1e4, color=&quot;#bbbbbb&quot;, label=&quot;沒換算，直接加總&quot;)
+ax[0].plot(d.index, d[&quot;rev&quot;] / 1e4, color=&quot;#4f81bd&quot;, label=&quot;換算成台幣&quot;)
+ax[0].set_ylabel(&quot;日營收（萬元）&quot;)
+ax[0].set_title(&quot;月初那段「起飛」大半是幣別造成的&quot;)
+ax[0].legend()
+ax[1].stackplot(by_cur.index, by_cur[&quot;TWD&quot;] / 1e4, by_cur[&quot;USD&quot;] / 1e4, labels=[&quot;台幣平台&quot;, &quot;美金平台（已換算）&quot;],
+                colors=[&quot;#f79646&quot;, &quot;#4f81bd&quot;], alpha=0.8)
+ax[1].set_ylabel(&quot;日營收（萬元）&quot;)
+ax[1].legend(loc=&quot;upper left&quot;)
+ax[2].plot(d.index, d[&quot;camps&quot;], color=&quot;#9bbb59&quot;)
+ax[2].set_ylabel(&quot;在跑的活動數&quot;)
+ax[3].plot(d.index, d[&quot;ecpm&quot;], color=&quot;#8064a2&quot;)
+ax[3].set_ylabel(&quot;每千次曝光營收（元）&quot;)
+ax[3].set_title(&quot;單價全月在 50 到 116 元之間震盪，沒有往下走&quot;)
+fig.autofmt_xdate()
+save_fig(fig, &quot;ex16_timeseries.png&quot;)
+r.save()
+</code></pre>
+<p>程式裡的 r.chk(項目, 預期值, 實算值) 是對照檢查，把入口頁寫的數字跟實際算出來的放在一起比；r.pit 記錄坑有沒有出現，r.sc 記錄自己驗那一步有沒有效。畫圖的部分在程式最後面。</p>
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-3">結果</h3>
+<p>換算後全月營收約 297.5 萬元，直接加總只有 194.8 萬元，少掉大約三分之一。日營收從 10/1 的 1.3 萬元爬到 10/23 的 18.6 萬元，月底掉回 4.8 萬元；但同一天在跑的活動數也從 2 檔爬到 30 檔再掉到 10 檔。每千次曝光營收全月都在 50 到 116 元之間上下震盪、沒有走低的趨勢。所以營收的起落是跟著檔期走，不是單價崩掉。</p>
+</section>
+<section class="mod-sec sec-content"><h4>實際跑出來的數字</h4>
+<p>下表每一列都是程式實際算出來的值，23 項全部跟上面那段文字對得起來。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>實跑結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>換算後全月營收</td>
+<td>2975076</td>
+</tr>
+<tr>
+<td>直接加總</td>
+<td>1947799</td>
+</tr>
+<tr>
+<td>10/1 日營收（萬）</td>
+<td>1.2797</td>
+</tr>
+<tr>
+<td>10/23 日營收（萬）</td>
+<td>18.551</td>
+</tr>
+<tr>
+<td>10/31 日營收（萬）</td>
+<td>4.8458</td>
+</tr>
+<tr>
+<td>營收高點在 10/23</td>
+<td>是</td>
+</tr>
+<tr>
+<td>10/1 在跑的活動數</td>
+<td>2</td>
+</tr>
+<tr>
+<td>在跑活動數高點</td>
+<td>30</td>
+</tr>
+<tr>
+<td>10/31 在跑的活動數</td>
+<td>10</td>
+</tr>
+<tr>
+<td>每千次曝光營收 最低</td>
+<td>50.3961</td>
+</tr>
+<tr>
+<td>每千次曝光營收 最高</td>
+<td>115.4507</td>
+</tr>
+<tr>
+<td>每千次曝光營收沒有走低（日斜率 ≥ -0.5 元）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>10/1–10/2 只有程序化平台在投</td>
+<td>是</td>
+</tr>
+<tr>
+<td>自助平台進場日</td>
+<td>2024-10-03</td>
+</tr>
+<tr>
+<td>直客平台進場日</td>
+<td>2024-10-04</td>
+</tr>
+<tr>
+<td>10/1 未換算營收（元）</td>
+<td>406.25</td>
+</tr>
+<tr>
+<td>10/2 未換算營收（元）</td>
+<td>1527.64</td>
+</tr>
+<tr>
+<td>10/1 到 10/7 未換算漲幾倍</td>
+<td>101.5103</td>
+</tr>
+<tr>
+<td>10/1 到 10/7 換算後漲幾倍</td>
+<td>6.5311</td>
+</tr>
+<tr>
+<td>10/3 未換算 比前一天（倍）</td>
+<td>1.6305</td>
+</tr>
+<tr>
+<td>10/3 換算後 比前一天（倍）</td>
+<td>0.261</td>
+</tr>
+<tr>
+<td>10/4 未換算 比前一天（倍）</td>
+<td>4.7927</td>
+</tr>
+<tr>
+<td>10/4 換算後 比前一天（倍）</td>
+<td>1.7034</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="mod-sec sec-content"><h4>補充</h4>
+<ul>
+<li>每千次曝光營收的日斜率 -0.46 元／天，一個月下來不到 15 元，相對於 50 到 116 元的日間震盪看不出趨勢</li>
+</ul>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-4">圖表</h3>
+<p><img alt="第 16 題的圖" src="../../img/ex16_timeseries.png" /></p>
+<p>第一張是沒換算與換算後的日營收，第二張把台幣平台與美金平台（已換算）疊起來，第三張是每天在跑的活動數，第四張是每千次曝光營收。營收的起落跟著活動數走，單價沒有往下掉。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-5">這題的坑，實際跑的時候有沒有出現</h3>
+<p>幣別混用（KMG 埋的第二個陷阱）。10/1、10/2 只有兩個程序化平台在投，記的都是 USD，直接 sum(revenue) 會讓這兩天看起來只有幾百到一千多元；台幣平台 10/3（自助）、10/4（直客）陸續進場後，沒換算的序列從 10/1 到 10/7 一路漲了 100 倍，換算後其實只漲 6.5 倍。更誤導的是 10/3：沒換算看起來比前一天多 1.6 倍，換算後其實掉到前一天的四分之一。很多人會把月初這一段寫成「10 月初廣告起飛」，其實那是幣別造成的假趨勢，跟市場一點關係都沒有。</p>
+<p>實際跑的結果：月初第一週，沒換算的日營收漲了 102 倍，換算後只漲 6.5 倍。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-6">自己驗那一步抓不抓得到錯</h3>
+<p>把每天的營收依 currency 分成兩組各印一條線，兩條相加要剛好等於你的總營收線；接著比較「有換算」與「沒換算」兩個版本，如果月初那段「起飛」在沒換算的版本特別陡、換算後就平下來（例如 10/4 單日，沒換算跳 4.8 倍、換算後 1.7 倍），代表你抓到的是幣別不是市場。</p>
+<p>實際跑的結果：兩種幣別分開畫再相加，剛好等於總營收線；10/3 沒換算是上漲、換算後是下跌，方向都相反。</p>
+</section>
+<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<p>上一題 <a href="%E7%B7%B4%E7%BF%92_15_-_%E6%9C%83%E8%B3%A3%E8%A8%82%E9%96%B1%E7%9A%84%E7%A8%BF%E5%AD%90.html">練習 15 - 會賣訂閱的稿子</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_17_-_%E6%89%BE%E5%87%BA%E7%82%8E%E4%B8%8A%E7%9A%84%E7%95%99%E8%A8%80%E5%8D%80.html">練習 17 - 找出炎上的留言區</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
+<p class="sitefoot">學生版｜更新於 2026-09-13 10:38</p></div></div></div><script>
+(function () {
+  var links = document.querySelectorAll('.sidebar .toc a');
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var heads = document.querySelectorAll('.content h3[id]');
+  if (!heads.length || !('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+    var current = null;
+    heads.forEach(function (h) { if (seen[h.id] && !current) current = h.id; });
+    if (!current) return;
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (map[current]) map[current].classList.add('active');
+  }, { rootMargin: '0px 0px -70% 0px' });
+  heads.forEach(function (h) { io.observe(h); });
+})();
+</script><script>
+(function () {
+  var open = null;
+  function fallback(box) {
+    box.classList.add('figzoom-open');
+    document.body.classList.add('figzoom-lock');
+    open = box;
+  }
+  function close() {
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    if (!open) return;
+    open.classList.remove('figzoom-open');
+    document.body.classList.remove('figzoom-lock');
+    open = null;
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.figzoom-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var box = btn.parentElement;
+    if (open === box || document.fullscreenElement === box) { close(); return; }
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(function () { fallback(box); });
+    } else {
+      fallback(box);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>
