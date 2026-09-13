@@ -4,51 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 14 - 讀者眼中有幾種內容</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 14 - 讀者眼中有幾種內容</h1></div><p>在本單元中，會介紹第 14 題「總編要一張表：這個月一千多則內容，讀者眼中到底是幾種？」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：我們每個月發一千多則，後台只分新聞、深度、影音、Podcast 四種。但那是我們自己編的分類，讀者的行為真的也分成四種嗎？其中哪一群是真的在幫我們賣訂閱的？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 5 組：沒有標籤的時候怎麼看出結構</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1 的 content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>沒有標籤的時候怎麼分群</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 14 - 讀者眼中有幾種內容</h1></div><p>在本單元中，會介紹第 14 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 5 組：沒有標籤的時候怎麼看出結構</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>我們每個月發一千多則，後台只分新聞、深度、影音、Podcast 四種。但那是我們自己編的分類，讀者的行為真的也分成四種嗎？其中哪一群是真的在幫我們賣訂閱的？</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1 的 content_monthly_2024_10.csv）</p>
+<p>對應單元：沒有標籤的時候怎麼分群</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>編輯部的內容分類是生產端的語言，讀者的行為分群是消費端的語言。找出「不紅但會賣訂閱」的那一群，才知道哪一類內容應該用訂閱、而不是流量來評估。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是非監督式學習的分群（clustering）。用比率而不是量體當特徵、先標準化、比較不同的群數，最後用一句話替每一群命名。群數是分析者的選擇，不是資料替你決定的答案。</p>
+<p>1,438 則分成 4 群，分法大約有 10 的 864 次方種，KMeans 不可能全部試過，只能從一個起點往下走到附近的低點。只起跑一次、換 20 個亂數種子，沒有一次跟最佳解完全一樣，一致度從 0.43 到接近 1，這就是要設 n_init 多跑幾次的原因。見 <a href="M_%E6%90%9C%E5%B0%8B%E7%A9%BA%E9%96%93%E8%88%87%E6%B2%B3%E5%85%A7%E5%A1%94.html">搜尋空間與河內塔</a></p>
+<p>內容型態本身有 1.58 bits 的不確定性，知道一則內容落在哪一群之後剩 0.63 bits，分群帶走了 60%。四群裡最純的一群只剩 0.27 bits，最混的一群還有 1.28 bits，交叉表要先看那一群。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>K-means 分群。不要拿 pv、uv、sessions 這種量體欄位直接分，改用每一則自己的比率當特徵：每次瀏覽的平均停留秒數（dwell_sec_total / pv）、跳出率（bounce_sessions / sessions）、每千次瀏覽的分享數與留言數、撞牆率（paywall_hit_cnt / sessions）、撞牆後的轉換率（conversion_cnt / paywall_hit_cnt）。六個特徵先做標準化，再跑 k = 2 到 6（KMeans 的 n_init=10、random_state=42），把每個 k 的 silhouette 都印出來，再決定要幾群。用 Python 的理由：標準化、KMeans、silhouette 在 scikit-learn 裡各一行就有，你的力氣可以全花在挑特徵跟解釋分群上。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>K-means 分群。</li>
+<li>不要拿 pv、uv、sessions 這種量體欄位直接分，改用每一則自己的比率當特徵：每次瀏覽的平均停留秒數（dwell_sec_total / pv）、跳出率（bounce_sessions / sessions）、每千次瀏覽的分享數與留言數、撞牆率（paywall_hit_cnt / sessions）、撞牆後的轉換率（conversion_cnt / paywall_hit_cnt）。</li>
+<li>六個特徵先做標準化，再跑 k = 2 到 6（KMeans 的 n_init=10、random_state=42），把每個 k 的 silhouette 都印出來，再決定要幾群。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python 的理由：標準化、KMeans、silhouette 在 scikit-learn 裡各一行就有，你的力氣可以全花在挑特徵跟解釋分群上。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from math import lgamma, log
 
 from _kmg import *
@@ -152,165 +139,28 @@ ax[1].set_ylim(0.2, 0.3)
 ax[1].set_title(&quot;silhouette 挑不出 k=4，k=2 到 6 都差不多&quot;)
 save_fig(fig, &quot;ex14_clusters.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>k=4 會分出四群，而且四群都講得出一句話：一群平均每次瀏覽停留 135 秒、完全不在付費牆後（影音與 Podcast）；一群只停留 23 秒（即時新聞）；一群撞牆率 0.35（付費牆裡的新聞），影音群與即時新聞群都只有 0.02；最後一群瀏覽量中位數只有 229（其他三群在 448 到 493），撞牆率 0.16，跳出率卻最低（0.46）、撞牆後轉換率最高（0.345，其他三群 0.16 到 0.21）——那就是深度報導群，它不紅，但它是賣訂閱的那一群，這就是回答總編那句問話的答案。一併要注意 k=4 的 silhouette 只有 0.24，最高的反而是 k=2（0.27），k=2 到 6 全部擠在 0.24 到 0.27 之間：選四群是因為四群都講得出一句話，不是指標替你挑的。這四群是好用的標籤，不是資料裡天然存在的界線。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>silhouette（k=4）</td>
-<td>0.2413</td>
-</tr>
-<tr>
-<td>silhouette 最高的 k</td>
-<td>2</td>
-</tr>
-<tr>
-<td>silhouette 最高值</td>
-<td>0.2662</td>
-</tr>
-<tr>
-<td>k=2 到 6 的 silhouette 最低值</td>
-<td>0.2371</td>
-</tr>
-<tr>
-<td>四種性格各落在不同群</td>
-<td>4</td>
-</tr>
-<tr>
-<td>影音群每次瀏覽停留（秒）</td>
-<td>135.3494</td>
-</tr>
-<tr>
-<td>影音群付費牆比例</td>
-<td>0</td>
-</tr>
-<tr>
-<td>即時新聞群每次瀏覽停留（秒）</td>
-<td>22.8246</td>
-</tr>
-<tr>
-<td>付費新聞群撞牆率</td>
-<td>0.3476</td>
-</tr>
-<tr>
-<td>影音群撞牆率</td>
-<td>0.0201</td>
-</tr>
-<tr>
-<td>即時新聞群撞牆率</td>
-<td>0.02</td>
-</tr>
-<tr>
-<td>深度群撞牆率</td>
-<td>0.1637</td>
-</tr>
-<tr>
-<td>深度群瀏覽量中位數</td>
-<td>229.5</td>
-</tr>
-<tr>
-<td>其他三群瀏覽量中位數 最低</td>
-<td>448</td>
-</tr>
-<tr>
-<td>其他三群瀏覽量中位數 最高</td>
-<td>493</td>
-</tr>
-<tr>
-<td>深度群跳出率</td>
-<td>0.4613</td>
-</tr>
-<tr>
-<td>深度群撞牆轉換率</td>
-<td>0.3449</td>
-</tr>
-<tr>
-<td>其他三群撞牆轉換率 最低</td>
-<td>0.1582</td>
-</tr>
-<tr>
-<td>其他三群撞牆轉換率 最高</td>
-<td>0.2075</td>
-</tr>
-<tr>
-<td>深度群跳出率是四群最低</td>
-<td>是</td>
-</tr>
-<tr>
-<td>深度群撞牆轉換率是四群最高</td>
-<td>是</td>
-</tr>
-<tr>
-<td>分成 4 群的分法（10 的幾次方）</td>
-<td>864</td>
-</tr>
-<tr>
-<td>只起跑一次 20 個種子 inertia 最低</td>
-<td>5345.1168</td>
-</tr>
-<tr>
-<td>只起跑一次 20 個種子 inertia 最高</td>
-<td>5641.6109</td>
-</tr>
-<tr>
-<td>跟最佳解的一致度 ARI 最低</td>
-<td>0.4333</td>
-</tr>
-<tr>
-<td>跟最佳解分群完全相同的次數</td>
-<td>0</td>
-</tr>
-<tr>
-<td>內容型態 entropy（bits）</td>
-<td>1.5837</td>
-</tr>
-<tr>
-<td>知道群別後剩的 entropy（bits）</td>
-<td>0.6321</td>
-</tr>
-<tr>
-<td>分群帶走的比例</td>
-<td>0.6009</td>
-</tr>
-<tr>
-<td>最純那一群的 entropy（bits）</td>
-<td>0.2655</td>
-</tr>
-<tr>
-<td>最混那一群的 entropy（bits）</td>
-<td>1.278</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.2413</span><span class="k">silhouette（k=4）</span></div><div class="lab-kpi"><span class="v">2</span><span class="k">silhouette 最高的 k</span></div><div class="lab-kpi"><span class="v">0.2662</span><span class="k">silhouette 最高值</span></div><div class="lab-kpi"><span class="v">0.2371</span><span class="k">k=2 到 6 的 silhouette 最低值</span></div><div class="lab-kpi"><span class="v">4</span><span class="k">四種性格各落在不同群</span></div><div class="lab-kpi"><span class="v">135.3494</span><span class="k">影音群每次瀏覽停留（秒）</span></div><div class="lab-kpi"><span class="v">0</span><span class="k">影音群付費牆比例</span></div><div class="lab-kpi"><span class="v">22.8246</span><span class="k">即時新聞群每次瀏覽停留（秒）</span></div><div class="lab-kpi"><span class="v">0.3476</span><span class="k">付費新聞群撞牆率</span></div><div class="lab-kpi"><span class="v">0.0201</span><span class="k">影音群撞牆率</span></div><div class="lab-kpi"><span class="v">0.02</span><span class="k">即時新聞群撞牆率</span></div><div class="lab-kpi"><span class="v">0.1637</span><span class="k">深度群撞牆率</span></div></div>
+
 <ul>
 <li>各 k 的 silhouette：k=2 0.266、k=3 0.237、k=4 0.241、k=5 0.245、k=6 0.260</li>
 <li>只起跑一次時，20 個種子跟最佳解的 ARI 最高是 0.9978</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 14 題的圖" src="../../img/ex14_clusters.png" /></p>
-<p>左圖是四群的群中心，數字是標準化後離全站平均幾個標準差，紅色高於平均、藍色低於平均。右圖是 k=2 到 6 的 silhouette，最高的是 k=2，不是 k=4。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 14 題的圖" src="../../img/ex14_clusters.png" />
+<em>左圖是四群的群中心，數字是標準化後離全站平均幾個標準差，紅色高於平均、藍色低於平均。右圖是 k=2 到 6 的 silhouette，最高的是 k=2，不是 k=4。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>內容型態本身有 1.58 bits 的不確定性，知道一則內容落在哪一群之後剩 0.63 bits，分群帶走了 60%。四群裡最純的一群只剩 0.27 bits，最混的一群還有 1.28 bits，交叉表要先看那一群。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_13_-_%E5%81%9C%E6%8A%95%E7%89%88%E4%BD%8D%E6%B8%85%E5%96%AE.html">練習 13 - 停投版位清單</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_15_-_%E6%9C%83%E8%B3%A3%E8%A8%82%E9%96%B1%E7%9A%84%E7%A8%BF%E5%AD%90.html">練習 15 - 會賣訂閱的稿子</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

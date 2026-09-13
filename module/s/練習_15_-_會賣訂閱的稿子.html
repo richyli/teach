@@ -4,51 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 15 - 會賣訂閱的稿子</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 15 - 會賣訂閱的稿子</h1></div><p>在本單元中，會介紹第 15 題「內容策略會要的一頁結論：哪一種稿最容易落進「會賣訂閱」那一群，而且下個月還算數」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：分群跟我說有一群內容特別會帶訂閱，那我下個月到底要叫記者做什麼樣的稿？給我一句可以直接寫進製作規範的話，順便告訴我這句話有多可靠、什麼情況下會不成立。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>挑戰</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 5 組：沒有標籤的時候怎麼看出結構</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1）、content、content_monthly、dim_section、staff（L2 要自己 join）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>沒有標籤的時候怎麼分群</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 15 - 會賣訂閱的稿子</h1></div><p>在本單元中，會介紹第 15 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-3">挑戰</span><span class="lab-chip">第 5 組：沒有標籤的時候怎麼看出結構</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>分群跟我說有一群內容特別會帶訂閱，那我下個月到底要叫記者做什麼樣的稿？給我一句可以直接寫進製作規範的話，順便告訴我這句話有多可靠、什麼情況下會不成立。</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1）、content、content_monthly、dim_section、staff（L2 要自己 join）</p>
+<p>對應單元：沒有標籤的時候怎麼分群</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>製作規範會影響整個編輯部下個月做什麼稿，所以需要一句可以執行、而且下個月還成立的話，同時要清楚它只是關聯，不是「多寫就多賣」。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是關聯規則（association rules）與穩定性檢驗。用 support、confidence、lift 找出哪些屬性組合容易落進高轉換群，再用多次切半驗證確認規則不是單一批資料的偶然。候選規則越多，越需要這一步。</p>
+<p>29 個品項的單項加兩兩組合，一共 435 條候選規則，過了最低支持度的還有 118 條。在這麼多條裡挑 lift 最高的，就算把標籤隨機打亂，每次也挑得出 lift 1.5 到 2.2 的規則，所以「自己驗」把門檻放在 lift 3：低於 3，亂猜也差不多做得到。見 <a href="M_%E6%90%9C%E5%B0%8B%E7%A9%BA%E9%96%93%E8%88%87%E6%B2%B3%E5%85%A7%E5%A1%94.html">搜尋空間與河內塔</a></p>
+<p>lift 取以 2 為底的對數，就是這條規則的逐點互資訊（PMI）。最強那條 lift 5.66，約等於 2.5 bits：知道一篇稿是「深度報導且標題沒數字」，關於它會不會落進高轉換群，你多知道了 2.5 bits。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>兩段接起來。第一段用行為比率（停留、跳出、分享、留言、撞牆率、撞牆後轉換率）做 K-means，找出撞牆後轉換率最高的那一群當標籤。第二段只拿「稿子還沒發就已經決定的屬性」二元化成品項：content_type、section_name、is_paywalled、has_number_in_headline、字數分三段，用關聯規則找哪些屬性組合落進那一群的 lift 最高。第三段做穩定性檢驗：資料隨機切一半，A 半重跑分群，B 半用 A 的中心點指派標籤，看規則的 lift 還在不在；切法至少換 20 種（例如 np.random.default_rng(0) 到 default_rng(19)），只切一次看不出穩不穩。用 Python 的理由：同一套流程要重跑三、四次，寫成函式再迴圈最省事，靠複製貼上會讓你自己都搞不清楚跑的是哪一版。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>兩段接起來。</li>
+<li>第一段用行為比率（停留、跳出、分享、留言、撞牆率、撞牆後轉換率）做 K-means，找出撞牆後轉換率最高的那一群當標籤。</li>
+<li>第二段只拿「稿子還沒發就已經決定的屬性」二元化成品項：content_type、section_name、is_paywalled、has_number_in_headline、字數分三段，用關聯規則找哪些屬性組合落進那一群的 lift 最高。</li>
+<li>第三段做穩定性檢驗：資料隨機切一半，A 半重跑分群，B 半用 A 的中心點指派標籤，看規則的 lift 還在不在；切法至少換 20 種（例如 np.random.default_rng。到 default_rng(19)），只切一次看不出穩不穩。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python 的理由：同一套流程要重跑三、四次，寫成函式再迴圈最省事，靠複製貼上會讓你自己都搞不清楚跑的是哪一版。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score
@@ -181,130 +169,29 @@ ax[1].set_ylabel(&quot;lift&quot;)
 ax[1].set_title(&quot;掉下去的原因：分群那一步挑到別的群&quot;)
 save_fig(fig, &quot;ex15_stability.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>高轉換群的基準比例約 14.7%。跑出來最強的規則是「內容型態＝深度報導 且 標題沒有數字」→ 落進高轉換群的 confidence 0.83、lift 5.66；「有設付費牆 且 2000 字以上」lift 5.57；光看「內容型態＝深度報導」lift 就有 5.36。但切半重跑就不穩了：20 種切法裡，有 11 次「深度報導」的 lift 還在 4.8 到 6.5，另外 9 次掉到 1.7 到 2.7。掉下去的那幾次，A 半邊的 K-means 挑到的「高轉換群」根本不是深度報導群——那一群裡深度報導只佔 25% 到 41%，站得住的那 11 次是 72% 到 84%。所以這條規則下個月還算不算數，取決於分群那一步挑到哪一群，不是規則本身有多強。但真正該交出去的那句話是反面的：這些規則的前項（深度、長文）跟分群用的特徵（停留時間、轉換率）講的根本是同一件事，規則只是把分群結果翻譯回可以下指令的欄位，它不是新發現，更不是「多寫深度報導就會多賣訂閱」的因果證據——深度報導本來就寫給已經想訂的人看。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>高轉換群基準比例</td>
-<td>0.1474</td>
-</tr>
-<tr>
-<td>最強規則</td>
-<td>type=feature &amp; no_number_in_headline</td>
-</tr>
-<tr>
-<td>深度報導且標題無數字 confidence</td>
-<td>0.8344</td>
-</tr>
-<tr>
-<td>深度報導且標題無數字 lift</td>
-<td>5.6597</td>
-</tr>
-<tr>
-<td>付費牆且兩千字以上 lift</td>
-<td>5.5672</td>
-</tr>
-<tr>
-<td>深度報導 lift</td>
-<td>5.3567</td>
-</tr>
-<tr>
-<td>lift 還站得住（≥ 3）的切法數</td>
-<td>11</td>
-</tr>
-<tr>
-<td>站得住的 lift 最低</td>
-<td>4.755</td>
-</tr>
-<tr>
-<td>站得住的 lift 最高</td>
-<td>6.4804</td>
-</tr>
-<tr>
-<td>掉下去的 lift 最低</td>
-<td>1.6831</td>
-</tr>
-<tr>
-<td>掉下去的 lift 最高</td>
-<td>2.6983</td>
-</tr>
-<tr>
-<td>掉下去時 高轉換群裡深度報導佔比 最低</td>
-<td>0.2549</td>
-</tr>
-<tr>
-<td>掉下去時 高轉換群裡深度報導佔比 最高</td>
-<td>0.4088</td>
-</tr>
-<tr>
-<td>站得住時 高轉換群裡深度報導佔比 最低</td>
-<td>0.7248</td>
-</tr>
-<tr>
-<td>站得住時 高轉換群裡深度報導佔比 最高</td>
-<td>0.8353</td>
-</tr>
-<tr>
-<td>lift 與深度報導佔比的相關</td>
-<td>0.9852</td>
-</tr>
-<tr>
-<td>品項數</td>
-<td>29</td>
-</tr>
-<tr>
-<td>候選規則（單項＋兩兩組合）</td>
-<td>435</td>
-</tr>
-<tr>
-<td>過了最低支持度 0.03 的規則</td>
-<td>118</td>
-</tr>
-<tr>
-<td>最強規則的 PMI（bits）</td>
-<td>2.5007</td>
-</tr>
-<tr>
-<td>打亂標籤後最高 lift 的最小值</td>
-<td>1.4799</td>
-</tr>
-<tr>
-<td>打亂標籤後最高 lift 的最大值</td>
-<td>2.2149</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.1474</span><span class="k">高轉換群基準比例</span></div><div class="lab-kpi"><span class="v">0.8344</span><span class="k">深度報導且標題無數字 confidence</span></div><div class="lab-kpi"><span class="v">5.6597</span><span class="k">深度報導且標題無數字 lift</span></div><div class="lab-kpi"><span class="v">5.5672</span><span class="k">付費牆且兩千字以上 lift</span></div><div class="lab-kpi"><span class="v">5.3567</span><span class="k">深度報導 lift</span></div><div class="lab-kpi"><span class="v">11</span><span class="k">lift 還站得住（≥ 3）的切法數</span></div><div class="lab-kpi"><span class="v">4.755</span><span class="k">站得住的 lift 最低</span></div><div class="lab-kpi"><span class="v">6.4804</span><span class="k">站得住的 lift 最高</span></div><div class="lab-kpi"><span class="v">1.6831</span><span class="k">掉下去的 lift 最低</span></div><div class="lab-kpi"><span class="v">2.6983</span><span class="k">掉下去的 lift 最高</span></div><div class="lab-kpi"><span class="v">0.2549</span><span class="k">掉下去時 高轉換群裡深度報導佔比 最低</span></div><div class="lab-kpi"><span class="v">0.4088</span><span class="k">掉下去時 高轉換群裡深度報導佔比 最高</span></div></div>
+
 <ul>
 <li>lift 前五：type=feature &amp; no_number_in_headline（confidence 0.83、lift 5.66）；paywalled &amp; words&gt;=2000（confidence 0.82、lift 5.57）；type=feature &amp; paywalled（confidence 0.82、lift 5.56）；type=feature &amp; words&gt;=2000（confidence 0.80、lift 5.41）；type=feature（confidence 0.79、lift 5.36）</li>
 <li>20 種切法的「深度報導」lift：0→5.16、1→5.39、2→4.98、3→5.01、4→5.38、5→2.60、6→2.43、7→2.48、8→1.76、9→5.94、10→4.76、11→5.26、12→2.70、13→5.41、14→5.21、15→2.61、16→2.50、17→6.48、18→2.39、19→1.68</li>
 <li>標籤打亂 20 次，每次挑到的最高 lift：1.62、1.94、1.59、2.21、2.02、1.67、1.80、1.86、1.94、1.88、1.66、1.48、1.61、1.50、1.90、1.57、1.72、1.49、1.96、1.80</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 15 題的圖" src="../../img/ex15_stability.png" /></p>
-<p>左圖是 20 種切法下，B 半邊「深度報導」這條規則的 lift：藍色站得住、紅色掉到 3 以下，灰色點線是把標籤打亂時能挑到的最高 lift。右圖說明掉下去的原因：A 半邊挑到的高轉換群裡深度報導越少，lift 就越低。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 15 題的圖" src="../../img/ex15_stability.png" />
+<em>左圖是 20 種切法下，B 半邊「深度報導」這條規則的 lift：藍色站得住、紅色掉到 3 以下，灰色點線是把標籤打亂時能挑到的最高 lift。右圖說明掉下去的原因：A 半邊挑到的高轉換群裡深度報導越少，lift 就越低。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>lift 取以 2 為底的對數，就是這條規則的逐點互資訊（PMI）。最強那條 lift 5.66，約等於 2.5 bits：知道一篇稿是「深度報導且標題沒數字」，關於它會不會落進高轉換群，你多知道了 2.5 bits。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_14_-_%E8%AE%80%E8%80%85%E7%9C%BC%E4%B8%AD%E6%9C%89%E5%B9%BE%E7%A8%AE%E5%85%A7%E5%AE%B9.html">練習 14 - 讀者眼中有幾種內容</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_16_-_%E6%9C%88%E5%BA%95%E5%BB%A3%E5%91%8A%E7%87%9F%E6%94%B6%E4%B8%8B%E6%BB%91.html">練習 16 - 月底廣告營收下滑</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

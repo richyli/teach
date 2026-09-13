@@ -4,51 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 09 - 付費牆讓流量掉幾成</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 09 - 付費牆讓流量掉幾成</h1></div><p>在本單元中，會介紹第 9 題「總經理要一個數字：一篇稿子關進付費牆，流量會掉幾成」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：「讀者事業處想再把三百篇稿子推進付費牆。給我一個數字：一篇稿子關進去，瀏覽量大概掉幾成？掉的量換到的訂閱划不划算？」</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>進階</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 3 組：這個差異是真的嗎</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1 檔名 content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>為什麼這篇會紅 用迴歸找關聯</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 09 - 付費牆讓流量掉幾成</h1></div><p>在本單元中，會介紹第 9 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-2">進階</span><span class="lab-chip">第 3 組：這個差異是真的嗎</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>「讀者事業處想再把三百篇稿子推進付費牆。給我一個數字：一篇稿子關進去，瀏覽量大概掉幾成？掉的量換到的訂閱划不划算？」</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1 檔名 content_monthly_2024_10.csv）</p>
+<p>對應單元：為什麼這篇會紅 用迴歸找關聯</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>付費牆牽動流量與訂閱之間的取捨。主管要「一個數字」，但這個數字會隨控制條件從不顯著變成少掉四分之一；只交一個數字，等於替主管做了一個沒說出口的假設。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是迴歸分析與規格穩健性。係數是「控制了哪些條件之後」的關聯，不是因果。把合理的規格都跑一次、並排列出來（規格曲線，specification curve），比挑一條最好看的交出去更負責。</p>
+<p>四組控制變數各自放或不放，一共有 16 條規格可以跑；付費牆係數從 -0.481 到 -0.100 都跑得出來，其中 12 條顯著。只交出你挑中的那一條，等於沒告訴別人你在多大的空間裡找過。見 <a href="M_%E6%90%9C%E5%B0%8B%E7%A9%BA%E9%96%93%E8%88%87%E6%B2%B3%E5%85%A7%E5%A1%94.html">搜尋空間與河內塔</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>三條逐步加控制的 OLS 迴歸，依變數都是 log(pv)——瀏覽量右偏得很厲害（中位數 446、最大 5869），取對數以後係數可以直接讀成百分比。A：只放 is_paywalled。B：加 content_type、log(word_cnt)、has_number_in_headline。C：再加 section_name 當版面的固定效果。把三條的 is_paywalled 係數、p 值、R 平方並排看。語言用 Python：statsmodels 的 formula 寫法，C(section_name) 一個字就把 18 個版面展開成虛擬變數，不必自己動手做 18 欄，改規格只要改字串。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>三條逐步加控制的 OLS 迴歸，依變數都是 log(pv)——瀏覽量右偏得很厲害（中位數 446、最大 5869），取對數以後係數可以直接讀成百分比。</li>
+<li>A：只放 is_paywalled。</li>
+<li>B：加 content_type、log(word_cnt)、has_number_in_headline。</li>
+<li>C：再加 section_name 當版面的固定效果。</li>
+<li>把三條的 is_paywalled 係數、p 值、R 平方並排看。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 Python：statsmodels 的 formula 寫法，C(section_name) 一個字就把 18 個版面展開成虛擬變數，不必自己動手做 18 欄，改規格只要改字串。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from itertools import combinations
 
 from _kmg import *
@@ -111,107 +99,27 @@ ax.set_ylabel(&quot;付費牆係數（log 瀏覽量）與 95% 信賴區間&quot;
 ax.set_title(&quot;同一個問題，16 條規格：係數從 -0.48 到 -0.10（藍點＝p &lt; 0.05）&quot;)
 save_fig(fig, &quot;ex09_spec_curve.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>同一個問題，三條線給出三個答案。A：係數 -0.214、p=0.0001、R 平方 0.010。B：係數 -0.103、p=0.083，照慣例就是「不顯著」，R 平方 0.070。C：係數 -0.291、p=0.0014、R 平方 0.490。只交 B 會寫成「付費牆對流量沒有顯著影響」，只交 C 會寫成「有牆的稿子平均少掉約四分之一的瀏覽量」（exp(-0.291)-1 ≈ -25%）。差別在於付費牆不是抽籤決定的：財經、科技、環境、深度調查這四個版面 100% 進付費牆，其他版面多半在 15% 以下，不控制版面，你估到的其實是「財經跟娛樂的流量差多少」。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pv 中位數</td>
-<td>446.5</td>
-</tr>
-<tr>
-<td>pv 最大值</td>
-<td>5869</td>
-</tr>
-<tr>
-<td>A 付費牆係數</td>
-<td>-0.2144</td>
-</tr>
-<tr>
-<td>A p 值</td>
-<td>0.0001</td>
-</tr>
-<tr>
-<td>A R 平方</td>
-<td>0.0101</td>
-</tr>
-<tr>
-<td>B 付費牆係數</td>
-<td>-0.1035</td>
-</tr>
-<tr>
-<td>B p 值</td>
-<td>0.0825</td>
-</tr>
-<tr>
-<td>B R 平方</td>
-<td>0.0704</td>
-</tr>
-<tr>
-<td>C 付費牆係數</td>
-<td>-0.2914</td>
-</tr>
-<tr>
-<td>C p 值</td>
-<td>0.0014</td>
-</tr>
-<tr>
-<td>C R 平方</td>
-<td>0.4904</td>
-</tr>
-<tr>
-<td>C 規格換算成流量變化</td>
-<td>-0.2528</td>
-</tr>
-<tr>
-<td>100% 進付費牆的版面</td>
-<td>深度調查、環境、科技、財經</td>
-</tr>
-<tr>
-<td>其他版面多半在 15% 以下</td>
-<td>是</td>
-</tr>
-<tr>
-<td>可以跑的規格數</td>
-<td>16</td>
-</tr>
-<tr>
-<td>付費牆係數 最小</td>
-<td>-0.4811</td>
-</tr>
-<tr>
-<td>付費牆係數 最大</td>
-<td>-0.1004</td>
-</tr>
-<tr>
-<td>在 0.05 下顯著的規格數</td>
-<td>12</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">446.5</span><span class="k">pv 中位數</span></div><div class="lab-kpi"><span class="v">5869</span><span class="k">pv 最大值</span></div><div class="lab-kpi"><span class="v">-0.2144</span><span class="k">A 付費牆係數</span></div><div class="lab-kpi"><span class="v">0.0001</span><span class="k">A p 值</span></div><div class="lab-kpi"><span class="v">0.0101</span><span class="k">A R 平方</span></div><div class="lab-kpi"><span class="v">-0.1035</span><span class="k">B 付費牆係數</span></div><div class="lab-kpi"><span class="v">0.0825</span><span class="k">B p 值</span></div><div class="lab-kpi"><span class="v">0.0704</span><span class="k">B R 平方</span></div><div class="lab-kpi"><span class="v">-0.2914</span><span class="k">C 付費牆係數</span></div><div class="lab-kpi"><span class="v">0.0014</span><span class="k">C p 值</span></div><div class="lab-kpi"><span class="v">0.4904</span><span class="k">C R 平方</span></div><div class="lab-kpi"><span class="v">-0.2528</span><span class="k">C 規格換算成流量變化</span></div></div>
+
 <ul>
 <li>其他版面的付費比率：影音專題 1%、島上會議 2%、社會 4%、活動 6%、評論 7%、體育 7%、短影音 8%、國際 8%、政治 9%、生活 9%、娛樂 11%、選物誌 13%、教育 14%、品牌內容 16%</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 9 題的圖" src="../../img/ex09_spec_curve.png" /></p>
-<p>16 條規格各跑一次付費牆係數，照係數大小排好。藍點是 p &lt; 0.05、灰點不顯著，直線是 95% 信賴區間。係數從 -0.48 到 -0.10，有沒有控制版面決定你站在哪一端。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 9 題的圖" src="../../img/ex09_spec_curve.png" />
+<em>16 條規格各跑一次付費牆係數，照係數大小排好。藍點是 p &lt; 0.05、灰點不顯著，直線是 95% 信賴區間。係數從 -0.48 到 -0.10，有沒有控制版面決定你站在哪一端。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_08_-_%E8%87%AA%E5%8A%A9%E5%B9%B3%E5%8F%B0%E9%BB%9E%E6%93%8A%E7%8E%87%E7%9C%9F%E7%9A%84%E6%AF%94%E8%BC%83%E9%AB%98%E5%97%8E.html">練習 08 - 自助平台點擊率真的比較高嗎</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_10_-_%E7%99%BC%E7%A8%BF%E5%89%8D%E9%A0%90%E4%BC%B0%E6%B5%81%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 10 - 發稿前預估流量的模型</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

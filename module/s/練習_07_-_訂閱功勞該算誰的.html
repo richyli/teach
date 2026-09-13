@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 07 - 訂閱功勞該算誰的</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,48 +14,34 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 07 - 訂閱功勞該算誰的</h1></div><p>在本單元中，會介紹第 7 題「影音處貢獻一半流量卻只拿兩成訂閱功勞，年終獎金該怎麼分」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：年度檢討會上，影音與聲音處主管說：「我們做了全站快一半的流量，訂閱的功勞卻都算在新聞內容處頭上。」這句話對嗎？這筆訂閱到底該算誰的？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>挑戰</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 2 組：把經營問題拆成算得出來的東西</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1：content_monthly_2024_10.csv）、content（L2：content.csv）、content_monthly（L2：content_monthly.csv）、dim_section（L2：dim_section.csv）、staff（L2：staff.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>歸因 這筆訂閱該算誰的（穩健性檢查接 世代分析 為什麼要看同一批人）</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 07 - 訂閱功勞該算誰的</h1></div><p>在本單元中，會介紹第 7 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-3">挑戰</span><span class="lab-chip">第 2 組：把經營問題拆成算得出來的東西</span><span class="lab-chip lab-tool">R ＋ Python 畫圖</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>年度檢討會上，影音與聲音處主管說：「我們做了全站快一半的流量，訂閱的功勞卻都算在新聞內容處頭上。」這句話對嗎？這筆訂閱到底該算誰的？</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1：content_monthly_2024_10.csv）、content（L2：content.csv）、content_monthly（L2：content_monthly.csv）、dim_section（L2：dim_section.csv）、staff（L2：staff.csv）</p>
+<p>對應單元：歸因 這筆訂閱該算誰的（穩健性檢查接 世代分析 為什麼要看同一批人）</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>歸因規則決定預算、獎金與部門話語權怎麼分。last-touch 結構上就讓免費影音拿不到功勞，規則沒先講清楚，會議上吵的其實是規則，不是表現。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是歸因分析（attribution）：同一份資料，放進不同的歸因模型會得到不同答案。分析的責任是把每個模型的假設攤開，再做穩健性檢查（這裡是按發布世代分開重跑），說清楚結論的效力到哪裡，以及要什麼資料才真的解得了。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>第一步先讀懂 conversion_cnt 的定義——「從這則內容進來而完成訂閱的人數」，它已經替你做了一個歸因選擇：功勞全給撞牆的最後那一則（last-touch）。第二步做一套對照歸因：把全站 14,463 個訂閱按各事業處的工作階段比例重新分配（流量加權，當作 first-touch 的粗略代理），比較兩套下的部門排名。第三步做穩健性檢查：只留 10 月上旬發布的內容重跑一次，看結論會不會變——不同時間發的稿混在一起算，差異可能只是反映那幾天發了什麼稿，這正是世代分析要擋的東西。最後寫清楚要有什麼資料才真的解得了這題（讀者層級的接觸路徑），以及在沒有它之前這個結論的效力到哪裡。用 R，因為最後要用一張斜線圖把「流量比例」和「訂閱功勞比例」兩端連起來，一眼看出誰掉下去，ggplot2 畫這種圖最短。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題的分析用 R，整支程式如下。從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2；cat 那幾行會把算出來的關鍵數字印出來。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>第一步先讀懂 conversion_cnt 的定義——「從這則內容進來而完成訂閱的人數」，它已經替你做了一個歸因選擇：功勞全給撞牆的最後那一則（last-touch）。</li>
+<li>第二步做一套對照歸因：把全站 14,463 個訂閱按各事業處的工作階段比例重新分配（流量加權，當作 first-touch 的粗略代理），比較兩套下的部門排名。</li>
+<li>第三步做穩健性檢查：只留 10 月上旬發布的內容重跑一次，看結論會不會變——不同時間發的稿混在一起算，差異可能只是反映那幾天發了什麼稿，這正是世代分析要擋的東西。</li>
+<li>最後寫清楚要有什麼資料才真的解得了這題（讀者層級的接觸路徑），以及在沒有它之前這個結論的效力到哪裡。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 R，因為最後要用一張斜線圖把「流量比例」和「訂閱功勞比例」兩端連起來，一眼看出誰掉下去，ggplot2 畫這種圖最短。</p>
+
+<details class="lab-code"><summary>看完整程式（R）</summary>
+
+
 <pre><code class="language-r"># ex07 年終獎金該怎麼分：last-touch 與流量加權歸因（R）
 suppressMessages(library(ggplot2))
 res_dir &lt;- &quot;teacher/exercise_runs/results&quot;
@@ -103,9 +89,13 @@ early &lt;- f[day &lt;= 10, ]
 es &lt;- tapply(early$sessions, early$division, sum)
 ec &lt;- tapply(early$conversion_cnt, early$division, sum)
 </code></pre>
-</section>
-<section class="mod-sec sec-content"><h4>畫圖的程式</h4>
-<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義再算一次，順便確認和 R 的結果一樣。</p>
+
+
+</details>
+
+<details class="lab-code"><summary>看畫圖的程式（Python，照同一套定義重算一次）</summary>
+
+
 <pre><code class="language-python">&quot;&quot;&quot;第 7 題的圖（R 那支負責數字，這支用同一套算法重算一次再畫中文圖）。&quot;&quot;&quot;
 from _kmg import *
 
@@ -146,86 +136,24 @@ ax[1].set_title(&quot;三個發布世代：方向一樣，數值晃將近 15 個
 ax[1].legend(fontsize=8, loc=&quot;upper left&quot;, bbox_to_anchor=(1.0, 1.0))
 save_fig(fig, &quot;ex07_attribution.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>主管說的方向是對的，但幅度要講清楚：影音與聲音處佔全站工作階段 46.2%，在 last-touch 下只拿到 17.4% 的訂閱功勞；新聞內容處佔 45.7% 的工作階段卻拿到 78.7%。換成流量加權，兩個處都變成大約 46%——整整 33 個百分點的落差完全由歸因規則造成，不是誰做得比較好。上、中、下三個發布世代分開看，方向都一樣（新聞內容處 71.6%、86.6%、76.9%），但數值會晃將近 15 個百分點，所以你只能說「方向穩定」，不能說「就是 78.7%」。真正的答案是兩套都不對：免費影音永遠不會出現在撞牆的那一刻，last-touch 結構上就拿不到功勞；而流量加權假設每一段造訪對訂閱的貢獻都一樣，同樣是硬套上去的假設。</p>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.4619</span><span class="k">影音與聲音處 工作階段佔比</span></div><div class="lab-kpi"><span class="v">0.1736</span><span class="k">影音與聲音處 last-touch 訂閱功勞</span></div><div class="lab-kpi"><span class="v">0.4571</span><span class="k">新聞內容處 工作階段佔比</span></div><div class="lab-kpi"><span class="v">0.7868</span><span class="k">新聞內容處 last-touch 訂閱功勞</span></div><div class="lab-kpi"><span class="v">32.9637</span><span class="k">新聞內容處 兩套歸因落差（百分點）</span></div><div class="lab-kpi"><span class="v">0.4619</span><span class="k">流量加權 影音與聲音處</span></div><div class="lab-kpi"><span class="v">0.4571</span><span class="k">流量加權 新聞內容處</span></div><div class="lab-kpi"><span class="v">0.716</span><span class="k">上旬世代 新聞內容處功勞</span></div><div class="lab-kpi"><span class="v">0.8656</span><span class="k">中旬世代 新聞內容處功勞</span></div><div class="lab-kpi"><span class="v">0.7692</span><span class="k">下旬世代 新聞內容處功勞</span></div><div class="lab-kpi"><span class="v">14.9644</span><span class="k">三個世代的晃動幅度（百分點）</span></div><div class="lab-kpi"><span class="v">0.4619</span><span class="k">影音與聲音處 工作階段佔比</span></div></div>
+
 </section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>影音與聲音處 工作階段佔比</td>
-<td>0.4619</td>
-</tr>
-<tr>
-<td>影音與聲音處 last-touch 訂閱功勞</td>
-<td>0.1736</td>
-</tr>
-<tr>
-<td>新聞內容處 工作階段佔比</td>
-<td>0.4571</td>
-</tr>
-<tr>
-<td>新聞內容處 last-touch 訂閱功勞</td>
-<td>0.7868</td>
-</tr>
-<tr>
-<td>新聞內容處 兩套歸因落差（百分點）</td>
-<td>32.9637</td>
-</tr>
-<tr>
-<td>流量加權 影音與聲音處</td>
-<td>0.4619</td>
-</tr>
-<tr>
-<td>流量加權 新聞內容處</td>
-<td>0.4571</td>
-</tr>
-<tr>
-<td>上旬世代 新聞內容處功勞</td>
-<td>0.716</td>
-</tr>
-<tr>
-<td>中旬世代 新聞內容處功勞</td>
-<td>0.8656</td>
-</tr>
-<tr>
-<td>下旬世代 新聞內容處功勞</td>
-<td>0.7692</td>
-</tr>
-<tr>
-<td>三個世代的晃動幅度（百分點）</td>
-<td>14.9644</td>
-</tr>
-<tr>
-<td>影音與聲音處 工作階段佔比</td>
-<td>0.4619</td>
-</tr>
-<tr>
-<td>影音與聲音處 last-touch 功勞</td>
-<td>0.1736</td>
-</tr>
-<tr>
-<td>新聞內容處 last-touch 功勞</td>
-<td>0.7868</td>
-</tr>
-</tbody>
-</table>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 7 題的圖" src="../../img/ex07_attribution.png" />
+<em>左圖是兩種分功勞算法的對照：新聞內容處與影音與聲音處的工作階段幾乎一樣多，last-touch 功勞卻一個 78.7%、一個 17.4%。右圖把內容按發布日期分成上中下旬三個世代各算一次，方向一樣，數值會晃。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 7 題的圖" src="../../img/ex07_attribution.png" /></p>
-<p>左圖是兩種分功勞算法的對照：新聞內容處與影音與聲音處的工作階段幾乎一樣多，last-touch 功勞卻一個 78.7%、一個 17.4%。右圖把內容按發布日期分成上中下旬三個世代各算一次，方向一樣，數值會晃。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_06_-_banner_%E8%B3%A3%E5%BB%A3%E5%91%8A%E9%82%84%E6%98%AF%E6%8E%A8%E8%A8%82%E9%96%B1.html">練習 06 - banner 賣廣告還是推訂閱</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_08_-_%E8%87%AA%E5%8A%A9%E5%B9%B3%E5%8F%B0%E9%BB%9E%E6%93%8A%E7%8E%87%E7%9C%9F%E7%9A%84%E6%AF%94%E8%BC%83%E9%AB%98%E5%97%8E.html">練習 08 - 自助平台點擊率真的比較高嗎</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

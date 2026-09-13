@@ -4,51 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 01 - 月會上的則數對不對</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 01 - 月會上的則數對不對</h1></div><p>在本單元中，會介紹第 1 題「月會投影片上的「十月發了 1,444 則」，幫我查一下這個數字對不對」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：總編輯明天月會要說「十月我們發了 1,444 則報導、拿到 92 萬次瀏覽」，這兩個數字可以直接上投影片嗎？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 1 組：先把一張表讀對</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1 的 content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td><a href="M_%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%93_AI_%E8%AE%80%E4%B8%80%E5%BC%B5%E8%A1%A8.html">第一次讓 AI 讀一張表</a></td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 01 - 月會上的則數對不對</h1></div><p>在本單元中，會介紹第 1 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 1 組：先把一張表讀對</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>總編輯明天月會要說「十月我們發了 1,444 則報導、拿到 92 萬次瀏覽」，這兩個數字可以直接上投影片嗎？</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1 的 content_monthly_2024_10.csv）</p>
+<p>對應單元：<a href="M_%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%93_AI_%E8%AE%80%E4%B8%80%E5%BC%B5%E8%A1%A8.html">第一次讓 AI 讀一張表</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>月會投影片上的數字，會變成部門的績效，也會變成下個月人力與預算的依據。這次只差 6 則，看起來無傷，但「一列就是一則」這句話一旦不成立，之後按記者、按版面拆的每一張報表都會跟著錯，被懷疑的是整個數據團隊的可信度。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是資料分析的第一步：資料盤點（data profiling）。動手算任何數字之前，先確認這張表的分析單位是什麼、主鍵是哪幾欄、主鍵是不是真的唯一。分析的價值來自可信度，而可信度從「這張表的一列代表什麼」開始。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>先讀資料字典，把這張表的主鍵找出來（content_id ＋ stat_month），再用 pandas 的 duplicated() 檢查主鍵是不是真的唯一；發現不唯一就照 ingest_ts（入庫時間）取最新那一列，然後重新算則數與瀏覽量總和。用 Python，因為「檢查主鍵有沒有重複」＋「按指定欄位去重」在 pandas 只要兩行，同一件事在 Excel 要一路拉公式比對才看得出來是哪幾列重覆。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先讀資料字典，把這張表的主鍵找出來（content_id ＋ stat_month），再用 pandas 的 duplicated() 檢查主鍵是不是真的唯一；發現不唯一就照 ingest_ts（入庫時間）取最新那一列，然後重新算則數與瀏覽量總和。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python，因為「檢查主鍵有沒有重複」＋「按指定欄位去重」在 pandas 只要兩行，同一件事在 Excel 要一路拉公式比對才看得出來是哪幾列重覆。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 df = flat()
@@ -79,9 +62,13 @@ ax.set_xlabel(&quot;被重複計入的瀏覽量&quot;)
 ax.set_title(&quot;重送的 6 則內容：各自的瀏覽量被算了兩次，合計多算 %s 次&quot; % format(gap, &quot;,&quot;))
 save_fig(fig, &quot;ex01_duplicates.png&quot;)
 </code></pre>
-</section>
-<section class="mod-sec sec-content"><h4>共用的讀檔函式</h4>
-<p>每一支 Python 程式開頭的 from _kmg import * 載入的是下面這一支：讀檔、依主鍵去重、換幣別、算 entropy、存圖。</p>
+
+
+</details>
+
+<details class="lab-code"><summary>看共用的讀檔函式 _kmg.py（每一題的 from _kmg import * 載入的就是它）</summary>
+
+
 <pre><code class="language-python">&quot;&quot;&quot;練習實跑的共用載入與記錄工具。每一題的腳本都 from _kmg import *。&quot;&quot;&quot;
 import json
 from pathlib import Path
@@ -133,57 +120,23 @@ def save_fig(fig, name):
     fig.savefig(RES / name, dpi=130)
     plt.close(fig)
 </code></pre>
+
+
+</details>
+
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>表裡有 1,444 列，但只有 1,438 個不同的 content_id——有 6 則內容因為報表重送各出現兩次，兩列除了 ingest_ts 以外一模一樣。去重後正確答案是 1,438 則、918,470 次瀏覽；被多算掉的 2,266 次瀏覽，剛好等於那 6 列的 pv 加總。誤差只有 0.25% 看似無傷，但「一列就是一則」這句話是錯的，之後任何按記者、按版面算則數的報表都會跟著錯。</p>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">1444</span><span class="k">列數</span></div><div class="lab-kpi"><span class="v">1438</span><span class="k">不重複 content_id</span></div><div class="lab-kpi"><span class="v">6</span><span class="k">主鍵重複列數</span></div><div class="lab-kpi"><span class="v">1438</span><span class="k">去重後則數</span></div><div class="lab-kpi"><span class="v">918,470</span><span class="k">去重後總瀏覽量</span></div><div class="lab-kpi"><span class="v">2266</span><span class="k">被多算的瀏覽量</span></div><div class="lab-kpi"><span class="v">12</span><span class="k">重複列除 ingest_ts 外完全相同（列數）</span></div></div>
+
 </section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>列數</td>
-<td>1444</td>
-</tr>
-<tr>
-<td>不重複 content_id</td>
-<td>1438</td>
-</tr>
-<tr>
-<td>主鍵重複列數</td>
-<td>6</td>
-</tr>
-<tr>
-<td>去重後則數</td>
-<td>1438</td>
-</tr>
-<tr>
-<td>去重後總瀏覽量</td>
-<td>918470</td>
-</tr>
-<tr>
-<td>被多算的瀏覽量</td>
-<td>2266</td>
-</tr>
-<tr>
-<td>重複列除 ingest_ts 外完全相同（列數）</td>
-<td>12</td>
-</tr>
-</tbody>
-</table>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 1 題的圖" src="../../img/ex01_duplicates.png" />
+<em>每一條是一則被重送的內容，長度是它的瀏覽量。這六則各被算了兩次，加起來就是總瀏覽量多出來的 2,266 次。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 1 題的圖" src="../../img/ex01_duplicates.png" /></p>
-<p>每一條是一則被重送的內容，長度是它的瀏覽量。這六則各被算了兩次，加起來就是總瀏覽量多出來的 2,266 次。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>下一題 <a href="%E7%B7%B4%E7%BF%92_02_-_%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%B9%B3%E5%8F%B0%E8%A9%B2%E4%B8%8D%E8%A9%B2%E5%81%9C.html">練習 02 - 程序化平台該不該停</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

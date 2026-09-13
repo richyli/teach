@@ -4,51 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 06 - banner 賣廣告還是推訂閱</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 06 - banner 賣廣告還是推訂閱</h1></div><p>在本單元中，會介紹第 6 題「首頁 banner 是繼續賣廣告，還是改成推訂閱？給商業發展處一個打平點」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：商業發展處問：「首頁那塊 banner 一個月到底能賣多少錢？如果改成訂閱入口，要轉出幾個訂閱才划得來？」</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>進階</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 2 組：把經營問題拆成算得出來的東西</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>ad_daily（L1：ad_daily_2024_10.csv）、content_monthly_flat（L1：content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>LTV 與 CAC 一個讀者值多少</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 06 - banner 賣廣告還是推訂閱</h1></div><p>在本單元中，會介紹第 6 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-2">進階</span><span class="lab-chip">第 2 組：把經營問題拆成算得出來的東西</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>商業發展處問：「首頁那塊 banner 一個月到底能賣多少錢？如果改成訂閱入口，要轉出幾個訂閱才划得來？」</p>
+</blockquote>
+<p>用到的資料：ad_daily（L1：ad_daily_2024_10.csv）、content_monthly_flat（L1：content_monthly_2024_10.csv）</p>
+<p>對應單元：LTV 與 CAC 一個讀者值多少</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>同一塊版面只能做一件事，要賣廣告還是導訂閱，是機會成本的比較。打平點把兩種收入換到同一個單位上，討論就從「感覺訂閱比較好」變成「每千次曝光要換到幾個訂閱」。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是單位經濟學與情境分析。資料裡沒有的數字，例如月費與留存月數，要明確寫成假設放在程式最上面，再把假設掃過一個範圍，看結論在哪裡翻盤，這就是敏感度分析。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>兩張表各自算單價，不要硬接起來——它們的粒度不同（一邊是活動×版位×日，一邊是內容×月），10 月廣告曝光 4,170 萬次、網站工作階段只有 78 萬段，硬 join 會錯得離譜。廣告端：先照 currency 欄換算成台幣，再算每個版位的每千次曝光收入（eCPM）與點擊率。訂閱端：用 conversion_cnt ÷ paywall_hit_cnt 得到撞牆轉換率，再自己設「訂閱月費」與「平均留存月數」兩個假設算出 LTV——資料裡沒有這兩個數字，所以一定要寫在程式最上面當變數。最後回推打平點：這個版位每一千次曝光要換到幾個訂閱，才抵得過現在的廣告收入。用 Python，因為結論成不成立完全看留存假設，最後要用迴圈掃 3、6、12、24 個月四種留存看它在哪裡翻盤，手動改數字改四遍很容易漏。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>兩張表各自算單價，不要硬接起來——它們的粒度不同（一邊是活動×版位×日，一邊是內容×月），10 月廣告曝光 4,170 萬次、網站工作階段只有 78 萬段，硬 join 會錯得離譜。</li>
+<li>廣告端：先照 currency 欄換算成台幣，再算每個版位的每千次曝光收入（eCPM）與點擊率。</li>
+<li>訂閱端：用 conversion_cnt ÷ paywall_hit_cnt 得到撞牆轉換率，再自己設「訂閱月費」與「平均留存月數」兩個假設算出 LTV——資料裡沒有這兩個數字，所以一定要寫在程式最上面當變數。</li>
+<li>最後回推打平點：這個版位每一千次曝光要換到幾個訂閱，才抵得過現在的廣告收入。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python，因為結論成不成立完全看留存假設，最後要用迴圈掃 3、6、12、24 個月四種留存看它在哪裡翻盤，手動改數字改四遍很容易漏。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 MONTHLY_FEE = 199      # 假設：訂閱月費（資料裡沒有，照題目設定）
@@ -104,99 +90,27 @@ ax[1].set_ylabel(&quot;top_banner 每千次曝光要換到的訂閱數&quot;)
 ax[1].set_title(&quot;留存越短，打平點越高&quot;)
 save_fig(fig, &quot;ex06_breakeven.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>10 月廣告收入換算後是 297.5 萬元台幣。各版位每千次曝光收入差很多：video_preroll 143.3 元、in_article 60.8 元、top_banner 36.7 元、sidebar 22.4 元。以月費 199 元、留存 12 個月（LTV 2,388 元）算，top_banner 的打平點是每千次曝光只要換到 0.015 個訂閱，也就是六萬五千次曝光換到一個訂閱就夠。同一個月網站帶進 14,463 個新訂閱，光首月訂閱費就有 288 萬元，和整個月的廣告收入幾乎一樣大。結論不是「廣告可以不用做了」，而是「廣告單價低到讓訂閱入口很容易打平，真正的風險在留存假設」：留存從 12 個月掉到 3 個月，打平點立刻變成四倍。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>廣告曝光總數（萬）</td>
-<td>4170.4236</td>
-</tr>
-<tr>
-<td>網站工作階段（萬）</td>
-<td>78.0431</td>
-</tr>
-<tr>
-<td>換算後廣告收入</td>
-<td>2975076</td>
-</tr>
-<tr>
-<td>每千次曝光收入 video_preroll</td>
-<td>143.3282</td>
-</tr>
-<tr>
-<td>每千次曝光收入 in_article</td>
-<td>60.769</td>
-</tr>
-<tr>
-<td>每千次曝光收入 top_banner</td>
-<td>36.7203</td>
-</tr>
-<tr>
-<td>每千次曝光收入 sidebar</td>
-<td>22.4059</td>
-</tr>
-<tr>
-<td>LTV</td>
-<td>2388</td>
-</tr>
-<tr>
-<td>top_banner 打平點（每千次曝光要換到的訂閱）</td>
-<td>0.0154</td>
-</tr>
-<tr>
-<td>換到一個訂閱需要的曝光</td>
-<td>65032.0654</td>
-</tr>
-<tr>
-<td>新訂閱首月訂閱費（萬元）</td>
-<td>287.8137</td>
-</tr>
-<tr>
-<td>留存 3 個月時打平點是幾倍</td>
-<td>4</td>
-</tr>
-<tr>
-<td>sidebar 被低估</td>
-<td>0.2901</td>
-</tr>
-<tr>
-<td>video_preroll 被低估</td>
-<td>0.3688</td>
-</tr>
-<tr>
-<td>程序化收入佔比（全部）</td>
-<td>0.3566</td>
-</tr>
-<tr>
-<td>程序化收入佔比（可視率 dropna 後）</td>
-<td>0.2647</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">4170.4236</span><span class="k">廣告曝光總數（萬）</span></div><div class="lab-kpi"><span class="v">78.0431</span><span class="k">網站工作階段（萬）</span></div><div class="lab-kpi"><span class="v">2,975,076</span><span class="k">換算後廣告收入</span></div><div class="lab-kpi"><span class="v">143.3282</span><span class="k">每千次曝光收入 video_preroll</span></div><div class="lab-kpi"><span class="v">60.769</span><span class="k">每千次曝光收入 in_article</span></div><div class="lab-kpi"><span class="v">36.7203</span><span class="k">每千次曝光收入 top_banner</span></div><div class="lab-kpi"><span class="v">22.4059</span><span class="k">每千次曝光收入 sidebar</span></div><div class="lab-kpi"><span class="v">2388</span><span class="k">LTV</span></div><div class="lab-kpi"><span class="v">0.0154</span><span class="k">top_banner 打平點（每千次曝光要換到的訂閱）</span></div><div class="lab-kpi"><span class="v">65032.0654</span><span class="k">換到一個訂閱需要的曝光</span></div><div class="lab-kpi"><span class="v">287.8137</span><span class="k">新訂閱首月訂閱費（萬元）</span></div><div class="lab-kpi"><span class="v">4</span><span class="k">留存 3 個月時打平點是幾倍</span></div></div>
+
 <ul>
 <li>top_banner 打平點（每千次曝光要換到的訂閱數）：留存 3 個月 0.0615、留存 6 個月 0.0308、留存 12 個月 0.0154、留存 24 個月 0.0077</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 6 題的圖" src="../../img/ex06_breakeven.png" /></p>
-<p>左圖是各版位換算後的每千次曝光收入。右圖是 top_banner 改成訂閱入口時，每千次曝光要換到幾個訂閱才打平；留存從 12 個月掉到 3 個月，打平點變成四倍。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 6 題的圖" src="../../img/ex06_breakeven.png" />
+<em>左圖是各版位換算後的每千次曝光收入。右圖是 top_banner 改成訂閱入口時，每千次曝光要換到幾個訂閱才打平；留存從 12 個月掉到 3 個月，打平點變成四倍。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_05_-_%E5%A4%9A%E4%B8%89%E7%99%BE%E5%80%8B%E8%A8%82%E9%96%B1%E6%8E%A8%E5%93%AA%E4%B8%80%E7%92%B0.html">練習 05 - 多三百個訂閱推哪一環</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_07_-_%E8%A8%82%E9%96%B1%E5%8A%9F%E5%8B%9E%E8%A9%B2%E7%AE%97%E8%AA%B0%E7%9A%84.html">練習 07 - 訂閱功勞該算誰的</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

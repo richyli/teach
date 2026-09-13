@@ -4,51 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 03 - 最佳報導獎發給誰</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 03 - 最佳報導獎發給誰</h1></div><p>在本單元中，會介紹第 3 題「本月最佳報導獎要發給誰——請給我十月瀏覽量最高的記者」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：內容處要發本月流量獎，月報表按記者姓名排出來第一名是楊心怡，獎金可以直接發給她嗎？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>進階</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 1 組：先把一張表讀對</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1）、content_monthly（L2）、content（L2）、staff（L2）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>兩張表接起來才有意義</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 03 - 最佳報導獎發給誰</h1></div><p>在本單元中，會介紹第 3 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-2">進階</span><span class="lab-chip">第 1 組：先把一張表讀對</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>內容處要發本月流量獎，月報表按記者姓名排出來第一名是楊心怡，獎金可以直接發給她嗎？</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1）、content_monthly（L2）、content（L2）、staff（L2）</p>
+<p>對應單元：兩張表接起來才有意義</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>獎金、考績、升遷都綁在「誰表現最好」上。拿姓名排名，錢會發給四個人加起來的總和，真正的第一名反而拿不到，這是組織公平的問題，不只是技術問題。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是實體辨識與資料表關聯（join）：分析要以能唯一認出一個對象的識別碼為準。接第二張表是為了拿到正確的識別碼，而每接一次表，都要檢查列數有沒有變多或變少。</p>
+<p>480 個記者代碼要 8.91 bits 才分得開；只知道姓名的話，平均還剩 0.96 bits 的不確定性，等於還要在大約兩個人裡面猜。「姓名不能當識別碼」用數字講就是這一句。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>先在月報表去重，按 staff_name 做一份排行榜；再把 content_monthly 接 content（靠 content_id）、content 接 staff（靠 author_primary_id 對 staff_id），改成按記者代碼 staff_id 做第二份排行榜，兩份並排比較。用 Python，因為 pandas 的 merge 可以在接表前後直接比對列數有沒有變（1,444 接完還是 1,444），接壞了、接出重覆列，當場就看得出來。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先在月報表去重，按 staff_name 做一份排行榜；再把 content_monthly 接 content（靠 content_id）、content 接 staff（靠 author_primary_id 對 staff_id），改成按記者代碼 staff_id 做第二份排行榜，兩份並排比較。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python，因為 pandas 的 merge 可以在接表前後直接比對列數有沒有變（1,444 接完還是 1,444），接壞了、接出重覆列，當場就看得出來。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 f = dedupe(flat())
@@ -110,127 +94,24 @@ ax[1].set_title(&quot;按記者代碼排：王淑芬第一，楊心怡不在前�
 ax[1].set_xlabel(&quot;十月瀏覽量&quot;)
 save_fig(fig, &quot;ex03_rank_name_vs_id.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>兩份排行榜的第一名不是同一個人。月報表只給記者姓名，按姓名排出來是「楊心怡 26 則、17,726 次瀏覽」；但 staff 表裡 480 個記者代碼只對應到 279 個不同姓名，staff 表裡叫楊心怡的有五個人，十月有發稿的是其中四個（stf_0025、stf_0088、stf_0166、stf_0311）；四個人裡瀏覽量最高的 stf_0025 只有 6 則、8,944 次，發最多則的 stf_0088 也只有 11 則、6,079 次。真正的第一名是代碼 stf_0062 的王淑芬，16 則、17,389 次瀏覽。全部 1,438 則裡有 989 則（將近七成）的作者姓名被別人共用，所以這不是剛好撞名的偶發狀況。</p>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">楊心怡</span><span class="k">按姓名第一名</span></div><div class="lab-kpi"><span class="v">26</span><span class="k">按姓名第一名則數</span></div><div class="lab-kpi"><span class="v">17,726</span><span class="k">按姓名第一名瀏覽量</span></div><div class="lab-kpi"><span class="v">1444</span><span class="k">接 content 後列數不變</span></div><div class="lab-kpi"><span class="v">1444</span><span class="k">接 staff 後列數不變</span></div><div class="lab-kpi"><span class="v">stf_0062</span><span class="k">按代碼第一名代碼</span></div><div class="lab-kpi"><span class="v">王淑芬</span><span class="k">按代碼第一名姓名</span></div><div class="lab-kpi"><span class="v">16</span><span class="k">按代碼第一名則數</span></div><div class="lab-kpi"><span class="v">17,389</span><span class="k">按代碼第一名瀏覽量</span></div><div class="lab-kpi"><span class="v">5</span><span class="k">staff 表裡叫楊心怡的人數</span></div><div class="lab-kpi"><span class="v">stf_0025</span><span class="k">楊心怡中瀏覽量最高者</span></div><div class="lab-kpi"><span class="v">6</span><span class="k">瀏覽量最高那位的則數</span></div></div>
+
 </section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>按姓名第一名</td>
-<td>楊心怡</td>
-</tr>
-<tr>
-<td>按姓名第一名則數</td>
-<td>26</td>
-</tr>
-<tr>
-<td>按姓名第一名瀏覽量</td>
-<td>17726</td>
-</tr>
-<tr>
-<td>接 content 後列數不變</td>
-<td>1444</td>
-</tr>
-<tr>
-<td>接 staff 後列數不變</td>
-<td>1444</td>
-</tr>
-<tr>
-<td>按代碼第一名代碼</td>
-<td>stf_0062</td>
-</tr>
-<tr>
-<td>按代碼第一名姓名</td>
-<td>王淑芬</td>
-</tr>
-<tr>
-<td>按代碼第一名則數</td>
-<td>16</td>
-</tr>
-<tr>
-<td>按代碼第一名瀏覽量</td>
-<td>17389</td>
-</tr>
-<tr>
-<td>staff 表裡叫楊心怡的人數</td>
-<td>5</td>
-</tr>
-<tr>
-<td>十月有發稿的楊心怡</td>
-<td>stf_0025、stf_0088、stf_0166、stf_0311</td>
-</tr>
-<tr>
-<td>楊心怡中瀏覽量最高者</td>
-<td>stf_0025</td>
-</tr>
-<tr>
-<td>瀏覽量最高那位的則數</td>
-<td>6</td>
-</tr>
-<tr>
-<td>瀏覽量最高那位的瀏覽量</td>
-<td>8944</td>
-</tr>
-<tr>
-<td>楊心怡中發最多則者</td>
-<td>stf_0088</td>
-</tr>
-<tr>
-<td>發最多則那位的則數</td>
-<td>11</td>
-</tr>
-<tr>
-<td>發最多則那位的瀏覽量</td>
-<td>6079</td>
-</tr>
-<tr>
-<td>staff_id 不重複數</td>
-<td>480</td>
-</tr>
-<tr>
-<td>staff_name 不重複數</td>
-<td>279</td>
-</tr>
-<tr>
-<td>作者姓名被別人共用的則數</td>
-<td>989</td>
-</tr>
-<tr>
-<td>分開 480 個代碼需要的 bits</td>
-<td>8.9069</td>
-</tr>
-<tr>
-<td>知道姓名後平均還剩的 bits</td>
-<td>0.9618</td>
-</tr>
-<tr>
-<td>同名最多幾人</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 3 題的圖" src="../../img/ex03_rank_name_vs_id.png" />
+<em>同一份資料排兩次。左邊按姓名加總，四個叫楊心怡的人被加成一個；右邊按記者代碼加總，第一名換人，四個楊心怡都不在前十。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 3 題的圖" src="../../img/ex03_rank_name_vs_id.png" /></p>
-<p>同一份資料排兩次。左邊按姓名加總，四個叫楊心怡的人被加成一個；右邊按記者代碼加總，第一名換人，四個楊心怡都不在前十。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>480 個記者代碼要 8.91 bits 才分得開；只知道姓名的話，平均還剩 0.96 bits 的不確定性，等於還要在大約兩個人裡面猜。「姓名不能當識別碼」用數字講就是這一句。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_02_-_%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%B9%B3%E5%8F%B0%E8%A9%B2%E4%B8%8D%E8%A9%B2%E5%81%9C.html">練習 02 - 程序化平台該不該停</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_04_-_%E6%B7%B1%E5%BA%A6%E5%A0%B1%E5%B0%8E%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E5%81%9A.html">練習 04 - 深度報導值不值得做</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

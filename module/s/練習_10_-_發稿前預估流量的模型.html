@@ -4,51 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 10 - 發稿前預估流量的模型</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 10 - 發稿前預估流量的模型</h1></div><p>在本單元中，會介紹第 10 題「內容策略部要一個「發稿前就能預估流量」的模型，主管說準不準看 R 平方就好」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：「我們想在稿子送出前就知道它大概會有多少瀏覽量，好決定要不要推首頁、要不要下廣告。先做個原型，看 R 平方多少。」</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>挑戰</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 3 組：這個差異是真的嗎</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1 檔名 content_monthly_2024_10.csv）、L1 的 DATA_DICTIONARY.md</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>為什麼這篇會紅 用迴歸找關聯</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 10 - 發稿前預估流量的模型</h1></div><p>在本單元中，會介紹第 10 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-3">挑戰</span><span class="lab-chip">第 3 組：這個差異是真的嗎</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>「我們想在稿子送出前就知道它大概會有多少瀏覽量，好決定要不要推首頁、要不要下廣告。先做個原型，看 R 平方多少。」</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1 檔名 content_monthly_2024_10.csv）、L1 的 DATA_DICTIONARY.md</p>
+<p>對應單元：為什麼這篇會紅 用迴歸找關聯</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>預測模型是拿來在發稿前做決定的，所以模型上線那一刻拿得到什麼資料，決定它真正的價值。R 平方 0.97 的模型在會議上很漂亮，上線後卻根本用不了。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是預測性分析（predictive analytics）的第一條紀律：特徵必須在預測的當下就已經存在。用資料字典標出每一個欄位「什麼時候才知道」，把事後才有的欄位擋在模型外面，這就是防止資料洩漏（data leakage）。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>(1) 先照資料字典「什麼時候才知道」那一欄把欄位分兩堆：按下發布那一秒就存在的（content_type、is_paywalled、word_cnt、headline_len、has_number_in_headline、section_name），以及之後才有的。(2) 只用第一堆跑 log(pv) 的 OLS，記下 R 平方與各係數。(3) 故意把 total_pv_lifetime 加進去再跑一次，再把 uv 加進去跑第三次。(4) 三條的 R 平方與係數並排，最後寫一段「我沒有用哪些欄位、為什麼」。語言用 Python：資料字典那張表可以直接讀進 pandas，用「什麼時候才知道」這一欄寫一行斷言，凡是寫著「事後回填」的欄位就不准進模型——用程式擋住自己，比靠記性可靠。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先照資料字典「什麼時候才知道」那一欄把欄位分兩堆：按下發布那一秒就存在的（content_type、is_paywalled、word_cnt、headline_len、has_number_in_headline、section_name），以及之後才有的。</li>
+<li>只用第一堆跑 log(pv) 的 OLS，記下 R 平方與各係數。</li>
+<li>故意把 total_pv_lifetime 加進去再跑一次，再把 uv 加進去跑第三次。</li>
+<li>三條的 R 平方與係數並排，最後寫一段「我沒有用哪些欄位、為什麼」。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 Python：資料字典那張表可以直接讀進 pandas，用「什麼時候才知道」這一欄寫一行斷言，凡是寫著「事後回填」的欄位就不准進模型——用程式擋住自己，比靠記性可靠。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 import statsmodels.formula.api as smf
 
@@ -101,74 +87,24 @@ ax[1].set_ylabel(&quot;log(pv)，要預測的這個月瀏覽量&quot;)
 ax[1].set_title(&quot;回填欄跟答案幾乎排成一直線&quot;)
 save_fig(fig, &quot;ex10_leak_r2.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>只用發稿前的欄位，R 平方 0.490。加進 total_pv_lifetime，R 平方跳到 0.973，而且原本的係數同時被壓扁：標題數字從 0.218 掉到 0.014、付費牆從 -0.291 掉到 -0.003，total_pv_lifetime 自己拿走 0.95。再加 uv，R 平方 0.996。這不是模型變準，是把答案抄進去了：total_pv_lifetime 是事後回填的累積瀏覽量，它本來就把這個月的 pv 包在裡面；uv 跟 pv 是同一群人的兩種數法。這兩個欄位在稿子發出去的那一秒都還不存在，拿來做發稿前預估等於跟未來借數字。</p>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.4904</span><span class="k">只用發稿前欄位 R 平方</span></div><div class="lab-kpi"><span class="v">0.9727</span><span class="k">加 total_pv_lifetime R 平方</span></div><div class="lab-kpi"><span class="v">0.9964</span><span class="k">再加 uv R 平方</span></div><div class="lab-kpi"><span class="v">0.2182</span><span class="k">標題數字係數（乾淨）</span></div><div class="lab-kpi"><span class="v">0.0143</span><span class="k">標題數字係數（加回填欄後）</span></div><div class="lab-kpi"><span class="v">-0.2914</span><span class="k">付費牆係數（乾淨）</span></div><div class="lab-kpi"><span class="v">-0.0025</span><span class="k">付費牆係數（加回填欄後）</span></div><div class="lab-kpi"><span class="v">0.9514</span><span class="k">total_pv_lifetime 係數</span></div><div class="lab-kpi"><span class="v">1.8083</span><span class="k">total_pv_lifetime ÷ pv 中位數</span></div></div>
+
 </section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>資料字典標為事後回填的欄位</td>
-<td>total_pv_lifetime</td>
-</tr>
-<tr>
-<td>只用發稿前欄位 R 平方</td>
-<td>0.4904</td>
-</tr>
-<tr>
-<td>加 total_pv_lifetime R 平方</td>
-<td>0.9727</td>
-</tr>
-<tr>
-<td>再加 uv R 平方</td>
-<td>0.9964</td>
-</tr>
-<tr>
-<td>標題數字係數（乾淨）</td>
-<td>0.2182</td>
-</tr>
-<tr>
-<td>標題數字係數（加回填欄後）</td>
-<td>0.0143</td>
-</tr>
-<tr>
-<td>付費牆係數（乾淨）</td>
-<td>-0.2914</td>
-</tr>
-<tr>
-<td>付費牆係數（加回填欄後）</td>
-<td>-0.0025</td>
-</tr>
-<tr>
-<td>total_pv_lifetime 係數</td>
-<td>0.9514</td>
-</tr>
-<tr>
-<td>total_pv_lifetime ÷ pv 中位數</td>
-<td>1.8083</td>
-</tr>
-<tr>
-<td>比值全部大於 1</td>
-<td>是</td>
-</tr>
-</tbody>
-</table>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 10 題的圖" src="../../img/ex10_leak_r2.png" />
+<em>左圖是三個模型的 R 平方，紅色兩個是把事後才有的欄位放進去。右圖是回填欄與這個月瀏覽量的散佈圖，幾乎排成一直線，所以它能讓 R 平方跳到 0.97。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 10 題的圖" src="../../img/ex10_leak_r2.png" /></p>
-<p>左圖是三個模型的 R 平方，紅色兩個是把事後才有的欄位放進去。右圖是回填欄與這個月瀏覽量的散佈圖，幾乎排成一直線，所以它能讓 R 平方跳到 0.97。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_09_-_%E4%BB%98%E8%B2%BB%E7%89%86%E8%AE%93%E6%B5%81%E9%87%8F%E6%8E%89%E5%B9%BE%E6%88%90.html">練習 09 - 付費牆讓流量掉幾成</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_11_-_%E5%8A%A0%E6%8E%A8%E5%90%8D%E5%96%AE%E7%9A%84%E9%96%80%E6%AA%BB.html">練習 11 - 加推名單的門檻</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

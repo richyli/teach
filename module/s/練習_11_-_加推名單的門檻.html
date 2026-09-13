@@ -4,51 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 11 - 加推名單的門檻</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 11 - 加推名單的門檻</h1></div><p>在本單元中，會介紹第 11 題「總編要一份「這批稿要不要加推首頁與電子報」的名單，人力有上限」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：編輯台一個月最多只能再加推兩百則左右，超過就做不完。哪些稿子最可能衝到當月流量前段？漏掉一則爆紅的很可惜，硬推一則沒人看的也不過浪費編輯一小時，你幫我排一份名單出來。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 4 組：預測、門檻與代價</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1 釋出的 content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>預測會不會退訂（門檻不是統計決定的，是成本決定的）</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 11 - 加推名單的門檻</h1></div><p>在本單元中，會介紹第 11 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 4 組：預測、門檻與代價</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>編輯台一個月最多只能再加推兩百則左右，超過就做不完。哪些稿子最可能衝到當月流量前段？漏掉一則爆紅的很可惜，硬推一則沒人看的也不過浪費編輯一小時，你幫我排一份名單出來。</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1 釋出的 content_monthly_2024_10.csv）</p>
+<p>對應單元：預測會不會退訂（門檻不是統計決定的，是成本決定的）</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>模型給的是機率，真正要做的決定是「推哪幾則」，而且受限於編輯台的人力。門檻應該由「漏掉一則爆紅」和「誤推一則」的代價比來決定，而不是用套件的預設值。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是分類模型與決策門檻。用 confusion matrix 看每個門檻下抓到、漏掉、誤推各有幾則，把模型的排序能力（AUC）轉成一份做得完的名單。這是從預測走到處方性分析（prescriptive analytics）的那一步：不只說會怎樣，還說該怎麼做。</p>
+<p>門檻表的每一列就是一張 confusion matrix。門檻 0.5 時 TP 2、FP 1、FN 41、TN 388，準確率 0.903，卻漏掉 43 則裡的 41 則；門檻降到 0.2，抓到的從 2 則變 26 則，召回率從 5% 升到 60%。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
+<p>門檻從 0.5 一路掃到 0.1，就是在一條線上找最好的點；決定停在哪裡的是「漏掉一則」和「誤推一則」的代價比，不是準確率。見 <a href="M_%E6%90%9C%E5%B0%8B%E7%A9%BA%E9%96%93%E8%88%87%E6%B2%B3%E5%85%A7%E5%A1%94.html">搜尋空間與河內塔</a></p>
+<p>邏輯斯迴歸訓練時在壓低的是交叉熵（log loss）。這個模型在測試集上是 0.232，全部都猜基準比例是 0.324，差距就是模型真的學到的東西。見 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>標籤定成「這則內容的 pv 有沒有落在當月前 10%」（切點是 1,390 次）。特徵只准用發布那一刻就知道的欄位：content_type、section_name、is_paywalled、word_cnt、headline_len、has_number_in_headline——pv 以外的 uv、sessions、dwell_sec_total 都是同一個月的結果，不能當特徵。資料切 30% 當測試集（分層抽樣、random_state=0），類別欄做 one-hot、數值欄標準化，跑預設設定的邏輯斯迴歸，拿到每一則的機率之後，把門檻從 0.5 一路往下掃到 0.1，每個門檻記一列「名單幾則／抓到幾則／誤抓幾則」，最後用一句成本敘述（漏掉一則爆紅約等於少掉一整天的流量，誤推一則約等於編輯多花一小時）挑門檻。語言用 Python，因為 predict_proba 給的是機率不是是非題，換門檻只要改一個數字，不必重跑模型。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>標籤定成「這則內容的 pv 有沒有落在當月前 10%」（切點是 1,390 次）。</li>
+<li>特徵只准用發布那一刻就知道的欄位：content_type、section_name、is_paywalled、word_cnt、headline_len、has_number_in_headline——pv 以外的 uv、sessions、dwell_sec_total 都是同一個月的結果，不能當特徵。</li>
+<li>資料切 30% 當測試集（分層抽樣、random_state=0），類別欄做 one-hot、數值欄標準化，跑預設設定的邏輯斯迴歸，拿到每一則的機率之後，把門檻從 0.5 一路往下掃到 0.1，每個門檻記一列「名單幾則／抓到幾則／誤抓幾則」，最後用一句成本敘述（漏掉一則爆紅約等於少掉一整天的流量，誤推一則約等於編輯多花一小時）挑門檻。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 Python，因為 predict_proba 給的是機率不是是非題，換門檻只要改一個數字，不必重跑模型。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
@@ -140,135 +128,27 @@ for k, (t, c) in enumerate([(0.5, c5), (0.2, c2)]):
     a.set_title(&quot;門檻 %.1f&quot; % t)
 save_fig(fig, &quot;ex11_threshold.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>測試集 432 則裡有 43 則屬於前 10%。用預設門檻 0.5，模型只點名 3 則、抓到 2 則，recall 只有 5%，可是準確率有 90.3%——它靠「幾乎什麼都不推」拿到這個分數。把門檻降到 0.2，名單變成 61 則、抓到 26 則，recall 從 5% 跳到 60%，代價是誤推 35 則；再降到 0.1 會抓到 35 則（recall 81%），但名單膨脹到 114 則，換算回整個月超過編輯台的人力上限。AUC 0.88 表示模型的排序本身是有用的，壞掉的只是那個預設門檻。0.2 附近的名單約等於全月 203 則，剛好卡在兩百則的上限，這才是能執行的答案。換一個 random_state 重切，門檻 0.2 的名單會在 61 到 81 則之間變動，數字會晃，但「0.5 幾乎不推、0.2 附近才抓得到」這個結論不變。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>前 10% 的切點</td>
-<td>1389.6</td>
-</tr>
-<tr>
-<td>測試集則數</td>
-<td>432</td>
-</tr>
-<tr>
-<td>測試集正例</td>
-<td>43</td>
-</tr>
-<tr>
-<td>門檻 0.5 名單則數</td>
-<td>3</td>
-</tr>
-<tr>
-<td>門檻 0.5 抓到</td>
-<td>2</td>
-</tr>
-<tr>
-<td>門檻 0.5 準確率</td>
-<td>0.9028</td>
-</tr>
-<tr>
-<td>門檻 0.2 名單則數</td>
-<td>61</td>
-</tr>
-<tr>
-<td>門檻 0.2 抓到</td>
-<td>26</td>
-</tr>
-<tr>
-<td>門檻 0.2 誤推</td>
-<td>35</td>
-</tr>
-<tr>
-<td>門檻 0.1 名單則數</td>
-<td>114</td>
-</tr>
-<tr>
-<td>門檻 0.1 抓到</td>
-<td>35</td>
-</tr>
-<tr>
-<td>門檻 0.1 recall</td>
-<td>0.814</td>
-</tr>
-<tr>
-<td>AUC</td>
-<td>0.8812</td>
-</tr>
-<tr>
-<td>門檻 0.2 名單換算成全月則數</td>
-<td>203.0509</td>
-</tr>
-<tr>
-<td>換種子後 門檻 0.2 名單最少</td>
-<td>61</td>
-</tr>
-<tr>
-<td>換種子後 門檻 0.2 名單最多</td>
-<td>81</td>
-</tr>
-<tr>
-<td>門檻 0.5 confusion matrix（TP/FP/FN/TN）</td>
-<td>2、1、41、388</td>
-</tr>
-<tr>
-<td>門檻 0.2 confusion matrix（TP/FP/FN/TN）</td>
-<td>26、35、17、354</td>
-</tr>
-<tr>
-<td>門檻 0.2 precision</td>
-<td>0.4262</td>
-</tr>
-<tr>
-<td>門檻 0.2 準確率</td>
-<td>0.8796</td>
-</tr>
-<tr>
-<td>模型的交叉熵（log loss）</td>
-<td>0.2315</td>
-</tr>
-<tr>
-<td>全部猜基準比例的交叉熵</td>
-<td>0.3241</td>
-</tr>
-<tr>
-<td>標籤本身的 entropy（bits）</td>
-<td>0.4675</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">1389.6</span><span class="k">前 10% 的切點</span></div><div class="lab-kpi"><span class="v">432</span><span class="k">測試集則數</span></div><div class="lab-kpi"><span class="v">43</span><span class="k">測試集正例</span></div><div class="lab-kpi"><span class="v">3</span><span class="k">門檻 0.5 名單則數</span></div><div class="lab-kpi"><span class="v">2</span><span class="k">門檻 0.5 抓到</span></div><div class="lab-kpi"><span class="v">0.9028</span><span class="k">門檻 0.5 準確率</span></div><div class="lab-kpi"><span class="v">61</span><span class="k">門檻 0.2 名單則數</span></div><div class="lab-kpi"><span class="v">26</span><span class="k">門檻 0.2 抓到</span></div><div class="lab-kpi"><span class="v">35</span><span class="k">門檻 0.2 誤推</span></div><div class="lab-kpi"><span class="v">114</span><span class="k">門檻 0.1 名單則數</span></div><div class="lab-kpi"><span class="v">35</span><span class="k">門檻 0.1 抓到</span></div><div class="lab-kpi"><span class="v">0.814</span><span class="k">門檻 0.1 recall</span></div></div>
+
 <ul>
 <li>換 random_state 重切，門檻 0.2 的名單則數：0 → 61 則、1 → 81 則、7 → 72 則、42 → 70 則、2024 → 81 則</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 11 題的圖" src="../../img/ex11_threshold.png" /></p>
-<p>左圖把門檻從 0.6 往下掃到 0.05：藍線是抓到的比例（recall），橙線是名單裡真的衝進前 10% 的比例（precision），灰色長條是名單則數。右邊兩張是門檻 0.5 與 0.2 的 confusion matrix。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 11 題的圖" src="../../img/ex11_threshold.png" />
+<em>左圖把門檻從 0.6 往下掃到 0.05：藍線是抓到的比例（recall），橙線是名單裡真的衝進前 10% 的比例（precision），灰色長條是名單則數。右邊兩張是門檻 0.5 與 0.2 的 confusion matrix。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>confusion matrix</h4>
-<p>門檻表的每一列就是一張 confusion matrix。門檻 0.5 時 TP 2、FP 1、FN 41、TN 388，準確率 0.903，卻漏掉 43 則裡的 41 則；門檻降到 0.2，抓到的從 2 則變 26 則，召回率從 5% 升到 60%。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>邏輯斯迴歸訓練時在壓低的是交叉熵（log loss）。這個模型在測試集上是 0.232，全部都猜基準比例是 0.324，差距就是模型真的學到的東西。見 <a href="M_%E5%BE%9E_Shannon_%E5%88%B0_LLM.html">從 Shannon 到 LLM</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_10_-_%E7%99%BC%E7%A8%BF%E5%89%8D%E9%A0%90%E4%BC%B0%E6%B5%81%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 10 - 發稿前預估流量的模型</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_12_-_%E6%BA%96%E7%A2%BA%E7%8E%87_99%25_%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 12 - 準確率 99% 的模型</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

@@ -4,51 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 05 - 多三百個訂閱推哪一環</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 05 - 多三百個訂閱推哪一環</h1></div><p>在本單元中，會介紹第 5 題「訂閱長官要「下個月多 300 個新訂閱」，先算出該推哪一環」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：讀者事業處主管說：「下個月要多 300 個新訂閱。到底是要衝流量、把更多稿子放進付費牆，還是想辦法讓撞到牆的人更願意付錢？」</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 2 組：把經營問題拆成算得出來的東西</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content_monthly_flat（L1：content_monthly_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>指標樹 把營收拆成可以動的東西</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 05 - 多三百個訂閱推哪一環</h1></div><p>在本單元中，會介紹第 5 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 2 組：把經營問題拆成算得出來的東西</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>讀者事業處主管說：「下個月要多 300 個新訂閱。到底是要衝流量、把更多稿子放進付費牆，還是想辦法讓撞到牆的人更願意付錢？」</p>
+</blockquote>
+<p>用到的資料：content_monthly_flat（L1：content_monthly_2024_10.csv）</p>
+<p>對應單元：指標樹 把營收拆成可以動的東西</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>一個營收目標，要落到某個團隊能動的槓桿上，才有人負責、才知道預算放哪裡。指標樹告訴主管該推撞牆率還是轉換率，也提醒哪一環推過頭會邊際遞減。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是診斷性分析（diagnostic analytics）最常用的工具：指標樹（metric tree）。把結果指標拆成幾個相乘的驅動指標，逐層往下拆，找出差異最大的那一環，最後把各層乘回去驗算，確認拆法沒有漏掉東西。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>畫一棵指標樹並且真的算出來：新訂閱數 = 工作階段數 × 撞牆率（paywall_hit_cnt ÷ sessions）× 撞牆轉換率（conversion_cnt ÷ paywall_hit_cnt）。先用主鍵去重，整站算一次當基準，再按版面（section_name）與是否付費（is_paywalled）各拆一次，看三個乘數分別差幾倍；最後回推「其他兩環不動，這一環要動幾個百分點才生得出 300 個訂閱」。用 Python，因為指標樹是一層接一層往下拆、最後還要把三個乘數乘回去驗算，pandas 一路 assign 接著寫最省事也最好檢查。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>畫一棵指標樹並且真的算出來：新訂閱數 = 工作階段數 × 撞牆率（paywall_hit_cnt ÷ sessions）× 撞牆轉換率（conversion_cnt ÷ paywall_hit_cnt）。</li>
+<li>先用主鍵去重，整站算一次當基準，再按版面（section_name）與是否付費（is_paywalled）各拆一次，看三個乘數分別差幾倍；最後回推「其他兩環不動，這一環要動幾個百分點才生得出 300 個訂閱」。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python，因為指標樹是一層接一層往下拆、最後還要把三個乘數乘回去驗算，pandas 一路 assign 接著寫最省事也最好檢查。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 raw = flat()
@@ -97,107 +81,27 @@ ax.set_ylabel(&quot;撞牆後轉換率（新訂閱 ÷ 撞牆次數）&quot;)
 ax.set_title(&quot;撞牆率在版面之間差 17 倍，撞牆後轉換率只在 17% 到 27% 之間（圓圈大小＝工作階段）&quot;)
 save_fig(fig, &quot;ex05_metric_tree.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>全站 780,431 段工作階段 → 65,900 次撞牆（8.4%）→ 14,463 個新訂閱（21.9%），三個數乘回去要剛好回到 14,463。拆開看，撞牆率在版面之間差 17 倍（科技 36.0%、深度調查 34.7%，對照影音專題 2.1%、島上會議 2.7%），撞牆後的轉換率卻全部擠在 16.8% 到 26.6% 之間。要多 300 個訂閱，撞牆率那一環只要動 0.2 個百分點，轉換率那一環卻要從 21.9% 拉到 22.4%——前者明顯比較好動。但資料也給了反面訊號：撞牆率最高的那四個版面，撞牆後的轉換率反而略低（約 21%，其他版面在 25% 上下），代表「多擋人」會邊際遞減，不能一路推到底。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>工作階段</td>
-<td>780431</td>
-</tr>
-<tr>
-<td>撞牆次數</td>
-<td>65900</td>
-</tr>
-<tr>
-<td>新訂閱</td>
-<td>14463</td>
-</tr>
-<tr>
-<td>撞牆率</td>
-<td>0.0844</td>
-</tr>
-<tr>
-<td>撞牆轉換率</td>
-<td>0.2195</td>
-</tr>
-<tr>
-<td>三個乘數乘回去</td>
-<td>14463</td>
-</tr>
-<tr>
-<td>撞牆率 科技</td>
-<td>0.3595</td>
-</tr>
-<tr>
-<td>撞牆率 深度調查</td>
-<td>0.3471</td>
-</tr>
-<tr>
-<td>撞牆率 影音專題</td>
-<td>0.0211</td>
-</tr>
-<tr>
-<td>撞牆率 島上會議</td>
-<td>0.0266</td>
-</tr>
-<tr>
-<td>撞牆率最大÷最小（倍）</td>
-<td>17.0473</td>
-</tr>
-<tr>
-<td>撞牆轉換率 最低版面</td>
-<td>0.1678</td>
-</tr>
-<tr>
-<td>撞牆轉換率 最高版面</td>
-<td>0.2658</td>
-</tr>
-<tr>
-<td>撞牆率那一環要增加（百分點）</td>
-<td>0.1752</td>
-</tr>
-<tr>
-<td>撞牆轉換率那一環要拉到</td>
-<td>0.224</td>
-</tr>
-<tr>
-<td>撞牆率前四版面的撞牆轉換率（合併計算）</td>
-<td>0.2085</td>
-</tr>
-<tr>
-<td>其餘版面的撞牆轉換率（合併計算）</td>
-<td>0.2397</td>
-</tr>
-<tr>
-<td>不去重多算的訂閱</td>
-<td>40</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">780,431</span><span class="k">工作階段</span></div><div class="lab-kpi"><span class="v">65,900</span><span class="k">撞牆次數</span></div><div class="lab-kpi"><span class="v">14,463</span><span class="k">新訂閱</span></div><div class="lab-kpi"><span class="v">0.0844</span><span class="k">撞牆率</span></div><div class="lab-kpi"><span class="v">0.2195</span><span class="k">撞牆轉換率</span></div><div class="lab-kpi"><span class="v">14,463</span><span class="k">三個乘數乘回去</span></div><div class="lab-kpi"><span class="v">0.3595</span><span class="k">撞牆率 科技</span></div><div class="lab-kpi"><span class="v">0.3471</span><span class="k">撞牆率 深度調查</span></div><div class="lab-kpi"><span class="v">0.0211</span><span class="k">撞牆率 影音專題</span></div><div class="lab-kpi"><span class="v">0.0266</span><span class="k">撞牆率 島上會議</span></div><div class="lab-kpi"><span class="v">17.0473</span><span class="k">撞牆率最大÷最小（倍）</span></div><div class="lab-kpi"><span class="v">0.1678</span><span class="k">撞牆轉換率 最低版面</span></div></div>
+
 <ul>
 <li>撞牆率最高的四個版面是科技、深度調查、環境、財經；各版面撞牆轉換率的平均，前四個 0.209、其餘 0.240</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 5 題的圖" src="../../img/ex05_metric_tree.png" /></p>
-<p>每一個圓是一個版面，橫軸是撞牆率，縱軸是撞牆後轉換率，圓越大工作階段越多。版面左右拉得很開、上下擠得很緊；右下角撞牆率最高的四個版面，撞牆後轉換率反而略低。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 5 題的圖" src="../../img/ex05_metric_tree.png" />
+<em>每一個圓是一個版面，橫軸是撞牆率，縱軸是撞牆後轉換率，圓越大工作階段越多。版面左右拉得很開、上下擠得很緊；右下角撞牆率最高的四個版面，撞牆後轉換率反而略低。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_04_-_%E6%B7%B1%E5%BA%A6%E5%A0%B1%E5%B0%8E%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E5%81%9A.html">練習 04 - 深度報導值不值得做</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_06_-_banner_%E8%B3%A3%E5%BB%A3%E5%91%8A%E9%82%84%E6%98%AF%E6%8E%A8%E8%A8%82%E9%96%B1.html">練習 06 - banner 賣廣告還是推訂閱</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

@@ -555,3 +555,109 @@ body.figzoom-lock { overflow: hidden; }
 @media (max-width: 800px) {
     .figzoom-btn span { display: none; }
 }
+
+/* ============================================================
+   資料分析解題頁（_guides/練習 NN - *.md，由 build_labs.py 產生）
+   區塊由 SECTION_CLASS 的 sec-lab-* 對應；色塊取代表格。
+   ============================================================ */
+.lab-meta { display: flex; flex-wrap: wrap; gap: .45rem; margin: -.6rem 0 1.2rem; }
+.lab-chip { display: inline-block; padding: .18rem .7rem; border-radius: 999px; font-size: .8rem;
+            background: #f1f4f8; border: 1px solid #dde4ee; color: #4a5a6e; }
+.lab-lv-1 { background: #eaf6ee; border-color: #bfe0cb; color: #26663f; font-weight: 600; }
+.lab-lv-2 { background: #e8f1fd; border-color: #b9d1f1; color: #1d4f8f; font-weight: 600; }
+.lab-lv-3 { background: #fdf0e6; border-color: #f0cfb0; color: #97501a; font-weight: 600; }
+.lab-tool { background: #f5f1fb; border-color: #dcd0ee; color: #5b3f9c; }
+
+.sec-lab-ask, .sec-lab-biz, .sec-lab-da, .sec-lab-how, .sec-lab-result, .sec-lab-fig, .sec-lab-next {
+    border-radius: 12px; padding: 1.1rem 1.4rem 1rem; margin: 0 0 1.2rem; }
+.sec-lab-ask > *:last-child, .sec-lab-biz > *:last-child, .sec-lab-da > *:last-child,
+.sec-lab-how > *:last-child, .sec-lab-result > *:last-child, .sec-lab-fig > *:last-child,
+.sec-lab-next > *:last-child { margin-bottom: 0; }
+.sec-lab-ask > h3, .sec-lab-biz > h3, .sec-lab-da > h3, .sec-lab-how > h3,
+.sec-lab-result > h3, .sec-lab-fig > h3, .sec-lab-next > h3 { margin: 0 0 .6rem; font-size: 1.08rem; }
+
+/* 情境：大引號卡 */
+.sec-lab-ask { background: #f6f8fb; border: 1px solid #e2e8f0; }
+.sec-lab-ask > h3 { color: #3c4f66; }
+.sec-lab-ask blockquote { position: relative; margin: .4rem 0 .9rem; padding: .9rem 1.1rem .9rem 2.6rem;
+    background: #ffffff; border: 0; border-radius: 10px; box-shadow: 0 1px 3px rgba(20,40,70,.08);
+    font-size: 1.02rem; line-height: 1.85; color: #26374a; }
+.sec-lab-ask blockquote::before { content: "\201C"; position: absolute; left: .7rem; top: -.1rem;
+    font-size: 2.6rem; line-height: 1; color: #9db6d4; font-family: Georgia, serif; }
+.sec-lab-ask blockquote p { margin: 0; }
+.sec-lab-ask p { font-size: .9rem; color: #56667a; margin: .3rem 0; }
+
+/* 商業意義：暖色 */
+.sec-lab-biz { background: #fff8ef; border: 1px solid #f1dcc0; border-left: 5px solid #d9822b;
+               border-radius: 0 12px 12px 0; }
+.sec-lab-biz > h3 { color: #8a4a12; }
+.sec-lab-biz > h3::before { content: "商業"; }
+/* 資料分析意義：冷色 */
+.sec-lab-da { background: #f4f6fd; border: 1px solid #d9def3; border-left: 5px solid #5a6fc0;
+              border-radius: 0 12px 12px 0; }
+.sec-lab-da > h3 { color: #34458c; }
+.sec-lab-da > h3::before { content: "分析"; }
+.sec-lab-biz > h3::before, .sec-lab-da > h3::before {
+    display: inline-block; margin-right: .5rem; padding: .05rem .5rem; border-radius: 6px;
+    font-size: .72rem; vertical-align: .12rem; color: #ffffff; letter-spacing: .08em; }
+.sec-lab-biz > h3::before { background: #d9822b; }
+.sec-lab-da > h3::before { background: #5a6fc0; }
+.sec-lab-da p + p { padding-top: .6rem; border-top: 1px dashed #d3d9ef; }
+
+/* 做法：編號圓點步驟 */
+.sec-lab-how { background: #ffffff; border: 1px solid #d5e6dc; }
+.sec-lab-how > h3 { color: #1f5c3e; }
+.sec-lab-how ol { counter-reset: labstep; list-style: none; padding-left: 0; margin: .4rem 0 .8rem; }
+.sec-lab-how ol > li { counter-increment: labstep; position: relative; padding: .15rem 0 .15rem 2.5rem;
+                       margin: .55rem 0; line-height: 1.8; }
+.sec-lab-how ol > li::before { content: counter(labstep); position: absolute; left: 0; top: .2rem;
+    width: 1.7rem; height: 1.7rem; border-radius: 50%; background: #2e7d55; color: #ffffff;
+    font-size: .82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.sec-lab-how ol > li + li::after { content: ""; position: absolute; left: .82rem; top: -.55rem;
+    height: .6rem; border-left: 2px solid #cfe3d7; }
+.lab-why { background: #f2f8f4; border-radius: 8px; padding: .6rem .9rem; font-size: .9rem; color: #2b4a3a; }
+.lab-why strong { color: #1f5c3e; }
+details.lab-code { margin: .9rem 0 0; border: 1px solid #e3e7ec; border-radius: 10px; background: #fafbfc; }
+details.lab-code > summary { cursor: pointer; padding: .6rem 1rem; font-size: .9rem; color: #33475b;
+                             font-weight: 600; list-style: none; }
+details.lab-code > summary::-webkit-details-marker { display: none; }
+details.lab-code > summary::before { content: "▸"; display: inline-block; margin-right: .5rem;
+                                     transition: transform .15s; }
+details.lab-code[open] > summary::before { transform: rotate(90deg); }
+details.lab-code > pre { margin: 0; border-top: 1px solid #e3e7ec; border-radius: 0 0 10px 10px;
+                         font-size: .8rem; max-height: 32rem; }
+details.lab-code > p { margin: .6rem 1rem; font-size: .86rem; color: #5a6a7a; }
+
+/* 結果：數字卡 */
+.sec-lab-result { background: #f3f8fb; border: 1px solid #d2e3ec; border-left: 5px solid #2f6f8f;
+                  border-radius: 0 12px 12px 0; }
+.sec-lab-result > h3 { color: #1d5470; }
+.lab-kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem;
+            margin: 1rem 0 .4rem; }
+.lab-kpi { background: #ffffff; border: 1px solid #dbe7ee; border-radius: 10px; padding: .6rem .8rem;
+           display: flex; flex-direction: column; gap: .15rem; }
+.lab-kpi .v { font-size: 1.28rem; font-weight: 700; color: #1d5470; line-height: 1.25;
+              font-variant-numeric: tabular-nums; word-break: break-word; }
+.lab-kpi .k { font-size: .76rem; color: #6b7c8c; line-height: 1.45; }
+.sec-lab-result ul { font-size: .88rem; color: #4a5b6b; }
+
+/* 圖 */
+.sec-lab-fig { background: #ffffff; border: 1px solid #e6ebf2; }
+.sec-lab-fig > h3 { color: #3c4f66; }
+.sec-lab-fig img { margin: .6rem auto .5rem; border-radius: 6px; }
+.sec-lab-fig p > img + em { background: #f6f8fb; border-radius: 8px; padding: .6rem .9rem;
+                            text-align: left; color: #56667a; font-size: .86rem; }
+
+/* 繼續練習 */
+.sec-lab-next { background: #fafafa; border: 1px dashed #d8dde3; font-size: .92rem; }
+.sec-lab-next > h3 { color: #56667a; font-size: 1rem; }
+
+/* 解題頁在手機上：欄位名、檔名這類長英文字要能斷行，不要把卡片撐出畫面 */
+.sec-lab-ask, .sec-lab-biz, .sec-lab-da, .sec-lab-how, .sec-lab-result, .sec-lab-fig, .sec-lab-next, .lab-meta {
+    overflow-wrap: anywhere; min-width: 0; }
+@media (max-width: 600px) {
+    .sec-lab-ask, .sec-lab-biz, .sec-lab-da, .sec-lab-how, .sec-lab-result, .sec-lab-fig, .sec-lab-next {
+        padding: .9rem 1rem .8rem; }
+    .lab-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sec-lab-how ol > li { padding-left: 2.2rem; }
+}

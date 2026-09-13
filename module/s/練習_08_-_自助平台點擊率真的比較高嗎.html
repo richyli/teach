@@ -4,51 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 08 - 自助平台點擊率真的比較高嗎</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 08 - 自助平台點擊率真的比較高嗎</h1></div><p>在本單元中，會介紹第 8 題「業務部要我證明自助下單平台的廣告比直客業務賣得好」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：「業務主管說自助下單平台的點擊率比我們直客業務高四成，要我們把好版位多留給自助平台。這個差距是真的嗎？大到值得改版位分配嗎？」</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 3 組：這個差異是真的嗎</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>ad_daily（L1 檔名 ad_daily_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>從描述到推論 這個差異是真的嗎</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 08 - 自助平台點擊率真的比較高嗎</h1></div><p>在本單元中，會介紹第 8 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 3 組：這個差異是真的嗎</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>「業務主管說自助下單平台的點擊率比我們直客業務高四成，要我們把好版位多留給自助平台。這個差距是真的嗎？大到值得改版位分配嗎？」</p>
+</blockquote>
+<p>用到的資料：ad_daily（L1 檔名 ad_daily_2024_10.csv）</p>
+<p>對應單元：從描述到推論 這個差異是真的嗎</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>版位是廣告營收最核心的資源。差距「顯著」不代表值得改分配政策；這門生意照曝光計價，點擊率高一點也不會多賺一塊錢。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是推論統計與分層比較。p 值只回答「這個差距是不是抽樣抽出來的」，不回答「這個差距重不重要」。把資料按版位分層再比一次，才能把組成差異和真正的平台差異分開，這是辛普森悖論最常見的一種長相。</p>
+<p>四個版位平均分配是 2.00 bits；自助平台的曝光組成只有 1.73 bits，直客是 1.96 bits。自助平台的曝光比較集中，集中在點閱率最高的 video_preroll，這個組成差異才是整月點閱率差距的來源。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>(1) 四個平台各自把 click_cnt 與 impression_cnt 先加總、再相除，得到整月 CTR（不是把每一列的 CTR 拿去平均）。(2) 對 kmg_selfserve 與 kmg_direct 做兩組比例的 z 檢定，報差值與 p。(3) 同一組比較，按 placement 拆成四個版位各做一次。(4) 想換算成錢的話，revenue 這一欄混了 TWD 與 USD，兩個程序化平台記的是美金，要先乘匯率 31.5 才能加。語言用 Python：這題只需要加總與一個 z 檢定，statsmodels.stats.proportion.proportions_ztest 直接吃「點擊數、曝光數」兩個數字，不必把上千萬次曝光展開成一列一個 0 或 1。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>四個平台各自把 click_cnt 與 impression_cnt 先加總、再相除，得到整月 CTR（不是把每一列的 CTR 拿去平均）。</li>
+<li>對 kmg_selfserve 與 kmg_direct 做兩組比例的 z 檢定，報差值與 p。</li>
+<li>同一組比較，按 placement 拆成四個版位各做一次。</li>
+<li>想換算成錢的話，revenue 這一欄混了 TWD 與 USD，兩個程序化平台記的是美金，要先乘匯率 31.5 才能加。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 Python：這題只需要加總與一個 z 檢定，statsmodels.stats.proportion.proportions_ztest 直接吃「點擊數、曝光數」兩個數字，不必把上千萬次曝光展開成一列一個 0 或 1。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 from statsmodels.stats.proportion import proportions_ztest
 
@@ -108,119 +95,24 @@ ax[1].set_title(&quot;差別在版位組成：自助有一半曝光在 video_pre
 ax[1].legend(fontsize=8, loc=&quot;upper left&quot;, bbox_to_anchor=(1.0, 1.0))
 save_fig(fig, &quot;ex08_ctr_by_placement.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>整月 CTR 自助 0.507%、直客 0.358%，差 0.149 個百分點，z 大約 58，p 小到印出來就是 0。但拆到版位就散掉了：top_banner 0.201% 對 0.185%、in_article 0.422% 對 0.402%、sidebar 0.111% 對 0.110%，而 video_preroll 反過來是直客比較高（0.859% 對 0.829%）。真正的差別在版位組成：自助平台有 49% 的曝光落在 CTR 最高的 video_preroll，直客只有 18%。再把每次點擊帶進的收入算出來，四個平台是 16.6 到 17.3 元，幾乎一樣——因為這門生意是照曝光計價的。</p>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.5068</span><span class="k">整月 CTR 自助（%）</span></div><div class="lab-kpi"><span class="v">0.3583</span><span class="k">整月 CTR 直客（%）</span></div><div class="lab-kpi"><span class="v">0.1485</span><span class="k">差距（百分點）</span></div><div class="lab-kpi"><span class="v">57.9577</span><span class="k">z</span></div><div class="lab-kpi"><span class="v">0.2012</span><span class="k">top_banner 自助（%）</span></div><div class="lab-kpi"><span class="v">0.185</span><span class="k">top_banner 直客（%）</span></div><div class="lab-kpi"><span class="v">0.4222</span><span class="k">in_article 自助（%）</span></div><div class="lab-kpi"><span class="v">0.4018</span><span class="k">in_article 直客（%）</span></div><div class="lab-kpi"><span class="v">0.1107</span><span class="k">sidebar 自助（%）</span></div><div class="lab-kpi"><span class="v">0.1104</span><span class="k">sidebar 直客（%）</span></div><div class="lab-kpi"><span class="v">0.829</span><span class="k">video_preroll 自助（%）</span></div><div class="lab-kpi"><span class="v">0.8589</span><span class="k">video_preroll 直客（%）</span></div></div>
+
 </section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>整月 CTR 自助（%）</td>
-<td>0.5068</td>
-</tr>
-<tr>
-<td>整月 CTR 直客（%）</td>
-<td>0.3583</td>
-</tr>
-<tr>
-<td>差距（百分點）</td>
-<td>0.1485</td>
-</tr>
-<tr>
-<td>z</td>
-<td>57.9577</td>
-</tr>
-<tr>
-<td>p 小到接近 0</td>
-<td>是</td>
-</tr>
-<tr>
-<td>top_banner 自助（%）</td>
-<td>0.2012</td>
-</tr>
-<tr>
-<td>top_banner 直客（%）</td>
-<td>0.185</td>
-</tr>
-<tr>
-<td>in_article 自助（%）</td>
-<td>0.4222</td>
-</tr>
-<tr>
-<td>in_article 直客（%）</td>
-<td>0.4018</td>
-</tr>
-<tr>
-<td>sidebar 自助（%）</td>
-<td>0.1107</td>
-</tr>
-<tr>
-<td>sidebar 直客（%）</td>
-<td>0.1104</td>
-</tr>
-<tr>
-<td>video_preroll 自助（%）</td>
-<td>0.829</td>
-</tr>
-<tr>
-<td>video_preroll 直客（%）</td>
-<td>0.8589</td>
-</tr>
-<tr>
-<td>自助曝光落在 video_preroll 的比例</td>
-<td>0.4915</td>
-</tr>
-<tr>
-<td>直客曝光落在 video_preroll 的比例</td>
-<td>0.183</td>
-</tr>
-<tr>
-<td>每次點擊收入 最低平台</td>
-<td>16.6345</td>
-</tr>
-<tr>
-<td>每次點擊收入 最高平台</td>
-<td>17.274</td>
-</tr>
-<tr>
-<td>直客整月曝光（萬）</td>
-<td>1769.0502</td>
-</tr>
-<tr>
-<td>直客補到自助水準多出的點擊（萬）</td>
-<td>2.6279</td>
-</tr>
-<tr>
-<td>版位組成 entropy 自助（bits）</td>
-<td>1.7337</td>
-</tr>
-<tr>
-<td>版位組成 entropy 直客（bits）</td>
-<td>1.9643</td>
-</tr>
-</tbody>
-</table>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 8 題的圖" src="../../img/ex08_ctr_by_placement.png" />
+<em>左圖是同一個版位裡兩個平台的點擊率，四個版位都很接近，video_preroll 還是直客比較高。右圖是兩個平台的曝光落在各版位的比例，自助平台一半的曝光在點擊率最高的 video_preroll。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 8 題的圖" src="../../img/ex08_ctr_by_placement.png" /></p>
-<p>左圖是同一個版位裡兩個平台的點擊率，四個版位都很接近，video_preroll 還是直客比較高。右圖是兩個平台的曝光落在各版位的比例，自助平台一半的曝光在點擊率最高的 video_preroll。</p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>四個版位平均分配是 2.00 bits；自助平台的曝光組成只有 1.73 bits，直客是 1.96 bits。自助平台的曝光比較集中，集中在點閱率最高的 video_preroll，這個組成差異才是整月點閱率差距的來源。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_07_-_%E8%A8%82%E9%96%B1%E5%8A%9F%E5%8B%9E%E8%A9%B2%E7%AE%97%E8%AA%B0%E7%9A%84.html">練習 07 - 訂閱功勞該算誰的</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_09_-_%E4%BB%98%E8%B2%BB%E7%89%86%E8%AE%93%E6%B5%81%E9%87%8F%E6%8E%89%E5%B9%BE%E6%88%90.html">練習 09 - 付費牆讓流量掉幾成</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

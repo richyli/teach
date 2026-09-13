@@ -4,51 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 02 - 程序化平台該不該停</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 02 - 程序化平台該不該停</h1></div><p>在本單元中，會介紹第 2 題「兩家程序化廣告平台十月只收三萬多，業務主管問要不要停掉」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：十月廣告收入 195 萬，openx 跟 adx 兩家程序化平台加起來才三萬出頭，是不是該把它們關掉，版位全部留給自家業務？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 1 組：先把一張表讀對</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>ad_daily（L1／L2 的 ad_daily_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>讓 AI 算的數字對不對</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 02 - 程序化平台該不該停</h1></div><p>在本單元中，會介紹第 2 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 1 組：先把一張表讀對</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>十月廣告收入 195 萬，openx 跟 adx 兩家程序化平台加起來才三萬出頭，是不是該把它們關掉，版位全部留給自家業務？</p>
+</blockquote>
+<p>用到的資料：ad_daily（L1／L2 的 ad_daily_2024_10.csv）</p>
+<p>對應單元：讓 AI 算的數字對不對</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>要不要停掉一個通路，是營收結構的決策，不是報表問題。單位看錯，會把收益率比自家直客還高、佔全站廣告收入三分之一以上的通路整個砍掉。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這是資料整合裡最基本的一件事：同一個欄位的單位要一致，也就是資料標準化。加總之前先看表裡有沒有「單位欄」，例如幣別、時區、計量單位；有的話，要先換成同一個單位才能加。任何跨平台、跨來源的彙總都以這一步為前提。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>先問資料字典一個問題：revenue 旁邊為什麼要多一欄 currency。按 currency 分組各自加總，把 USD 的列乘上匯率換成台幣再合併（匯率不在資料裡，要自己定一個並在報告裡標明來源，例如 1 USD = 31.5 TWD），最後算每千次曝光收入（收入 ÷ 曝光數 × 1000）比較四個平台。用 Python，因為 pandas 可以用一行條件式依 currency 逐列換算再 groupby，852 列不會有任何一列被漏掉。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先問資料字典一個問題：revenue 旁邊為什麼要多一欄 currency。</li>
+<li>按 currency 分組各自加總，把 USD 的列乘上匯率換成台幣再合併（匯率不在資料裡，要自己定一個並在報告裡標明來源，例如 1 USD = 31.5 TWD），最後算每千次曝光收入（收入 ÷ 曝光數 × 1000）比較四個平台。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python，因為 pandas 可以用一行條件式依 currency 逐列換算再 groupby，852 列不會有任何一列被漏掉。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 a = ad()
@@ -94,79 +78,27 @@ ax[1].set_ylabel(&quot;每千次曝光收入（元）&quot;)
 ax[1].set_title(&quot;換算後，程序化平台比直客還高，只輸自助平台&quot;)
 save_fig(fig, &quot;ex02_platform_revenue.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>revenue 欄混了兩種幣別：kmg_direct 與 kmg_selfserve 記台幣，openx_prog 與 adx_prog 記美金。直接加總得到 194.8 萬，換算後其實是 297.5 萬，原本的算法少報了約三分之一。兩家程序化平台不是只收 3 萬，是收了約 106 萬，超過全站廣告收入的三分之一；每千次曝光收入 adx_prog 74 元、openx_prog 73 元，比自家直客的 61 元還高，只輸給自助平台的 88 元——原本要被關掉的，其實是收益率排第二、第三的通路。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>直接加總（元）</td>
-<td>1947799</td>
-</tr>
-<tr>
-<td>換算後總額（元）</td>
-<td>2975076</td>
-</tr>
-<tr>
-<td>直接加總少報的比例</td>
-<td>0.3453</td>
-</tr>
-<tr>
-<td>各平台幣別</td>
-<td>adx_prog USD、kmg_direct TWD、kmg_selfserve TWD、openx_prog USD</td>
-</tr>
-<tr>
-<td>程序化換算後收入（元）</td>
-<td>1060959</td>
-</tr>
-<tr>
-<td>程序化佔全站廣告收入</td>
-<td>0.3566</td>
-</tr>
-<tr>
-<td>adx_prog 每千次曝光收入</td>
-<td>74.1451</td>
-</tr>
-<tr>
-<td>openx_prog 每千次曝光收入</td>
-<td>73.0295</td>
-</tr>
-<tr>
-<td>kmg_direct 每千次曝光收入</td>
-<td>60.682</td>
-</tr>
-<tr>
-<td>kmg_selfserve 每千次曝光收入</td>
-<td>87.5492</td>
-</tr>
-<tr>
-<td>收益率最高的平台</td>
-<td>kmg_selfserve</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">1,947,799</span><span class="k">直接加總（元）</span></div><div class="lab-kpi"><span class="v">2,975,076</span><span class="k">換算後總額（元）</span></div><div class="lab-kpi"><span class="v">0.3453</span><span class="k">直接加總少報的比例</span></div><div class="lab-kpi"><span class="v">1,060,959</span><span class="k">程序化換算後收入（元）</span></div><div class="lab-kpi"><span class="v">0.3566</span><span class="k">程序化佔全站廣告收入</span></div><div class="lab-kpi"><span class="v">74.1451</span><span class="k">adx_prog 每千次曝光收入</span></div><div class="lab-kpi"><span class="v">73.0295</span><span class="k">openx_prog 每千次曝光收入</span></div><div class="lab-kpi"><span class="v">60.682</span><span class="k">kmg_direct 每千次曝光收入</span></div><div class="lab-kpi"><span class="v">87.5492</span><span class="k">kmg_selfserve 每千次曝光收入</span></div><div class="lab-kpi"><span class="v">kmg_selfserve</span><span class="k">收益率最高的平台</span></div></div>
+
 <ul>
 <li>四個平台換算後的每千次曝光收入：adx_prog 74.1 元、kmg_direct 60.7 元、kmg_selfserve 87.5 元、openx_prog 73.0 元</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 2 題的圖" src="../../img/ex02_platform_revenue.png" /></p>
-<p>左圖灰色是直接加總、藍色是換成台幣後的十月收入，兩個程序化平台的灰色長條幾乎看不見。右圖是換算後的每千次曝光收入，程序化平台比自家直客高，只輸給自助平台。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 2 題的圖" src="../../img/ex02_platform_revenue.png" />
+<em>左圖灰色是直接加總、藍色是換成台幣後的十月收入，兩個程序化平台的灰色長條幾乎看不見。右圖是換算後的每千次曝光收入，程序化平台比自家直客高，只輸給自助平台。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_03_-_%E6%9C%80%E4%BD%B3%E5%A0%B1%E5%B0%8E%E7%8D%8E%E7%99%BC%E7%B5%A6%E8%AA%B0.html">練習 03 - 最佳報導獎發給誰</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

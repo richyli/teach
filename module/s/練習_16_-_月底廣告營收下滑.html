@@ -4,51 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 16 - 月底廣告營收下滑</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 16 - 月底廣告營收下滑</h1></div><p>在本單元中，會介紹第 16 題「10 月下旬廣告營收一路往下掉，業務主管要你在會前說清楚是不是出事了」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：這個月廣告收入從 10 月 23 日以後一路往下掉，月底只剩高峰的四分之一。是市場冷掉了，還是我們自己出了什麼問題？</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>入門</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 6 組：時間、存活與回頭看的陷阱</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>ad_daily（L1 的 ad_daily_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>時間序列 明天的流量會怎樣</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 16 - 月底廣告營收下滑</h1></div><p>在本單元中，會介紹第 16 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-1">入門</span><span class="lab-chip">第 6 組：時間、存活與回頭看的陷阱</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>這個月廣告收入從 10 月 23 日以後一路往下掉，月底只剩高峰的四分之一。是市場冷掉了，還是我們自己出了什麼問題？</p>
+</blockquote>
+<p>用到的資料：ad_daily（L1 的 ad_daily_2024_10.csv）</p>
+<p>對應單元：時間序列 明天的流量會怎樣</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>營收往下掉，會前要先分清楚是市場冷了、單價崩了，還是檔期自然結束。答案不同，該做的事完全不同：降價搶單、檢查產品，或只是提早排下個月的檔期。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是時間序列的拆解思維：把總營收拆成「量」（在跑的活動數）與「價」（每千次曝光營收）分開畫。畫之前先確認整條序列的單位一致，才不會把資料問題讀成市場趨勢。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>先看 currency 欄，把記成 USD 的列乘 31.5 換成台幣，再依 stat_date 加總成 31 天的日營收序列；同一天再算兩個東西：當天在跑的活動數（campaign_id 去重計數）與總曝光數，然後算每千次曝光營收（台幣營收 ÷ 曝光數 × 1000）。三條線畫在一起看。用 Python 的理由：853 列資料用 pandas 的 groupby 三行就變成日序列，算完直接畫圖，不必把資料搬到別的工具。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先看 currency 欄，把記成 USD 的列乘 31.5 換成台幣，再依 stat_date 加總成 31 天的日營收序列；同一天再算兩個東西：當天在跑的活動數（campaign_id 去重計數）與總曝光數，然後算每千次曝光營收（台幣營收 ÷ 曝光數 × 1000）。</li>
+<li>三條線畫在一起看。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　用 Python 的理由：853 列資料用 pandas 的 groupby 三行就變成日序列，算完直接畫圖，不必把資料搬到別的工具。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 
 a = ad()
@@ -112,127 +96,27 @@ ax[3].set_title(&quot;單價全月在 50 到 116 元之間震盪，沒有往下�
 fig.autofmt_xdate()
 save_fig(fig, &quot;ex16_timeseries.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>換算後全月營收約 297.5 萬元，直接加總只有 194.8 萬元，少掉大約三分之一。日營收從 10/1 的 1.3 萬元爬到 10/23 的 18.6 萬元，月底掉回 4.8 萬元；但同一天在跑的活動數也從 2 檔爬到 30 檔再掉到 10 檔。每千次曝光營收全月都在 50 到 116 元之間上下震盪、沒有走低的趨勢。所以營收的起落是跟著檔期走，不是單價崩掉。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>換算後全月營收</td>
-<td>2975076</td>
-</tr>
-<tr>
-<td>直接加總</td>
-<td>1947799</td>
-</tr>
-<tr>
-<td>10/1 日營收（萬）</td>
-<td>1.2797</td>
-</tr>
-<tr>
-<td>10/23 日營收（萬）</td>
-<td>18.551</td>
-</tr>
-<tr>
-<td>10/31 日營收（萬）</td>
-<td>4.8458</td>
-</tr>
-<tr>
-<td>營收高點在 10/23</td>
-<td>是</td>
-</tr>
-<tr>
-<td>10/1 在跑的活動數</td>
-<td>2</td>
-</tr>
-<tr>
-<td>在跑活動數高點</td>
-<td>30</td>
-</tr>
-<tr>
-<td>10/31 在跑的活動數</td>
-<td>10</td>
-</tr>
-<tr>
-<td>每千次曝光營收 最低</td>
-<td>50.3961</td>
-</tr>
-<tr>
-<td>每千次曝光營收 最高</td>
-<td>115.4507</td>
-</tr>
-<tr>
-<td>每千次曝光營收沒有走低（日斜率 ≥ -0.5 元）</td>
-<td>是</td>
-</tr>
-<tr>
-<td>10/1–10/2 只有程序化平台在投</td>
-<td>是</td>
-</tr>
-<tr>
-<td>自助平台進場日</td>
-<td>2024-10-03</td>
-</tr>
-<tr>
-<td>直客平台進場日</td>
-<td>2024-10-04</td>
-</tr>
-<tr>
-<td>10/1 未換算營收（元）</td>
-<td>406.25</td>
-</tr>
-<tr>
-<td>10/2 未換算營收（元）</td>
-<td>1527.64</td>
-</tr>
-<tr>
-<td>10/1 到 10/7 未換算漲幾倍</td>
-<td>101.5103</td>
-</tr>
-<tr>
-<td>10/1 到 10/7 換算後漲幾倍</td>
-<td>6.5311</td>
-</tr>
-<tr>
-<td>10/3 未換算 比前一天（倍）</td>
-<td>1.6305</td>
-</tr>
-<tr>
-<td>10/3 換算後 比前一天（倍）</td>
-<td>0.261</td>
-</tr>
-<tr>
-<td>10/4 未換算 比前一天（倍）</td>
-<td>4.7927</td>
-</tr>
-<tr>
-<td>10/4 換算後 比前一天（倍）</td>
-<td>1.7034</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">2,975,076</span><span class="k">換算後全月營收</span></div><div class="lab-kpi"><span class="v">1,947,799</span><span class="k">直接加總</span></div><div class="lab-kpi"><span class="v">1.2797</span><span class="k">10/1 日營收（萬）</span></div><div class="lab-kpi"><span class="v">18.551</span><span class="k">10/23 日營收（萬）</span></div><div class="lab-kpi"><span class="v">4.8458</span><span class="k">10/31 日營收（萬）</span></div><div class="lab-kpi"><span class="v">2</span><span class="k">10/1 在跑的活動數</span></div><div class="lab-kpi"><span class="v">30</span><span class="k">在跑活動數高點</span></div><div class="lab-kpi"><span class="v">10</span><span class="k">10/31 在跑的活動數</span></div><div class="lab-kpi"><span class="v">50.3961</span><span class="k">每千次曝光營收 最低</span></div><div class="lab-kpi"><span class="v">115.4507</span><span class="k">每千次曝光營收 最高</span></div><div class="lab-kpi"><span class="v">2024-10-03</span><span class="k">自助平台進場日</span></div><div class="lab-kpi"><span class="v">2024-10-04</span><span class="k">直客平台進場日</span></div></div>
+
 <ul>
 <li>每千次曝光營收的日斜率 -0.46 元／天，一個月下來不到 15 元，相對於 50 到 116 元的日間震盪看不出趨勢</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 16 題的圖" src="../../img/ex16_timeseries.png" /></p>
-<p>第一張是沒換算與換算後的日營收，第二張把台幣平台與美金平台（已換算）疊起來，第三張是每天在跑的活動數，第四張是每千次曝光營收。營收的起落跟著活動數走，單價沒有往下掉。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 16 題的圖" src="../../img/ex16_timeseries.png" />
+<em>第一張是沒換算與換算後的日營收，第二張把台幣平台與美金平台（已換算）疊起來，第三張是每天在跑的活動數，第四張是每千次曝光營收。營收的起落跟著活動數走，單價沒有往下掉。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_15_-_%E6%9C%83%E8%B3%A3%E8%A8%82%E9%96%B1%E7%9A%84%E7%A8%BF%E5%AD%90.html">練習 15 - 會賣訂閱的稿子</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_17_-_%E6%89%BE%E5%87%BA%E7%82%8E%E4%B8%8A%E7%9A%84%E7%95%99%E8%A8%80%E5%8D%80.html">練習 17 - 找出炎上的留言區</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

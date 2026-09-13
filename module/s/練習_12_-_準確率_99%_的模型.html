@@ -4,51 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 12 - 準確率 99% 的模型</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 12 - 準確率 99% 的模型</h1></div><p>在本單元中，會介紹第 12 題「數據組做的訂閱轉換預測準確率 99%，上線前你要說清楚它憑什麼這麼準」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：數據組說他們做了一個模型，可以預測一則內容會不會帶來十筆以上訂閱，準確率 99%，下個月想拿它來排產製的優先順序。這東西可以信嗎？我要知道它到底學到了什麼。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>進階</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 4 組：預測、門檻與代價</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>content（L2）、content_monthly（L2）、dim_section（L2）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>模型看起來太準 就是出事了</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 12 - 準確率 99% 的模型</h1></div><p>在本單元中，會介紹第 12 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-2">進階</span><span class="lab-chip">第 4 組：預測、門檻與代價</span><span class="lab-chip lab-tool">Python</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>數據組說他們做了一個模型，可以預測一則內容會不會帶來十筆以上訂閱，準確率 99%，下個月想拿它來排產製的優先順序。這東西可以信嗎？我要知道它到底學到了什麼。</p>
+</blockquote>
+<p>用到的資料：content（L2）、content_monthly（L2）、dim_section（L2）</p>
+<p>對應單元：模型看起來太準 就是出事了</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>主管最常遇到的，是別人交來一個「很準的模型」。拿它排產製優先順序之前，要能問出它憑什麼準、比一行常識規則好多少，才不會為一個抄答案的模型付錢。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是模型評估與基準線（baseline）。準確率要跟最簡單的規則比才有意義；每一個特徵都要檢查取得的時點，找出洩漏；也要知道不同模型對洩漏的敏感度不一樣，線性模型看不出來不代表沒有。</p>
+<p>把「是付費牆內容就猜會」這條規則放到全部 1,438 則上：TP 252、FP 51、FN 19、TN 1,116，準確率 0.951。正例只佔 18.8%，先把這張表算出來，才看得出 99% 裡有多少是這條規則早就做到的。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
+<p>標籤本身有 0.698 bits 的不確定性，知道是不是付費牆之後只剩 0.235 bits，一個欄位就帶走了 66%。這就是一行規則能跟模型打得有來有回的原因。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>標籤是 conversion_cnt 是否大於等於 10。動手前先把每個欄位分三堆：發布那一刻就知道的（content 與 dim_section 整張表）、要等月底才知道的（content_monthly 的流量欄位）、事後回填的（total_pv_lifetime，資料字典的 available_at 寫的是 post_hoc）。模型用隨機森林（RandomForestClassifier，500 棵樹、random_state=42），測試集切 30%（分層抽樣、random_state=42）。然後跑四個對照：(A) 數據組版，content_monthly 的欄位全丟進去；(B) 只拿掉 total_pv_lifetime；(C) 只用發布當下的欄位；(D) 完全不用模型的一條規則「是付費牆內容就猜會」。語言用 Python，因為這四個版本只差在欄位清單，同一段 sklearn 程式改一個 list 就跑完，準確率能並排比較。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題用 Python，整支程式如下。資料放在 dist/L1 與 dist/L2 兩個資料夾；print 那幾行會把算出來的關鍵數字印出來，畫圖的部分在最後面。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>標籤是 conversion_cnt 是否大於等於 10。</li>
+<li>動手前先把每個欄位分三堆：發布那一刻就知道的（content 與 dim_section 整張表）、要等月底才知道的（content_monthly 的流量欄位）、事後回填的（total_pv_lifetime，資料字典的 available_at 寫的是 post_hoc）。</li>
+<li>模型用隨機森林（RandomForestClassifier，500 棵樹、random_state=42），測試集切 30%（分層抽樣、random_state=42）。</li>
+<li>然後跑四個對照：(A) 數據組版，content_monthly 的欄位全丟進去；(B) 只拿掉 total_pv_lifetime；(C) 只用發布當下的欄位；(D) 完全不用模型的一條規則「是付費牆內容就猜會」。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 Python，因為這四個版本只差在欄位清單，同一段 sklearn 程式改一個 list 就跑完，準確率能並排比較。</p>
+
+<details class="lab-code"><summary>看完整程式（Python）</summary>
+
+
 <pre><code class="language-python">from _kmg import *
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -143,127 +131,27 @@ ax.set_title(&quot;回填欄讓隨機森林多 3.2 個百分點，邏輯斯迴�
 ax.legend()
 save_fig(fig, &quot;ex12_leakage.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>(A) 準確率 98.8%、AUC 接近 1.00。拆開來看，paywall_hit_cnt 根本是這個標籤的分母（跟 conversion_cnt 的相關係數 0.98），等於拿答案的一半去猜答案；total_pv_lifetime 更誇張，它是「到今天為止的累積瀏覽量」，內容發布那天這個數字還不存在。(B) 只拿掉回填欄，準確率還是 99.3%——因為真正的洩漏是那個分母，它還留著。(C) 乾淨版掉到 94.7%、AUC 0.98，看起來還是很好；但 (D) 那條一行規則在同一個測試集上的準確率是 94.0%，模型只贏它 0.7 個百分點。最後把 total_pv_lifetime 單獨加回乾淨版，準確率立刻從 94.7% 跳到 97.9%——一個欄位換來 3.2 個百分點，這就是洩漏的指紋。同一件事換成邏輯斯迴歸做，只會從 94.0% 升到 95.6%：線性模型吃不太到這個洩漏，不代表沒有洩漏。真正的發現是：付費牆內容有 83% 會超過十筆轉換、非付費牆只有 1.7%，所謂的模型其實是把 is_paywalled 那一欄抄了一遍。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A 數據組版 準確率</td>
-<td>0.9884</td>
-</tr>
-<tr>
-<td>A AUC 接近 1</td>
-<td>是</td>
-</tr>
-<tr>
-<td>B 只拿掉回填欄 準確率</td>
-<td>0.9931</td>
-</tr>
-<tr>
-<td>C 只用發布當下 準確率</td>
-<td>0.9468</td>
-</tr>
-<tr>
-<td>C AUC</td>
-<td>0.9752</td>
-</tr>
-<tr>
-<td>D 一行規則 準確率（同一個測試集）</td>
-<td>0.9398</td>
-</tr>
-<tr>
-<td>C 只贏一行規則（百分點）</td>
-<td>0.6944</td>
-</tr>
-<tr>
-<td>C 加回 total_pv_lifetime 準確率</td>
-<td>0.9792</td>
-</tr>
-<tr>
-<td>一個欄位換來的準確率（百分點）</td>
-<td>3.2407</td>
-</tr>
-<tr>
-<td>邏輯斯迴歸 C 準確率</td>
-<td>0.9398</td>
-</tr>
-<tr>
-<td>邏輯斯迴歸 C 加回 total_pv_lifetime 準確率</td>
-<td>0.956</td>
-</tr>
-<tr>
-<td>paywall_hit_cnt 與 conversion_cnt 相關</td>
-<td>0.9804</td>
-</tr>
-<tr>
-<td>付費牆內容十筆以上轉換的比例</td>
-<td>0.8317</td>
-</tr>
-<tr>
-<td>非付費牆內容十筆以上轉換的比例</td>
-<td>0.0167</td>
-</tr>
-<tr>
-<td>一行規則 全資料 confusion matrix（TP/FP/FN/TN）</td>
-<td>252、51、19、1116</td>
-</tr>
-<tr>
-<td>一行規則 全資料準確率</td>
-<td>0.9513</td>
-</tr>
-<tr>
-<td>正例比例</td>
-<td>0.1885</td>
-</tr>
-<tr>
-<td>標籤 entropy（bits）</td>
-<td>0.6982</td>
-</tr>
-<tr>
-<td>知道是否付費牆後剩的 entropy（bits）</td>
-<td>0.2346</td>
-</tr>
-<tr>
-<td>互資訊（bits）</td>
-<td>0.4636</td>
-</tr>
-<tr>
-<td>帶走的比例</td>
-<td>0.664</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">0.9884</span><span class="k">A 數據組版 準確率</span></div><div class="lab-kpi"><span class="v">0.9931</span><span class="k">B 只拿掉回填欄 準確率</span></div><div class="lab-kpi"><span class="v">0.9468</span><span class="k">C 只用發布當下 準確率</span></div><div class="lab-kpi"><span class="v">0.9752</span><span class="k">C AUC</span></div><div class="lab-kpi"><span class="v">0.9398</span><span class="k">D 一行規則 準確率（同一個測試集）</span></div><div class="lab-kpi"><span class="v">0.6944</span><span class="k">C 只贏一行規則（百分點）</span></div><div class="lab-kpi"><span class="v">0.9792</span><span class="k">C 加回 total_pv_lifetime 準確率</span></div><div class="lab-kpi"><span class="v">3.2407</span><span class="k">一個欄位換來的準確率（百分點）</span></div><div class="lab-kpi"><span class="v">0.9398</span><span class="k">邏輯斯迴歸 C 準確率</span></div><div class="lab-kpi"><span class="v">0.956</span><span class="k">邏輯斯迴歸 C 加回 total_pv_lifetime 準確率</span></div><div class="lab-kpi"><span class="v">0.9804</span><span class="k">paywall_hit_cnt 與 conversion_cnt 相關</span></div><div class="lab-kpi"><span class="v">0.8317</span><span class="k">付費牆內容十筆以上轉換的比例</span></div></div>
+
 <ul>
 <li>隨機森林準確率：A 98.8%、B 99.3%、C 94.7%、C＋回填 97.9%；邏輯斯迴歸：A 98.6%、B 98.8%、C 94.0%、C＋回填 95.6%</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 12 題的圖" src="../../img/ex12_leakage.png" /></p>
-<p>五種做法在同一個測試集上的準確率，藍色是隨機森林、綠色是邏輯斯迴歸，D 是一行規則所以兩色一樣。縱軸從 90% 開始，差距看起來大，其實都在幾個百分點之內。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 12 題的圖" src="../../img/ex12_leakage.png" />
+<em>五種做法在同一個測試集上的準確率，藍色是隨機森林、綠色是邏輯斯迴歸，D 是一行規則所以兩色一樣。縱軸從 90% 開始，差距看起來大，其實都在幾個百分點之內。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>confusion matrix</h4>
-<p>把「是付費牆內容就猜會」這條規則放到全部 1,438 則上：TP 252、FP 51、FN 19、TN 1,116，準確率 0.951。正例只佔 18.8%，先把這張表算出來，才看得出 99% 裡有多少是這條規則早就做到的。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
-</section>
-<section class="mod-sec sec-content"><h4>entropy</h4>
-<p>標籤本身有 0.698 bits 的不確定性，知道是不是付費牆之後只剩 0.235 bits，一個欄位就帶走了 66%。這就是一行規則能跟模型打得有來有回的原因。見 <a href="M_Entropy_%E8%88%87_Shannon_%E8%B3%87%E8%A8%8A%E7%90%86%E8%AB%96.html">Entropy 與 Shannon 資訊理論</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_11_-_%E5%8A%A0%E6%8E%A8%E5%90%8D%E5%96%AE%E7%9A%84%E9%96%80%E6%AA%BB.html">練習 11 - 加推名單的門檻</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_13_-_%E5%81%9C%E6%8A%95%E7%89%88%E4%BD%8D%E6%B8%85%E5%96%AE.html">練習 13 - 停投版位清單</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;

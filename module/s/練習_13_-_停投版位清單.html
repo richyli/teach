@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>練習 13 - 停投版位清單</title>
-<link rel="stylesheet" href="../../style.e6c66ae5.css">
+<link rel="stylesheet" href="../../style.d70203e9.css">
 <script>
 MathJax = {
   tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -14,48 +14,35 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
-<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">題目</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">怎麼做</a></li><li><a href="#sec-5">結果</a></li><li><a href="#sec-6">圖表</a></li><li><a href="#sec-7">連到課堂概念</a></li><li><a href="#sec-8">接著做</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 13 - 停投版位清單</h1></div><p>在本單元中，會介紹第 13 題「業務部要一份建議停投的版位清單，但上次照數字砍完反而少了一塊收入」背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。</p>
-<p>建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
-<section class="mod-sec sec-content"><h3 id="sec-1">題目</h3>
-<p>有人會這樣問你：這個月廣告有八百多筆投放紀錄，我要知道哪些「活動×版位×日」是賠本的，下個月直接停掉。但上次照數字砍完，營收反而掉了一塊，這次要你確定砍對人。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>難度</td>
-<td>挑戰</td>
-</tr>
-<tr>
-<td>組別</td>
-<td>第 4 組：預測、門檻與代價</td>
-</tr>
-<tr>
-<td>用哪張表</td>
-<td>ad_daily（L1 釋出的 ad_daily_2024_10.csv）</td>
-</tr>
-<tr>
-<td>對應單元</td>
-<td>模型看起來太準 就是出事了（同時練 預測會不會退訂 的成本門檻）</td>
-</tr>
-</tbody>
-</table>
+<div class="layout"><aside class="sidebar"><div class="sidebar-label">本頁內容</div><nav class="toc"><ul><li><a href="#sec-1">有人會這樣問你</a></li><li><a href="#sec-2">這一題在商業上要回答什麼</a></li><li><a href="#sec-3">這一題練的是哪一種資料分析</a></li><li><a href="#sec-4">一步一步怎麼做</a></li><li><a href="#sec-5">結果會看到什麼</a></li><li><a href="#sec-6">圖怎麼讀</a></li><li><a href="#sec-7">繼續練習</a></li></ul></nav></aside><div class="content"><div class="container"><div class="hero"><h1>練習 13 - 停投版位清單</h1></div><p>在本單元中，會介紹第 13 題背後的商業問題、它練的是哪一種資料分析，以及從資料到結論的完整做法、程式與圖表。建議先回 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 自己試著做一次，再來對照這一頁。</p>
+<div class="lab-meta"><span class="lab-chip lab-lv-3">挑戰</span><span class="lab-chip">第 4 組：預測、門檻與代價</span><span class="lab-chip lab-tool">R ＋ Python 畫圖</span></div>
+
+<section class="mod-sec sec-lab-ask"><h3 id="sec-1">有人會這樣問你</h3>
+<blockquote>
+<p>這個月廣告有八百多筆投放紀錄，我要知道哪些「活動×版位×日」是賠本的，下個月直接停掉。但上次照數字砍完，營收反而掉了一塊，這次要你確定砍對人。</p>
+</blockquote>
+<p>用到的資料：ad_daily（L1 釋出的 ad_daily_2024_10.csv）</p>
+<p>對應單元：模型看起來太準 就是出事了（同時練 預測會不會退訂 的成本門檻）</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
+<section class="mod-sec sec-lab-biz"><h3 id="sec-2">這一題在商業上要回答什麼</h3>
 <p>停投名單直接砍掉收入。標籤錯了，模型越準砍得越徹底：沒換幣別的名單，會冤枉停掉每個月 41 萬元的投放。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
+<section class="mod-sec sec-lab-da"><h3 id="sec-3">這一題練的是哪一種資料分析</h3>
 <p>這一題練的是標籤品質：監督式學習的上限由標籤決定，資料清理必須發生在貼標籤之前。再用 confusion matrix 比較兩份名單，把「冤枉停投」與「該停沒停」各有多少、各值多少錢算出來。</p>
+<p>把換算幣別後的標籤當正確答案，未換算那份停投名單是 TP 68、FP 145（冤枉停投）、FN 145（該停沒停）、TN 494。FP 和 FN 剛好一樣多，是因為兩份名單都切在第 25 百分位；但代價不一樣：被冤枉停投的那 145 列，換算後一個月有 41 萬元收入。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-4">怎麼做</h3>
-<p>先算每一列的千次曝光收入（revenue ÷ impression_cnt × 1000）當效益指標，低於全體第 25 百分位就貼上「建議停投」的標籤，再用 placement、platform、advertiser_industry 跑一個簡單分類（glm 或決策樹）看是什麼在決定這個標籤。關鍵不在模型在標籤：revenue 旁邊有 currency 欄，adx_prog 與 openx_prog 記的是美金，要先乘 31.5 換成台幣。整套做兩次——不換算一次、換算一次——把兩份停投名單逐列對照，看有幾列翻面。最後用誤判成本定門檻（停錯一個賺錢版位等於少收真實收入，留著一個低效版位只是版面被佔住），並檢查 viewability_rate 的缺失是不是隨機的。語言用 R，因為這題七成的工是清理跟分群彙總，dplyr 一條管線從換幣別、算 eCPM、貼標籤到出成本表就寫完，yardstick 直接給混淆矩陣，也接得上後面同樣用 R 的存活分析模組。</p>
-</section>
-<section class="mod-sec sec-content"><h4>程式</h4>
-<p>這一題的分析用 R，整支程式如下。從 kmg_data_universe 這個資料夾執行，資料放在 dist/L1 與 dist/L2；cat 那幾行會把算出來的關鍵數字印出來。</p>
+<section class="mod-sec sec-lab-how"><h3 id="sec-4">一步一步怎麼做</h3>
+<ol>
+<li>先算每一列的千次曝光收入（revenue ÷ impression_cnt × 1000）當效益指標，低於全體第 25 百分位就貼上「建議停投」的標籤，再用 placement、platform、advertiser_industry 跑一個簡單分類（glm 或決策樹）看是什麼在決定這個標籤。</li>
+<li>關鍵不在模型在標籤：revenue 旁邊有 currency 欄，adx_prog 與 openx_prog 記的是美金，要先乘 31.5 換成台幣。</li>
+<li>整套做兩次——不換算一次、換算一次——把兩份停投名單逐列對照，看有幾列翻面。</li>
+<li>最後用誤判成本定門檻（停錯一個賺錢版位等於少收真實收入，留著一個低效版位只是版面被佔住），並檢查 viewability_rate 的缺失是不是隨機的。</li>
+</ol>
+<p class="lab-why"><strong>工具怎麼選</strong>　語言用 R，因為這題七成的工是清理跟分群彙總，dplyr 一條管線從換幣別、算 eCPM、貼標籤到出成本表就寫完，yardstick 直接給混淆矩陣，也接得上後面同樣用 R 的存活分析模組。</p>
+
+<details class="lab-code"><summary>看完整程式（R）</summary>
+
+
 <pre><code class="language-r"># ex13 建議停投的版位清單：標籤錯，模型越準錯得越徹底（R：dplyr＋yardstick）
 lib &lt;- Sys.getenv(&quot;R_LIBS_USER&quot;)
 .libPaths(c(lib, .libPaths()))
@@ -107,9 +94,13 @@ a$est &lt;- factor(ifelse(predict(m, type = &quot;response&quot;) &gt; 0.5, &quo
 acc &lt;- accuracy(a, truth = truth, estimate = est)$.estimate
 cmat &lt;- conf_mat(a, truth = truth, estimate = est)
 </code></pre>
-</section>
-<section class="mod-sec sec-content"><h4>畫圖的程式</h4>
-<p>圖用 Python 畫，因為 Windows 上 R 的中文字型不好設定。這支程式照同一套定義再算一次，順便確認和 R 的結果一樣。</p>
+
+
+</details>
+
+<details class="lab-code"><summary>看畫圖的程式（Python，照同一套定義重算一次）</summary>
+
+
 <pre><code class="language-python">&quot;&quot;&quot;第 13 題的圖與 confusion matrix（R 那支負責主要數字，這支重算停投名單並畫中文圖）。&quot;&quot;&quot;
 from _kmg import *
 
@@ -149,132 +140,27 @@ ax[1].set_yticks([0, 1], [&quot;換算後：該停&quot;, &quot;換算後：該�
 ax[1].set_title(&quot;冤枉停投 145 列，換算後月收入 %s 元&quot; % format(round(wrong), &quot;,&quot;))
 save_fig(fig, &quot;ex13_stop_list.png&quot;)
 </code></pre>
-<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a> 的「共用的讀檔函式」那一段。</p>
+
+
+</details>
+
+<p>程式開頭的 from _kmg import * 載入共用的讀檔、去重、換幣別與畫圖函式，內容放在 <a href="%E7%B7%B4%E7%BF%92_01_-_%E6%9C%88%E6%9C%83%E4%B8%8A%E7%9A%84%E5%89%87%E6%95%B8%E5%B0%8D%E4%B8%8D%E5%B0%8D.html">練習 01 - 月會上的則數對不對</a>。</p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-5">結果</h3>
+<section class="mod-sec sec-lab-result"><h3 id="sec-5">結果會看到什麼</h3>
 <p>不換幣別，852 筆的總收入會算成 194.8 萬，真值是 297.5 萬，少算三分之一。停投名單會變成：adx_prog 有 74%、openx_prog 有 77% 被標成賠本，自家直客與自助平台一筆都沒有——整份名單其實在說「把兩個程序化平台全砍掉」，而那正是上次砍完營收掉一塊的原因。換算之後名單完全變樣：四個平台的標記比例落在 16% 到 33% 之間，852 列裡有 290 列（34%）標籤翻面。換算後再看，程序化平台的 eCPM 中位數（44.5 與 48.6）跟自家直客（46.9）根本差不多，真正低效的是版位不是平台——sidebar 中位數只有 22.2，video_preroll 有 143.6。另外 viewability_rate 缺了 12.8%，而且全部缺在兩個程序化平台（各缺約四成）；這裡會推翻一個直覺：直接 dropna 之後平均可視率是 0.613，跟自家平台的 0.610 幾乎一樣，所以被扭曲的不是平均值，而是「誰還留在資料裡」——程序化的列少了四成，後面任何以列為單位的統計都會被自家平台主導。</p>
-</section>
-<section class="mod-sec sec-content"><h4>跑出來的關鍵數字</h4>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>結果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>幣別種類</td>
-<td>2</td>
-</tr>
-<tr>
-<td>直接加總</td>
-<td>1947798.96</td>
-</tr>
-<tr>
-<td>換算後總額</td>
-<td>2975076.475</td>
-</tr>
-<tr>
-<td>未換算 停投比例 adx_prog</td>
-<td>0.7407</td>
-</tr>
-<tr>
-<td>未換算 停投比例 openx_prog</td>
-<td>0.7687</td>
-</tr>
-<tr>
-<td>未換算 停投比例 kmg_direct</td>
-<td>0</td>
-</tr>
-<tr>
-<td>未換算 停投比例 kmg_selfserve</td>
-<td>0</td>
-</tr>
-<tr>
-<td>換算後 停投比例 最低平台</td>
-<td>0.1633</td>
-</tr>
-<tr>
-<td>換算後 停投比例 最高平台</td>
-<td>0.3259</td>
-</tr>
-<tr>
-<td>標籤翻面列數</td>
-<td>290</td>
-</tr>
-<tr>
-<td>標籤翻面比例</td>
-<td>0.3404</td>
-</tr>
-<tr>
-<td>換算後 eCPM 中位數 adx_prog</td>
-<td>44.5484</td>
-</tr>
-<tr>
-<td>換算後 eCPM 中位數 openx_prog</td>
-<td>48.5507</td>
-</tr>
-<tr>
-<td>換算後 eCPM 中位數 kmg_direct</td>
-<td>46.9251</td>
-</tr>
-<tr>
-<td>換算後 eCPM 中位數 sidebar</td>
-<td>22.2354</td>
-</tr>
-<tr>
-<td>換算後 eCPM 中位數 video_preroll</td>
-<td>143.5696</td>
-</tr>
-<tr>
-<td>可視率缺失比例</td>
-<td>0.1279</td>
-</tr>
-<tr>
-<td>自家平台可視率沒有缺失</td>
-<td>1</td>
-</tr>
-<tr>
-<td>dropna 後平均可視率</td>
-<td>0.6134</td>
-</tr>
-<tr>
-<td>自家平台平均可視率</td>
-<td>0.6098</td>
-</tr>
-<tr>
-<td>標籤翻面列數</td>
-<td>290</td>
-</tr>
-<tr>
-<td>未換算名單的 confusion matrix（TP/FP/FN/TN）</td>
-<td>68、145、145、494</td>
-</tr>
-<tr>
-<td>被冤枉停投的列換算後收入（元）</td>
-<td>412564</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="mod-sec sec-content"><h4>補充</h4>
+<div class="lab-kpis"><div class="lab-kpi"><span class="v">2</span><span class="k">幣別種類</span></div><div class="lab-kpi"><span class="v">1947798.96</span><span class="k">直接加總</span></div><div class="lab-kpi"><span class="v">2975076.475</span><span class="k">換算後總額</span></div><div class="lab-kpi"><span class="v">0.7407</span><span class="k">未換算 停投比例 adx_prog</span></div><div class="lab-kpi"><span class="v">0.7687</span><span class="k">未換算 停投比例 openx_prog</span></div><div class="lab-kpi"><span class="v">0</span><span class="k">未換算 停投比例 kmg_direct</span></div><div class="lab-kpi"><span class="v">0</span><span class="k">未換算 停投比例 kmg_selfserve</span></div><div class="lab-kpi"><span class="v">0.1633</span><span class="k">換算後 停投比例 最低平台</span></div><div class="lab-kpi"><span class="v">0.3259</span><span class="k">換算後 停投比例 最高平台</span></div><div class="lab-kpi"><span class="v">290</span><span class="k">標籤翻面列數</span></div><div class="lab-kpi"><span class="v">0.3404</span><span class="k">標籤翻面比例</span></div><div class="lab-kpi"><span class="v">44.5484</span><span class="k">換算後 eCPM 中位數 adx_prog</span></div></div>
+
 <ul>
 <li>用換算後的標籤跑邏輯斯迴歸（版位、平台、廣告主產業），準確率 97.4%</li>
 </ul>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-6">圖表</h3>
-<p><img alt="第 13 題的圖" src="../../img/ex13_stop_list.png" /></p>
-<p>左圖是各平台被標成「建議停投」的比例，紅色是沒換幣別就貼標籤，藍色是換算後再貼。右圖把換算後的標籤當正確答案，看沒換算那份名單錯在哪：145 列被冤枉停投、145 列該停沒停。</p>
+<section class="mod-sec sec-lab-fig"><h3 id="sec-6">圖怎麼讀</h3>
+<p><img alt="第 13 題的圖" src="../../img/ex13_stop_list.png" />
+<em>左圖是各平台被標成「建議停投」的比例，紅色是沒換幣別就貼標籤，藍色是換算後再貼。右圖把換算後的標籤當正確答案，看沒換算那份名單錯在哪：145 列被冤枉停投、145 列該停沒停。</em></p>
 </section>
-<section class="mod-sec sec-content"><h3 id="sec-7">連到課堂概念</h3>
-</section>
-<section class="mod-sec sec-content"><h4>confusion matrix</h4>
-<p>把換算幣別後的標籤當正確答案，未換算那份停投名單是 TP 68、FP 145（冤枉停投）、FN 145（該停沒停）、TN 494。FP 和 FN 剛好一樣多，是因為兩份名單都切在第 25 百分位；但代價不一樣：被冤枉停投的那 145 列，換算後一個月有 41 萬元收入。見 <a href="M_Confusion_Matrix_%E8%88%87%E8%AA%A4%E5%88%A4%E4%BB%A3%E5%83%B9.html">Confusion Matrix 與誤判代價</a></p>
-</section>
-<section class="mod-sec sec-content"><h3 id="sec-8">接著做</h3>
+<section class="mod-sec sec-lab-next"><h3 id="sec-7">繼續練習</h3>
 <p>上一題 <a href="%E7%B7%B4%E7%BF%92_12_-_%E6%BA%96%E7%A2%BA%E7%8E%87_99%25_%E7%9A%84%E6%A8%A1%E5%9E%8B.html">練習 12 - 準確率 99% 的模型</a>、下一題 <a href="%E7%B7%B4%E7%BF%92_14_-_%E8%AE%80%E8%80%85%E7%9C%BC%E4%B8%AD%E6%9C%89%E5%B9%BE%E7%A8%AE%E5%85%A7%E5%AE%B9.html">練習 14 - 讀者眼中有幾種內容</a>，或回到 <a href="Hub_-_%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E7%B7%B4%E7%BF%92%E6%A1%88%E4%BE%8B%E5%BA%AB.html">Hub - 資料分析練習案例庫</a> 挑別的題目。</p></section>
-<p class="sitefoot">學生版｜更新於 2026-09-13 11:19</p></div></div></div><script>
+<p class="sitefoot">學生版｜更新於 2026-09-13 11:59</p></div></div></div><script>
 (function () {
   var links = document.querySelectorAll('.sidebar .toc a');
   if (!links.length) return;
